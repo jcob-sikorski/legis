@@ -29,7 +29,7 @@ To run the app locally, install its dependencies and then call the run script:
 Metadata File
 -------------
 
-The client uses a metadata file, ``src/atlasConfig.json``, to configure
+The client uses a metadata file, ``src/config.jsx``, to configure
 its connection to Atlas App Services. If you created this project
 through MongoDB Atlas or the App Services CLI then the file is
 pre-populated with your connection info.

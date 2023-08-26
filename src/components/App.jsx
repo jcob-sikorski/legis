@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { AppProvider, useApp } from "./RealmApp";
 import * as Realm from "realm-web";
-import atlasConfig from "../atlasConfig.json";
+import { config } from "./../config";
 import "./App.css";
-const { appId } = atlasConfig;
+
+const appId = config.appId;
 
 export default function ProvidedApp() {
+
   return (
     <AppProvider appId={appId}>
       <App />
@@ -19,9 +21,7 @@ function App() {
 
   async function loginAnonymous() {
     const credentials = Realm.Credentials.anonymous();
-    const user = await app.logIn(credentials);
-    console.assert(user.id === app.currentUser.id);
-    return user;
+    await app.logIn(credentials);
   }
 
   useEffect(() => {
