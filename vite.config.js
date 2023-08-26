@@ -6,7 +6,7 @@ import topLevelAwait from "vite-plugin-top-level-await";
 export default defineConfig({
   plugins: [react(), topLevelAwait()],
   build: {
-    outDir: "build",
+    outDir: "dist",
   },
   server: {
     open: true,
