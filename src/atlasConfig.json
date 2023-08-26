@@ -1,0 +1,9 @@
+{
+    "appId": "application-0-hzzgo",
+    "appUrl": "https://realm.mongodb.com/groups/64e8cdc8a1a1b900877bdd18/apps/64e8d4512a376e7316cae804",
+    "baseUrl": "https://realm.mongodb.com",
+    "clientApiBaseUrl": "https://eu-central-1.aws.realm.mongodb.com",
+    "dataApiBaseUrl": "https://eu-central-1.aws.data.mongodb-api.com",
+    "dataExplorerLink": "https://cloud.mongodb.com/links/64e8cdc8a1a1b900877bdd18/explorer/AtlasCluster/database/collection/find",
+    "dataSourceName": "mongodb-atlas"
+}
