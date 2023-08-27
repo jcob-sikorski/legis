@@ -3,6 +3,7 @@ import { useApp } from "./RealmApp";
 import mixpanel from 'mixpanel-browser';
 import * as Realm from "realm-web";
 import "./Waitlist.css";
+import "./Common.css";
 
 export default function Waitlist() {
   const app = useApp();
