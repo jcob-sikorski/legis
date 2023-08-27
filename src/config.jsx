@@ -5,6 +5,7 @@ export const config = {
     clientApiBaseUrl: import.meta.env.VITE_REACT_clientApiBaseUrl,
     dataApiBaseUrl: import.meta.env.VITE_REACT_dataApiBaseUrl,
     dataExplorerLink: import.meta.env.VITE_REACT_dataExplorerLink,
-    dataSourceName: import.meta.env.VITE_REACT_dataSourceName
+    dataSourceName: import.meta.env.VITE_REACT_dataSourceName,
+    projectId: import.meta.env.VITE_REACT_projectId
   };
   

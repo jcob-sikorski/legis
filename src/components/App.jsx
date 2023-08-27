@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AppProvider, useApp } from "./RealmApp";
 import { inject } from '@vercel/analytics';
+import mixpanel from 'mixpanel-browser';
 import * as Realm from "realm-web";
 import { config } from "./../config";
 import "./App.css";
@@ -8,6 +9,8 @@ import "./App.css";
 const appId = config.appId;
 
 inject();
+
+mixpanel.init(config.projectId, { debug: true, track_pageview: true, persistence: 'localStorage' });
 
 export default function ProvidedApp() {
 
@@ -34,6 +37,8 @@ function App() {
   const handleEmailSubmission = async () => {
     if (email && email.length < 80) {
       await app.currentUser.functions.submitEmail(email);
+
+      mixpanel.identify(email);
 
       setTimeout(() => {
         setEmail("");
