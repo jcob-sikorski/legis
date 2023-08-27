@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { AppProvider, useApp } from "./RealmApp";
-import { Analytics } from "@vercel/analytics";
+import { inject } from '@vercel/analytics';
 import * as Realm from "realm-web";
 import { config } from "./../config";
 import "./App.css";
 
 const appId = config.appId;
 
+inject();
+
 export default function ProvidedApp() {
 
   return (
     <AppProvider appId={appId}>
       <App />
-      <Analytics />
     </AppProvider>
   );
 }
