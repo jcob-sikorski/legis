@@ -25,6 +25,7 @@ export default function SignUp() {
 
       setTimeout(() => {
         setEmail("");
+        setPassword("");
       }, 180);
     }
   };
