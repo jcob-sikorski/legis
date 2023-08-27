@@ -1,68 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { AppProvider, useApp } from "./RealmApp";
-import { inject } from '@vercel/analytics';
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Waitlist from "./Waitlist"; // Ensure the path to Waitlist is correct
+import SignUp from "./SignUp"
+import { config } from "./../config"; // Make sure the path to config is correct
+import { AppProvider } from "./RealmApp";
 import mixpanel from 'mixpanel-browser';
-import * as Realm from "realm-web";
-import { config } from "./../config";
-import "./App.css";
+import { inject } from '@vercel/analytics';
 
 const appId = config.appId;
 
 inject();
-
 mixpanel.init(config.projectId, { debug: true, track_pageview: true, persistence: 'localStorage' });
 
-export default function ProvidedApp() {
-
+export default function App() {
   return (
     <AppProvider appId={appId}>
-      <App />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Waitlist />} />
+          <Route path="/signup" element={<SignUp />} />
+        </Routes>
+      </BrowserRouter>
     </AppProvider>
-  );
-}
-
-function App() {
-  const app = useApp();
-  const [email, setEmail] = useState("");
-
-  async function loginAnonymous() {
-    const credentials = Realm.Credentials.anonymous();
-    await app.logIn(credentials);
-  }
-
-  useEffect(() => {
-    loginAnonymous();
-  }, []);
-
-  const handleEmailSubmission = async () => {
-    if (email && email.length < 80) {
-      await app.currentUser.functions.submitEmail(email);
-
-      mixpanel.identify(email);
-
-      setTimeout(() => {
-        setEmail("");
-      }, 200);
-    }
-  };
-
-  return (
-    <div className="StartScreen">
-      <h1 className="title">UNFOLLOW</h1>
-      <p className="subtitle">The fastest way to unfollow people on Twitter</p>
-      <p className="subtitle">Join our waitlist 👀</p>
-      <div className="emailContainer">
-        <input
-          type="email"
-          className="emailInput"
-          placeholder="Your email..."
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <button className="submitButton" onClick={handleEmailSubmission}>
-          Submit
-        </button>
-      </div>
-    </div>
   );
 }
