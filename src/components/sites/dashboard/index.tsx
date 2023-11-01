@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import {
   AppstoreOutlined,
   BarChartOutlined,
+  DownloadOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  PlusOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Button, theme, Row, Col } from 'antd';
+import { Layout, Menu, Button, theme, Row, Col, Flex } from 'antd';
 import {faker} from '@faker-js/faker';
 import SiteCard from './SiteCard';
 
@@ -59,11 +61,16 @@ export const Dashboard: React.FC = () => {
           />
         </Header>
         <Content style={{background: colorBgContainer, padding: 0}}>
-        <Row style={{ maxWidth: 1200, marginInline: 'auto', marginBottom: 50}} gutter={[16, 24]}>
-            {POSTS && POSTS.map((d: any) => <Col className="gutter-row" span={12}>
-                <SiteCard data={d}/>
-            </Col>)}
-        </Row>
+            <Flex style={{ flexDirection: 'column', maxWidth: 1200, marginInline: 'auto', marginBottom: 50}} >
+                <Button style={{maxWidth: '150px', fontWeight: 'bold'}} type="primary" icon={<PlusOutlined />} size='large'>
+                    New site
+                </Button>
+                <Row gutter={[16, 24]}>
+                    {POSTS && POSTS.map((d: any) => <Col className="gutter-row" span={12}>
+                        <SiteCard data={d}/>
+                    </Col>)}
+                </Row>
+            </Flex>
             {/* {POSTS && POSTS.map((d: any) => <SiteCard data={d}/>)} */}
         </Content>
       </Layout>
