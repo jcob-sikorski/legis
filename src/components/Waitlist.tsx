@@ -6,7 +6,7 @@ import "./Waitlist.css";
 import "./Common.css";
 
 export default function Waitlist() {
-  const app = useApp();
+  const app: any = useApp();
   const [email, setEmail] = useState("");
 
   async function loginAnonymous() {

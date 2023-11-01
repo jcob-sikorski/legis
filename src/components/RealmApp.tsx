@@ -1,16 +1,16 @@
 import React from "react";
 import * as Realm from "realm-web";
-import { config } from "./../config";
+import { config } from "../config";
 
 const { baseUrl } = config.appId;
 
-function createApp(id) {
+function createApp(id: any) {
   return new Realm.App({ id, baseUrl });
 }
 
 const AppContext = React.createContext(null);
 
-export function AppProvider({ appId, children }) {
+export function AppProvider({ appId, children } : any) {
   // Store Realm.App in React state. If appId changes, all children will rerender and use the new App.
   const [app, setApp] = React.useState(createApp(appId));
   React.useEffect(() => {
@@ -20,7 +20,7 @@ export function AppProvider({ appId, children }) {
   const [currentUser, setCurrentUser] = React.useState(app.currentUser);
   // Wrap the base logIn function to save the logged in user in state
   const logIn = React.useCallback(
-    async (credentials) => {
+    async (credentials: any) => {
       await app.logIn(credentials);
       setCurrentUser(app.currentUser);
     },
@@ -29,7 +29,7 @@ export function AppProvider({ appId, children }) {
   // Wrap the current user's logOut function to remove the logged out user from state
   const logOut = React.useCallback(async () => {
     try {
-      const user = app.currentUser;
+      const user: any = app.currentUser;
       await user?.logOut();
       await app.removeUser(user);
     } catch (err) {
@@ -43,7 +43,7 @@ export function AppProvider({ appId, children }) {
   }, [app]);
 
   // Override the App's currentUser & logIn properties + include the app-level logout function
-  const appContext = React.useMemo(() => {
+  const appContext: any = React.useMemo(() => {
     return { ...app, currentUser, logIn, logOut };
   }, [app, currentUser, logIn, logOut]);
 

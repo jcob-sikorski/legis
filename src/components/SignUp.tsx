@@ -6,7 +6,7 @@ import "./SignUp.css";
 import "./Common.css";
 
 export default function SignUp() {
-  const app = useApp();
+  const app: any = useApp();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
