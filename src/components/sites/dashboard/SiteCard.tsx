@@ -4,7 +4,7 @@ import Meta from "antd/es/card/Meta";
 
 export default function SiteCard({data}: any) {
 
-    const { title, description, photoURL, siteURL} = data;
+    const { title, subtitle, description, deleted, image_url, site_url} = data;
 
     return <Card
     style={{ width: '100%' }}
@@ -13,7 +13,7 @@ export default function SiteCard({data}: any) {
           <img
             alt="example"
             style={{ height: '100%' }}
-            src={photoURL}
+            src={image_url}
           />
         </div>
       }
@@ -22,12 +22,12 @@ export default function SiteCard({data}: any) {
       <EditOutlined key="edit" />,
       <Popover key="share" overlayInnerStyle={{ padding: 10 }} content={
         <Space direction="vertical" align="center">
-            <QRCode value={siteURL} bordered={false} />
-            <a style={{marginInline: 'auto'}}>{siteURL}</a>
-            <span onClick={() => copyTextToClipboard(siteURL)} style={{cursor: 'pointer'}}>Click to copy link</span>
+            <QRCode value={site_url} bordered={false} />
+            <a style={{marginInline: 'auto'}}>{site_url}</a>
+            <span onClick={() => copyTextToClipboard(site_url)} style={{cursor: 'pointer'}}>Click to copy link</span>
         </Space>
     }>
-      <LinkOutlined  width={100} height={100} src={siteURL} alt="icon" />
+      <LinkOutlined  width={100} height={100} src={site_url} alt="icon" />
   </Popover>,
       <DeleteOutlined key="delete" />,
     ]}
