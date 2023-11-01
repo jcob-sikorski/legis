@@ -2,7 +2,7 @@ import { DeleteOutlined, EditOutlined, LinkOutlined, SettingOutlined } from "@an
 import { Card, Popover, QRCode, Space } from "antd";
 import Meta from "antd/es/card/Meta";
 
-export default function SiteCard({data}: any) {
+export default function SiteCard({ data, onDelete }: any) {
 
     const { title, subtitle, description, deleted, image_url, site_url} = data;
 
@@ -29,7 +29,7 @@ export default function SiteCard({data}: any) {
     }>
       <LinkOutlined  width={100} height={100} src={site_url} alt="icon" />
   </Popover>,
-      <DeleteOutlined key="delete" />,
+      <DeleteOutlined key="delete" onClick={onDelete} />,
     ]}
   >
     <Meta
