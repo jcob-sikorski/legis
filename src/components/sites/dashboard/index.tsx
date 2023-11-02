@@ -83,7 +83,6 @@ export const Dashboard: React.FC = () => {
       const result = await site_collection.insertOne(newSite);
       console.log("Created site:", JSON.stringify(result));
       
-      // Now, you can update the state with the newly created site
       setSites((prevSites) => [...prevSites, newSite]);
     } catch (error) {
       console.error("Error creating site:", error);
@@ -147,7 +146,7 @@ export const Dashboard: React.FC = () => {
                 <Row gutter={[16, 24]} style={{padding: 10}}>
                     {sites && sites.map((d: any) => 
                       <Col className="gutter-row" span={12}>
-                          <SiteCard data={d} onDelete={() => deleteSite(d._id)} />
+                          <SiteCard data={d} onDelete={() => deleteSite(d._id)} onClone={() => createSite()} />
                       </Col>)}
                 </Row>
             </Flex>
