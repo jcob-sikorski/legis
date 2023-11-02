@@ -5,6 +5,7 @@ import { AppProvider } from "./RealmApp";
 import mixpanel from 'mixpanel-browser';
 import { inject } from '@vercel/analytics';
 import Dashboard from "./sites/dashboard";
+import Editor from "./sites/editor";
 
 const appId = config.appId;
 
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/" element={<Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/editor" element={<Editor />} />
         </Routes>
       </BrowserRouter>
     </AppProvider>
