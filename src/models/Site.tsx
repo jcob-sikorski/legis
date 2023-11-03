@@ -9,6 +9,13 @@ export class Site extends Realm.Object<Site> {
   deleted: Realm.Types.Int;
   image_url?: string;
   site_url?: string;
+  status?: Realm.Types.Int;
+  share_image_url?: string;
+  favicon_url?: string;
+  action?: Realm.Types.Int;
+  type?: Realm.List<string>;
+  host?: Realm.List<string>;
+  target?: Realm.List<string>;
 
   static primaryKey = '_id';
 
