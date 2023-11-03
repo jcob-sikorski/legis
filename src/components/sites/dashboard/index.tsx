@@ -15,12 +15,26 @@ import * as Realm from "realm-web";
 import { Site } from '../../../models/Site';
 import Sidebar from '../menu';
 import { config } from "../../../config";
+import { useRedux } from '../../../hooks/useRedux';
+import { useDispatch } from 'react-redux';
+import { setSite } from '../../../redux/actions';
 
 const { Header, Sider, Content } = Layout;
 
 export const Dashboard: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [sites, setSites] = useState<Site[]>([]);
+
+  // REDUX HERE
+  const [site] = useRedux("site"); // give exact variable name in quotes
+
+  const dispatch = useDispatch();
+
+  function onDemoRedux() {
+    const newSite: Site = {_id: 'abc', user_id: 'def', deleted: 0}
+    dispatch(setSite(newSite));
+  }
+  // REDUX END
 
   const {
     token: { colorBgContainer, colorBgBase },
@@ -90,6 +104,8 @@ export const Dashboard: React.FC = () => {
     }
   }
   
+
+
   return (
     <Layout style={{minHeight: '100vh'}}>
       <Sidebar/>
@@ -99,6 +115,12 @@ export const Dashboard: React.FC = () => {
                 <Button style={{maxWidth: '150px', fontWeight: 'bold'}} type="primary" icon={<PlusOutlined />} size='large' onClick={createSite}>
                     New site
                 </Button>
+                <Button style={{maxWidth: '250px', fontWeight: 'bold'}} type="default" icon={<PlusOutlined />} size='large' onClick={onDemoRedux}>
+                    Add site data with redux
+                </Button>
+                <>
+                  site redux data: {JSON.stringify(site)}
+                </>
                 <Row gutter={[16, 24]} style={{padding: 10}}>
                     {sites && sites.map((d: any) => 
                       <Col className="gutter-row" span={12}>
