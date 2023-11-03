@@ -30,16 +30,6 @@ export const Dashboard: React.FC = () => {
   const password = "123456";
   const app = new Realm.App({ id: config.appId });
   
-  const credentials = Realm.Credentials.emailPassword(email, password);
-  app.logIn(credentials)
-    .then(user => {
-      console.log("User logged in successfully.");
-      const currentUserID = user.id;
-    })
-    .catch(error => {
-      console.error("Error logging in the user:", error);
-    });
-  
   const currentUserID = app.currentUser!.id;
 
   const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
