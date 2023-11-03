@@ -8,9 +8,14 @@ export default function SiteCard({ data, onClone, onDelete }: any) {
     const { title, subtitle, description, deleted, image_url, site_url} = data;
 
     const navigate = useNavigate();
+
     function onEdit() {
         navigate('/editor')
     }
+
+    function onSettings() {
+      navigate('/site-settings')
+  }
 
     return <Card
     style={{ width: '100%' }}
@@ -24,7 +29,7 @@ export default function SiteCard({ data, onClone, onDelete }: any) {
         </div>
       }
     actions={[
-      <SettingOutlined key="setting" />,
+      <SettingOutlined key="setting" onClick={onSettings}/>,
       <EditOutlined key="edit" onClick={onEdit} />,
       <CopyOutlined key="clone" onClick={onClone} />,
       <DeleteOutlined key="delete" onClick={onDelete} />,

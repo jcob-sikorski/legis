@@ -6,6 +6,7 @@ import mixpanel from 'mixpanel-browser';
 import { inject } from '@vercel/analytics';
 import Dashboard from "./sites/dashboard";
 import Editor from "./sites/editor";
+import SiteSettings from "./sites/siteSettings";
 
 const appId = config.appId;
 
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/editor" element={<Editor />} />
+          <Route path="/site-settings" element={<SiteSettings />} />
         </Routes>
       </BrowserRouter>
     </AppProvider>
