@@ -16,6 +16,7 @@ export class Site extends Realm.Object<Site> {
   type?: Realm.List<string>;
   host?: Realm.List<string>;
   target?: Realm.List<string>;
+  repo_url?: string;
 
   static primaryKey = '_id';
 
