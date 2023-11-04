@@ -3,17 +3,23 @@ import { Card, Popover, QRCode, Space } from "antd";
 import Meta from "antd/es/card/Meta";
 import { useNavigate } from "react-router-dom";
 
+import { useDispatch } from 'react-redux';
+import { setSite } from '../../../redux/actions';
+
 export default function SiteCard({ data, onClone, onDelete }: any) {
 
     const { title, subtitle, description, deleted, image_url, site_url} = data;
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     function onEdit() {
         navigate('/editor')
     }
 
     function onSettings() {
+      dispatch(setSite(data));
+
       navigate('/site-settings')
   }
 

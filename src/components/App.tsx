@@ -3,7 +3,6 @@ import SignUp from "./SignUp";
 import { config } from "./../config";
 import { AppProvider } from "./RealmApp";
 import * as Realm from "realm-web";
-import { User } from '../models/User';
 import mixpanel from 'mixpanel-browser';
 import { inject } from '@vercel/analytics';
 import Dashboard from "./sites/dashboard";

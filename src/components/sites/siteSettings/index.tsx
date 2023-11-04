@@ -1,56 +1,51 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Input, Button } from 'antd'; // Import Input and Button from 'antd'
+import { Layout, Input, Button } from 'antd';
 import Sidebar from '../menu';
-
-// Schema interface
-interface SiteSettingsSchema {
-  user_id: string;
-  _id: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  deleted: number;
-  image_url: string;
-  site_url: string;
-  status: number;
-  share_image_url: string;
-  favicon_url: string;
-  action: number;
-  type: string[];
-  host: string[];
-  target: string[];
-}
+import Site from '../../../models/Site';
+import { useRedux } from '../../../hooks/useRedux';
+import * as Realm from 'realm-web';
+import { config } from '../../../config';
 
 const SiteSettings: React.FC = () => {
-  // Placeholder values
-  const defaultSiteSettings: SiteSettingsSchema = {
-    user_id: 'User ID Placeholder',
-    _id: 'ID Placeholder',
-    title: 'Title Placeholder',
-    subtitle: 'Subtitle Placeholder',
-    description: 'Description Placeholder',
-    deleted: 0, // Placeholder for numeric fields
-    image_url: 'Image URL Placeholder',
-    site_url: 'Site URL Placeholder',
-    status: 0, // Placeholder for numeric fields
-    share_image_url: 'Share Image URL Placeholder',
-    favicon_url: 'Favicon URL Placeholder',
-    action: 0, // Placeholder for numeric fields
-    type: [], // Placeholder for arrays
-    host: [], // Placeholder for arrays
-    target: [], // Placeholder for arrays
+  const [site] = useRedux('site');
+
+  const [siteSettings, setSiteSettings] = useState<Site | {}>({});
+  const [fieldValues, setFieldValues] = useState<{ [key: string]: string | number | string[] }>({});
+
+  const app = new Realm.App({ id: config.appId });
+
+  const mongodb = app.currentUser!.mongoClient('mongodb-atlas');
+  const siteCollection = mongodb.db('legis').collection('Site');
+
+  useEffect(() => {
+    if (site) {
+      setSiteSettings(site);
+      setFieldValues({});
+      for (const key of Object.keys(site)) {
+        setFieldValues((prevFieldValues) => ({
+          ...prevFieldValues,
+          [key]: site[key],
+        }));
+      }
+    }
+  }, [site]);
+
+  const updateField = async (fieldName: keyof Site, value: string | number | string[]) => {
+    const updatedValues = { ...fieldValues, [fieldName]: value };
+    setFieldValues(updatedValues);
   };
 
-  // State to store the site settings
-  const [siteSettings, setSiteSettings] = useState<SiteSettingsSchema>(defaultSiteSettings);
-
-  // Function to update a field in the state
-  const updateField = (fieldName: keyof SiteSettingsSchema, value: string | number | string[]) => {
-    setSiteSettings({
-      ...siteSettings,
-      [fieldName]: value,
-    });
-  };
+  const updateDBField = async (fieldName: keyof Site) => {
+    try {
+      const updateResult = await siteCollection.updateOne(
+        { _id: new Realm.BSON.ObjectId(site!._id) },
+        { $set: { [fieldName]: fieldValues[fieldName] } }
+      );
+      console.log(`Updated ${updateResult.modifiedCount} document.`);
+    } catch (error) {
+      console.error('Error updating document in MongoDB:', error);
+    }
+  }
 
   return (
     <Layout hasSider style={{ minHeight: '100vh' }}>
@@ -60,10 +55,11 @@ const SiteSettings: React.FC = () => {
           <div key={fieldName}>
             <Input
               placeholder={fieldName}
-              onChange={(e) => updateField(fieldName as keyof SiteSettingsSchema, e.target.value)}
-              size='large'
+              value={fieldValues[fieldName] || ''}
+              onChange={(e) => updateField(fieldName as keyof Site, e.target.value)}
+              size="large"
             />
-            <Button onClick={() => updateField(fieldName as keyof SiteSettingsSchema, 'New Value')}>
+            <Button onClick={() => updateDBField(fieldName as keyof Site)}>
               Set
             </Button>
           </div>
