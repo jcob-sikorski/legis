@@ -6,6 +6,8 @@ export const config = {
     dataApiBaseUrl: import.meta.env.VITE_REACT_dataApiBaseUrl,
     dataExplorerLink: import.meta.env.VITE_REACT_dataExplorerLink,
     dataSourceName: import.meta.env.VITE_REACT_dataSourceName,
-    projectId: import.meta.env.VITE_REACT_projectId
+    projectId: import.meta.env.VITE_REACT_projectId,
+    githubUsername: import.meta.env.VITE_REACT_githubUsername,
+    githubToken: import.meta.env.VITE_REACT_githubToken,
   };
   
