@@ -17,7 +17,7 @@ function Visualisation({
 } : any) {
 
     const { onAddSection, checkIfNoSections, setSelectedSectionId, setSelectedTemplateId } = functions;
-    const { selectedSectionId, selectedTemplateId } = variables;
+    const { selectedSectionId, selectedTemplateId, isDevMode } = variables;
 
     const hasNoSections = checkIfNoSections();
 
@@ -39,14 +39,18 @@ function Visualisation({
         }
       }
 
-    const selectedSectionStyle = {border: '4px solid #ff6550'}
+    const selectedSectionStyle = {outline: '4px solid #ff000077', outlineOffset: '-2px'}
 
     return ( <Layout className="site-layout" style={{ marginRight: BAR_WIDTH }}>
     <Content style={{ maxWidth: '1200px', margin: '24px 16px 0', overflow: 'initial' }}>
-        [selectedSectionId]: {selectedSectionId}<br/>
-        [selectedTemplateId]: {selectedTemplateId}<br/>
+        {isDevMode && <>
+            [selectedSectionId]: {selectedSectionId}<br/>
+            [selectedTemplateId]: {selectedTemplateId}<br/>
+        </>}
         {data && data.map((s: any) => <div onClick={() => onSectionClick(s)} style={selectedSectionId === s.section_id ? selectedSectionStyle : {}}>
-            [section_id]: {s.section_id}
+            {isDevMode && <>
+                [section_id]: {s.section_id}
+            </>}
             {switchTemplate(s)}
         </div>)}
     </Content>
