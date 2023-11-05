@@ -17,7 +17,7 @@ function Visualisation({
 } : any) {
 
     const { onAddSection, checkIfNoSections, setSelectedSectionId, setSelectedTemplateId } = functions;
-    const { selectedSectionId, selectedTemplateId, isDevMode } = variables;
+    const { selectedSectionId, selectedTemplateId, isDevMode, isDeploying } = variables;
 
     const hasNoSections = checkIfNoSections();
 
@@ -39,10 +39,16 @@ function Visualisation({
         }
       }
 
-    const selectedSectionStyle = {outline: '4px solid #ff000077', outlineOffset: '-2px'}
+    const selectedSectionStyle = isDeploying 
+    ? {} 
+    : { outline: '4px solid #ff000077', outlineOffset: '-2px' }
+
+    const contentStyle = isDeploying 
+    ? {} 
+    : { maxWidth: '1200px', margin: '24px 16px 0', overflow: 'initial' }
 
     return ( <Layout className="site-layout" style={{ marginRight: BAR_WIDTH }}>
-    <Content style={{ maxWidth: '1200px', margin: '24px 16px 0', overflow: 'initial' }}>
+    <Content style={contentStyle}>
         {isDevMode && <>
             [selectedSectionId]: {selectedSectionId}<br/>
             [selectedTemplateId]: {selectedTemplateId}<br/>

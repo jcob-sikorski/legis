@@ -37,6 +37,7 @@ const Editor: React.FC = () => {
 
   const [isAddingNewSection, setIsAddingNewSection] = useState<boolean>(false);
 
+  const [isDeploying, setIsDeploying] = useState<boolean>(false);
   const [isDevMode, setIsDevMode] = useState<boolean>(false);
 
   function processJson(json: string) {
@@ -87,9 +88,18 @@ const Editor: React.FC = () => {
     return data && data.length === 0;
   }
 
+  useEffect(() => {
+    if (isDeploying) {
+      deploy();
+    }
+  }, [isDeploying])
 
   async function onDeploy() {
+    setIsDeploying(true);    
+  }
 
+  // deploy() function MUST be triggered by useEffect, because it depends on state reactive rendered data. (It must wait for tree to re-render and then generate an html string).
+  async function deploy() {
     const pageTitle = `Best Lawyer Page Ever`;
 
     const htmlBodyString = ReactDOMServer.renderToString(visualisationComponent);
@@ -126,12 +136,16 @@ const Editor: React.FC = () => {
         headers: {
           Authorization: `token ${githubToken}`,
         },
-      });
+      })
+
+      setIsDeploying(false)
   
       console.log("Pushed HTML content to GitHub repository:", response.data);
   
       console.log("GitHub Pages deployment triggered.");
+      
     } catch (error) {
+      setIsDeploying(false)
       console.error("Error pushing content and triggering deployment.");
       throw error;
     }
@@ -155,6 +169,7 @@ const Editor: React.FC = () => {
     selectedSectionId,
     selectedTemplateId,
     isDevMode,
+    isDeploying,
   }} 
 />
 
@@ -184,12 +199,5 @@ const Editor: React.FC = () => {
     </Layout>
   );
 };
-
-function TestComponent() {
-  return <div>
-    <h1> TEST COMPONENT HERE! </h1>
-    <input />
-  </div>
-}
 
 export default Editor;
