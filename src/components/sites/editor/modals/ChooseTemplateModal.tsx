@@ -5,7 +5,7 @@ import { groupProfilesByCategory } from '../../../../utils';
 
 // import profiles from '../../../templates/profiles.json';
 
-const ChooseTemplateModal: React.FC = ({setOpen, open, onTemplateSelected} : any) => {
+const ChooseTemplateModal = ({setOpen, open, onTemplateSelected} : any) => {
 
   const [templateId, setTemplateId] = useState("");
 
