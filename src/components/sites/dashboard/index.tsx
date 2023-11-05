@@ -105,6 +105,10 @@ export const Dashboard: React.FC = () => {
     }
   }
 
+  async function editSite(siteId: string) {
+    navigate(`/editor/${siteId}`);
+  }
+
   async function deleteSite(siteId: string) {
     try {
       // Find the site by its _id and get the associated GitHub repository name
@@ -147,7 +151,7 @@ export const Dashboard: React.FC = () => {
                 <Row gutter={[16, 24]} style={{padding: 10}}>
                     {sites && sites.map((d: any) => 
                       <Col className="gutter-row" span={12}>
-                          <SiteCard data={d} onDelete={() => deleteSite(d._id)} onClone={() => createSite()} />
+                          <SiteCard data={d} onEdit={() => editSite(d._id)} onClone={() => createSite()} onDelete={() => deleteSite(d._id)} />
                       </Col>)}
                 </Row>
             </Flex>
