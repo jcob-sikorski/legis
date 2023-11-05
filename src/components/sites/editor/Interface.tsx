@@ -9,11 +9,11 @@ const { Sider } = Layout;
 
 import PROFILES from '../../templates/profiles.json';
 
-import { PlusOutlined } from '@ant-design/icons';
+import { FireOutlined, PlusOutlined, RocketOutlined } from '@ant-design/icons';
 
 function Interface({json, setJson, data, setData, processJson, functions, variables} : any) {
 
-  const { onAddSection, setSelectedSectionId, setSelectedTemplateId } = functions;
+  const { onAddSection, setSelectedSectionId, setSelectedTemplateId, onDeploy } = functions ?? {};
   const { selectedSectionId, selectedTemplateId } = variables;
 
     const { site_id } = useParams();
@@ -115,6 +115,10 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
 
         <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary" icon={<PlusOutlined />} size='large' onClick={onAddSection}>
             New section
+        </Button>
+
+        <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary" icon={<RocketOutlined />} size='large' onClick={onDeploy}>
+            Deploy
         </Button>
 
       

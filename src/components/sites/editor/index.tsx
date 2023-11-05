@@ -8,9 +8,9 @@ import Visualisation from './Visualisation';
 import { useParams } from 'react-router-dom';
 import ChooseTemplateModal from './modals/ChooseTemplateModal';
 
+import ReactDOMServer from 'react-dom/server';
 
 import { v4 as uuidv4 } from 'uuid';
-
 
 const Editor: React.FC = () => {
 
@@ -69,7 +69,11 @@ const Editor: React.FC = () => {
     return data && data.length === 0;
   }
 
-  
+  function onDeploy() {
+    const htmlString = ReactDOMServer.renderToString(visualisationComponent);
+    
+    console.log(htmlString)
+  }
 
   // useEffect(() => {
   //   if (json) processJson(json)
@@ -79,22 +83,24 @@ const Editor: React.FC = () => {
     if (data) processData(data)
   }, [data])
 
+  const visualisationComponent =  <Visualisation 
+  data={data} 
+  functions={{
+    onAddSection,
+    checkIfNoSections,
+    setSelectedSectionId,
+    setSelectedTemplateId
+  }} 
+  // setSelectedTemplateId={setSelectedTemplateId}
+  variables={{
+    selectedSectionId,
+    selectedTemplateId,
+  }} 
+/>
+
   return (
     <Layout hasSider style={{minHeight: '100vh'}}>
-      <Visualisation 
-        data={data} 
-        functions={{
-          onAddSection,
-          checkIfNoSections,
-          setSelectedSectionId,
-          setSelectedTemplateId
-        }} 
-        // setSelectedTemplateId={setSelectedTemplateId}
-        variables={{
-          selectedSectionId,
-          selectedTemplateId,
-        }} 
-      />
+      {visualisationComponent}
       <Interface 
         setJson={setJson} 
         json={json}
@@ -105,6 +111,7 @@ const Editor: React.FC = () => {
           onAddSection,
           setSelectedSectionId,
           setSelectedTemplateId,
+          onDeploy,
         }}
         variables={{
           selectedSectionId,
@@ -115,5 +122,12 @@ const Editor: React.FC = () => {
     </Layout>
   );
 };
+
+function TestComponent() {
+  return <div>
+    <h1> TEST COMPONENT HERE! </h1>
+    <input />
+  </div>
+}
 
 export default Editor;
