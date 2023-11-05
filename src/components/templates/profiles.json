@@ -1,0 +1,210 @@
+{
+    "THero1": {
+        "metadata": {
+            "category": "hero"
+        },
+        "fields": [
+            {
+                "id": "superHeading",
+                "type": "input",
+                "label": "Super-Heading",
+                "subtype": 1
+            },
+            {
+                "id": "heading",
+                "type": "input",
+                "label": "Heading",
+                "subtype": 1
+            },
+            {
+                "id": "subHeading",
+                "type": "textarea",
+                "label": "Sub-Heading",
+                "subtype": 1
+            },
+            {
+                "id": "btnLabel",
+                "type": "input",
+                "label": "Button Label",
+                "subtype": 1
+            },
+            {
+                "id": "bgImage",
+                "type": "input",
+                "label": "Background Image",
+                "subtype": 1
+            }
+        ]
+    },
+    "TContact1": {
+        "metadata": {
+            "category": "contact"
+        },
+        "fields": [
+            {
+                "id": "emailInput",
+                "type": "checkbox",
+                "label": "Ask for email?",
+                "subtype": 1
+            },
+            {
+                "id": "messageInput",
+                "type": "checkbox",
+                "label": "Ask for message?",
+                "subtype": 1
+            },
+            {
+                "id": "heading",
+                "type": "input",
+                "label": "Heading",
+                "subtype": 1
+            },
+            {
+                "id": "subHeading",
+                "type": "textarea",
+                "label": "Sub-Heading",
+                "subtype": 1
+            },
+            {
+                "id": "btnLabel",
+                "type": "input",
+                "label": "Button Label",
+                "subtype": 1
+            }
+        ]
+    },
+    "TContact2": {
+        "metadata": {
+            "category": "contact"
+        },
+        "fields": [
+            {
+                "id": "nameInput",
+                "type": "checkbox",
+                "label": "Ask for name?",
+                "subtype": 1
+            },
+            {
+                "id": "emailInput",
+                "type": "checkbox",
+                "label": "Ask for email?",
+                "subtype": 1
+            },
+            {
+                "id": "messageInput",
+                "type": "checkbox",
+                "label": "Ask for message?",
+                "subtype": 1
+            },
+            {
+                "id": "heading",
+                "type": "input",
+                "label": "Heading",
+                "subtype": 1
+            },
+            {
+                "id": "subHeading",
+                "type": "textarea",
+                "label": "Sub-Heading",
+                "subtype": 1
+            },
+            {
+                "id": "btnLabel",
+                "type": "input",
+                "label": "Button Label",
+                "subtype": 1
+            },
+            {
+                "id": "email",
+                "type": "input",
+                "label": "Email",
+                "subtype": 1
+            },
+            {
+                "id": "phone",
+                "type": "input",
+                "label": "Telephone Number",
+                "subtype": 1
+            },
+            {
+                "id": "addressLine1",
+                "type": "input",
+                "label": "Address Line 1",
+                "subtype": 1
+            },
+            {
+                "id": "addressLine2",
+                "type": "input",
+                "label": "Address Line 2",
+                "subtype": 1
+            }
+        ]
+    },
+    "TContact3": {
+        "metadata": {
+            "category": "contact"
+        },
+        "fields": [
+            {
+                "id": "nameInput",
+                "type": "checkbox",
+                "label": "Ask for name?",
+                "subtype": 1
+            },
+            {
+                "id": "emailInput",
+                "type": "checkbox",
+                "label": "Ask for email?",
+                "subtype": 1
+            },
+            {
+                "id": "messageInput",
+                "type": "checkbox",
+                "label": "Ask for message?",
+                "subtype": 1
+            },
+            {
+                "id": "heading",
+                "type": "input",
+                "label": "Heading",
+                "subtype": 1
+            },
+            {
+                "id": "subHeading",
+                "type": "textarea",
+                "label": "Sub-Heading",
+                "subtype": 1
+            },
+            {
+                "id": "btnLabel",
+                "type": "input",
+                "label": "Button Label",
+                "subtype": 1
+            },
+            {
+                "id": "email",
+                "type": "input",
+                "label": "Email",
+                "subtype": 1
+            },
+            {
+                "id": "addressLine1",
+                "type": "input",
+                "label": "Address Line 1",
+                "subtype": 1
+            },
+            {
+                "id": "addressLine2",
+                "type": "input",
+                "label": "Address Line 2",
+                "subtype": 1
+            },
+            {
+                "id": "socialMedia",
+                "type": "input",
+                "label": "Social Media",
+                "subtype": 1
+            }
+        ]
+    }
+}
