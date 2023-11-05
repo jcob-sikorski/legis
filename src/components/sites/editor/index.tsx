@@ -89,6 +89,9 @@ const Editor: React.FC = () => {
 
 
   async function onDeploy() {
+
+    const pageTitle = `Best Lawyer Page Ever`;
+
     const htmlBodyString = ReactDOMServer.renderToString(visualisationComponent);
     console.log("htmlBodyString: ", htmlBodyString);
 
@@ -96,8 +99,13 @@ const Editor: React.FC = () => {
       <!doctype html>
         <html>
         <head>
-          <meta charset="UTF-8">
+          <meta charset="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+          <!-- customizable page variables -->
+          <title>${pageTitle}</title>
+          
+          <!-- tailwindcss -->
           <script src="https://cdn.tailwindcss.com"></script>
         </head>
         <body>
