@@ -10,6 +10,7 @@ const { Sider } = Layout;
 import PROFILES from '../../templates/profiles.json';
 
 import { EditOutlined, FireOutlined, MinusOutlined, PlusOutlined, RocketOutlined } from '@ant-design/icons';
+import ImageUploadInput from './ImageUploadInput';
 
 function Interface({json, setJson, data, setData, processJson, functions, variables} : any) {
 
@@ -69,7 +70,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       type: FieldType,
       subtype: number,
     }
-    type FieldType = "input" | "textarea" | "checkbox";
+    type FieldType = "input" | "textarea" | "checkbox" | "image";
 
     function switchField(field: JSONProfileField) {
 
@@ -91,6 +92,10 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
             <Radio value="1">Yes</Radio>
             <Radio value="">No</Radio>
           </Radio.Group>
+        </Form.Item>
+        case 'image':
+          return <Form.Item name={id} label={label.toUpperCase()} style={{margin: 0, padding: 0, background: '#ff02'}} >
+          <ImageUploadInput />
         </Form.Item>
       }
 
