@@ -231,12 +231,14 @@ const Editor: React.FC = () => {
           setSelectedSectionId,
           setSelectedTemplateId,
           onDeploy,
-          setIsDevMode
+          setIsDevMode,
+          setIsDeploying,
         }}
         variables={{
           selectedSectionId,
           selectedTemplateId,
           isDevMode,
+          isDeploying,
         }} 
       />
       <ChooseTemplateModal onTemplateSelected={onTemplateSelected} open={isAddingNewSection} setOpen={setIsAddingNewSection} />

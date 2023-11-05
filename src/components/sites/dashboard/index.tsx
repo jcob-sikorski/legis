@@ -64,15 +64,18 @@ export const Dashboard: React.FC = () => {
   }, []);
 
   async function createSite() {
+
+    const newId = new Realm.BSON.ObjectId()
+
     const newSite = {
       user_id: new Realm.BSON.ObjectId(currentUserID),
-      _id: new Realm.BSON.ObjectId(),
-      title: "Your Site Title",
+      _id: newId,
+      title: "Site " + newId,
       subtitle: "Your Site Subtitle",
       description: "Your Site Description",
       deleted: 0,
       image_url: "https://picsum.photos/200/300",
-      site_url: "URL to Your Site",
+      site_url: "https://legisbiz.github.io/" + newId,
     };
   
     try {
@@ -93,13 +96,15 @@ export const Dashboard: React.FC = () => {
       });
   
       console.log("Created GitHub repository:", githubRepoResponse.data);
-      // navigate(`/editor/${newSite._id}`);
+      
   
       setSites((prevSites) => [...prevSites, {
             ...newSite,
             user_id: newSite.user_id.toString(),
             _id: newSite._id.toString(),
           }]);
+
+          editSite(newSite._id.toString());
     } catch (error) {
       console.error("Error creating site:", error);
     }

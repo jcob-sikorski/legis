@@ -41,5 +41,6 @@ export default function SiteCard({ data, onEdit, onClone, onDelete }: any) {
       title={title}
       description={description}
     />
+    <a href={site_url} target='_blank'>{site_url}</a>
   </Card>
 }

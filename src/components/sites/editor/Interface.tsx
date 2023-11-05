@@ -14,8 +14,8 @@ import ImageUploadInput from './ImageUploadInput';
 
 function Interface({json, setJson, data, setData, processJson, functions, variables} : any) {
 
-  const { onAddSection, setSelectedSectionId, setSelectedTemplateId, onDeploy, setIsDevMode } = functions ?? {};
-  const { selectedSectionId, selectedTemplateId, isDevMode } = variables;
+  const { onAddSection, setSelectedSectionId, setSelectedTemplateId, onDeploy, setIsDevMode, setIsDeploying } = functions ?? {};
+  const { selectedSectionId, selectedTemplateId, isDevMode, isDeploying } = variables;
 
     const { site_id } = useParams();
 
@@ -120,7 +120,11 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
             dev mode
             <Switch className='bg-red' checked={isDevMode} onClick={() => setIsDevMode(!isDevMode)} />
         </Space>
-        {isDevMode && <>
+        {isDevMode && !isDeploying && <>
+            <Space>
+              isDeploying
+              <Switch className='bg-red' checked={isDeploying} onClick={() => setIsDeploying(!isDeploying)} />
+            </Space>
             <br /> selectedTemplateId: {selectedTemplateId} <br />
             <br /> 2: {selectedSectionId} <br />
             <TextArea style={{minHeight: 300}} value={json} onChange={(e: any) => setJson(e.target.value)} />

@@ -45,11 +45,15 @@ function Visualisation({
 
     const contentStyle = isDeploying 
     ? {} 
-    : { maxWidth: '1200px', margin: '24px 16px 0', overflow: 'initial' }
+    : { maxWidth: '1200px', margin: '24px 12px 0', overflow: 'initial' }
 
-    return ( <Layout className="site-layout" style={{ marginRight: BAR_WIDTH }}>
+    const layoutStyle = isDeploying
+    ? { marginInline: 'auto' }
+    : { marginRight: BAR_WIDTH }
+
+    return ( <Layout className="site-layout" style={layoutStyle}>
     <Content style={contentStyle}>
-        {isDevMode && <>
+        {(isDevMode && !isDeploying) && <>
             [selectedSectionId]: {selectedSectionId}<br/>
             [selectedTemplateId]: {selectedTemplateId}<br/>
         </>}
@@ -60,10 +64,12 @@ function Visualisation({
             {switchTemplate(s)}
         </div>)}
     </Content>
+    {!isDeploying &&
     <Flex align='center' justify='center' style={{minHeight: hasNoSections ? '360px' : '100px'}}>
         <Title style={{cursor:'pointer'}} onClick={onAddSection}>+ New section</Title>
     </Flex>
-    <Footer style={{ textAlign: 'center' }}>Legis - Footer</Footer>
+    }
+    <Footer style={{ textAlign: 'center' }}>Generated with Legis &middot; 2023</Footer>
   </Layout> );
 }
 
