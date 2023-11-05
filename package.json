@@ -13,6 +13,7 @@
     "@ant-design/icons": "^5.2.6",
     "@vercel/analytics": "^1.1.1",
     "antd": "^5.10.3",
+    "antd-img-crop": "^4.13.0",
     "axios": "^1.6.0",
     "html-to-react": "^1.7.0",
     "mixpanel-browser": "^2.47.0",

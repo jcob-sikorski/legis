@@ -30,7 +30,7 @@
             },
             {
                 "id": "bgImage",
-                "type": "input",
+                "type": "image",
                 "label": "Background Image",
                 "subtype": 1
             }

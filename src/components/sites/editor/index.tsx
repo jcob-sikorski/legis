@@ -37,6 +37,8 @@ const Editor: React.FC = () => {
 
   const [isAddingNewSection, setIsAddingNewSection] = useState<boolean>(false);
 
+  const [isDevMode, setIsDevMode] = useState<boolean>(false);
+
   function processJson(json: string) {
     // If is able to parse json, then parse it and set to data. If not, display error in console, but don't crash app.
     try {
@@ -121,12 +123,14 @@ const Editor: React.FC = () => {
     onAddSection,
     checkIfNoSections,
     setSelectedSectionId,
-    setSelectedTemplateId
+    setSelectedTemplateId,
+    setIsDevMode,
   }} 
   // setSelectedTemplateId={setSelectedTemplateId}
   variables={{
     selectedSectionId,
     selectedTemplateId,
+    isDevMode,
   }} 
 />
 
@@ -144,10 +148,12 @@ const Editor: React.FC = () => {
           setSelectedSectionId,
           setSelectedTemplateId,
           onDeploy,
+          setIsDevMode
         }}
         variables={{
           selectedSectionId,
           selectedTemplateId,
+          isDevMode,
         }} 
       />
       <ChooseTemplateModal onTemplateSelected={onTemplateSelected} open={isAddingNewSection} setOpen={setIsAddingNewSection} />
