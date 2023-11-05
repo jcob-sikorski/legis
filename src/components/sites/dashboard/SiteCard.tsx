@@ -6,16 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { setSite } from '../../../redux/actions';
 
-export default function SiteCard({ data, onClone, onDelete }: any) {
+export default function SiteCard({ data, onEdit, onClone, onDelete }: any) {
 
     const { title, subtitle, description, deleted, image_url, site_url} = data;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    function onEdit() {
-        navigate('/editor')
-    }
 
     function onSettings() {
       dispatch(setSite(data));
