@@ -29,6 +29,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
 
     useEffect(() => {
       const newProfile = selectedTemplateId ? profiles[selectedTemplateId] : {};
+      console.log("selected profile template: ", newProfile);
       setProfile(newProfile);
       setFields(newProfile?.fields ?? []);
     }, [selectedTemplateId])

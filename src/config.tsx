@@ -9,5 +9,7 @@ export const config = {
     projectId: import.meta.env.VITE_REACT_projectId,
     githubUsername: import.meta.env.VITE_REACT_githubUsername,
     githubToken: import.meta.env.VITE_REACT_githubToken,
+    pkUploadcare: import.meta.env.VITE_REACT_pkUploadcare,
+    skUploadcare: import.meta.env.VITE_REACT_skUploadcare
   };
   

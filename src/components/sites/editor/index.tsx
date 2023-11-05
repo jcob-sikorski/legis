@@ -12,12 +12,22 @@ import ReactDOMServer from 'react-dom/server';
 
 import { v4 as uuidv4 } from 'uuid';
 
+import * as Realm from "realm-web";
+import { config } from "../../../config";
+import axios from 'axios';
+
 const Editor: React.FC = () => {
+  const app = new Realm.App({ id: config.appId });
+  const currentUserID = app.currentUser!.id;
+  const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
+  const site_collection = mongodb.db("legis").collection("Site");
+
+  // Set up your GitHub API credentials and repository name
+  const githubUsername = config.githubUsername;
+  const githubToken = config.githubToken;
 
   const { site_id } = useParams();
   console.warn("site_id editor", site_id);
-
-  
 
   const [json, setJson] = useState(DEV_START_JSON);
   const [data, setData] = useState<any[]>([]);
@@ -46,6 +56,12 @@ const Editor: React.FC = () => {
     }
   }
 
+  useEffect(() => {
+    if (data) {
+      console.log("data: ", data);
+    }
+  }, [data])
+
   // shared functions
 
   function onAddSection() {
@@ -69,15 +85,31 @@ const Editor: React.FC = () => {
     return data && data.length === 0;
   }
 
-  function onDeploy() {
-    const htmlString = ReactDOMServer.renderToString(visualisationComponent);
-    
-    console.log(htmlString)
-  }
 
-  // useEffect(() => {
-  //   if (json) processJson(json)
-  // }, [json])
+  async function onDeploy() {
+    const htmlString = ReactDOMServer.renderToString(visualisationComponent);
+    console.log("htmlString: ", htmlString);
+  
+    try {
+      const base64Content = btoa(unescape(encodeURIComponent(htmlString))); // Convert HTML string to base64
+      const response = await axios.put(`https://api.github.com/repos/${githubUsername}/${site_id}/contents/index.html`, {
+        message: 'Initial commit',
+        content: base64Content,
+        branch: 'gh-pages', // Specify the 'gh-pages' branch
+      }, {
+        headers: {
+          Authorization: `token ${githubToken}`,
+        },
+      });
+  
+      console.log("Pushed HTML content to GitHub repository:", response.data);
+  
+      console.log("GitHub Pages deployment triggered.");
+    } catch (error) {
+      console.error("Error pushing content and triggering deployment.");
+      throw error;
+    }
+  }
 
   useEffect(() => {
     if (data) processData(data)

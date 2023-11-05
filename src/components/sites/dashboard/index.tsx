@@ -32,7 +32,7 @@ export const Dashboard: React.FC = () => {
 
   // Set up your GitHub API credentials and repository name
   const githubUsername = config.githubUsername;
-  const githubToken = config.githubToken; // Generate a personal access token in GitHub
+  const githubToken = config.githubToken;
 
   React.useEffect(() => {
     console.log("sites: ", sites);
@@ -93,7 +93,7 @@ export const Dashboard: React.FC = () => {
       });
   
       console.log("Created GitHub repository:", githubRepoResponse.data);
-      navigate(`/editor/${newSite._id}`);
+      // navigate(`/editor/${newSite._id}`);
   
       setSites((prevSites) => [...prevSites, {
             ...newSite,
