@@ -16,6 +16,9 @@ import * as Realm from "realm-web";
 import { config } from "../../../config";
 import axios from 'axios';
 
+// TODO: push the created site to mongodb
+// TODO: update the page every 5 seconds in mongodb
+
 const Editor: React.FC = () => {
   const app = new Realm.App({ id: config.appId });
   const currentUserID = app.currentUser!.id;
@@ -58,12 +61,6 @@ const Editor: React.FC = () => {
         console.warn("Custom Error: JSON Parsing Error!")
     }
   }
-
-  useEffect(() => {
-    if (data) {
-      console.log("data: ", data);
-    }
-  }, [data])
 
   // shared functions
 
@@ -151,9 +148,56 @@ const Editor: React.FC = () => {
     }
   }
 
-  useEffect(() => {
-    if (data) processData(data)
-  }, [data])
+  React.useEffect(() => {
+    console.log("Fetching the site from mongo.");
+    async function getData() {
+      try {
+        // Include a query to find the site by its site_id
+        const result = await site_collection.find({ _id: new Realm.BSON.ObjectId(site_id) });
+  
+        if (result.length > 0 && result[0].hasOwnProperty("bodyTemplate")) {
+            console.log("Found a site with bodyTemplate:", result[0].bodyTemplate);
+            setData(result[0].bodyTemplate);
+          }
+        else {
+          console.log("Site doesn't have the bodyTemplate yet.");
+        }
+      } catch (error) {
+        console.error("Error searching for this site:", error);
+      }
+    }
+  
+    getData();
+  }, []); // Include site_id in the dependency array if it may change
+  
+
+  React.useEffect(() => {
+    console.log("Pushing the site to mongo.");
+    const updateSite = async () => {
+      if (data) {
+        try {
+          const result = await site_collection.updateOne(
+            { _id: new Realm.BSON.ObjectId(site_id) }, // Specify the query to find the site by site_id
+            {
+              $set: { bodyTemplate: data }, // Use $set to update the data field
+            }
+          );
+  
+          console.log("Updated site:", JSON.stringify(result));
+        } catch (error) {
+          console.error("Error updating site:", error);
+        }
+      }
+    };
+  
+    // Set a delay of 5 seconds before updating the site
+    const timeoutId = setTimeout(updateSite, 5000);
+  
+    // Clear the timeout if the component is unmounted or if the data changes
+    return () => clearTimeout(timeoutId);
+  }, [data]);
+  
+  
 
   const visualisationComponent =  <Visualisation 
   data={data} 
