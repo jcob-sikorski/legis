@@ -39,11 +39,12 @@ function App() {
     <AppProvider appId={appId} user={user}>
       <BrowserRouter>
         <Routes>
-          <Route path="/signup" element={<SignUp />} />
           <Route path="/" element={<Dashboard />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/editor" element={<Editor />} />
           <Route path="/site-settings" element={<SiteSettings />} />
+
+          <Route path="/editor/:site_id" element={<Editor />} />
         </Routes>
       </BrowserRouter>
     </AppProvider>

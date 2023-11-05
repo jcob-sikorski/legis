@@ -9,10 +9,14 @@ import Site from '../../../models/Site';
 import Sidebar from '../menu';
 import { config } from "../../../config";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const { Content } = Layout;
 
 export const Dashboard: React.FC = () => {
+  
+  const navigate = useNavigate();
+
   const [sites, setSites] = useState<Site[]>([]);
 
   const {
@@ -89,6 +93,7 @@ export const Dashboard: React.FC = () => {
       });
   
       console.log("Created GitHub repository:", githubRepoResponse.data);
+      navigate(`/editor/${newSite._id}`);
   
       setSites((prevSites) => [...prevSites, {
             ...newSite,
