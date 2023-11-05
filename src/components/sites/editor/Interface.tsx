@@ -9,18 +9,18 @@ const { Sider } = Layout;
 
 import PROFILES from '../../templates/profiles.json';
 
-import { FireOutlined, PlusOutlined, RocketOutlined } from '@ant-design/icons';
+import { EditOutlined, FireOutlined, MinusOutlined, PlusOutlined, RocketOutlined } from '@ant-design/icons';
 
 function Interface({json, setJson, data, setData, processJson, functions, variables} : any) {
 
-  const { onAddSection, setSelectedSectionId, setSelectedTemplateId, onDeploy } = functions ?? {};
-  const { selectedSectionId, selectedTemplateId } = variables;
+  const { onAddSection, setSelectedSectionId, setSelectedTemplateId, onDeploy, setIsDevMode } = functions ?? {};
+  const { selectedSectionId, selectedTemplateId, isDevMode } = variables;
 
     const { site_id } = useParams();
 
     const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
 
-    const [isDevMode, setIsDevMode] = useState<boolean>(false);
+    
 
     // profiles & fields
     const profiles: any = PROFILES;
@@ -42,6 +42,18 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
 
     console.log("selectedTemplateId: ", selectedTemplateId);
     console.log()
+
+    function onRemoveSection() {
+      setData((data ?? []).filter((s: any) => s.section_id !== selectedSectionId))
+      setSelectedSectionId("");
+      setSelectedTemplateId("");
+    }
+
+    function onTemplateChange(template_id: string) {
+      setSelectedTemplateId(template_id);
+      setData((data ?? []).map((s: any) => s.section_id === selectedSectionId ? {...s, template_id} : s))
+    }
+
     // const { fields } = profile;
 
     // "super-heading": 1,
@@ -112,15 +124,34 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
         </>
         }
         
+        <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary" icon={<RocketOutlined />} size='large' onClick={onDeploy}>
+            Deploy
+        </Button>
 
         <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary" icon={<PlusOutlined />} size='large' onClick={onAddSection}>
             New section
         </Button>
 
-        <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary" icon={<RocketOutlined />} size='large' onClick={onDeploy}>
-            Deploy
-        </Button>
-
+        {sectionsCount && <>
+          <Button style={{maxWidth: '190px', fontWeight: 'bold', backgroundColor: '#c00'}} type="primary" icon={<MinusOutlined />} size='large' onClick={onRemoveSection}>
+              Remove section
+          </Button>
+  
+          <Select
+            defaultValue={selectedTemplateId}
+            key={selectedSectionId + '-select'}
+            style={{ width: 120 }}
+            onChange={onTemplateChange}
+            options={[
+              { value: 'THero1', label: 'Hero 1' },
+              { value: 'TContact1', label: 'Contact 1' },
+              { value: 'TContact2', label: 'Contact 2' },
+              { value: 'TContact3', label: 'Contact 3' },
+            ]}
+          />
+        </>
+        }
+        
       
       {sectionsCount > 0 && data.filter((d: any) => d.section_id === selectedSectionId).map(() => <Form
           onValuesChange={handleFormChange}
