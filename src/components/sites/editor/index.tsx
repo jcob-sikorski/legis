@@ -157,7 +157,7 @@ const Editor: React.FC = () => {
   }, []); // Include site_id in the dependency array if it may change
   
 
-  React.useEffect(() => { // TODO make sure you won't create a loop by fethcing the data and updating the data
+  React.useEffect(() => {
     console.log("Pushing the site to mongo.");
     const updateSite = async () => {
       if (data) {
@@ -176,8 +176,13 @@ const Editor: React.FC = () => {
       }
     };
   
-    updateSite();
+    // Set a delay of 5 seconds before updating the site
+    const timeoutId = setTimeout(updateSite, 5000);
+  
+    // Clear the timeout if the component is unmounted or if the data changes
+    return () => clearTimeout(timeoutId);
   }, [data]);
+  
   
 
   const visualisationComponent =  <Visualisation 
