@@ -1,4 +1,4 @@
-import { Button, Cascader, Checkbox, DatePicker, Flex, Form, Input, InputNumber, Layout, Radio, Select, Space, Switch, TreeSelect } from 'antd';
+import { Button, Cascader, Checkbox, DatePicker, Flex, Form, Input, InputNumber, Layout, Radio, Select, Space, Switch, TreeSelect, Typography } from 'antd';
 import Title from 'antd/es/typography/Title';
 import TextArea from 'antd/es/input/TextArea';
 import { BAR_WIDTH } from './const';
@@ -18,10 +18,6 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
   const { selectedSectionId, selectedTemplateId, isDevMode, isDeploying } = variables;
 
     const { site_id } = useParams();
-
-    const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
-
-    
 
     // profiles & fields
     const profiles: any = PROFILES;
@@ -78,24 +74,35 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       let type: FieldType = field.type;
       let label: string = field.label;
       let id: string = field.id;
+
+      const labelComponent = <Typography.Title level={5} >
+        {label.toUpperCase()}
+        </Typography.Title>;
+
+      const itemStyle = {margin: '0', padding: 0,}
+
       switch(type) {
         case 'input':
-          return <Form.Item name={id} label={label.toUpperCase()} style={{margin: 0, padding: 0, background: '#0ff2'}}>
+          return <Form.Item name={id} style={itemStyle}>
+          {labelComponent}
           <Input />
         </Form.Item>;
         case 'textarea': 
-          return <Form.Item name={id} label={label.toUpperCase()} style={{margin: 0, padding: 0, background: '#f0f2'}}>
+          return <Form.Item name={id} style={itemStyle}>
+          {labelComponent}
           <TextArea rows={3} />
         </Form.Item>
         case 'checkbox':
-          return <Form.Item name={id} label={label.toUpperCase()} style={{margin: 0, padding: 0, background: '#ff02'}} >
+          return <Form.Item name={id} style={itemStyle}>
+          {labelComponent}
           <Radio.Group>
             <Radio value="1">Yes</Radio>
             <Radio value="">No</Radio>
           </Radio.Group>
         </Form.Item>
         case 'image':
-          return <Form.Item name={id} label={label.toUpperCase()} style={{margin: 0, padding: 0, background: '#ff02'}} >
+          return <Form.Item name={id} style={itemStyle} >
+          {labelComponent}
           <ImageUploadInput />
         </Form.Item>
       }
@@ -168,7 +175,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
           key={selectedSectionId + '-form'}
           layout="vertical"
           initialValues={data.filter((d: any) => d.section_id === selectedSectionId)[0] ?? {}}
-          size={componentSize as SizeType}
+          size='large'
           style={{ maxWidth: 600, padding: 10 }}
         >
           {/* {JSON.stringify(fields)} */}
