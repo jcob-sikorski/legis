@@ -11,7 +11,7 @@ const OnBoarding: React.FC = () => {
   // const { site_id } = useParams();
   
   return (
-    <Layout hasSider style={{minHeight: '100vh'}}>
+    <Layout>
       {/* <VisualGuide/> */}
       <Survey/>
     </Layout>
