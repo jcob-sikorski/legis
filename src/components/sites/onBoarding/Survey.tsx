@@ -2,6 +2,8 @@ import React, { useState, ReactNode } from 'react';
 import { Layout, Typography, Form, Input, Select, Button, Checkbox, Radio } from 'antd';
 import { useSpring, animated } from '@react-spring/web';
 
+import './Survey.css';
+
 const { Title } = Typography;
 const { Option } = Select;
 
@@ -72,14 +74,6 @@ function Survey() {
           )}
           {page === 1 && (
             <AnimatedPage>
-              <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>What is your main practice area?</div>
-                <Select placeholder="Select your main practice area">
-                  <Option value="Banking and Debt finance Law">Banking and Debt finance Law</Option>
-                </Select>
-            </AnimatedPage>
-          )}
-          {page === 2 && (
-            <AnimatedPage>
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>What is your main practice area? (e.g., Family Law)</div>
               <Select placeholder="Select your main practice area">
                 <Option value="Banking and Debt finance Law">Banking and Debt finance Law</Option>
@@ -117,7 +111,7 @@ function Survey() {
               </Select>
             </AnimatedPage>
           )}
-          {page === 3 && (
+          {page === 2 && (
             <AnimatedPage>
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>Write a one-sentence description of your law firm</div>
               <div style={{ borderBottom: "2px solid black" }}>
@@ -133,7 +127,7 @@ function Survey() {
               </div>
             </AnimatedPage>
           )}
-          {page === 4 && (
+          {page === 3 && (
             <AnimatedPage>
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>What smaller practice areas do you specialize in? (E.g., Divorce settlement, custody claims, drafting wills, etc)</div>
               <div style={{ borderBottom: "2px solid black" }}>
@@ -149,7 +143,7 @@ function Survey() {
               </div>
             </AnimatedPage>
           )}
-          {page === 5 && (
+          {page === 4 && (
             <AnimatedPage>
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>How does your law firm stand out?</div>
               <Checkbox.Group>
@@ -168,7 +162,7 @@ function Survey() {
               </Checkbox.Group>
             </AnimatedPage>
           )}
-          {page === 6 && (
+          {page === 5 && (
             <AnimatedPage>
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>Which of these statements best represents your law firm?</div>
               <Radio.Group>
@@ -187,7 +181,7 @@ function Survey() {
               </Radio.Group>
             </AnimatedPage>
           )}
-          {page === 7 && (
+          {page === 6 && (
             <AnimatedPage>
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>What values are most important at your law firm?</div>
               <Checkbox.Group>
@@ -209,7 +203,7 @@ function Survey() {
               </Checkbox.Group>
             </AnimatedPage>
           )}
-          {page === 8 && (
+          {page === 7 && (
             <AnimatedPage>
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>Name your lawyers and write a one-sentence description about your lawyer.</div>
               <div style={{ borderBottom: "2px solid black" }}>
@@ -225,7 +219,7 @@ function Survey() {
               </div>
             </AnimatedPage>
           )}
-          {page === 9 && (
+          {page === 8 && (
             <AnimatedPage>
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>Write 3 good reviews given by your clients. Separate each review by a comma.</div>
               <div style={{ borderBottom: "2px solid black" }}>
@@ -241,22 +235,15 @@ function Survey() {
               </div>
             </AnimatedPage>
           )}
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
-          {page !== 9 && (
+        <div style={{ display: 'flex', flexDirection: 'row', position: 'absolute', bottom: 0, right: 0 }}>
+          {page !== 8 && (
             <Button
               type="primary"
               onClick={nextPage}
+              className="custom-button"
               style={{
-                backgroundColor: 'black',
                 width: 100,
-                height: 50,
-                fontFamily: 'revert-layer',
-                fontWeight: 'bolder',
-                fontSize: 20,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: 10
+                height: 50
               }}
             >
               Next
@@ -266,17 +253,10 @@ function Survey() {
             <Button
               type="primary"
               onClick={prevPage}
+              className="custom-button"
               style={{
-                backgroundColor: 'black',
                 width: 100,
-                height: 50,
-                fontFamily: 'revert-layer',
-                fontWeight: 'bolder',
-                fontSize: 20,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: 10
+                height: 50
               }}
             >
               Previous
