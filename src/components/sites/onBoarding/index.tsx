@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 
 // Window Components
 // import VisualGuide from './VisualGuide';
-import Questions from './Questions';
+import Survey from './Survey';
 
 const OnBoarding: React.FC = () => {
   // const { site_id } = useParams();
@@ -13,7 +13,7 @@ const OnBoarding: React.FC = () => {
   return (
     <Layout hasSider style={{minHeight: '100vh'}}>
       {/* <VisualGuide/> */}
-      <Questions/>
+      <Survey/>
     </Layout>
   )
 };
