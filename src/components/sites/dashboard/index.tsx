@@ -81,12 +81,14 @@ export const Dashboard: React.FC = () => {
     try {
       const result = await site_collection.insertOne(newSite);
       console.log("Created site:", JSON.stringify(result));
-  
-      const repositoryName = newSite._id;
+
+      const site_id: string = newSite._id.toString();
+
+      navigate(`/onboarding/${site_id}`);
   
       // Create a new GitHub repository
       const githubRepoResponse = await axios.post(`https://api.github.com/user/repos`, {
-        name: repositoryName,
+        name: site_id,
         private: false, // Set to true if you want a private repository
       }, {
         auth: {
@@ -96,15 +98,14 @@ export const Dashboard: React.FC = () => {
       });
   
       console.log("Created GitHub repository:", githubRepoResponse.data);
-      
   
       setSites((prevSites) => [...prevSites, {
             ...newSite,
             user_id: newSite.user_id.toString(),
-            _id: newSite._id.toString(),
+            _id: site_id,
           }]);
 
-          editSite(newSite._id.toString());
+          editSite(site_id);
     } catch (error) {
       console.error("Error creating site:", error);
     }

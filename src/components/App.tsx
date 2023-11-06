@@ -8,6 +8,7 @@ import { inject } from '@vercel/analytics';
 import Dashboard from "./sites/dashboard";
 import Editor from "./sites/editor";
 import SiteSettings from "./sites/siteSettings";
+import OnBoarding from "./sites/onBoarding";
 import { useState, useEffect } from "react";
 import Html from "./sites/html";
 
@@ -44,9 +45,8 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/site-settings" element={<SiteSettings />} />
-
           <Route path="/editor/:site_id" element={<Editor />} />
-
+          <Route path="/onboarding" element={<OnBoarding />} />
           <Route path="/html" element={<Html />} />
         </Routes>
       </BrowserRouter>

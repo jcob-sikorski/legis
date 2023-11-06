@@ -16,9 +16,6 @@ import * as Realm from "realm-web";
 import { config } from "../../../config";
 import axios from 'axios';
 
-// TODO: push the created site to mongodb
-// TODO: update the page every 5 seconds in mongodb
-
 const Editor: React.FC = () => {
   const app = new Realm.App({ id: config.appId });
   const currentUserID = app.currentUser!.id;
