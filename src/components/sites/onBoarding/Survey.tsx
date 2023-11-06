@@ -75,40 +75,54 @@ function Survey() {
           {page === 1 && (
             <AnimatedPage>
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>What is your main practice area? (e.g., Family Law)</div>
-              <Select placeholder="Select your main practice area">
-                <Option value="Banking and Debt finance Law">Banking and Debt finance Law</Option>
-                <Option value="Charity Law">Charity Law</Option>
-                <Option value="Civil litigation dispute resolution law">
-                  Civil litigation dispute resolution law
-                </Option>
-                <Option value="Commercial law">Commercial law</Option>
-                <Option value="Arbitration">Arbitration</Option>
-                <Option value="Aviation Law">Aviation Law</Option>
-                <Option value="Construction Law">Construction Law</Option>
-                <Option value="Consumer Law">Consumer Law</Option>
-                <Option value="Corporate Law">Corporate Law</Option>
-                <Option value="Criminal Law">Criminal Law</Option>
-                <Option value="Employment Law">Employment Law</Option>
-                <Option value="Environmental Law">Environmental Law</Option>
-                <Option value="Family Law">Family Law</Option>
-                <Option value="Real-estate law">Real-estate law</Option>
-                <Option value="Human Rights Law">Human Rights Law</Option>
-                <Option value="Immigration Law">Immigration Law</Option>
-                <Option value="Energy & Infrastructure Law">Energy & Infrastructure Law</Option>
-                <Option value="Insurance Law">Insurance Law</Option>
-                <Option value="Intellectual Property Law">Intellectual Property Law</Option>
-                <Option value="Personal Injury Law">Personal Injury Law</Option>
-                <Option value="Property Law">Property Law</Option>
-                <Option value="Public company & equity finance law">
-                  Public company & equity finance law
-                </Option>
-                <Option value="Restructuring & insolvency law">Restructuring & insolvency law</Option>
-                <Option value="Competition Law">Competition Law</Option>
-                <Option value="Maritime Law">Maritime Law</Option>
-                <Option value="Sports Law">Sports Law</Option>
-                <Option value="Tax law">Tax law</Option>
-                <Option value="Gaming Law">Gaming Law</Option>
-              </Select>
+              <div className="custom-select">
+                <Select 
+                  placeholder="Select your main practice area" 
+                  style={{
+                    width: '100%', 
+                    marginTop: '10px',
+                    borderRadius: '4px',
+                    borderColor: '#1890ff',
+                  }}
+                  dropdownStyle={{
+                    borderRadius: '4px',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'
+                  }}
+                >
+                  <Option value="Banking and Debt finance Law">Banking and Debt finance Law</Option>
+                  <Option value="Charity Law">Charity Law</Option>
+                  <Option value="Civil litigation dispute resolution law">
+                    Civil litigation dispute resolution law
+                  </Option>
+                  <Option value="Commercial law">Commercial law</Option>
+                  <Option value="Arbitration">Arbitration</Option>
+                  <Option value="Aviation Law">Aviation Law</Option>
+                  <Option value="Construction Law">Construction Law</Option>
+                  <Option value="Consumer Law">Consumer Law</Option>
+                  <Option value="Corporate Law">Corporate Law</Option>
+                  <Option value="Criminal Law">Criminal Law</Option>
+                  <Option value="Employment Law">Employment Law</Option>
+                  <Option value="Environmental Law">Environmental Law</Option>
+                  <Option value="Family Law">Family Law</Option>
+                  <Option value="Real-estate law">Real-estate law</Option>
+                  <Option value="Human Rights Law">Human Rights Law</Option>
+                  <Option value="Immigration Law">Immigration Law</Option>
+                  <Option value="Energy & Infrastructure Law">Energy & Infrastructure Law</Option>
+                  <Option value="Insurance Law">Insurance Law</Option>
+                  <Option value="Intellectual Property Law">Intellectual Property Law</Option>
+                  <Option value="Personal Injury Law">Personal Injury Law</Option>
+                  <Option value="Property Law">Property Law</Option>
+                  <Option value="Public company & equity finance law">
+                    Public company & equity finance law
+                  </Option>
+                  <Option value="Restructuring & insolvency law">Restructuring & insolvency law</Option>
+                  <Option value="Competition Law">Competition Law</Option>
+                  <Option value="Maritime Law">Maritime Law</Option>
+                  <Option value="Sports Law">Sports Law</Option>
+                  <Option value="Tax law">Tax law</Option>
+                  <Option value="Gaming Law">Gaming Law</Option>
+                </Select>
+              </div>
             </AnimatedPage>
           )}
           {page === 2 && (
@@ -146,36 +160,38 @@ function Survey() {
           {page === 4 && (
             <AnimatedPage>
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>How does your law firm stand out?</div>
-              <Checkbox.Group>
-                <Checkbox value="Work ethic - We work harder than anyone else.">
-                  Work ethic - We work harder than anyone else.
-                </Checkbox>
-                <Checkbox value="Clarity-focused: We are problem solvers at heart.">
-                  Clarity-focused: We are problem solvers at heart.
-                </Checkbox>
-                <Checkbox value="Domain experts - We are experts at what we do.">
-                  Domain experts - We are experts at what we do.
-                </Checkbox>
-                <Checkbox value="Accessible - We make sure quality legal help reaches as many people as possible.">
-                  Accessible - We make sure quality legal help reaches as many people as possible.
-                </Checkbox>
-              </Checkbox.Group>
+              <div className="custom-checkbox">
+                <Checkbox.Group>
+                  <Checkbox value="Work ethic - We work harder than anyone else." style={{ display: 'flex', alignItems: 'center', fontSize: 20 }}>
+                    Work ethic - We work harder than anyone else.
+                  </Checkbox>
+                  <Checkbox value="Clarity-focused: We are problem solvers at heart." style={{ display: 'flex', alignItems: 'center', fontSize: 20 }}>
+                    Clarity-focused: We are problem solvers at heart.
+                  </Checkbox>
+                  <Checkbox value="Domain experts - We are experts at what we do." style={{ display: 'flex', alignItems: 'center', fontSize: 20 }}>
+                    Domain experts - We are experts at what we do.
+                  </Checkbox>
+                  <Checkbox value="Accessible - We make sure quality legal help reaches as many people as possible." style={{ display: 'flex', alignItems: 'center', fontSize: 20 }}>
+                    Accessible - We make sure quality legal help reaches as many people as possible.
+                  </Checkbox>
+                </Checkbox.Group>
+              </div>
             </AnimatedPage>
           )}
           {page === 5 && (
             <AnimatedPage>
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>Which of these statements best represents your law firm?</div>
-              <Radio.Group>
-                <Radio value="Gritty - We aren’t afraid to get our hands dirty">
+              <Radio.Group className="custom-radio">
+                <Radio value="Gritty - We aren’t afraid to get our hands dirty" style={{ display: 'flex', alignItems: 'center', fontSize: 20, marginTop: 20, marginBottom: 20 }}>
                   Gritty - We aren’t afraid to get our hands dirty
                 </Radio>
-                <Radio value="Passionate - We are going to do everything to make sure our client is happy">
+                <Radio value="Passionate - We are going to do everything to make sure our client is happy" style={{ display: 'flex', alignItems: 'center', fontSize: 20, marginTop: 20, marginBottom: 20 }}>
                   Passionate - We are going to do everything to make sure our client is happy
                 </Radio>
-                <Radio value="Compassionate & Strong - we look after our clients always, especially when things get rough">
+                <Radio value="Compassionate & Strong - we look after our clients always, especially when things get rough" style={{ display: 'flex', alignItems: 'center', fontSize: 20, marginTop: 20, marginBottom: 20 }}>
                   Compassionate & Strong - we look after our clients always, especially when things get rough
                 </Radio>
-                <Radio value="Fearless - We aren’t afraid to take on big challenges. We take them head on.">
+                <Radio value="Fearless - We aren’t afraid to take on big challenges. We take them head on." style={{ display: 'flex', alignItems: 'center', fontSize: 20, marginTop: 20, marginBottom: 20 }}>
                   Fearless - We aren’t afraid to take on big challenges. We take them head on.
                 </Radio>
               </Radio.Group>
@@ -184,23 +200,25 @@ function Survey() {
           {page === 6 && (
             <AnimatedPage>
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>What values are most important at your law firm?</div>
-              <Checkbox.Group>
-                <Checkbox value="Reliability">
-                  Reliability
-                </Checkbox>
-                <Checkbox value="Loyalty & Trust">
-                  Loyalty & Trust
-                </Checkbox>
-                <Checkbox value="Integrity">
-                  Integrity
-                </Checkbox>
-                <Checkbox value="Excellence">
-                  Excellence
-                </Checkbox>
-                <Checkbox value="Collaboration">
-                  Collaboration
-                </Checkbox>
-              </Checkbox.Group>
+              <div className="custom-checkbox">
+                <Checkbox.Group>
+                  <Checkbox value="Reliability" style={{ display: 'flex', alignItems: 'center', fontSize: 20 }}>
+                    Reliability
+                  </Checkbox>
+                  <Checkbox value="Loyalty & Trust" style={{ display: 'flex', alignItems: 'center', fontSize: 20 }}>
+                    Loyalty & Trust
+                  </Checkbox>
+                  <Checkbox value="Integrity" style={{ display: 'flex', alignItems: 'center', fontSize: 20 }}>
+                    Integrity
+                  </Checkbox>
+                  <Checkbox value="Excellence" style={{ display: 'flex', alignItems: 'center', fontSize: 20 }}>
+                    Excellence
+                  </Checkbox>
+                  <Checkbox value="Collaboration" style={{ display: 'flex', alignItems: 'center', fontSize: 20 }}>
+                    Collaboration
+                  </Checkbox>
+                </Checkbox.Group>
+              </div>
             </AnimatedPage>
           )}
           {page === 7 && (
@@ -236,19 +254,6 @@ function Survey() {
             </AnimatedPage>
           )}
         <div style={{ display: 'flex', flexDirection: 'row', position: 'absolute', bottom: 0, right: 0 }}>
-          {page !== 8 && (
-            <Button
-              type="primary"
-              onClick={nextPage}
-              className="custom-button"
-              style={{
-                width: 100,
-                height: 50
-              }}
-            >
-              Next
-            </Button>
-          )}
           {page !== 0 && (
             <Button
               type="primary"
@@ -260,6 +265,19 @@ function Survey() {
               }}
             >
               Previous
+            </Button>
+          )}
+          {page !== 8 && (
+            <Button
+              type="primary"
+              onClick={nextPage}
+              className="custom-button"
+              style={{
+                width: 100,
+                height: 50
+              }}
+            >
+              Next
             </Button>
           )}
         </div>

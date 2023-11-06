@@ -16,3 +16,33 @@
   color: black !important;
   border-color: black !important;
 }
+
+.custom-select .ant-select-focused .ant-select-selector,
+.custom-select .ant-select-open .ant-select-selector {
+  border-color: black !important;
+  box-shadow: none !important;
+}
+
+.custom-checkbox .ant-checkbox-inner {
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+  align-self: center;
+  align-items: center;
+  border-color: black;
+  border-radius: 4px;
+}
+
+.custom-checkbox .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: black !important;
+  border-color: black !important;
+}
+
+.custom-radio .ant-radio-inner {
+  border-color: black;
+}
+
+.custom-radio .ant-radio-checked .ant-radio-inner {
+  background-color: black !important;
+  border-color: black !important;
+}
