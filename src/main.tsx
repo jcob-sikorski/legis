@@ -19,7 +19,7 @@ const store = configureStore({
 import { ConfigProvider, Typography } from "antd";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <ReduxProvider store={store}>
       <ConfigProvider
         theme={{
@@ -31,5 +31,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <App />
       </ConfigProvider>
     </ReduxProvider>
-  </React.StrictMode>,
+  // </React.StrictMode>,
 )

@@ -46,7 +46,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/site-settings" element={<SiteSettings />} />
           <Route path="/editor/:site_id" element={<Editor />} />
-          <Route path="/onboarding" element={<OnBoarding />} />
+          <Route path="/onboarding/:site_id" element={<OnBoarding />} />
           <Route path="/html" element={<Html />} />
         </Routes>
       </BrowserRouter>
