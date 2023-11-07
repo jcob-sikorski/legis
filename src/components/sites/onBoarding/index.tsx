@@ -47,7 +47,7 @@ function Survey() {
       try {
         // const result = await onboarding_collection.deleteMany({});
         // Include a query to find the site by its site_id
-        const result = await onboarding_collection.find({ _id: new Realm.BSON.ObjectId(site_id) });
+        const result = await onboarding_collection.find({ site_id: new Realm.BSON.ObjectId(site_id) });
         // const result: any = [];
         console.log(result);
   
@@ -55,7 +55,17 @@ function Survey() {
         if (!result || result.length === 0) {
           createData();
         } else {
-          // TODO set the onBoarding data to the state hook
+          const documents = result.map((doc: any) => {
+            // Convert user_id and _id to strings
+            const modifiedDoc = {
+              ...doc,
+              site_id: doc.site_id.toString(),
+              _id: doc._id.toString(),
+            };
+            return modifiedDoc;
+          });
+          const mergedDocuments = documents.reduce((acc, doc) => ({ ...acc, ...doc }), {});
+          setFieldValues(prevState => ({...prevState, ...mergedDocuments}));
         }
       } catch (error) {
         console.error("Error searching for this site:", error);
@@ -163,7 +173,7 @@ function Survey() {
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>What is the name of your law firm?</div>
               <div style={{ borderBottom: "2px solid black" }}>
                 <Input
-                  defaultValue={fieldValues?.LawFirmName || ''}
+                  value={fieldValues?.LawFirmName}
                   onChange={(e) => updateField(fields[page] as keyof OnBoarding, e.target.value)}
                   style={{
                     backgroundColor: "transparent",
@@ -182,7 +192,7 @@ function Survey() {
               <div className="custom-select">
                 <Select 
                   placeholder="Select your main practice area" 
-                  defaultValue={fieldValues?.MainPracticeArea ? fieldValues?.MainPracticeArea.toString() : ''}
+                  value={fieldValues?.MainPracticeArea ? fieldValues?.MainPracticeArea.toString() : ''}
                   onChange={(value: string) => updateField(fields[page] as keyof OnBoarding, value)}
                   style={{
                     width: '100%', 
@@ -236,7 +246,7 @@ function Survey() {
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>Write a one-sentence description of your law firm</div>
               <div style={{ borderBottom: "2px solid black" }}>
                 <Input
-                  defaultValue={fieldValues?.OneSentenceDescription}
+                  value={fieldValues?.OneSentenceDescription}
                   onChange={(e) => updateField(fields[page] as keyof OnBoarding, e.target.value)}
                   style={{
                     backgroundColor: "transparent",
@@ -254,7 +264,7 @@ function Survey() {
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>What smaller practice areas do you specialize in? (E.g., Divorce settlement, custody claims, drafting wills, etc)</div>
               <div style={{ borderBottom: "2px solid black" }}>
                 <Input
-                  defaultValue={fieldValues?.SpecializedPracticeAreas}
+                  value={fieldValues?.SpecializedPracticeAreas}
                   onChange={(e) => updateField(fields[page] as keyof OnBoarding, e.target.value)}
                   style={{
                     backgroundColor: "transparent",
@@ -272,7 +282,7 @@ function Survey() {
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>How does your law firm stand out?</div>
               <div className="custom-checkbox">
                 <Checkbox.Group 
-                  defaultValue={Array.isArray(fieldValues?.StandOutFactor) ? fieldValues?.StandOutFactor : [fieldValues?.StandOutFactor]}
+                  value={Array.isArray(fieldValues?.StandOutFactor) ? fieldValues?.StandOutFactor : [fieldValues?.StandOutFactor]}
                   onChange={(checkedValues) => updateField(fields[page] as keyof OnBoarding, checkedValues as string[])}
                 >
                   <Checkbox value="Work ethic - We work harder than anyone else." style={{ display: 'flex', alignItems: 'center', fontSize: 20 }}>
@@ -296,7 +306,7 @@ function Survey() {
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>Which of these statements best represents your law firm?</div>
               <Radio.Group 
                 className="custom-radio" 
-                defaultValue={fieldValues?.FirmRepresentation}
+                value={fieldValues?.FirmRepresentation}
                 onChange={(e) => updateField(fields[page] as keyof OnBoarding, e.target.value)}
               >
                 <Radio value="Gritty - We aren’t afraid to get our hands dirty" style={{ display: 'flex', alignItems: 'center', fontSize: 20, marginTop: 20, marginBottom: 20 }}>
@@ -319,7 +329,7 @@ function Survey() {
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>What values are most important at your law firm?</div>
               <div className="custom-checkbox">
                 <Checkbox.Group 
-                  defaultValue={Array.isArray(fieldValues?.StandOutFactor) ? fieldValues?.StandOutFactor : [fieldValues?.StandOutFactor]}
+                  value={Array.isArray(fieldValues?.ImportantValues) ? fieldValues?.ImportantValues : [fieldValues?.ImportantValues]}
                   onChange={(checkedValues) => updateField(fields[page] as keyof OnBoarding, checkedValues as string[])}
                 >
                   <Checkbox value="Reliability" style={{ display: 'flex', alignItems: 'center', fontSize: 20 }}>
@@ -346,7 +356,7 @@ function Survey() {
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>Tell us the strength of your firm, what are your experience levels and what you bring to the table.</div>
               <div style={{ borderBottom: "2px solid black" }}>
                 <Input
-                  defaultValue={fieldValues?.FirmStrengths}
+                  value={fieldValues?.FirmStrengths}
                   onChange={(e) => updateField(fields[page] as keyof OnBoarding, e.target.value)}
                   style={{
                     backgroundColor: "transparent",
@@ -364,7 +374,7 @@ function Survey() {
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>Name your lawyers and write a one-sentence description about your lawyer.</div>
               <div style={{ borderBottom: "2px solid black" }}>
                 <Input
-                  defaultValue={fieldValues?.LawyerDetails}
+                  value={fieldValues?.LawyerDetails}
                   onChange={(e) => updateField(fields[page] as keyof OnBoarding, e.target.value)}
                   style={{
                     backgroundColor: "transparent",
@@ -382,7 +392,7 @@ function Survey() {
               <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>Write 3 good reviews given by your clients. Separate each review by a comma.</div>
               <div style={{ borderBottom: "2px solid black" }}>
                 <Input
-                  defaultValue={fieldValues?.ClientReviews}
+                  value={fieldValues?.ClientReviews}
                   onChange={(e) => updateField(fields[page] as keyof OnBoarding, e.target.value)}
                   style={{
                     backgroundColor: "transparent",
