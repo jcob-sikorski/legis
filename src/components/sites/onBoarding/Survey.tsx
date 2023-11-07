@@ -47,7 +47,7 @@ function Survey() {
   return (
     <Layout style={{ display: 'flex', flexDirection: 'row', overflow: 'hidden' }}>
       <div style={{ backgroundColor: '#262627' }}>
-        <img src="https://ucarecdn.com/a04c4d65-1938-45af-8370-94a7afd7712c/tempImageVBrM6v.heic" alt="Your description" style={{ width: '100%', maxHeight: '100vh' }} />
+        <img src="https://ucarecdn.com/194ed0d0-5921-4684-8ae1-02bfd645d41c/_d65e891a18e343b9bccb0adb2a065aca.jpeg" alt="Your description" style={{ width: '100%', maxHeight: '100vh' }} />
       </div>
       <div style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
         <Form
