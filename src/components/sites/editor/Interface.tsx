@@ -11,6 +11,7 @@ import PROFILES from '../../templates/profiles.json';
 
 import { EditOutlined, FireOutlined, MinusOutlined, PlusOutlined, RocketOutlined } from '@ant-design/icons';
 import ImageUploadInput from './ImageUploadInput';
+import { FieldType, JSONProfileField } from '../../../models';
 
 function Interface({json, setJson, data, setData, processJson, functions, variables} : any) {
 
@@ -61,13 +62,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
     // "bg-image": 1
 
 
-    interface JSONProfileField {
-      id: string,
-      label: string,
-      type: FieldType,
-      subtype: number,
-    }
-    type FieldType = "input" | "textarea" | "checkbox" | "image";
+    
 
     function switchField(field: JSONProfileField) {
 

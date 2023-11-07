@@ -21,6 +21,7 @@ import Sider from 'antd/es/layout/Sider';
 import { Content, Header } from 'antd/es/layout/layout';
 import { RocketOutlined } from '@ant-design/icons';
 import Sections from './Sections';
+import { getPromptForGeneration } from '../../../utils';
 
 // TODO: push the created site to mongodb
 // TODO: update the page every 5 seconds in mongodb
@@ -87,7 +88,8 @@ const Editor: React.FC = () => {
     ]);
     setSelectedSectionId(section_id);
     setSelectedTemplateId(template_id);
-    scrollToElement(section_id);
+    dummyRef.current.scrollIntoView({ block: "start", behavior: 'smooth' });
+    // scrollToElement(section_id);
   }
 
   function checkIfNoSections() {
@@ -96,19 +98,28 @@ const Editor: React.FC = () => {
 
   function scrollToElement(id: string) {
     // const visualisationContainer: any = document.getElementById('visualisation-container');
-    // const element: any = document.getElementById('editor-dummy');
     // element.scrollTo({
-    //   top: 1000,
-    //   behavior: "smooth"
-    //  });
-    // const yOffset = -10; 
-    // const y = element.getBoundingClientRect().top + visualisationContainer.pageYOffset  + yOffset;
-    // if (element) visualisationContainer.scrollTo({top: y, behavior: 'smooth'});
-    // if (element) element.scrollIntoView({block: "end", behavior: 'smooth'});
-    dummyRef.current.scrollIntoView({ block: "start", behavior: 'smooth' });
+      //   top: 1000,
+      //   behavior: "smooth"
+      //  });
+      // const yOffset = -10; 
+      // const y = element.getBoundingClientRect().top + visualisationContainer.pageYOffset  + yOffset;
+      // if (element) visualisationContainer.scrollTo({top: y, behavior: 'smooth'});
+      const element: any = document.getElementById(id);
+    if (element) element.scrollIntoView({block: "end", behavior: 'smooth'});
+    // dummyRef.current.scrollIntoView({ block: "start", behavior: 'smooth' });
     // console.log("el: ", element)
    }
   
+   function onTestPrompt() {
+    // selected during onboarding
+    const onboardingData: any = {
+      templateIds: ["THero1", "TContact3", "TContact2"],
+      lawyerField: 'Real Estate'
+    }
+    getPromptForGeneration(onboardingData);
+   }
+
   useEffect(() => {
     if (isDeploying) {
       deploy();
@@ -222,9 +233,12 @@ const Editor: React.FC = () => {
   }, [data]);
   
   const sectionsComponent = <Sections 
-    data={data}
+    variables={{
+      data,
+    }}
     functions={{
       onAddSection,
+      scrollToElement,
     }}
   />
 
@@ -285,7 +299,10 @@ const Editor: React.FC = () => {
             </Flex>
           </Col>
           <Col span={6}>
-            <Flex justify='flex-end'>
+            <Flex justify='flex-end' gap={4}>
+              <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary"  onClick={onTestPrompt}>
+                Prompt
+              </Button>
               <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary" icon={<RocketOutlined />}  onClick={onDeploy}>
                 Deploy
               </Button>
