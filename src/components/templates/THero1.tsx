@@ -2,9 +2,9 @@
 function THero1({data} : any) {
     return ( <section className="text-gray-600 body-font">
     <div
-    className="relative overflow-hidden bg-cover bg-no-repeat bg-[50%] h-[500px] bg-[url('https://tecdn.b-cdn.net/img/new/standard/city/078.jpg')]">
+    className="relative overflow-hidden bg-cover bg-no-repeat bg-[50%] h-[500px] bg-[#28354f]">
     <div
-      className="absolute top-0 right-0 bottom-0 left-0 h-full w-full overflow-hidden bg-fixed bg-[hsla(0,0%,0%,0.75)]">
+      className="absolute top-0 right-0 bottom-0 left-0 h-full w-full overflow-hidden bg-fixed">
       <div className="flex h-full items-start mt-24 justify-start">
         <div className="px-6 text-start text-white md:px-12">
             <h3 className="text-lg mb-6">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Col, Flex, Layout, Row, Space, Typography } from 'antd';
 import { RIGHT_BAR_WIDTH, DEV_START_JSON, NAV_BAR_HEIGHT, LEFT_BAR_WIDTH } from './const';
 
@@ -20,6 +20,7 @@ import './index.css';
 import Sider from 'antd/es/layout/Sider';
 import { Content, Header } from 'antd/es/layout/layout';
 import { RocketOutlined } from '@ant-design/icons';
+import Sections from './Sections';
 
 // TODO: push the created site to mongodb
 // TODO: update the page every 5 seconds in mongodb
@@ -47,6 +48,8 @@ const Editor: React.FC = () => {
 
   const [isDeploying, setIsDeploying] = useState<boolean>(false);
   const [isDevMode, setIsDevMode] = useState<boolean>(false);
+
+  const dummyRef = useRef<any>(null);
 
   function processJson(json: string) {
     // If is able to parse json, then parse it and set to data. If not, display error in console, but don't crash app.
@@ -84,12 +87,28 @@ const Editor: React.FC = () => {
     ]);
     setSelectedSectionId(section_id);
     setSelectedTemplateId(template_id);
+    scrollToElement(section_id);
   }
 
   function checkIfNoSections() {
     return data && data.length === 0;
   }
 
+  function scrollToElement(id: string) {
+    // const visualisationContainer: any = document.getElementById('visualisation-container');
+    // const element: any = document.getElementById('editor-dummy');
+    // element.scrollTo({
+    //   top: 1000,
+    //   behavior: "smooth"
+    //  });
+    // const yOffset = -10; 
+    // const y = element.getBoundingClientRect().top + visualisationContainer.pageYOffset  + yOffset;
+    // if (element) visualisationContainer.scrollTo({top: y, behavior: 'smooth'});
+    // if (element) element.scrollIntoView({block: "end", behavior: 'smooth'});
+    dummyRef.current.scrollIntoView({ block: "start", behavior: 'smooth' });
+    // console.log("el: ", element)
+   }
+  
   useEffect(() => {
     if (isDeploying) {
       deploy();
@@ -202,6 +221,13 @@ const Editor: React.FC = () => {
     return () => clearTimeout(timeoutId);
   }, [data]);
   
+  const sectionsComponent = <Sections 
+    data={data}
+    functions={{
+      onAddSection,
+    }}
+  />
+
   const interfaceComponent = <Interface 
   setJson={setJson} 
   json={json}
@@ -224,7 +250,7 @@ const Editor: React.FC = () => {
   }} 
   />;
 
-  const visualisationComponent =  <Visualisation 
+  const visualisationComponent = <Visualisation 
   data={data} 
   functions={{
     onAddSection,
@@ -239,6 +265,7 @@ const Editor: React.FC = () => {
     selectedTemplateId,
     isDevMode,
     isDeploying,
+    dummyRef,
   }} 
 />
 
@@ -271,12 +298,13 @@ const Editor: React.FC = () => {
       <Layout>
         {/* Left side */}
         <Flex  style={{ width: LEFT_BAR_WIDTH, background: '#EDF3F9', borderRight: borderStyle, position: 'fixed', height: '100vh', left: 0 }}>
-          Left hello left is here
+          {sectionsComponent}
         </Flex>
 
         {/* Center */}
-        <Flex className='editor-scrollbar' style={{maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`, overflowY: 'scroll', marginLeft: LEFT_BAR_WIDTH, marginRight: RIGHT_BAR_WIDTH, background: '#f9fafb', justifyContent: 'center'}}>
+        <Flex id='visualisation-container' className='editor-scrollbar' style={{maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`, overflowY: 'scroll', marginLeft: LEFT_BAR_WIDTH, marginRight: RIGHT_BAR_WIDTH, background: '#f9fafb', justifyContent: 'center'}}>
           {visualisationComponent}
+          
         </Flex>
 
         {/* Right side */}

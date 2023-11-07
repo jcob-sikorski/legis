@@ -17,7 +17,7 @@ function Visualisation({
 } : any) {
 
     const { onAddSection, checkIfNoSections, setSelectedSectionId, setSelectedTemplateId } = functions;
-    const { selectedSectionId, selectedTemplateId, isDevMode, isDeploying } = variables;
+    const { selectedSectionId, selectedTemplateId, isDevMode, isDeploying, dummyRef } = variables;
 
     const hasNoSections = checkIfNoSections();
 
@@ -57,12 +57,13 @@ function Visualisation({
             [selectedSectionId]: {selectedSectionId}<br/>
             [selectedTemplateId]: {selectedTemplateId}<br/>
         </>}
-        {data && data.map((s: any) => <div onClick={() => onSectionClick(s)} style={selectedSectionId === s.section_id ? selectedSectionStyle : {}}>
+        {data && data.map((s: any) => <div key={s.section_id} id={s.section_id} onClick={() => onSectionClick(s)} style={selectedSectionId === s.section_id ? selectedSectionStyle : {}}>
             {isDevMode && <>
                 [section_id]: {s.section_id}
             </>}
             {switchTemplate(s)}
         </div>)}
+        <div id='editor-dummy' ref={dummyRef} />
     </Flex>
     {!isDeploying &&
     <Flex align='center' justify='center' style={{minHeight: hasNoSections ? '360px' : '100px'}}>
