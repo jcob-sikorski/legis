@@ -15,11 +15,21 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
 })
 
+// ANTDesign
+import { ConfigProvider, Typography } from "antd";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ReduxProvider store={store}>
-      <App />
+      <ConfigProvider
+        theme={{
+          token: {
+            fontFamily: "Poppins"
+          }
+        }}
+      >
+        <App />
+      </ConfigProvider>
     </ReduxProvider>
   </React.StrictMode>,
 )

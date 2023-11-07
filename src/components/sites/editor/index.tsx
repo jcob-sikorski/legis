@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Layout } from 'antd';
-import { DEV_START_JSON } from './const';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, Col, Flex, Layout, Row, Space, Typography } from 'antd';
+import { RIGHT_BAR_WIDTH, DEV_START_JSON, NAV_BAR_HEIGHT, LEFT_BAR_WIDTH } from './const';
 
 // Window Components
 import Interface from './Interface';
 import Visualisation from './Visualisation';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ChooseTemplateModal from './modals/ChooseTemplateModal';
 
 import ReactDOMServer from 'react-dom/server';
@@ -15,6 +15,16 @@ import { v4 as uuidv4 } from 'uuid';
 import * as Realm from "realm-web";
 import { config } from "../../../config";
 import axios from 'axios';
+
+import './index.css';
+import Sider from 'antd/es/layout/Sider';
+import { Content, Header } from 'antd/es/layout/layout';
+import { RocketOutlined } from '@ant-design/icons';
+import Sections from './Sections';
+import { getPromptForGeneration } from '../../../utils';
+
+// TODO: push the created site to mongodb
+// TODO: update the page every 5 seconds in mongodb
 
 const Editor: React.FC = () => {
   const app = new Realm.App({ id: config.appId });
@@ -39,6 +49,8 @@ const Editor: React.FC = () => {
 
   const [isDeploying, setIsDeploying] = useState<boolean>(false);
   const [isDevMode, setIsDevMode] = useState<boolean>(false);
+
+  const dummyRef = useRef<any>(null);
 
   function processJson(json: string) {
     // If is able to parse json, then parse it and set to data. If not, display error in console, but don't crash app.
@@ -76,11 +88,37 @@ const Editor: React.FC = () => {
     ]);
     setSelectedSectionId(section_id);
     setSelectedTemplateId(template_id);
+    dummyRef.current.scrollIntoView({ block: "start", behavior: 'smooth' });
+    // scrollToElement(section_id);
   }
 
   function checkIfNoSections() {
     return data && data.length === 0;
   }
+
+  function scrollToElement(id: string) {
+    // const visualisationContainer: any = document.getElementById('visualisation-container');
+    // element.scrollTo({
+      //   top: 1000,
+      //   behavior: "smooth"
+      //  });
+      // const yOffset = -10; 
+      // const y = element.getBoundingClientRect().top + visualisationContainer.pageYOffset  + yOffset;
+      // if (element) visualisationContainer.scrollTo({top: y, behavior: 'smooth'});
+      const element: any = document.getElementById(id);
+    if (element) element.scrollIntoView({block: "end", behavior: 'smooth'});
+    // dummyRef.current.scrollIntoView({ block: "start", behavior: 'smooth' });
+    // console.log("el: ", element)
+   }
+  
+   function onTestPrompt() {
+    // selected during onboarding
+    const onboardingData: any = {
+      templateIds: ["THero1", "TContact3", "TContact2"],
+      lawyerField: 'Real Estate'
+    }
+    getPromptForGeneration(onboardingData);
+   }
 
   useEffect(() => {
     if (isDeploying) {
@@ -194,9 +232,39 @@ const Editor: React.FC = () => {
     return () => clearTimeout(timeoutId);
   }, [data]);
   
-  
+  const sectionsComponent = <Sections 
+    variables={{
+      data,
+    }}
+    functions={{
+      onAddSection,
+      scrollToElement,
+    }}
+  />
 
-  const visualisationComponent =  <Visualisation 
+  const interfaceComponent = <Interface 
+  setJson={setJson} 
+  json={json}
+  data={data}
+  setData={setData}
+  processJson={processJson} 
+  functions={{
+    onAddSection,
+    setSelectedSectionId,
+    setSelectedTemplateId,
+    onDeploy,
+    setIsDevMode,
+    setIsDeploying,
+  }}
+  variables={{
+    selectedSectionId,
+    selectedTemplateId,
+    isDevMode,
+    isDeploying,
+  }} 
+  />;
+
+  const visualisationComponent = <Visualisation 
   data={data} 
   functions={{
     onAddSection,
@@ -211,35 +279,62 @@ const Editor: React.FC = () => {
     selectedTemplateId,
     isDevMode,
     isDeploying,
+    dummyRef,
   }} 
 />
 
+  const borderStyle = '1px solid #0002';
+
   return (
-    <Layout hasSider style={{minHeight: '100vh'}}>
-      {visualisationComponent}
-      <Interface 
-        setJson={setJson} 
-        json={json}
-        data={data}
-        setData={setData}
-        processJson={processJson} 
-        functions={{
-          onAddSection,
-          setSelectedSectionId,
-          setSelectedTemplateId,
-          onDeploy,
-          setIsDevMode,
-          setIsDeploying,
-        }}
-        variables={{
-          selectedSectionId,
-          selectedTemplateId,
-          isDevMode,
-          isDeploying,
-        }} 
-      />
+    <Layout style={{width: '100%'}}>
+      <Header style={{ padding: '4px 4px 4px 0px',  zIndex: 10000000, borderBottom: borderStyle, width: '100%', background: '#f0f1f9', height: NAV_BAR_HEIGHT, position: 'fixed' }}>
+        <Row>
+          <Col span={18}>
+            <Flex justify='center' style={{maxWidth: LEFT_BAR_WIDTH}}>
+              <Link to='/'>
+              <Typography.Title level={5} style={{fontWeight: 400}}>
+              <span style={{fontWeight: 300, fontSize: 20, letterSpacing: 3, border: '2px solid #2345ff99', padding: '0px 12px', borderRadius: 100 }}>LEGIS</span>
+            </Typography.Title>
+            </Link>
+            </Flex>
+          </Col>
+          <Col span={6}>
+            <Flex justify='flex-end' gap={4}>
+              <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary"  onClick={onTestPrompt}>
+                Prompt
+              </Button>
+              <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary" icon={<RocketOutlined />}  onClick={onDeploy}>
+                Deploy
+              </Button>
+            </Flex>
+          </Col>
+        </Row>
+      </Header>
+    <Layout hasSider style={{ marginTop: NAV_BAR_HEIGHT}}>
+      
+      <Layout>
+        {/* Left side */}
+        <Flex  style={{ width: LEFT_BAR_WIDTH, background: '#EDF3F9', borderRight: borderStyle, position: 'fixed', height: '100vh', left: 0 }}>
+          {sectionsComponent}
+        </Flex>
+
+        {/* Center */}
+        <Flex id='visualisation-container' className='editor-scrollbar' style={{maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`, overflowY: 'scroll', marginLeft: LEFT_BAR_WIDTH, marginRight: RIGHT_BAR_WIDTH, background: '#f9fafb', justifyContent: 'center'}}>
+          {visualisationComponent}
+          
+        </Flex>
+
+        {/* Right side */}
+        <Flex vertical style={{ width: RIGHT_BAR_WIDTH, background: '#EDF3F9', borderLeft: borderStyle, position: 'fixed', height: '100vh', right: 0 }}>
+          {interfaceComponent}
+        </Flex>
+        
+      </Layout>
+      
+      
       <ChooseTemplateModal onTemplateSelected={onTemplateSelected} open={isAddingNewSection} setOpen={setIsAddingNewSection} />
     </Layout>
+            </Layout>
   );
 };
 

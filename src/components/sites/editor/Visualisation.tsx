@@ -1,5 +1,5 @@
 import { Flex, Layout, Space } from 'antd';
-import { BAR_WIDTH } from './const';
+import { RIGHT_BAR_WIDTH } from './const';
 
 // Templates
 import TContact1 from '../../templates/TContact1';
@@ -17,7 +17,7 @@ function Visualisation({
 } : any) {
 
     const { onAddSection, checkIfNoSections, setSelectedSectionId, setSelectedTemplateId } = functions;
-    const { selectedSectionId, selectedTemplateId, isDevMode, isDeploying } = variables;
+    const { selectedSectionId, selectedTemplateId, isDevMode, isDeploying, dummyRef } = variables;
 
     const hasNoSections = checkIfNoSections();
 
@@ -49,21 +49,22 @@ function Visualisation({
 
     const layoutStyle = isDeploying
     ? { marginInline: 'auto' }
-    : { marginRight: BAR_WIDTH }
+    : { background: '#0000'}
 
     return ( <Layout className="site-layout" style={layoutStyle}>
-    <Content style={contentStyle}>
+    <Flex style={contentStyle} vertical>
         {(isDevMode && !isDeploying) && <>
             [selectedSectionId]: {selectedSectionId}<br/>
             [selectedTemplateId]: {selectedTemplateId}<br/>
         </>}
-        {data && data.map((s: any) => <div onClick={() => onSectionClick(s)} style={selectedSectionId === s.section_id ? selectedSectionStyle : {}}>
+        {data && data.map((s: any) => <div key={s.section_id} id={s.section_id} onClick={() => onSectionClick(s)} style={selectedSectionId === s.section_id ? selectedSectionStyle : {}}>
             {isDevMode && <>
                 [section_id]: {s.section_id}
             </>}
             {switchTemplate(s)}
         </div>)}
-    </Content>
+        <div id='editor-dummy' ref={dummyRef} />
+    </Flex>
     {!isDeploying &&
     <Flex align='center' justify='center' style={{minHeight: hasNoSections ? '360px' : '100px'}}>
         <Title style={{cursor:'pointer'}} onClick={onAddSection}>+ New section</Title>
