@@ -12,6 +12,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "@vercel/analytics": "^1.1.1",
+    "animate.css": "^4.1.1",
     "antd": "^5.10.3",
     "antd-img-crop": "^4.13.0",
     "axios": "^1.6.0",

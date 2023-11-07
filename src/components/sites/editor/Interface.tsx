@@ -1,7 +1,7 @@
 import { Button, Cascader, Checkbox, DatePicker, Flex, Form, Input, InputNumber, Layout, Radio, Select, Space, Switch, TreeSelect, Typography } from 'antd';
 import Title from 'antd/es/typography/Title';
 import TextArea from 'antd/es/input/TextArea';
-import { BAR_WIDTH } from './const';
+import { RIGHT_BAR_WIDTH } from './const';
 import { useEffect, useState } from 'react';
 import { SizeType } from 'antd/es/config-provider/SizeContext';
 import { useParams } from 'react-router-dom';
@@ -75,62 +75,56 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       let label: string = field.label;
       let id: string = field.id;
 
-      const labelComponent = <Typography.Title level={5} >
-        {label.toUpperCase()}
-        </Typography.Title>;
+      const labelComponent = <Typography.Title color='gray' type='secondary' level={5} style={{margin: '15px 0 0 0', padding: 0, textAlign: 'center', width: '100%'}} >
+      {label.toUpperCase()}
+      </Typography.Title>
 
-      const itemStyle = {margin: '0', padding: 0,}
+      const itemStyle = { margin: '0', padding: 0,}
 
       switch(type) {
         case 'input':
-          return <Form.Item name={id} style={itemStyle}>
+          return <>
           {labelComponent}
+          <Form.Item name={id} style={itemStyle}>
           <Input />
-        </Form.Item>;
+        </Form.Item></>;
         case 'textarea': 
-          return <Form.Item name={id} style={itemStyle}>
+          return <>
           {labelComponent}
+          <Form.Item name={id} style={itemStyle}>
           <TextArea rows={3} />
-        </Form.Item>
+        </Form.Item></>
         case 'checkbox':
-          return <Form.Item name={id} style={itemStyle}>
+          return <>
           {labelComponent}
+          <Form.Item name={id} style={itemStyle}>
           <Radio.Group>
             <Radio value="1">Yes</Radio>
             <Radio value="">No</Radio>
           </Radio.Group>
-        </Form.Item>
+        </Form.Item></>
         case 'image':
-          return <Form.Item name={id} style={itemStyle} >
+          return <>
           {labelComponent}
+          <Form.Item name={id} style={itemStyle} >
           <ImageUploadInput />
-        </Form.Item>
+        </Form.Item></>
       }
 
     }
 
     const sectionsCount = data?.length ?? 0;
 
-    return ( <Sider
-        width={BAR_WIDTH}
-        style={{
-          background: '#ddd',
-          overflow: 'auto',
-          height: '100vh',
-          position: 'fixed',
-          right: 0,
-          top: 0,
-          bottom: 0,
-        }}
-      >
-        <Space>
+    return ( 
+      <>
+        {/* <Space>
             dev mode
-            <Switch className='bg-red' checked={isDevMode} onClick={() => setIsDevMode(!isDevMode)} />
-        </Space>
+            <Switch checked={isDevMode} onClick={() => setIsDevMode(!isDevMode)} />
+        </Space> */}
         {isDevMode && !isDeploying && <>
             <Space>
               isDeploying
-              <Switch className='bg-red' checked={isDeploying} onClick={() => setIsDeploying(!isDeploying)} />
+              <Switch checked={isDeploying} onClick={() => setIsDeploying(!isDeploying)} />
             </Space>
             <br /> selectedTemplateId: {selectedTemplateId} <br />
             <br /> 2: {selectedSectionId} <br />
@@ -141,18 +135,16 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
         </>
         }
         
-        <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary" icon={<RocketOutlined />} size='large' onClick={onDeploy}>
-            Deploy
-        </Button>
+        
 
-        <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary" icon={<PlusOutlined />} size='large' onClick={onAddSection}>
+        {/* <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary" icon={<PlusOutlined />} onClick={onAddSection}>
             New section
-        </Button>
+        </Button> */}
 
         {sectionsCount && <>
-          <Button style={{maxWidth: '190px', fontWeight: 'bold', backgroundColor: '#c00'}} type="primary" icon={<MinusOutlined />} size='large' onClick={onRemoveSection}>
+          {/* <Button style={{maxWidth: '190px', fontWeight: 'bold', backgroundColor: '#c00'}} type="primary" icon={<MinusOutlined />} size='large' onClick={onRemoveSection}>
               Remove section
-          </Button>
+          </Button> */}
   
           <Select
             defaultValue={selectedTemplateId}
@@ -171,19 +163,17 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
         
       
       {sectionsCount > 0 && data.filter((d: any) => d.section_id === selectedSectionId).map(() => <Form
+          size='large'
           onValuesChange={handleFormChange}
           key={selectedSectionId + '-form'}
           layout="vertical"
           initialValues={data.filter((d: any) => d.section_id === selectedSectionId)[0] ?? {}}
-          size='large'
-          style={{ maxWidth: 600, padding: 10 }}
+          style={{ width: '100%', maxWidth: 600, padding: 10 }}
         >
           {/* {JSON.stringify(fields)} */}
           {fields && fields.map((field: JSONProfileField) => switchField(field))}
         </Form>)}
-        
-
-      </Sider> );
+</>);
 }
 
 {/* <Form.Item label="Form Size" name="size">

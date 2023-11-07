@@ -1,5 +1,5 @@
 import { Flex, Layout, Space } from 'antd';
-import { BAR_WIDTH } from './const';
+import { RIGHT_BAR_WIDTH } from './const';
 
 // Templates
 import TContact1 from '../../templates/TContact1';
@@ -49,10 +49,10 @@ function Visualisation({
 
     const layoutStyle = isDeploying
     ? { marginInline: 'auto' }
-    : { marginRight: BAR_WIDTH }
+    : { background: '#0000'}
 
     return ( <Layout className="site-layout" style={layoutStyle}>
-    <Content style={contentStyle}>
+    <Flex style={contentStyle} vertical>
         {(isDevMode && !isDeploying) && <>
             [selectedSectionId]: {selectedSectionId}<br/>
             [selectedTemplateId]: {selectedTemplateId}<br/>
@@ -63,7 +63,7 @@ function Visualisation({
             </>}
             {switchTemplate(s)}
         </div>)}
-    </Content>
+    </Flex>
     {!isDeploying &&
     <Flex align='center' justify='center' style={{minHeight: hasNoSections ? '360px' : '100px'}}>
         <Title style={{cursor:'pointer'}} onClick={onAddSection}>+ New section</Title>
