@@ -1,24 +1,21 @@
 import { Layout, Card, Row, Col, Button, List } from 'antd';
 
+import { valueColorMappping, colorHexMapping } from './colorMappings.tsx'
+
 function ColorPallette() {
   const groups = ['Work Ethic', 'Clarity & Problem-solvers', 'Expert & Authority', 'Accessible', 'Gritty', 'Passionate', 'Compassionate & strong', 'Fearless', 'Reliability', 'Loyalty & trust', 'Integrity', 'Excellence', 'Collaboration & working together'];
 
   // Function to generate a random color
-  const getRandomColor = () => {
-    const letters = '0123456789ABCDEF';
-    let color1 = '#';
-    let color2 = '#';
-    let color3 = '#';
-    for (let i = 0; i < 6; i++) {
-      color1 += letters[Math.floor(Math.random() * 16)];
-      color2 += letters[Math.floor(Math.random() * 16)];
-      color3 += letters[Math.floor(Math.random() * 16)];
-    }
+  const getColor = (group: string, buttonNumber: number, i: number, j: number) => {
+    console.log(`group: ${group}, i: ${i}, j: ${j}, buttonNumber: ${buttonNumber}`);
+
+    let basicColors = valueColorMappping[group];
+
+    let color1 = colorHexMapping[basicColors[0]][buttonNumber];
+    let color2 = colorHexMapping[basicColors[1]][buttonNumber];
+    let color3 = colorHexMapping[basicColors[2]][buttonNumber];
     return `linear-gradient(to right, ${color1} 33%, ${color2} 33%, ${color2} 66%, ${color3} 66%)`;
   }
-
-  // Create an array of random colors
-  const colors = Array.from({length: 8*2*4*groups.length}, getRandomColor);
 
   return (
     <Layout style={{ display: 'flex', flexDirection: 'row', overflow: 'hidden' }}>
@@ -31,7 +28,7 @@ function ColorPallette() {
         renderItem={(group, index) => (
           <List.Item>
             <Card title={group} style={{ width: "100%", backgroundColor: 'transparent', border: 'none' }}>
-              {[...Array(2)].map((_, i) => (
+              {[...Array(3)].map((_, i) => (
                 <Row gutter={16} key={i} justify={"center"}>
                   {[...Array(4)].map((_, j) => (
                     <Col key={j}>
@@ -40,7 +37,7 @@ function ColorPallette() {
                           height: 20, 
                           borderRadius: 30, 
                           margin: 10,
-                          background: colors[index*8*2*4 + i*4 + j], 
+                          background: getColor(group, i * 4 + j, i, j),
                           border: 'none'
                       }} />
                     </Col>
