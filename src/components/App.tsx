@@ -9,6 +9,7 @@ import Dashboard from "./sites/dashboard";
 import Editor from "./sites/editor";
 import SiteSettings from "./sites/siteSettings";
 import Survey from "./sites/Survey";
+import ColorPallette from "./sites/colorPallette";
 import { useState, useEffect } from "react";
 import Html from "./sites/html";
 
@@ -47,6 +48,7 @@ function App() {
           <Route path="/site-settings" element={<SiteSettings />} />
           <Route path="/editor/:site_id" element={<Editor />} />
           <Route path="/survey/:site_id" element={<Survey />} />
+          <Route path="/color-pallette" element={<ColorPallette />} />
           <Route path="/html" element={<Html />} />
         </Routes>
       </BrowserRouter>
