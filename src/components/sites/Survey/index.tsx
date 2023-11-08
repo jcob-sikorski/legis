@@ -3,7 +3,7 @@ import { Layout, Typography, Form, Input, Select, Button, Checkbox, Radio } from
 import { useSpring, animated } from '@react-spring/web';
 
 import * as Realm from "realm-web";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { config } from "../../../config";
 
 import './Survey.css';
@@ -155,6 +155,12 @@ function Survey() {
     });
     setPage(page - 1);
   };
+
+  const navigate = useNavigate();
+  
+  const onFinish = () => {
+    navigate(`/generate/${site_id}`);
+  }
 
   return (
     <Layout style={{ display: 'flex', flexDirection: 'row', overflow: 'hidden' }}>
@@ -430,6 +436,19 @@ function Survey() {
               }}
             >
               Next
+            </Button>
+          )}
+          {page === 9 && (
+            <Button
+              type="primary"
+              onClick={onFinish}
+              className="custom-button"
+              style={{
+                width: 100,
+                height: 50
+              }}
+            >
+              Finish
             </Button>
           )}
         </div>

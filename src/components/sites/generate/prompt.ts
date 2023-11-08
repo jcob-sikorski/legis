@@ -5,7 +5,7 @@ I need you to create labels for wireframes of elements of these sections.
 Law firm name is “${LawFirmName}” and its main practice area is “${MainPracticeArea}”. 
 Their one sentence description is “${OneSentenceDescription}”. Their standing out factor is "${StandOutFactor}". Give all your sections filled with answers in 1 big JSON file at the end. This is the data based on which i want you to create wireframes like i tell you: {
     "LawFirmName": "${LawFirmName}",
-    "MainPracticeArea": "Aviation Law",
+    "MainPracticeArea": "${MainPracticeArea}",
     "OneSentenceDescription": "${OneSentenceDescription}",
     "SpecializedPracticeAreas": "${SpecializedPracticeAreas}",
     "FirmRepresentation": "${FirmRepresentation}",
@@ -15,12 +15,12 @@ Their one sentence description is “${OneSentenceDescription}”. Their standin
 }
 
 
-Gimme wireframe labels for Aviation Law Firm Hero section. It should contain a headline and a  sub-headline. Make the subheadline longer
+Gimme wireframe labels for ${MainPracticeArea} Law Firm Hero section. It should contain a headline and a  sub-headline. Make the subheadline longer
  for the Practice Areas section. For each area i want you to create a paragraph explaining a bit more and helping a potential customer understand the law firm in context of this law area of expertise. 
 
-Heres the raw data to work with, along the data from previous response (which is that the website is about an Aviation Law Firm)
+Heres the raw data to work with, along the data from previous response (which is that the website is about an ${MainPracticeArea} Law Firm)
 
-    "SpecializedPracticeAreas": "Aviation Accidents & Personal Injury, Litigation, Aircraft Transactions",
+"SpecializedPracticeAreas": "${SpecializedPracticeAreas}"
 
 Do the Our values page like before, given this data, and make a paragraph about our values and also a very short description or a motto for each value. Figure something out.
 The data fields to be inspired by: FirmRepresentation, FirmStrengths, ImportantValues in the given above object

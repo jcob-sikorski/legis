@@ -21,7 +21,6 @@ function Generate() {
     const [response, setResponse] = useState<any>();
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<any>();
-    const [dataForGeneration, setDataForGeneration] = useState<any>();
   
   const currentUserID = app.currentUser!.id;
 
@@ -34,15 +33,6 @@ function Generate() {
         const result = await onboarding_collection.find({ site_id: new Realm.BSON.ObjectId(site_id) });
         const data = result.length > 0 ? result[0] : {};
         setOnboardingData(data);
-        let dataForGeneration = {
-            LawFirmName: data.LawFirmName,
-            OneSentenceDescription: data.OneSentenceDescription,
-            SpecializedPracticeAreas: data.SpecializedPracticeAreas,
-            FirmRepresentation: data.FirmRepresentation,
-            ImportantValues: data.ImportantValues,
-        }; 
-
-        setDataForGeneration(dataForGeneration);
         // getResponseFromGPT()
 
       } catch (error) {

@@ -105,7 +105,7 @@ export const Dashboard: React.FC = () => {
             _id: site_id,
           }]);
 
-          editSite(site_id);
+          // editSite(site_id);
     } catch (error) {
       console.error("Error creating site:", error);
     }
