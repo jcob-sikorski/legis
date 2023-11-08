@@ -12,6 +12,7 @@ import Survey from "./sites/Survey";
 import ColorPallette from "./sites/colorPallette";
 import { useState, useEffect } from "react";
 import Html from "./sites/html";
+import Generate from "./sites/generate";
 
 const appId = config.appId;
 
@@ -49,6 +50,7 @@ function App() {
           <Route path="/editor/:site_id" element={<Editor />} />
           <Route path="/survey/:site_id" element={<Survey />} />
           <Route path="/color-pallette" element={<ColorPallette />} />
+          <Route path="/generate/:site_id" element={<Generate />} />
           <Route path="/html" element={<Html />} />
         </Routes>
       </BrowserRouter>
