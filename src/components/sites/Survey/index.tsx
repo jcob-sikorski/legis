@@ -159,6 +159,11 @@ function Survey() {
   const navigate = useNavigate();
   
   const onFinish = () => {
+    if (page < fields.length) {
+      console.log("onFinish push to ")
+      updateDBField(fields[page] as keyof Questionnaire);
+    }
+
     navigate(`/generate/${site_id}`);
   }
 
