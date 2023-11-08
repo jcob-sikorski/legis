@@ -1,4 +1,4 @@
-export default interface OnBoarding {
+export default interface Questionnaire {
   _id: string;
   site_id: string;
   page?: number;

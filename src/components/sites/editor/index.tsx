@@ -112,12 +112,12 @@ const Editor: React.FC = () => {
    }
   
    function onTestPrompt() {
-    // selected during onboarding
-    const onboardingData: any = {
+    // selected during survey
+    const surveyData: any = {
       templateIds: ["THero1", "TContact3", "TContact2"],
       lawyerField: 'Real Estate'
     }
-    getPromptForGeneration(onboardingData);
+    getPromptForGeneration(surveyData);
    }
 
   useEffect(() => {

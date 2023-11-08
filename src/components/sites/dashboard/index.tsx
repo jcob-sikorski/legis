@@ -84,7 +84,7 @@ export const Dashboard: React.FC = () => {
 
       const site_id: string = newSite._id.toString();
 
-      navigate(`/onboarding/${site_id}`);
+      navigate(`/survey/${site_id}`);
   
       // Create a new GitHub repository
       const githubRepoResponse = await axios.post(`https://api.github.com/user/repos`, {

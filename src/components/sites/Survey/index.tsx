@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { config } from "../../../config";
 
 import './Survey.css';
-import OnBoarding from '../../../models/OnBoarding';
+import Questionnaire from '../../../models/Questionnaire';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -39,15 +39,15 @@ function Survey() {
   const currentUserID = app.currentUser!.id;
 
   const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
-  const onboarding_collection = mongodb.db("legis").collection("OnBoarding");
+  const survey_collection = mongodb.db("legis").collection("Questionnaire");
 
   React.useEffect(() => {
-    console.log("Fetching the onboarding data from mongo.");
+    console.log("Fetching the survey data from mongo.");
     async function getData() {
       try {
-        // const result = await onboarding_collection.deleteMany({});
+        // const result = await survey_collection.deleteMany({});
         // Include a query to find the site by its site_id
-        const result = await onboarding_collection.find({ site_id: new Realm.BSON.ObjectId(site_id) });
+        const result = await survey_collection.find({ site_id: new Realm.BSON.ObjectId(site_id) });
         // const result: any = [];
         console.log(result);
   
@@ -77,10 +77,10 @@ function Survey() {
   
 
   async function createData() {
-    console.log("Creating new onboarding data for this site");
+    console.log("Creating new survey data for this site");
 
     const newId = new Realm.BSON.ObjectId()
-    const newOnBoardingData = {
+    const newSurveyData = {
       site_id: new Realm.BSON.ObjectID(site_id),
       _id: newId,
       page: 0,
@@ -97,17 +97,17 @@ function Survey() {
     };
   
     try {
-      const result = await onboarding_collection.insertOne(newOnBoardingData);
-      console.log("Created new onboarding data:", JSON.stringify(result));
+      const result = await survey_collection.insertOne(newSurveyData);
+      console.log("Created new survey data:", JSON.stringify(result));
 
-      // TODO set the newOnBoarding data to the state hook
+      // TODO set the newSurvey data to the state hook
     } catch (error) {
       console.error("Error creating site:", error);
     }
   }
 
 
-  const updateField = async (fieldName: keyof OnBoarding, value: string | number | string[]) => {
+  const updateField = async (fieldName: keyof Questionnaire, value: string | number | string[]) => {
     const updatedValues = { ...fieldValues, [fieldName]: value };
     setFieldValues(updatedValues);
   };
@@ -120,9 +120,9 @@ function Survey() {
   }, [fieldValues]);
   
 
-  const updateDBField = async (fieldName: keyof OnBoarding) => {
+  const updateDBField = async (fieldName: keyof Questionnaire) => {
     try {
-      const updateResult = await onboarding_collection.updateOne(
+      const updateResult = await survey_collection.updateOne(
         { site_id: new Realm.BSON.ObjectID(site_id) },
         { $set: { [fieldName]: fieldValues[fieldName] } }
       );
@@ -135,7 +135,7 @@ function Survey() {
 
   const nextPage = () => {
     if (page < fields.length) {
-      updateDBField(fields[page] as keyof OnBoarding);
+      updateDBField(fields[page] as keyof Questionnaire);
     }
 
     setAnimationProps({
@@ -174,7 +174,7 @@ function Survey() {
               <div style={{ borderBottom: "2px solid black" }}>
                 <Input
                   value={fieldValues?.LawFirmName}
-                  onChange={(e) => updateField(fields[page] as keyof OnBoarding, e.target.value)}
+                  onChange={(e) => updateField(fields[page] as keyof Questionnaire, e.target.value)}
                   style={{
                     backgroundColor: "transparent",
                     color: "black",
@@ -193,7 +193,7 @@ function Survey() {
                 <Select 
                   placeholder="Select your main practice area" 
                   value={fieldValues?.MainPracticeArea ? fieldValues?.MainPracticeArea.toString() : ''}
-                  onChange={(value: string) => updateField(fields[page] as keyof OnBoarding, value)}
+                  onChange={(value: string) => updateField(fields[page] as keyof Questionnaire, value)}
                   style={{
                     width: '100%', 
                     marginTop: '10px',
@@ -247,7 +247,7 @@ function Survey() {
               <div style={{ borderBottom: "2px solid black" }}>
                 <Input
                   value={fieldValues?.OneSentenceDescription}
-                  onChange={(e) => updateField(fields[page] as keyof OnBoarding, e.target.value)}
+                  onChange={(e) => updateField(fields[page] as keyof Questionnaire, e.target.value)}
                   style={{
                     backgroundColor: "transparent",
                     color: "black",
@@ -265,7 +265,7 @@ function Survey() {
               <div style={{ borderBottom: "2px solid black" }}>
                 <Input
                   value={fieldValues?.SpecializedPracticeAreas}
-                  onChange={(e) => updateField(fields[page] as keyof OnBoarding, e.target.value)}
+                  onChange={(e) => updateField(fields[page] as keyof Questionnaire, e.target.value)}
                   style={{
                     backgroundColor: "transparent",
                     color: "black",
@@ -283,7 +283,7 @@ function Survey() {
               <div className="custom-checkbox">
                 <Checkbox.Group 
                   value={Array.isArray(fieldValues?.StandOutFactor) ? fieldValues?.StandOutFactor : [fieldValues?.StandOutFactor]}
-                  onChange={(checkedValues) => updateField(fields[page] as keyof OnBoarding, checkedValues as string[])}
+                  onChange={(checkedValues) => updateField(fields[page] as keyof Questionnaire, checkedValues as string[])}
                 >
                   <Checkbox value="Work ethic - We work harder than anyone else." style={{ display: 'flex', alignItems: 'center', fontSize: 20 }}>
                     Work ethic - We work harder than anyone else.
@@ -307,7 +307,7 @@ function Survey() {
               <Radio.Group 
                 className="custom-radio" 
                 value={fieldValues?.FirmRepresentation}
-                onChange={(e) => updateField(fields[page] as keyof OnBoarding, e.target.value)}
+                onChange={(e) => updateField(fields[page] as keyof Questionnaire, e.target.value)}
               >
                 <Radio value="Gritty - We aren’t afraid to get our hands dirty" style={{ display: 'flex', alignItems: 'center', fontSize: 20, marginTop: 20, marginBottom: 20 }}>
                   Gritty - We aren’t afraid to get our hands dirty
@@ -330,7 +330,7 @@ function Survey() {
               <div className="custom-checkbox">
                 <Checkbox.Group 
                   value={Array.isArray(fieldValues?.ImportantValues) ? fieldValues?.ImportantValues : [fieldValues?.ImportantValues]}
-                  onChange={(checkedValues) => updateField(fields[page] as keyof OnBoarding, checkedValues as string[])}
+                  onChange={(checkedValues) => updateField(fields[page] as keyof Questionnaire, checkedValues as string[])}
                 >
                   <Checkbox value="Reliability" style={{ display: 'flex', alignItems: 'center', fontSize: 20 }}>
                     Reliability
@@ -357,7 +357,7 @@ function Survey() {
               <div style={{ borderBottom: "2px solid black" }}>
                 <Input
                   value={fieldValues?.FirmStrengths}
-                  onChange={(e) => updateField(fields[page] as keyof OnBoarding, e.target.value)}
+                  onChange={(e) => updateField(fields[page] as keyof Questionnaire, e.target.value)}
                   style={{
                     backgroundColor: "transparent",
                     color: "black",
@@ -375,7 +375,7 @@ function Survey() {
               <div style={{ borderBottom: "2px solid black" }}>
                 <Input
                   value={fieldValues?.LawyerDetails}
-                  onChange={(e) => updateField(fields[page] as keyof OnBoarding, e.target.value)}
+                  onChange={(e) => updateField(fields[page] as keyof Questionnaire, e.target.value)}
                   style={{
                     backgroundColor: "transparent",
                     color: "black",
@@ -393,7 +393,7 @@ function Survey() {
               <div style={{ borderBottom: "2px solid black" }}>
                 <Input
                   value={fieldValues?.ClientReviews}
-                  onChange={(e) => updateField(fields[page] as keyof OnBoarding, e.target.value)}
+                  onChange={(e) => updateField(fields[page] as keyof Questionnaire, e.target.value)}
                   style={{
                     backgroundColor: "transparent",
                     color: "black",
