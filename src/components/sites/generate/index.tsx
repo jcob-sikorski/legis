@@ -7,7 +7,8 @@ import OpenAI from 'openai';
 import { Button, Spin } from "antd";
 import { content, getPrompt } from "./prompt";
 const openai = new OpenAI({
-    apiKey: import.meta.env.VITE_REACT_openaiApiKey,
+    apiKey: config.openaiApiKey,
+    organization: config.openaiOrg,
     dangerouslyAllowBrowser: true,
 });
 
