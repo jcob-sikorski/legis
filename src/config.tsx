@@ -10,6 +10,8 @@ export const config = {
     githubUsername: import.meta.env.VITE_REACT_githubUsername,
     githubToken: import.meta.env.VITE_REACT_githubToken,
     pkUploadcare: import.meta.env.VITE_REACT_pkUploadcare,
-    skUploadcare: import.meta.env.VITE_REACT_skUploadcare
+    skUploadcare: import.meta.env.VITE_REACT_skUploadcare,
+    openaiApiKey: import.meta.env.VITE_REACT_openaiApiKey,
+    openaiOrg: import.meta.env.VITE_REACT_openaiOrg
   };
   

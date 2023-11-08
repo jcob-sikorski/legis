@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import OpenAI from 'openai';
 import { Button } from "antd";
 const openai = new OpenAI({
-    apiKey: import.meta.env.VITE_REACT_openaiApiKey,
+    apiKey: config.openaiApiKey,
+    organization: config.openaiOrg,
     dangerouslyAllowBrowser: true,
 });
 
