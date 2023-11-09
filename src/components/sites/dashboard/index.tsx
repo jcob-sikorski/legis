@@ -162,18 +162,21 @@ export const Dashboard: React.FC = () => {
         flexDirection: 'row', // Change flexDirection to 'row'
         alignItems: 'center', // Align items vertically in the center
       }}>
-        <h1 style={{ paddingLeft: 10 }}>DASHBOARD</h1>
+        <div>
+          <h1 style={{ padding: 10 }}>DASHBOARD</h1>
+          <h1 style={{ padding: 10 }}>MY SITES</h1>
+        </div>
+      </div>
+
+        <Content style={{background: colorBgContainer, padding: 0}}>
         <Button
           type="primary"
           onClick={createSite}
           className="custom-button"
-          style={{ marginLeft: 'auto' }} // Use marginLeft: 'auto' to push the button to the right
+          style={{ marginLeft: 'auto', height: 50 }} // Use marginLeft: 'auto' to push the button to the right
         >
           New Site
         </Button>
-      </div>
-
-        <Content style={{background: colorBgContainer, padding: 0}}>
             <Flex style={{ flexDirection: 'column', maxWidth: 1000, marginInline: 'auto', marginBottom: 50, padding: 10}} >
               <Row gutter={[16, 24]} style={{padding: 10}}>
                   {sites && sites.map((d: any) => 
