@@ -8,7 +8,7 @@ export let valueColorMappping: { [key: string]: string[] } = {
   "Compassionate & strong": ["Pink", "Green", "Orange"],
   "Fearless": ["Orange", "Purple", "Red"],
   "Reliability": ["Beige", "Brown", "Blue"],
-  "Loyalty & trust": ["Blue", "Purple", "Black"],
+  "Loyalty & trust": ["Blue", "Purple", "Silver"],
   "Integrity": ["Dark blue", "Dark purple", "White"],
   "Excellence": ["Purple", "Gold", "Black"],
   "Collaboration & working together": ["Yellow", "Green", "Brown"]
@@ -31,5 +31,6 @@ export let colorHexMapping: { [key: string]: string[] } = {
   "Tan": ["#FAEBD7", "#FFE4C4", "#FFEBCD", "#DEB887", "#BDB76B", "#F0E68C", "#FFE4B5", "#FFDEAD", "#FFDAB9", "#CD853F", "#D2B48C", "#F5DEB3"],
   "Beige": ["#F5F5DC", "#FFE4C4", "#FFEBCD", "#F5DEB3", "#DEB887", "#DEB887", "#BDB76B", "#F0E68C", "#EEE8AA", "#FFFACD", "#FAFAD2", "#FFFFE0"],
   "Dark purple": ["#800080", "#8B008B", "#9400D3", "#8A2BE2", "#4B0082", "#483D8B", "#6A5ACD", "#9370DB", "#BA55D3", "#9932CC", "#C71585", "#FF1493"],
-  "Gold": ["#FFD700", "#FFFF00", "#FFFFE0", "#FFFACD", "#FAFAD2", "#FFEFD5", "#FFE4B5", "#FFDAB9", "#EEE8AA", "#F0E68C", "#BDB76B", "#DAA520"]
+  "Gold": ["#FFD700", "#FFFF00", "#FFFFE0", "#FFFACD", "#FAFAD2", "#FFEFD5", "#FFE4B5", "#FFDAB9", "#EEE8AA", "#F0E68C", "#BDB76B", "#DAA520"],
+  "Silver": ["#F5F5F5", "#E6E6E6", "#D8D8D8", "#C0C0C0", "#B3B3B3", "#A6A6A6", "#999999", "#8C8C8C", "#7F7F7F", "#727272", "#656565", "#585858"]
 };
