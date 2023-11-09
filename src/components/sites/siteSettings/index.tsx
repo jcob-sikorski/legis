@@ -50,6 +50,7 @@ const SiteSettings: React.FC = () => {
       if (fieldName === "cname" && site.cname !== fieldValues[fieldName]) {
         const githubRepoResponse = await axios.put(`https://api.github.com/repos/${githubUsername}/${site!._id}/pages`, {
           cname: fieldValues[fieldName] as string,
+          https_enforced: true,
           source: "gh-pages"
         }, {
           headers: {
