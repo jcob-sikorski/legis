@@ -11,6 +11,8 @@ import { config } from "../../../config";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import './../../../index.css';
+
 const { Content } = Layout;
 
 export const Dashboard: React.FC = () => {
@@ -150,20 +152,36 @@ export const Dashboard: React.FC = () => {
   
   
   return (
-    <Layout style={{minHeight: '100vh'}}>
+    <Layout style={{minHeight: '100vh', display: 'flex'}}>
       <Sidebar/>
       <Layout>
+      <div style={{
+        background: '#f0f2f5',
+        fontSize: 14,
+        display: 'flex',
+        flexDirection: 'row', // Change flexDirection to 'row'
+        alignItems: 'center', // Align items vertically in the center
+      }}>
+        <h1 style={{ paddingLeft: 10 }}>DASHBOARD</h1>
+        <Button
+          type="primary"
+          onClick={createSite}
+          className="custom-button"
+          style={{ marginLeft: 'auto' }} // Use marginLeft: 'auto' to push the button to the right
+        >
+          New Site
+        </Button>
+      </div>
+
         <Content style={{background: colorBgContainer, padding: 0}}>
-            <Flex style={{ flexDirection: 'column', maxWidth: 1200, marginInline: 'auto', marginBottom: 50, padding: 10}} >
-                <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary" icon={<PlusOutlined />} size='large' onClick={createSite}>
-                    New site
-                </Button>
-                <Row gutter={[16, 24]} style={{padding: 10}}>
-                    {sites && sites.map((d: any) => 
-                      <Col className="gutter-row" span={12}>
-                          <SiteCard data={d} onEdit={() => editSite(d._id)} onClone={() => createSite()} onDelete={() => deleteSite(d._id)} />
-                      </Col>)}
-                </Row>
+            <Flex style={{ flexDirection: 'column', maxWidth: 1000, marginInline: 'auto', marginBottom: 50, padding: 10}} >
+              <Row gutter={[16, 24]} style={{padding: 10}}>
+                  {sites && sites.map((d: any) => 
+                    <Col className="gutter-row" span={12}>
+                        <SiteCard data={d} onEdit={() => editSite(d._id)} onClone={() => createSite()} onDelete={() => deleteSite(d._id)} />
+                    </Col>)
+                  }
+              </Row>
             </Flex>
         </Content>
       </Layout>

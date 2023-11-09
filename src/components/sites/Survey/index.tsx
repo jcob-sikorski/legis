@@ -6,6 +6,7 @@ import * as Realm from "realm-web";
 import { useNavigate, useParams } from 'react-router-dom';
 import { config } from "../../../config";
 
+import './../../../index.css';
 import './Survey.css';
 import Questionnaire from '../../../models/Questionnaire';
 
