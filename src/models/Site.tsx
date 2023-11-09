@@ -10,8 +10,5 @@ export default interface Site {
   status?: number;
   share_image_url?: string;
   favicon_url?: string;
-  action?: number;
-  type?: string[];
-  host?: string[];
-  target?: string[];
+  cname?: string;
 }

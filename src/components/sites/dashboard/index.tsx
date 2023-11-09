@@ -76,6 +76,10 @@ export const Dashboard: React.FC = () => {
       deleted: 0,
       image_url: "https://picsum.photos/200/300",
       site_url: "https://legisbiz.github.io/" + newId,
+      status: 1,
+      share_image_url: '',
+      favicon_url: '',
+      cname: ''
     };
   
     try {

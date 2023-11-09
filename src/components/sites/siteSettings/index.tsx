@@ -5,6 +5,7 @@ import Site from '../../../models/Site';
 import { useRedux } from '../../../hooks/useRedux';
 import * as Realm from 'realm-web';
 import { config } from '../../../config';
+import axios from 'axios';
 
 const SiteSettings: React.FC = () => {
   const [site] = useRedux('site');
@@ -15,7 +16,10 @@ const SiteSettings: React.FC = () => {
   const app = new Realm.App({ id: config.appId });
 
   const mongodb = app.currentUser!.mongoClient('mongodb-atlas');
-  const siteCollection = mongodb.db('legis').collection('Site');
+  const site_collection = mongodb.db('legis').collection('Site');
+
+  const githubUsername = config.githubUsername;
+  const githubToken = config.githubToken;
 
   useEffect(() => {
     if (site) {
@@ -37,13 +41,26 @@ const SiteSettings: React.FC = () => {
 
   const updateDBField = async (fieldName: keyof Site) => {
     try {
-      const updateResult = await siteCollection.updateOne(
+      const updateResult = await site_collection.updateOne(
         { _id: new Realm.BSON.ObjectId(site!._id) },
         { $set: { [fieldName]: fieldValues[fieldName] } }
       );
       console.log(`Updated ${updateResult.modifiedCount} document.`);
+
+      if (fieldName === "cname" && site.cname !== fieldValues[fieldName]) {
+        const githubRepoResponse = await axios.put(`https://api.github.com/repos/${githubUsername}/${site!._id}/pages`, {
+          cname: fieldValues[fieldName] as string,
+          source: "gh-pages"
+        }, {
+          headers: {
+            'Authorization': `token ${githubToken}`,
+            'X-GitHub-Api-Version': '2022-11-28'
+          },
+        });
+        console.log("Updated the repo: ", githubRepoResponse.data);
+      }
     } catch (error) {
-      console.error('Error updating document in MongoDB:', error);
+      console.error('Error updating document:', error);
     }
   }
 
