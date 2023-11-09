@@ -15,7 +15,7 @@ Their one sentence description is “${OneSentenceDescription}”. Their standin
 }
 
 
-Gimme wireframe labels for ${MainPracticeArea} Law Firm Hero section. It should contain a headline and a  sub-headline. Make the subheadline longer
+Gimme wireframe labels for ${MainPracticeArea} Firm Hero section. Write some eye-catching headline and use law firm name in it. Make the subheadline longer
  for the Practice Areas section. For each area i want you to create a paragraph explaining a bit more and helping a potential customer understand the law firm in context of this law area of expertise. 
 
 Heres the raw data to work with, along the data from previous response (which is that the website is about an ${MainPracticeArea} Law Firm)

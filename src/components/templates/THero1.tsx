@@ -1,6 +1,6 @@
 
 function THero1({data} : any) {
-    return ( <section className="text-gray-600 body-font">
+    return ( <section id={'section-' + data.section_id} className="text-gray-600 body-font">
     <div
     className="relative overflow-hidden bg-cover bg-no-repeat bg-[50%] h-[500px] bg-[#28354f]">
     <div

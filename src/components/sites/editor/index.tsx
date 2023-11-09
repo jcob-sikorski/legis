@@ -315,13 +315,12 @@ const Editor: React.FC = () => {
       <Layout>
         {/* Left side */}
         <Flex  style={{ width: LEFT_BAR_WIDTH, background: '#EDF3F9', borderRight: borderStyle, position: 'fixed', height: '100vh', left: 0 }}>
-          {sectionsComponent}
+          {/* {sectionsComponent} */}
         </Flex>
 
         {/* Center */}
         <Flex id='visualisation-container' className='editor-scrollbar' style={{maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`, overflowY: 'scroll', marginLeft: LEFT_BAR_WIDTH, marginRight: RIGHT_BAR_WIDTH, background: '#f9fafb', justifyContent: 'center'}}>
           {visualisationComponent}
-          
         </Flex>
 
         {/* Right side */}

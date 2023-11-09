@@ -7,6 +7,13 @@ import TContact2 from '../../templates/TContact2';
 import TContact3 from '../../templates/TContact3';
 import THero1 from '../../templates/THero1';
 import Title from 'antd/es/typography/Title';
+import TNoTemplate from '../../templates/TNoTemplate';
+import TNavBar1 from '../../templates/TNavBar1';
+import TPracticeAreas1 from '../../templates/TPracticeAreas1';
+import TValues1 from '../../templates/TValues1';
+import TTeam1 from '../../templates/TTeam1';
+import TReviews1 from '../../templates/TReviews1';
+import TAbout1 from '../../templates/TAbout1';
 
 const { Content, Footer } = Layout;
 
@@ -28,14 +35,37 @@ function Visualisation({
 
     function switchTemplate(data: any) {
         switch(data.template_id) {
-            default: case 'THero1':
+            // NavBar
+            case 'TNavBar1':
+                return <TNavBar1 data={data} />
+            // Hero
+            case 'THero1':
                 return <THero1 data={data} />
+            // PracticeAreas
+            case 'TPracticeAreas1':
+                return <TPracticeAreas1 data={data} />
+            // Values
+                case 'TValues1':
+                return <TValues1 data={data} />
+            // Team
+            case 'TTeam1':
+                return <TTeam1 data={data} />
+            // Reviews
+            case 'TReviews1':
+                return <TReviews1 data={data} />
+            // About
+            case 'TAbout1': case 'TAboutUs1':
+                return <TAbout1 data={data} />
+            // Contact
             case 'TContact1':
                 return <TContact1 data={data} />
             case 'TContact2':
                 return <TContact2 data={data} />
             case 'TContact3':
                 return <TContact3 data={data} />
+            // No template ID matched
+            default:
+                return <TNoTemplate data={data} /> 
         }
       }
 
@@ -65,11 +95,11 @@ function Visualisation({
         </div>)}
         <div id='editor-dummy' ref={dummyRef} />
     </Flex>
-    {!isDeploying &&
+    {/* {!isDeploying &&
     <Flex align='center' justify='center' style={{minHeight: hasNoSections ? '360px' : '100px'}}>
         <Title style={{cursor:'pointer'}} onClick={onAddSection}>+ New section</Title>
     </Flex>
-    }
+    } */}
     <Footer style={{ textAlign: 'center' }}>Generated with Legis &middot; 2023</Footer>
   </Layout> );
 }

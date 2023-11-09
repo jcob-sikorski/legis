@@ -112,10 +112,10 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
 
     return ( 
       <>
-        {/* <Space>
+        <Space>
             dev mode
             <Switch checked={isDevMode} onClick={() => setIsDevMode(!isDevMode)} />
-        </Space> */}
+        </Space>
         {isDevMode && !isDeploying && <>
             <Space>
               isDeploying

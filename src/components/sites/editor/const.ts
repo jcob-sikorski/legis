@@ -1,4 +1,4 @@
-export const LEFT_BAR_WIDTH = 200;
+export const LEFT_BAR_WIDTH = 120;
 export const RIGHT_BAR_WIDTH = 325;
 export const NAV_BAR_HEIGHT = 42;
 export const DEV_START_JSON = `[
