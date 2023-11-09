@@ -50,7 +50,7 @@ const SiteSettings: React.FC = () => {
       if (fieldName === "cname" && site.cname !== fieldValues[fieldName]) {
         const githubRepoResponse = await axios.put(`https://api.github.com/repos/${githubUsername}/${site!._id}/pages`, {
           cname: fieldValues[fieldName] as string,
-          https_enforced: true,
+          // https_enforced: true,
           source: "gh-pages"
         }, {
           headers: {
@@ -58,6 +58,16 @@ const SiteSettings: React.FC = () => {
             'X-GitHub-Api-Version': '2022-11-28'
           },
         });
+        // TODO enfore https after successful DNS check
+        // const githubRepoResponse = await axios.put(`https://api.github.com/repos/${githubUsername}/${site!._id}/pages`, {
+        //   https_enforced: true,
+        //   source: "gh-pages"
+        // }, {
+        //   headers: {
+        //     'Authorization': `token ${githubToken}`,
+        //     'X-GitHub-Api-Version': '2022-11-28'
+        //   },
+        // });
         console.log("Updated the repo: ", githubRepoResponse.data);
       }
     } catch (error) {
