@@ -87,59 +87,46 @@ const SiteComponent: React.FC = () => {
       <Layout>
         <Header style={{ background: '#fff', padding: 16, textAlign: 'left' }}/>
         <Content style={{ margin: '16px' }}>
-          <Title level={2} style={{fontWeight: 'normal'}}>Landing Page OS</Title>
-          <Title level={4} style={{fontWeight: 'normal'}}>360-degree solution to ship a high-converting landing page</Title>
-          <div style={{ marginBottom: '20px' }}>
-          <Input
-            style={{ maxWidth: '400px', borderRadius: 12, height: '40px', backgroundColor: 'white' }}
-            bordered={false}
-            // addonAfter={<Button style={{ alignSelf: 'center', alignContent: 'center', justifyContent: 'center' }}>Copy</Button>}
-          />
-          </div>
+          <Title level={2} style={{fontWeight: 'normal'}}>Site</Title>
           <div style={{ marginBottom: '40px' }}>
-            <Title level={5} style={{fontWeight: 'normal', color: '#616161' }}>This site’s URL (and what you’ll use to share with the world). If you’d like to change this to something else, click here.</Title>
+            <Title level={4} style={{fontWeight: 'normal'}}>Manage this site’s title, description,  and other general properties.</Title>
           </div>
-          <div style={{ marginBottom: '60px' }}>
-            <Title level={5} style={{fontWeight: 'normal', color: '#616161'}}>Added May, 2023 (last edited October 3, 2023)</Title>
+          <Title level={5} style={{fontWeight: 'normal', color: '#616161'}}>Title (required)</Title>
+          <Input
+            style={{ borderRadius: 5, height: '60px', backgroundColor: 'white', marginBottom: 20 }}
+            bordered={false}
+          />
+          <Title level={5} style={{fontWeight: 'normal', color: '#616161', marginBottom: 30}}>This site’s title (and what gets shown at the top of the browser window).</Title>
+          <Title level={5} style={{fontWeight: 'normal', color: '#616161'}}>Description (required)</Title>
+          <Input
+            style={{ borderRadius: 5, height: '60px', backgroundColor: 'white', marginBottom: 20 }}
+            bordered={false}
+          />
+          <Title level={5} style={{fontWeight: 'normal', color: '#616161', marginBottom: 30}}>A brief description of this site (and what’s usually used in bookmarks, search engine listings, etc.)</Title>
+          <Title level={5} style={{fontWeight: 'normal', color: '#616161'}}>Action</Title>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
+            <div style={{ backgroundColor: 'black', height: 30, width: 30, borderRadius: 50, marginLeft: 10 }} />
+            <div style={{ marginLeft: 10, color: 'black' }}>Publish to .legis.co URL</div>
           </div>
-          <div style={{ backgroundColor: 'white', display: 'flex', flexDirection: 'row', borderRadius: 5 }}>
-            <div style={{ flex: 1, borderRight: '0.5px solid #B6B6B6' }}>
-              <div style={{ padding: 20 }}>
-                <Title level={5} style={{fontWeight: 'bold' }}>Status</Title>
-              </div>
-              <div style={{ paddingLeft: 20 }}>
-                <Title level={5} style={{fontWeight: 'initial', color: '#616161' }}>Published</Title>
-              </div>
-              <div style={{ paddingLeft: 20 }}>
-                <Title level={5} style={{fontWeight: 'initial', color: '#A2A2A2' }}>Custom domain URL</Title>
-                <Button
-                  type="primary"
-                  className="custom-button"
-                  style={{ height: 50 }} // Use marginLeft: 'auto' to push the button to the right
-                >
-                  Change
-                </Button>
-              </div>
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ padding: 20 }}>
-                <Title level={5} style={{fontWeight: 'bold' }}>Status</Title>
-              </div>
-              <div style={{ paddingLeft: 20 }}>
-                <Title level={5} style={{fontWeight: 'initial', color: '#616161' }}>Shounak (you)</Title>
-              </div>
-              <div style={{ paddingLeft: 20 }}>
-                <Title level={5} style={{fontWeight: 'initial', color: '#A2A2A2' }}>shounak594@gmail.com</Title>
-                <Button
-                  type="primary"
-                  className="custom-button"
-                  style={{ height: 50 }} // Use marginLeft: 'auto' to push the button to the right
-                >
-                  Share
-                </Button>
-              </div>
-            </div>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
+            <div style={{ backgroundColor: 'black', height: 30, width: 30, borderRadius: 50, marginLeft: 10 }} />
+            <div style={{ marginLeft: 10, color: 'black' }}>Publish to custom domain</div>
           </div>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
+            <div style={{ backgroundColor: 'black', height: 30, width: 30, borderRadius: 50, marginLeft: 10 }} />
+            <div style={{ marginLeft: 10, color: 'black' }}>Save as a template</div>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
+            <div style={{ backgroundColor: 'black', height: 30, width: 30, borderRadius: 50, marginLeft: 10 }} />
+            <div style={{ marginLeft: 10, color: 'black' }}>Save as an offline draft</div>
+          </div>
+          <Button
+            type="primary"
+            className="custom-button"
+            style={{ height: 60, width: 200, marginTop: 10 }} // You can adjust the marginTop as needed
+          >
+            Save changes
+          </Button>
         </Content>
       </Layout>
     </Layout>
