@@ -21,10 +21,26 @@ function Visualisation({
     data, // if anything arrives here in this data prop it's already "sanitized" and is an object structure. NOT a JSON! (You can access its values like data?.email or data?.phone, etc., but you can't change it here)
     functions,
     variables,
+    mode = '',
 } : any) {
 
-    const { onAddSection, checkIfNoSections, setSelectedSectionId, setSelectedTemplateId } = functions;
-    const { selectedSectionId, selectedTemplateId, isDevMode, isDeploying, dummyRef } = variables;
+    const { onAddSection, checkIfNoSections, setSelectedSectionId, setSelectedTemplateId }
+     = mode === "showcase" 
+     ? {
+        onAddSection: () => {},
+        checkIfNoSections: () => {},
+        setSelectedSectionId: () => {},
+        setSelectedTemplateId: () => {},
+    } : functions;
+    const { selectedSectionId, selectedTemplateId, isDevMode, isDeploying, dummyRef } 
+     = mode === "showcase"
+     ? {
+        selectedSectionId: "",
+        selectedTemplateId: "",
+        isDevMode: false,
+        isDeploying: true,
+        dummyRef: null,
+     } : variables;
 
     const hasNoSections = checkIfNoSections();
 

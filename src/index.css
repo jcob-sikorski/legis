@@ -12,6 +12,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --legis-color-1: red;
+  --legis-color-2: yellow;
+  --legis-color-3: cyan;
 }
 
 body {
@@ -41,4 +45,16 @@ body {
   background-color: transparent !important;
   color: black !important;
   border-color: black !important;
+}
+
+.color-1 {
+  background-color: var(--legis-color-1) !important;
+}
+
+.color-2 {
+  background-color: var(--legis-color-2) !important;
+}
+
+.color-3 {
+  background-color: var(--legis-color-3) !important;
 }
