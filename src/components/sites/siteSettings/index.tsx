@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Input, Button } from 'antd';
+import { Layout, Input, Button, Typography } from 'antd';
 import Sidebar from '../menu';
+import SettingsMenu from './SettingsMenu';
 import Site from '../../../models/Site';
 import { useRedux } from '../../../hooks/useRedux';
 import * as Realm from 'realm-web';
 import { config } from '../../../config';
 import axios from 'axios';
+
+const { Header, Content } = Layout;
+const { Title } = Typography;
 
 const SiteSettings: React.FC = () => {
   const [site] = useRedux('site');
@@ -76,23 +80,67 @@ const SiteSettings: React.FC = () => {
   }
 
   return (
-    <Layout hasSider style={{ minHeight: '100vh' }}>
+    <Layout hasSider style={{ minHeight: '100vh', display: 'flex' }}>
       <Sidebar />
-      <div>
-        {Object.keys(siteSettings).map((fieldName) => (
-          <div key={fieldName}>
-            <Input
-              placeholder={fieldName}
-              value={fieldValues[fieldName] || ''}
-              onChange={(e) => updateField(fieldName as keyof Site, e.target.value)}
-              size="large"
-            />
-            <Button onClick={() => updateDBField(fieldName as keyof Site)}>
-              Set
-            </Button>
+      <SettingsMenu />
+      <Layout>
+        <Header style={{ background: '#fff', padding: 16, textAlign: 'left' }}/>
+        <Content style={{ margin: '16px' }}>
+          <Title level={2} style={{fontWeight: 'normal'}}>Landing Page OS</Title>
+          <Title level={4} style={{fontWeight: 'normal'}}>360-degree solution to ship a high-converting landing page</Title>
+          <div style={{ marginBottom: '20px' }}>
+          <Input
+            style={{ maxWidth: '400px', borderRadius: 12, height: '40px', backgroundColor: 'white' }}
+            bordered={false}
+            // addonAfter={<Button style={{ alignSelf: 'center', alignContent: 'center', justifyContent: 'center' }}>Copy</Button>}
+          />
           </div>
-        ))}
-      </div>
+          <div style={{ marginBottom: '40px' }}>
+            <Title level={5} style={{fontWeight: 'normal', color: '#616161' }}>This site’s URL (and what you’ll use to share with the world). If you’d like to change this to something else, click here.</Title>
+          </div>
+          <div style={{ marginBottom: '60px' }}>
+            <Title level={5} style={{fontWeight: 'normal', color: '#616161'}}>Added May, 2023 (last edited October 3, 2023)</Title>
+          </div>
+          <div style={{ backgroundColor: 'white', display: 'flex', flexDirection: 'row', borderRadius: 5 }}>
+            <div style={{ flex: 1, borderRight: '0.5px solid #B6B6B6' }}>
+              <div style={{ padding: 20 }}>
+                <Title level={5} style={{fontWeight: 'bold' }}>Status</Title>
+              </div>
+              <div style={{ paddingLeft: 20 }}>
+                <Title level={5} style={{fontWeight: 'initial', color: '#616161' }}>Published</Title>
+              </div>
+              <div style={{ paddingLeft: 20 }}>
+                <Title level={5} style={{fontWeight: 'initial', color: '#A2A2A2' }}>Custom domain URL</Title>
+                <Button
+                  type="primary"
+                  className="custom-button"
+                  style={{ height: 50 }} // Use marginLeft: 'auto' to push the button to the right
+                >
+                  Change
+                </Button>
+              </div>
+            </div>
+            <div style={{ flex: 1 }}>
+              <div style={{ padding: 20 }}>
+                <Title level={5} style={{fontWeight: 'bold' }}>Status</Title>
+              </div>
+              <div style={{ paddingLeft: 20 }}>
+                <Title level={5} style={{fontWeight: 'initial', color: '#616161' }}>Shounak (you)</Title>
+              </div>
+              <div style={{ paddingLeft: 20 }}>
+                <Title level={5} style={{fontWeight: 'initial', color: '#A2A2A2' }}>shounak594@gmail.com</Title>
+                <Button
+                  type="primary"
+                  className="custom-button"
+                  style={{ height: 50 }} // Use marginLeft: 'auto' to push the button to the right
+                >
+                  Share
+                </Button>
+              </div>
+            </div>
+          </div>
+        </Content>
+      </Layout>
     </Layout>
   );
 };

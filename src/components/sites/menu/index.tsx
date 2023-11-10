@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const { Sider } = Layout;
 
-const App = () => (
+const MainMenu = () => (
   <Sider width={'100'}>
     <Menu
       defaultSelectedKeys={['1']}
@@ -17,11 +17,11 @@ const App = () => (
         { key: '4', icon: <UserOutlined style={{ fontSize: '24px' }}/> },
       ].map(item => (
         <Menu.Item key={item.key} icon={item.icon} style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Link to={item.to as string}/>
+          {/* <Link to={item.to as string}/> */}
         </Menu.Item>
       ))}
     </Menu>
   </Sider>
 );
 
-export default App;
+export default MainMenu;
