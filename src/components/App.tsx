@@ -49,7 +49,7 @@ function App() {
           <Route path="/site-settings" element={<SiteSettings />} />
           <Route path="/editor/:site_id" element={<Editor />} />
           <Route path="/survey/:site_id" element={<Survey />} />
-          <Route path="/color-pallette" element={<ColorPallette />} />
+          <Route path="/color-palette/:site_id" element={<ColorPallette />} />
           <Route path="/generate/:site_id" element={<Generate />} />
           <Route path="/html" element={<Html />} />
         </Routes>

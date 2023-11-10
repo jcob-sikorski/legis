@@ -2,7 +2,7 @@
 function THero1({data} : any) {
     return ( <section id={'section-' + data.section_id} className="text-gray-600 body-font">
     <div
-    className="relative overflow-hidden bg-cover bg-no-repeat bg-[50%] h-[500px] bg-[#28354f]">
+    className="relative overflow-hidden bg-cover bg-no-repeat bg-[50%] h-[500px] bg-[#28354f] color-1">
     <div
       className="absolute top-0 right-0 bottom-0 left-0 h-full w-full overflow-hidden bg-fixed">
       <div className="flex h-full items-start mt-24 justify-start">
