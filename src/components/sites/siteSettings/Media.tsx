@@ -87,59 +87,53 @@ const Media: React.FC = () => {
       <Layout>
         <Header style={{ background: '#fff', padding: 16, textAlign: 'left' }}/>
         <Content style={{ margin: '16px' }}>
-          <Title level={2} style={{fontWeight: 'normal'}}>Landing Page OS</Title>
-          <Title level={4} style={{fontWeight: 'normal'}}>360-degree solution to ship a high-converting landing page</Title>
-          <div style={{ marginBottom: '20px' }}>
-          <Input
-            style={{ maxWidth: '400px', borderRadius: 12, height: '40px', backgroundColor: 'white' }}
-            bordered={false}
-            // addonAfter={<Button style={{ alignSelf: 'center', alignContent: 'center', justifyContent: 'center' }}>Copy</Button>}
-          />
-          </div>
-          <div style={{ marginBottom: '40px' }}>
-            <Title level={5} style={{fontWeight: 'normal', color: '#616161' }}>This site’s URL (and what you’ll use to share with the world). If you’d like to change this to something else, click here.</Title>
-          </div>
+          <Title level={2} style={{fontWeight: 'normal'}}>Media</Title>
           <div style={{ marginBottom: '60px' }}>
-            <Title level={5} style={{fontWeight: 'normal', color: '#616161'}}>Added May, 2023 (last edited October 3, 2023)</Title>
+            <Title level={4} style={{fontWeight: 'normal'}}>Manage media assets used by this site, such as its share image and icon.</Title>
           </div>
-          <div style={{ backgroundColor: 'white', display: 'flex', flexDirection: 'row', borderRadius: 5 }}>
-            <div style={{ flex: 1, borderRight: '0.5px solid #B6B6B6' }}>
-              <div style={{ padding: 20 }}>
-                <Title level={5} style={{fontWeight: 'bold' }}>Status</Title>
-              </div>
-              <div style={{ paddingLeft: 20 }}>
-                <Title level={5} style={{fontWeight: 'initial', color: '#616161' }}>Published</Title>
-              </div>
-              <div style={{ paddingLeft: 20 }}>
-                <Title level={5} style={{fontWeight: 'initial', color: '#A2A2A2' }}>Custom domain URL</Title>
-                <Button
-                  type="primary"
-                  className="custom-button"
-                  style={{ height: 50 }} // Use marginLeft: 'auto' to push the button to the right
-                >
-                  Change
-                </Button>
-              </div>
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ padding: 20 }}>
-                <Title level={5} style={{fontWeight: 'bold' }}>Status</Title>
-              </div>
-              <div style={{ paddingLeft: 20 }}>
-                <Title level={5} style={{fontWeight: 'initial', color: '#616161' }}>Shounak (you)</Title>
-              </div>
-              <div style={{ paddingLeft: 20 }}>
-                <Title level={5} style={{fontWeight: 'initial', color: '#A2A2A2' }}>shounak594@gmail.com</Title>
-                <Button
-                  type="primary"
-                  className="custom-button"
-                  style={{ height: 50 }} // Use marginLeft: 'auto' to push the button to the right
-                >
-                  Share
-                </Button>
-              </div>
-            </div>
+          <Title level={5} style={{fontWeight: 'normal', color: '#616161'}}>Share image (optional)</Title>
+          <div style={{ backgroundColor: 'white', display: 'flex', flexDirection: 'column', borderRadius: 5, justifyContent: 'center', alignContent: 'center', alignItems: 'center', marginBottom: 30 }}>
+            <Button
+              type="primary"
+              className="custom-button"
+              style={{ height: 50, width: 90 }}
+            >
+              Upload
+            </Button>
+            <Button
+              type="primary"
+              className="custom-button"
+              style={{ height: 50, width: 90, marginTop: 10 }} // You can adjust the marginTop as needed
+            >
+              Clear
+            </Button>
           </div>
+          <Title level={5} style={{fontWeight: 'normal', color: '#616161', marginBottom: 50}}>Image to display when this site is shared on social network (like Facebook or X). Defaults to screenshot if not provided.</Title>
+          <Title level={5} style={{fontWeight: 'normal', color: '#616161'}}>Icon (optional)</Title>
+          <div style={{ backgroundColor: 'black', height: 64, width: 64, borderRadius: 6, marginLeft: 10 }}/>
+          <div style={{ display: 'flex', flexDirection: 'row', borderRadius: 5 }}>
+            <Button
+              type="primary"
+              className="custom-button"
+              style={{ height: 50, width: 90 }}
+            >
+              Upload
+            </Button>
+            <Button
+              type="primary"
+              className="custom-button"
+              style={{ height: 50, width: 90, marginTop: 10 }} // You can adjust the marginTop as needed
+            >
+              Clear
+            </Button>
+          </div>
+          <Button
+            type="primary"
+            className="custom-button"
+            style={{ height: 60, width: 200, marginTop: 10 }} // You can adjust the marginTop as needed
+          >
+            Save changes
+          </Button>
         </Content>
       </Layout>
     </Layout>
