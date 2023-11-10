@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, Input, Button, Typography } from 'antd';
-import Sidebar from '../menu';
-import SettingsMenu from './SettingsMenu';
 import Site from '../../../models/Site';
 import { useRedux } from '../../../hooks/useRedux';
 import * as Realm from 'realm-web';
 import { config } from '../../../config';
 import axios from 'axios';
 
+import Sidebar from '../menu';
+import SettingsMenu from './SettingsMenu';
+
 const { Header, Content } = Layout;
 const { Title } = Typography;
 
-const SiteSettings: React.FC = () => {
+const Overview: React.FC = () => {
   const [site] = useRedux('site');
 
   const [siteSettings, setSiteSettings] = useState<Site | {}>({});
@@ -82,7 +83,7 @@ const SiteSettings: React.FC = () => {
   return (
     <Layout hasSider style={{ minHeight: '100vh', display: 'flex' }}>
       <Sidebar />
-      <SettingsMenu />
+      <SettingsMenu defaultSelectedKey='1'/>
       <Layout>
         <Header style={{ background: '#fff', padding: 16, textAlign: 'left' }}/>
         <Content style={{ margin: '16px' }}>
@@ -145,4 +146,4 @@ const SiteSettings: React.FC = () => {
   );
 };
 
-export default SiteSettings;
+export default Overview;

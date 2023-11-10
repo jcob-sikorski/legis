@@ -16,7 +16,7 @@ export default function SiteCard({ data, onEdit, onClone, onDelete }: any) {
     function onSettings() {
       dispatch(setSite(data));
 
-      navigate('/site-settings')
+      navigate('/overview-settings')
   }
 
     return (
