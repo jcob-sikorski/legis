@@ -224,7 +224,7 @@ function Visualisation({
                     top: 0, 
                     zIndex: 10,
                 }}>
-                    {[
+                    {!isDeploying && [
                         {
                             label: 'Duplicate section',
                             icon: <CopyFilled />,

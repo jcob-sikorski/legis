@@ -47,6 +47,8 @@ body {
   border-color: black !important;
 }
 
+
+/* TODO: !!! MAKE SURE THESE ARE ALSO GENERATED TO <style> TAG WHEN DEPLOYING SITE !!! */
 .color-1 {
   background-color: var(--legis-color-1) !important;
 }
@@ -57,4 +59,8 @@ body {
 
 .color-3 {
   background-color: var(--legis-color-3) !important;
+}
+
+div {
+  transition: background 0.4s;
 }

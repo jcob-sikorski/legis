@@ -121,7 +121,7 @@ function Generate() {
 
         console.log("Updated site:", JSON.stringify(result));
 
-        navigate(`/editor/${site_id}`);
+        navigate(`/color-palette/${site_id}`);
       } catch (error) {
         console.error("Error updating site:", error);
       }
