@@ -12,7 +12,7 @@ const SIDE_BAR_WIDTH = 450;
 const DEFAULT_COLORS = ["#5D74CF", "#8D88C7", "#4D4D4D"]
 
 function ColorPalette() {
-
+  const [selectedButtonIndex, setSelectedButtonIndex] = useState(-1);
   const {site_id} = useParams();
 
   const app = new Realm.App({ id: config.appId });
@@ -39,8 +39,10 @@ function ColorPalette() {
     return `linear-gradient(to right, ${color1} 33%, ${color2} 33%, ${color2} 66%, ${color3} 66%)`;
   }
 
-  const handleClick = (color: string) => {
+  const handleClick = (color: string, index: number) => {
+    setSelectedButtonIndex(index);
     setButtonColor(color);
+    console.log("SELECTED BUTTON INDEX: ", index);
   };
 
   useEffect(() => {
@@ -121,14 +123,14 @@ function ColorPalette() {
                     {[...Array(3)].map((_, j) => (
                       <Col key={j}>
                         <Button 
-                          onClick={() => handleClick(getColor(group, i))}
+                          onClick={() => handleClick(getColor(group, i), index*10+j)}
                           style={{ 
                             width: 80, 
                             height: 20,
                             borderRadius: 30, 
                             margin: 10,
                             background: getColor(group, j),
-                            border: 'none'
+                            border: index*10+j === selectedButtonIndex ? 'solid pink' : 'none'
                           }} 
                         />
                       </Col>
