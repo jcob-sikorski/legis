@@ -11,7 +11,7 @@ import * as Realm from "realm-web";
 const SIDE_BAR_WIDTH = 450;
 const DEFAULT_COLORS = ["#5D74CF", "#8D88C7", "#4D4D4D"]
 
-function ColorPallette() {
+function ColorPalette() {
 
   const {site_id} = useParams();
 
@@ -25,15 +25,13 @@ function ColorPallette() {
 
   const groups = ['Work Ethic', 'Clarity & Problem-solvers', 'Expert & Authority', 'Accessible', 'Gritty', 'Passionate', 'Compassionate & strong', 'Fearless', 'Reliability', 'Loyalty & trust', 'Integrity', 'Excellence', 'Collaboration & working together'];
 
-  function updateCSSStyles(colors: string[]) {
+  function updateCssStyles(colors: string[]) {
     document.documentElement.style.setProperty('--legis-color-1', `${colors[0]}`);
     document.documentElement.style.setProperty('--legis-color-2', `${colors[1]}`);
     document.documentElement.style.setProperty('--legis-color-3', `${colors[2]}`);
   }
 
-  // Function to generate a random color
   const getColor = (group: string, i: number) => {
-    // console.log(valueColorMapping);
     let color1 = valueColorMapping[group][i][0];
     let color2 = valueColorMapping[group][i][1];
     let color3 = valueColorMapping[group][i][2];
@@ -50,10 +48,9 @@ function ColorPallette() {
       const regex = /#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})/g;
       const matches = buttonColor.match(regex);
       const uniqueMatches = Array.from(new Set(matches));
-      console.log(uniqueMatches);
-      updateCSSStyles(uniqueMatches);
+      updateCssStyles(uniqueMatches);
     } else {
-      updateCSSStyles(DEFAULT_COLORS);
+      updateCssStyles(DEFAULT_COLORS);
     }
   }, [buttonColor]);
 
@@ -147,4 +144,4 @@ function ColorPallette() {
   );
 }
 
-export default ColorPallette;
+export default ColorPalette;
