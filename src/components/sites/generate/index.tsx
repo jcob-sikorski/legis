@@ -13,31 +13,55 @@ import Questionnaire from "../../../models/Questionnaire";
 
 import 'animate.css';
 
-
 const openai = new OpenAI({
     apiKey: config.openaiApiKey,
     organization: config.openaiOrg,
     dangerouslyAllowBrowser: true,
 });
 
-
-
-const app = new Realm.App({ id: config.appId }); 
-
 function Generate() {
-    const {site_id} = useParams();
+  const {site_id} = useParams();
     
-    const [onboardingData, setOnboardingData] = useState<any>();
-    const [response, setResponse] = useState<any>();
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<any>(); 
+  const [onboardingData, setOnboardingData] = useState<any>();
+  const [response, setResponse] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<any>(); 
+  const [textIndex, setTextIndex] = useState(0);
 
-    const [step, setStep] = useState<number>(0); 
+  const texts = [
+    'Spinning the Magic...',
+    'Brewing Awesomeness...',
+    'Stirring the Creativity...',
+    'Cooking up Brilliance...',
+    'Shaping Wonders...',
+    'Dancing with Ideas...',
+    'Whipping up Wonderment...',
+    'Sprinkling Stardust...',
+    'Crafting Dreams...',
+    'Juggling Innovation...',
+    'Painting Pixel Perfection...',
+    'Mastering the Art of Fun...',
+    'Tickling the Imagination...',
+    'Weaving Digital Delight...',
+    'Sculpting Smiles...',
+    'Building Blocks of Joy...',
+    'Blending Laughter and Code...',
+    'Mixing Tech and Play...',
+    'Sculpting the Future...',
+    'Waltzing with Innovation...',
+  ];
   
-  const currentUserID = app.currentUser!.id;
+
+  const [step, setStep] = useState<number>(0); 
+
+  const navigate = useNavigate();
+
+  const app = new Realm.App({ id: config.appId }); 
 
   const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
-  const onboarding_collection = mongodb.db("legis").collection("Questionnaire");        
+  const onboarding_collection = mongodb.db("legis").collection("Questionnaire");    
+  const site_collection = mongodb.db("legis").collection("Site");
+
   useEffect(() => {
     console.log("Fetching the survey data from mongo.");
     async function getData() {
@@ -56,30 +80,7 @@ function Generate() {
     getData();
   }, []);
 
-  const site_collection = mongodb.db("legis").collection("Site");
-
-  const updateSite = async (data: any) => {
-    console.log("Trying to upload this data: ", data);
-    if (data) {
-      try {
-        const result = await site_collection.updateOne(
-          { _id: new Realm.BSON.ObjectId(site_id) }, // Specify the query to find the site by site_id
-          {
-            $set: { bodyTemplate: data }, // Use $set to update the data field
-          }
-        );
-
-        console.log("Updated site:", JSON.stringify(result));
-      } catch (error) {
-        console.error("Error updating site:", error);
-      }
-    }
-  };
-
   async function getResponseFromGPT() {
-
-    
-
     const prompt = getPrompt(onboardingData);
 
     setStep(1);
@@ -103,14 +104,42 @@ function Generate() {
         setError(JSON.stringify(e));
         console.warn(e);
       })
-      // console.log("chatCompletion: ", chatCompletion)
-      // alert("chatCompletion:" + JSON.stringify(chatCompletion))
   }
 
-  const navigate = useNavigate();
-  function onContinue() {
-    navigate(`/editor/${site_id}`);
-  }
+  useEffect(() => {
+    if (onboardingData) {
+      getResponseFromGPT();
+    }
+  }, [onboardingData]);
+
+  const updateSite = async (data: any) => {
+    console.log("Trying to upload this data: ", data);
+    if (data) {
+      try {
+        const result = await site_collection.updateOne(
+          { _id: new Realm.BSON.ObjectId(site_id) }, // Specify the query to find the site by site_id
+          {
+            $set: { bodyTemplate: data }, // Use $set to update the data field
+          }
+        );
+
+        console.log("Updated site:", JSON.stringify(result));
+
+        navigate(`/editor/${site_id}`);
+      } catch (error) {
+        console.error("Error updating site:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTextIndex(() => Math.floor(Math.random() * texts.length));
+    }, 3500);
+  
+    return () => clearInterval(intervalId); // Cleanup the interval on component unmount
+  }, []);
+  
 
     return ( <>
         <Flex vertical style={{background: '#000', height: '100vh', width: '100%', color: 'white'}} justify="center" align="center">
@@ -128,34 +157,12 @@ function Generate() {
             </Button>
           </div>
           </>}
-
-          {!loading && step === 0 && <><h1 className="animate__bounceIn" style={{fontSize: 25}}>
-            On this stage, AI will generate your page's content. Ready?
-          </h1>
-          <div className="animate__bounceInUp" style={{animationDelay: '0s'}}>
-            <Button  onClick={getResponseFromGPT} type='primary' size='large' style={{width: 350, height: 50, marginTop: 30}}>
-              Let's make magic happen!
-            </Button>
-          </div>
-          </>}
-
-          {loading && <><h1 className="animate__bounceIn" style={{fontSize: 25}}>
-            <Spin size="large" style={{marginRight: 10}} /> Generating AI Content...
-          </h1>
-          </>}
-
-          {step === 2 && <><h1 className="animate__bounceIn" style={{fontSize: 25, color: 'lime'}}>
-            Success!
-          </h1>
-          <div className="animate__bounceInUp" style={{animationDelay: '0s'}}>
-            <Button  onClick={onContinue} type='primary' size='large' style={{width: 350, height: 50, marginTop: 30}}>
-              Continue
-            </Button>
-          </div>
-          </>}
-          
+          {loading && (
+            <h1 className="animate__bounceIn" style={{ fontSize: 25 }}>
+              <Spin size="large" style={{ marginRight: 10 }} /> {texts[textIndex]}
+            </h1>
+          )}
         </Flex>
-        {/* onboardingData: {JSON.stringify(onboardingData)} <br /> */}
         {localStorage.getItem("dev") === "true" && 
         // Dev only here
         <><Button onClick={getResponseFromGPT}>
