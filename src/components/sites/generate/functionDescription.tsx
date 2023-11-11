@@ -78,7 +78,7 @@ export let function_description: ChatCompletionTool[] = [
               }
             },
           },
-          "About us": {
+          "AboutUs": {
             "type": "string",
             "description": "Short eye-catching snippet based on Firm Strengths",
           },

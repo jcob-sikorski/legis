@@ -12,9 +12,9 @@ export default function TPracticeAreas1({data} : any) {
                 {/* {JSON.stringify(area)} */}
             </div>
             <div className="flex-grow pl-6">
-            <h2 className="text-gray-900 text-lg title-font font-medium mb-2">{area?.PracticeAreaTitle}</h2>
+            <h2 className="text-gray-900 text-lg title-font font-medium mb-2">{area?.practiceAreaName}</h2>
             <p className="leading-relaxed text-base">
-                {area?.PracticeAreaDescription}
+                {area?.practiceDescription}
             </p>
             {/* <a className="mt-3 text-indigo-500 inline-flex items-center">Learn More
                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 ml-2" viewBox="0 0 24 24">

@@ -14,9 +14,9 @@ export default function TTeam1({data} : any) {
                 <div className="h-full flex sm:flex-row flex-col items-center sm:justify-start justify-center text-center sm:text-left">
                   <img alt="team" className="flex-shrink-0 rounded-lg w-48 h-48 object-cover object-center sm:mb-0 mb-4" src="https://dummyimage.com/200x200" />
                   <div className="flex-grow sm:pl-8">
-                    <h2 className="title-font font-medium text-lg text-gray-900">{value.trim().split(" ")[0] + " " + value.trim().split(" ")[1]}</h2>
+                    <h2 className="title-font font-medium text-lg text-gray-900">{value?.memberName}</h2>
                     <h3 className="text-gray-500 mb-3">Lawyer</h3>
-                    <p className="mb-4">{value}</p>
+                    <p className="mb-4">{value?.details}</p>
                     <span className="inline-flex">
                       <a className="text-gray-500">
                         <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-5 h-5" viewBox="0 0 24 24">

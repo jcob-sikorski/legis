@@ -209,8 +209,10 @@ function Generate() {
     </> );
 }
 
-function getSiteData({NavBar, Hero, PracticeAreas, OurTeam, TheirValues, ReviewsAndTestimonials, AboutUs}: any) {
+function getSiteData(data: any) {
   
+  const {NavBar, Hero, PracticeAreas, OurTeam, TheirValues, ReviewsAndTestimonials, AboutUs} = data;
+
   // 1. Nav bar
   // 2. Hero section - name & 1-2 sentence description
   // 3. Practice areas
