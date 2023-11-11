@@ -122,11 +122,19 @@ export const Dashboard: React.FC = () => {
   }
 
   async function deleteSite(siteId: string) {
+    // Display a confirmation dialog
+    const isConfirmed = window.confirm("Are you sure you want to delete this site?");
+
+    if (!isConfirmed) {
+      return; // If the user cancels the deletion, exit the function
+    }
     try {
       // Find the site by its _id and get the associated GitHub repository name
       const site = sites.find((site) => site._id === siteId);
   
       if (site) {
+        setSites((prevSites) => prevSites.filter((site) => site._id !== siteId));
+
         const result = await site_collection.deleteOne({ _id: new Realm.BSON.ObjectId(siteId) });
         console.log("Deleted site:", JSON.stringify(result));
   
@@ -143,8 +151,6 @@ export const Dashboard: React.FC = () => {
       } else {
         console.error("Site not found in the local database.");
       }
-  
-      setSites((prevSites) => prevSites.filter((site) => site._id !== siteId));
     } catch (error) {
       console.error("Error deleting site:", error);
     }
