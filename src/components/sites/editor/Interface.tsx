@@ -1,7 +1,7 @@
 import { Button, Cascader, Checkbox, DatePicker, Flex, Form, Input, InputNumber, Layout, Radio, Select, Space, Switch, TreeSelect, Typography } from 'antd';
 import Title from 'antd/es/typography/Title';
 import TextArea from 'antd/es/input/TextArea';
-import { RIGHT_BAR_WIDTH } from './const';
+import { DEV_JSON_TO_INJECT, RIGHT_BAR_WIDTH } from './const';
 import { useEffect, useState } from 'react';
 import { SizeType } from 'antd/es/config-provider/SizeContext';
 import { useParams } from 'react-router-dom';
@@ -51,6 +51,17 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
     function onTemplateChange(template_id: string) {
       setSelectedTemplateId(template_id);
       setData((data ?? []).map((s: any) => s.section_id === selectedSectionId ? {...s, template_id} : s))
+    }
+
+    function injectData() {
+      try {
+        if (data) {
+          console.log(JSON.parse(DEV_JSON_TO_INJECT));
+          setData(JSON.parse(DEV_JSON_TO_INJECT));
+        }
+      } catch {
+        alert("Dev: Error parsing DEV_JSON_TO_INJECT")
+      }
     }
 
     // const { fields } = profile;
@@ -117,6 +128,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
             <Switch checked={isDevMode} onClick={() => setIsDevMode(!isDevMode)} />
         </Space>
         {isDevMode && !isDeploying && <>
+            <button onClick={injectData}>Inject hard-coded data JSON</button>
             <Space>
               isDeploying
               <Switch checked={isDeploying} onClick={() => setIsDeploying(!isDeploying)} />

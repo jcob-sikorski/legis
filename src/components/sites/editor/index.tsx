@@ -52,6 +52,7 @@ const Editor: React.FC = () => {
   const [isDevMode, setIsDevMode] = useState<boolean>(false);
 
   const dummyRef = useRef<any>(null);
+  const containerRef = useRef(null);
 
   function processJson(json: string) {
     // If is able to parse json, then parse it and set to data. If not, display error in console, but don't crash app.
@@ -265,6 +266,7 @@ const Editor: React.FC = () => {
     setSelectedSectionId,
     setSelectedTemplateId,
     setIsDevMode,
+    setData,
   }} 
   // setSelectedTemplateId={setSelectedTemplateId}
   variables={{
@@ -273,6 +275,7 @@ const Editor: React.FC = () => {
     isDevMode,
     isDeploying,
     dummyRef,
+    containerRef
   }} 
 />
 
@@ -305,7 +308,8 @@ const Editor: React.FC = () => {
         {/* Center */}
         <Flex 
           id='visualisation-container' 
-          className='editor-scrollbar' 
+          className='editor-scrollbar'
+          ref={containerRef} 
           style={{
             maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`, 
             overflowY: 'scroll', 
@@ -316,7 +320,8 @@ const Editor: React.FC = () => {
             display: 'flex',
             alignItems: 'flex-start',
             width: '100%',
-            boxShadow: '12px 4px solid black'
+            boxShadow: '12px 4px solid black',
+            scrollBehavior: 'smooth',
           }}>
           {visualisationComponent}
         </Flex>
