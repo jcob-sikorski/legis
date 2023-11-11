@@ -1,13 +1,14 @@
-import { Layout, Card, Row, Col, Button, List, Flex } from 'antd';
+import { Layout, Card, Row, Col, Button, List, Flex, Space } from 'antd';
 
 import { valueColorMapping } from './colorMappings.tsx'
 import { useState, useEffect } from 'react';
 import Visualisation from '../editor/Visualisation.tsx';
 import { config } from '../../../config.tsx';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import * as Realm from "realm-web";
 
+const SIDE_BAR_WIDTH = 450;
 const DEFAULT_COLORS = ["#5D74CF", "#8D88C7", "#4D4D4D"]
 
 function ColorPallette() {
@@ -78,40 +79,70 @@ function ColorPallette() {
     getData();
   }, []); // Include site_id in the dependency array if it may change
 
+  const navigate = useNavigate();
+
+  function onNext() {
+    navigate(`/editor/${site_id}`);
+  }
+
   return (
-    <Layout style={{ display: 'flex', flexDirection: 'row' }}>
-      <Flex id='visualisation-container' className='editor-scrollbar' style={{maxHeight: '100vh', overflowY: 'scroll', background: '#f9fafb', justifyContent: 'center', width: '60vw'}}>
+    <Layout style={{ 
+      display: 'flex', 
+      flexDirection: 'row', 
+      }}>
+      <Flex id='visualisation-container' className='editor-scrollbar' style={{
+        maxHeight: '100vh', 
+        overflowY: 'scroll', 
+        justifyContent: 'center', 
+        width: '100%',
+        marginRight: SIDE_BAR_WIDTH,
+        }}>
         <Visualisation data={data} mode='showcase' />
       </Flex>
-      <List
-        style={{ flex: '1', overflowY: 'scroll', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-        dataSource={groups}
-        renderItem={(group, index) => (
-          <List.Item>
-            <Card title={group} style={{ width: "100%", backgroundColor: 'transparent', border: 'none' }}>
-              {[...Array(1)].map((_, i) => (
-                <Row gutter={16} key={i} justify={"center"}>
-                  {[...Array(3)].map((_, j) => (
-                    <Col key={j}>
-                      <Button 
-                        onClick={() => handleClick(getColor(group, i))}
-                        style={{ 
-                          width: 80, 
-                          height: 20,
-                          borderRadius: 30, 
-                          margin: 10,
-                          background: getColor(group, j),
-                          border: 'none'
-                        }} 
-                      />
-                    </Col>
-                  ))}
-                </Row>
-              ))}
-            </Card>
-          </List.Item>
-        )}
-      />
+      <div style={{width: '100%', maxWidth: SIDE_BAR_WIDTH, position: 'absolute', right: 0}}>
+        <Flex align='center' justify='center' style={{padding: 10}}>
+          <Button onClick={onNext} style={{background: '#000', color: '#fff'}} size='large'>
+            NEXT
+          </Button>
+        </Flex>
+        <List
+          style={{ 
+            flex: '1', 
+            overflowY: 'scroll', 
+            height: '100vh', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center',
+            width: '100%',
+          }}
+          dataSource={groups}
+          renderItem={(group, index) => (
+            <List.Item>
+              <Card title={group} style={{ width: "100%", backgroundColor: 'transparent', border: 'none' }}>
+                {[...Array(1)].map((_, i) => (
+                  <Row gutter={16} key={i} justify={"center"}>
+                    {[...Array(3)].map((_, j) => (
+                      <Col key={j}>
+                        <Button 
+                          onClick={() => handleClick(getColor(group, i))}
+                          style={{ 
+                            width: 80, 
+                            height: 20,
+                            borderRadius: 30, 
+                            margin: 10,
+                            background: getColor(group, j),
+                            border: 'none'
+                          }} 
+                        />
+                      </Col>
+                    ))}
+                  </Row>
+                ))}
+              </Card>
+            </List.Item>
+          )}
+        />
+      </div>
     </Layout>
   );
 }
