@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 const { Sider } = Layout;
 
-const MainMenu = () => (
-  <Sider width={'100'}>
+const MainMenu = ({width = 100} : {width?: number}) => (
+  <Sider width={width}>
     <Menu
       defaultSelectedKeys={['1']}
       style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', paddingLeft: 4 }}

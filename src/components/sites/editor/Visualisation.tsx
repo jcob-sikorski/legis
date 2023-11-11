@@ -95,7 +95,7 @@ function Visualisation({
 
     const layoutStyle = isDeploying
     ? { marginInline: 'auto' }
-    : { background: '#0000'}
+    : { background: '#fff', maxWidth: '1200px'}
 
     return ( <Layout className="site-layout" style={layoutStyle}>
     <Flex style={contentStyle} vertical>

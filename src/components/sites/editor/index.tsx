@@ -22,6 +22,7 @@ import { Content, Header } from 'antd/es/layout/layout';
 import { RocketOutlined } from '@ant-design/icons';
 import Sections from './Sections';
 import { getPromptForGeneration } from '../../../utils';
+import MainMenu from '../menu';
 
 // TODO: push the created site to mongodb
 // TODO: update the page every 5 seconds in mongodb
@@ -232,15 +233,7 @@ const Editor: React.FC = () => {
     return () => clearTimeout(timeoutId);
   }, [data]);
   
-  const sectionsComponent = <Sections 
-    variables={{
-      data,
-    }}
-    functions={{
-      onAddSection,
-      scrollToElement,
-    }}
-  />
+  const sectionsComponent = <MainMenu />
 
   const interfaceComponent = <Interface 
   setJson={setJson} 
@@ -315,11 +308,25 @@ const Editor: React.FC = () => {
       <Layout>
         {/* Left side */}
         <Flex  style={{ width: LEFT_BAR_WIDTH, background: '#EDF3F9', borderRight: borderStyle, position: 'fixed', height: '100vh', left: 0 }}>
-          {/* {sectionsComponent} */}
+          {sectionsComponent}
         </Flex>
 
         {/* Center */}
-        <Flex id='visualisation-container' className='editor-scrollbar' style={{maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`, overflowY: 'scroll', marginLeft: LEFT_BAR_WIDTH, marginRight: RIGHT_BAR_WIDTH, background: '#f9fafb', justifyContent: 'center'}}>
+        <Flex 
+          id='visualisation-container' 
+          className='editor-scrollbar' 
+          style={{
+            maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`, 
+            overflowY: 'scroll', 
+            marginLeft: LEFT_BAR_WIDTH, 
+            marginRight: RIGHT_BAR_WIDTH, 
+            background: '#f9fafb', 
+            justifyContent: 'center',
+            display: 'flex',
+            alignItems: 'flex-start',
+            width: '100%',
+            boxShadow: '12px 4px solid black'
+          }}>
           {visualisationComponent}
         </Flex>
 
