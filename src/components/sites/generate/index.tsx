@@ -2,14 +2,14 @@ import * as Realm from "realm-web";
 import { useNavigate, useParams } from 'react-router-dom';
 import { config } from "../../../config";
 import { useEffect, useState } from "react";
+import { Button, Flex, Spin } from "antd";
 
 import OpenAI from 'openai';
-import { Button, Flex, Spin } from "antd";
-import { content, getPrompt } from "./prompt";
-import { OnboardingData } from "../../../models";
-import { v4 } from "uuid";
-// import { AIGeneratedData } from "../../../models/AIGeneratedData";
+import { function_description } from "./functionDescription";
+import { getOnboardingData } from "./getOnboardingData";
 import Questionnaire from "../../../models/Questionnaire";
+
+import { v4 } from "uuid";
 
 import 'animate.css';
 
@@ -28,7 +28,7 @@ function Generate() {
   const [error, setError] = useState<any>(); 
   const [textIndex, setTextIndex] = useState(0);
 
-  const texts = [
+  const waitingRoomTexts = [
     'Spinning the Magic...',
     'Brewing Awesomeness...',
     'Stirring the Creativity...',
@@ -50,9 +50,6 @@ function Generate() {
     'Sculpting the Future...',
     'Waltzing with Innovation...',
   ];
-  
-
-  const [step, setStep] = useState<number>(0); 
 
   const navigate = useNavigate();
 
@@ -64,46 +61,45 @@ function Generate() {
 
   useEffect(() => {
     console.log("Fetching the survey data from mongo.");
-    async function getData() {
+    async function fetchOnboardingData() {
       try {
         const result = await onboarding_collection.find({ site_id: new Realm.BSON.ObjectId(site_id) });
         const data = result.length > 0 ? result[0] : {};
         setOnboardingData(data);
-        // getResponseFromGPT()
-        
-
       } catch (error) {
         console.error("Error fetching for Questionnaire data for this site:", error);
       }
     }
-  
-    getData();
+    fetchOnboardingData();
   }, []);
 
   async function getResponseFromGPT() {
-    const prompt = getPrompt(onboardingData);
+    const systemPrompt = "You’re the expert at designing sleek, professional, high-end, easy to read and very short text for legal firm website. Design one and provide the JSON of the following structure:"
+    const userPrompt = getOnboardingData(onboardingData);
 
-    setStep(1);
+    console.log("userPrompt: ", userPrompt);
+
     setLoading(true);
-      await openai.chat.completions.create({
-        messages: [{ role: 'user', content: prompt }], // 
-        model: 'gpt-3.5-turbo',
-        max_tokens: 1000,
-        temperature: 0.3,
-      }).then((res) => {
-        const finalContent = JSON.parse(res.choices[0].message.content ?? "{}");
-        setResponse(finalContent)
-        setLoading(false);
-        setStep(2);
-        // generate site data value
-        const siteData = getSiteData(onboardingData, finalContent);
-        updateSite(siteData);
+    await openai.chat.completions.create({
+      messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userPrompt }],
+      model: 'gpt-3.5-turbo-1106',
+      tools: function_description,
+      tool_choice: {"type": "function", "function": {"name": "generate_sections_text"}},
+      response_format: { "type": "json_object" }
+    }).then((res) => {
+      // TODO safeguard from tool_calls "undefined"
+      let finalContent: any = JSON.parse(res.choices[0].message.tool_calls![0].function.arguments);
+      console.log("FINAL CONTENT: ", finalContent);
+      setResponse(finalContent)
+      setLoading(false);
         
-        console.log(res);
-      }).catch((e) => {
-        setError(JSON.stringify(e));
-        console.warn(e);
-      })
+      // generate site data value
+      const siteData = getSiteData(finalContent);
+      updateSite(siteData);
+    }).catch((e) => {
+      setError(JSON.stringify(e));
+      console.warn(e);
+    })
   }
 
   useEffect(() => {
@@ -134,7 +130,7 @@ function Generate() {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setTextIndex(() => Math.floor(Math.random() * texts.length));
+      setTextIndex(() => Math.floor(Math.random() * waitingRoomTexts.length));
     }, 3500);
   
     return () => clearInterval(intervalId); // Cleanup the interval on component unmount
@@ -159,7 +155,7 @@ function Generate() {
           </>}
           {loading && (
             <h1 className="animate__bounceIn" style={{ fontSize: 25 }}>
-              <Spin size="large" style={{ marginRight: 10 }} /> {texts[textIndex]}
+              <Spin size="large" style={{ marginRight: 10 }} /> {waitingRoomTexts[textIndex]}
             </h1>
           )}
         </Flex>
@@ -213,7 +209,7 @@ function Generate() {
     </> );
 }
 
-function getSiteData({LawFirmName, LawyerDetails, ClientReviews}: Questionnaire, {HeroSection, PracticeAreas, ValuesPage, AboutUsPage}: any) {
+function getSiteData({NavBar, Hero, PracticeAreas, OurTeam, TheirValues, ReviewsAndTestimonials, AboutUs}: any) {
   
   // 1. Nav bar
   // 2. Hero section - name & 1-2 sentence description
@@ -228,14 +224,14 @@ function getSiteData({LawFirmName, LawyerDetails, ClientReviews}: Questionnaire,
     {
       section_id: v4(),
       template_id: 'TNavBar1',
-      name: LawFirmName,
+      name: NavBar,
     },
     // 2. Hero section = GENERATED
     {
       section_id: v4(),
       template_id: 'THero1',
-      heading: HeroSection["headline"],
-      subHeading: HeroSection["sub-headline"],
+      heading: Hero.headline,
+      subHeading: Hero.subHeadline,
     },
     // 3. Practice areas = GENERATED
     {
@@ -247,26 +243,25 @@ function getSiteData({LawFirmName, LawyerDetails, ClientReviews}: Questionnaire,
     {
       section_id: v4(),
       template_id: 'TValues1',
-      description: ValuesPage["pageDescription"],
-      valuesList: ValuesPage["values"],
+      description: TheirValues,
     },
     // 5. The team = QUESTION 9
     {
       section_id: v4(),
       template_id: 'TTeam1',
-      lawyerDetails: LawyerDetails?.split(";")
+      lawyerDetails: OurTeam
     },
     // 6. Reviews and testimonials = GENERATED
     {
       section_id: v4(),
       template_id: 'TReviews1',
-      reviews: ClientReviews?.split(";"),
+      reviews: ReviewsAndTestimonials,
     },
     // 7. About us = GENERATED
     {
       section_id: v4(),
       template_id: 'TAbout1',
-      paragraph: AboutUsPage["paragraph"]
+      paragraph: AboutUs
     },
     // 7. Contact us form / CTA = NO DATA
     {
