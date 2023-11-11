@@ -284,21 +284,12 @@ const Editor: React.FC = () => {
         <Row>
           <Col span={18}>
             <Flex justify='center' style={{maxWidth: LEFT_BAR_WIDTH}}>
-              <Link to='/'>
-              <Typography.Title level={5} style={{fontWeight: 400}}>
-              <span style={{fontWeight: 300, fontSize: 20, letterSpacing: 3, border: '2px solid #2345ff99', padding: '0px 12px', borderRadius: 100 }}>LEGIS</span>
-            </Typography.Title>
-            </Link>
+              {/* Left Side of navbar */}
             </Flex>
           </Col>
           <Col span={6}>
             <Flex justify='flex-end' gap={4}>
-              <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary"  onClick={onTestPrompt}>
-                Prompt
-              </Button>
-              <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary" icon={<RocketOutlined />}  onClick={onDeploy}>
-                Deploy
-              </Button>
+              {/* Right Side of navbar */}
             </Flex>
           </Col>
         </Row>
