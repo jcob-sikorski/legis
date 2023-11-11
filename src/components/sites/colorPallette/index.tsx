@@ -1,6 +1,6 @@
 import { Layout, Card, Row, Col, Button, List } from 'antd';
 
-import { valueColorMappping, colorHexMapping } from './colorMappings.tsx'
+import { valueColorMapping } from './colorMappings.tsx'
 import { useState, useEffect } from 'react';
 import Visualisation from '../editor/Visualisation.tsx';
 import { config } from '../../../config.tsx';
@@ -23,12 +23,11 @@ function ColorPallette() {
   const groups = ['Work Ethic', 'Clarity & Problem-solvers', 'Expert & Authority', 'Accessible', 'Gritty', 'Passionate', 'Compassionate & strong', 'Fearless', 'Reliability', 'Loyalty & trust', 'Integrity', 'Excellence', 'Collaboration & working together'];
 
   // Function to generate a random color
-  const getColor = (group: string, buttonNumber: number, i: number, j: number) => {
-    let basicColors = valueColorMappping[group];
-
-    let color1 = colorHexMapping[basicColors[0]][buttonNumber];
-    let color2 = colorHexMapping[basicColors[1]][buttonNumber];
-    let color3 = colorHexMapping[basicColors[2]][buttonNumber];
+  const getColor = (group: string, i: number) => {
+    // console.log(valueColorMapping);
+    let color1 = valueColorMapping[group][i][0];
+    let color2 = valueColorMapping[group][i][1];
+    let color3 = valueColorMapping[group][i][2];
 
     document.documentElement.style.setProperty('--legis-color-1', `${color1}`);
     document.documentElement.style.setProperty('--legis-color-2', `${color2}`);
@@ -85,19 +84,19 @@ function ColorPallette() {
         renderItem={(group, index) => (
           <List.Item>
             <Card title={group} style={{ width: "100%", backgroundColor: 'transparent', border: 'none' }}>
-              {[...Array(3)].map((_, i) => (
+              {[...Array(1)].map((_, i) => (
                 <Row gutter={16} key={i} justify={"center"}>
-                  {[...Array(4)].map((_, j) => (
+                  {[...Array(3)].map((_, j) => (
                     <Col key={j}>
                       <Button 
-                        onClick={() => handleClick(getColor(group, i * 4 + j, i, j))}
+                        onClick={() => handleClick(getColor(group, i))}
                         style={{ 
-                            width: 80, 
-                            height: 20, 
-                            borderRadius: 30, 
-                            margin: 10,
-                            background: getColor(group, i * 4 + j, i, j),
-                            border: 'none'
+                          width: 80, 
+                          height: 20,
+                          borderRadius: 30, 
+                          margin: 10,
+                          background: getColor(group, j),
+                          border: 'none'
                         }} 
                       />
                     </Col>
