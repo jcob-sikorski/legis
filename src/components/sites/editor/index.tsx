@@ -22,6 +22,7 @@ import { Content, Header } from 'antd/es/layout/layout';
 import { RocketOutlined } from '@ant-design/icons';
 import Sections from './Sections';
 import { getPromptForGeneration } from '../../../utils';
+import MainMenu from '../menu';
 
 // TODO: push the created site to mongodb
 // TODO: update the page every 5 seconds in mongodb
@@ -232,15 +233,7 @@ const Editor: React.FC = () => {
     return () => clearTimeout(timeoutId);
   }, [data]);
   
-  const sectionsComponent = <Sections 
-    variables={{
-      data,
-    }}
-    functions={{
-      onAddSection,
-      scrollToElement,
-    }}
-  />
+  const sectionsComponent = <MainMenu />
 
   const interfaceComponent = <Interface 
   setJson={setJson} 
@@ -291,21 +284,12 @@ const Editor: React.FC = () => {
         <Row>
           <Col span={18}>
             <Flex justify='center' style={{maxWidth: LEFT_BAR_WIDTH}}>
-              <Link to='/'>
-              <Typography.Title level={5} style={{fontWeight: 400}}>
-              <span style={{fontWeight: 300, fontSize: 20, letterSpacing: 3, border: '2px solid #2345ff99', padding: '0px 12px', borderRadius: 100 }}>LEGIS</span>
-            </Typography.Title>
-            </Link>
+              {/* Left Side of navbar */}
             </Flex>
           </Col>
           <Col span={6}>
             <Flex justify='flex-end' gap={4}>
-              <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary"  onClick={onTestPrompt}>
-                Prompt
-              </Button>
-              <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary" icon={<RocketOutlined />}  onClick={onDeploy}>
-                Deploy
-              </Button>
+              {/* Right Side of navbar */}
             </Flex>
           </Col>
         </Row>
@@ -315,11 +299,25 @@ const Editor: React.FC = () => {
       <Layout>
         {/* Left side */}
         <Flex  style={{ width: LEFT_BAR_WIDTH, background: '#EDF3F9', borderRight: borderStyle, position: 'fixed', height: '100vh', left: 0 }}>
-          {/* {sectionsComponent} */}
+          {sectionsComponent}
         </Flex>
 
         {/* Center */}
-        <Flex id='visualisation-container' className='editor-scrollbar' style={{maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`, overflowY: 'scroll', marginLeft: LEFT_BAR_WIDTH, marginRight: RIGHT_BAR_WIDTH, background: '#f9fafb', justifyContent: 'center'}}>
+        <Flex 
+          id='visualisation-container' 
+          className='editor-scrollbar' 
+          style={{
+            maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`, 
+            overflowY: 'scroll', 
+            marginLeft: LEFT_BAR_WIDTH, 
+            marginRight: RIGHT_BAR_WIDTH, 
+            background: '#f9fafb', 
+            justifyContent: 'center',
+            display: 'flex',
+            alignItems: 'flex-start',
+            width: '100%',
+            boxShadow: '12px 4px solid black'
+          }}>
           {visualisationComponent}
         </Flex>
 
