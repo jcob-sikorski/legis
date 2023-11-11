@@ -23,8 +23,6 @@ import { RocketOutlined } from '@ant-design/icons';
 import Sections from './Sections';
 import { getPromptForGeneration } from '../../../utils';
 
-import './index.css';
-
 // TODO: push the created site to mongodb
 // TODO: update the page every 5 seconds in mongodb
 

@@ -1,4 +1,4 @@
-import { Layout, Card, Row, Col, Button, List } from 'antd';
+import { Layout, Card, Row, Col, Button, List, Flex } from 'antd';
 
 import { valueColorMapping } from './colorMappings.tsx'
 import { useState, useEffect } from 'react';
@@ -72,12 +72,10 @@ function ColorPallette() {
   }, []); // Include site_id in the dependency array if it may change
 
   return (
-    <Layout style={{ display: 'flex', flexDirection: 'row', overflow: 'hidden' }}>
-      <div style={{ backgroundColor: '#262627', maxWidth: '1000px', width: '100%' }}>
-        Hello
+    <Layout style={{ display: 'flex', flexDirection: 'row' }}>
+      <Flex id='visualisation-container' className='editor-scrollbar' style={{maxHeight: '100vh', overflowY: 'scroll', background: '#f9fafb', justifyContent: 'center', width: '60vw'}}>
         <Visualisation data={data} mode='showcase' />
-        {/* <img src="https://ucarecdn.com/194ed0d0-5921-4684-8ae1-02bfd645d41c/_d65e891a18e343b9bccb0adb2a065aca.jpeg" alt="Your description" style={{ width: '100%', maxHeight: '100vh' }} /> */}
-      </div>
+      </Flex>
       <List
         style={{ flex: '1', overflowY: 'scroll', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
         dataSource={groups}
