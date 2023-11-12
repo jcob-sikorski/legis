@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Input, Button, Typography } from 'antd';
+import { Layout, Input, Button, Typography, message } from 'antd';
 import Site from '../../../models/Site';
 import { useRedux } from '../../../hooks/useRedux';
 import * as Realm from 'realm-web';
@@ -16,7 +16,8 @@ const SiteComponent: React.FC = () => {
   const [site] = useRedux('site');
 
   const [siteSettings, setSiteSettings] = useState<Site | {}>({});
-  const [fieldValues, setFieldValues] = useState<{ [key: string]: string | number | string[] }>({});
+  const [siteTitle, setSiteTitle] = useState<string>(site?.title);
+  const [siteDescription, setSiteDescription] = useState<string>(site?.description);
 
   const app = new Realm.App({ id: config.appId });
 
@@ -29,56 +30,43 @@ const SiteComponent: React.FC = () => {
   useEffect(() => {
     if (site) {
       setSiteSettings(site);
-      setFieldValues({});
-      for (const key of Object.keys(site)) {
-        setFieldValues((prevFieldValues) => ({
-          ...prevFieldValues,
-          [key]: site[key],
-        }));
-      }
     }
   }, [site]);
 
-  const updateField = async (fieldName: keyof Site, value: string | number | string[]) => {
-    const updatedValues = { ...fieldValues, [fieldName]: value };
-    setFieldValues(updatedValues);
+  const saveChanges = async () => {
+    if (siteTitle !== site?.title) {
+      try {
+        const updateResult = await site_collection.updateOne(
+          { _id: new Realm.BSON.ObjectId(site!._id) },
+          { $set: { title: siteTitle } }
+        );
+        console.log(`Updated ${updateResult.modifiedCount} document.`);
+      } catch (error) {
+        console.error('Error updating document:', error);
+      }   
+    }
+
+    if (siteDescription !== site?.description) {
+      try {
+        const updateResult = await site_collection.updateOne(
+          { _id: new Realm.BSON.ObjectId(site!._id) },
+          { $set: { description: siteDescription } }
+        );
+        console.log(`Updated ${updateResult.modifiedCount} document.`);
+      } catch (error) {
+        console.error('Error updating document:', error);
+      }   
+    }
+    message.success('Saved changes.');
   };
 
-  const updateDBField = async (fieldName: keyof Site) => {
-    try {
-      const updateResult = await site_collection.updateOne(
-        { _id: new Realm.BSON.ObjectId(site!._id) },
-        { $set: { [fieldName]: fieldValues[fieldName] } }
-      );
-      console.log(`Updated ${updateResult.modifiedCount} document.`);
+  const handleTitleChange = (newValue: string) => {
+    setSiteTitle(newValue);
+  };
 
-      if (fieldName === "cname" && site.cname !== fieldValues[fieldName]) {
-        const githubRepoResponse = await axios.put(`https://api.github.com/repos/${githubUsername}/${site!._id}/pages`, {
-          cname: fieldValues[fieldName] as string,
-          // https_enforced: true,
-          source: "gh-pages"
-        }, {
-          headers: {
-            'Authorization': `token ${githubToken}`,
-            'X-GitHub-Api-Version': '2022-11-28'
-          },
-        });
-        // TODO enfore https after successful DNS check
-        // const githubRepoResponse = await axios.put(`https://api.github.com/repos/${githubUsername}/${site!._id}/pages`, {
-        //   https_enforced: true,
-        //   source: "gh-pages"
-        // }, {
-        //   headers: {
-        //     'Authorization': `token ${githubToken}`,
-        //     'X-GitHub-Api-Version': '2022-11-28'
-        //   },
-        // });
-        console.log("Updated the repo: ", githubRepoResponse.data);
-      }
-    } catch (error) {
-      console.error('Error updating document:', error);
-    }
-  }
+  const handleDescriptionChange = (newValue: string) => {
+    setSiteDescription(newValue);
+  };
 
   return (
     <Layout hasSider style={{ minHeight: '100vh', display: 'flex' }}>
@@ -95,12 +83,18 @@ const SiteComponent: React.FC = () => {
           <Input
             style={{ borderRadius: 5, height: '60px', backgroundColor: 'white', marginBottom: 20 }}
             bordered={false}
+            value={siteTitle}
+            placeholder={site?.title}
+            onChange={(e) => handleTitleChange(e.target.value)}
           />
           <Title level={5} style={{fontWeight: 'normal', color: '#616161', marginBottom: 30}}>This site’s title (and what gets shown at the top of the browser window).</Title>
           <Title level={5} style={{fontWeight: 'normal', color: '#616161'}}>Description (required)</Title>
           <Input
             style={{ borderRadius: 5, height: '60px', backgroundColor: 'white', marginBottom: 20 }}
             bordered={false}
+            value={siteDescription}
+            placeholder={site?.description}
+            onChange={(e) => handleDescriptionChange(e.target.value)}
           />
           <Title level={5} style={{fontWeight: 'normal', color: '#616161', marginBottom: 30}}>A brief description of this site (and what’s usually used in bookmarks, search engine listings, etc.)</Title>
           <Title level={5} style={{fontWeight: 'normal', color: '#616161'}}>Action</Title>
@@ -123,6 +117,7 @@ const SiteComponent: React.FC = () => {
           <Button
             type="primary"
             className="custom-button"
+            onClick={saveChanges}
             style={{ height: 60, width: 200, marginTop: 10 }} // You can adjust the marginTop as needed
           >
             Save changes

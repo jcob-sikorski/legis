@@ -8,7 +8,7 @@ import { setSite } from '../../../redux/actions';
 
 export default function SiteCard({ data, onEdit, onClone, onDelete }: any) {
 
-    const { title, subtitle, description, deleted, image_url, site_url, _id} = data;
+    const { title, description, image_url} = data;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
