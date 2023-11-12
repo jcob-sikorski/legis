@@ -21,7 +21,7 @@ export let function_description: ChatCompletionTool[] = [
                 "type": "string",
               },
               "subHeadline": {
-                "description": "Eye-catching One Sentence Description of the company",
+                "description": "Eye-catching One Sentence Description of the company. Must be really exceptional and professional looking",
                 "type": "string",
               }
             }
@@ -36,7 +36,7 @@ export let function_description: ChatCompletionTool[] = [
                   "type": "string",
                 },
                 "practiceDescription": {
-                  "description": "Short description of a practice area",
+                  "description": "Short description of a practice area, easy to understand and professional",
                   "type": "string",
                 }
               }
@@ -52,7 +52,7 @@ export let function_description: ChatCompletionTool[] = [
                   "type": "string",
                 },
                 "details": {
-                  "description": "Short description of the team member",
+                  "description": "Short description of the team member, easy to understand and professional",
                   "type": "string",
                 }
               }
@@ -60,7 +60,7 @@ export let function_description: ChatCompletionTool[] = [
           },
           "TheirValues": {
             "type": "string",
-            "description": "Short eye-catching snippet based on Stand Out Factor, Firm Representation and Important Values",
+            "description": "Two exceptional sentences based on Stand Out Factor, Firm Representation and Important Values",
           },
           "ReviewsAndTestimonials": {
             "type": "array",
@@ -80,7 +80,7 @@ export let function_description: ChatCompletionTool[] = [
           },
           "AboutUs": {
             "type": "string",
-            "description": "Short eye-catching snippet based on Firm Strengths",
+            "description": "Two exceptional sentences based on Firm Strengths",
           },
         },
         "required": ["NavBar", "Hero", "Practice areas", "Our Team", "Their values", "Reviews and Testimonials", "About us"],
