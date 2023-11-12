@@ -5,7 +5,7 @@ import { RIGHT_BAR_WIDTH, DEV_START_JSON, NAV_BAR_HEIGHT, LEFT_BAR_WIDTH } from 
 // Window Components
 import Interface from './Interface';
 import Visualisation from './Visualisation';
-import { Link, useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import ChooseTemplateModal from './modals/ChooseTemplateModal';
 
 import ReactDOMServer from 'react-dom/server';
@@ -53,6 +53,7 @@ const Editor: React.FC = () => {
 
   const dummyRef = useRef<any>(null);
   const containerRef = useRef(null);
+  const navigate = useNavigate();
 
   function processJson(json: string) {
     // If is able to parse json, then parse it and set to data. If not, display error in console, but don't crash app.
@@ -177,7 +178,24 @@ const Editor: React.FC = () => {
       console.log("Pushed HTML content to GitHub repository:", response.data);
   
       console.log("GitHub Pages deployment triggered.");
-      
+
+      console.log("Pushing the site to mongo.");
+
+      try {
+        const result = await site_collection.updateOne(
+          { _id: new Realm.BSON.ObjectId(site_id) }, // Specify the query to find the site by site_id
+          {
+            $set: {
+              site_url: "https://legisbiz.github.io/" + site_id,
+              status: 1,
+            },
+          }
+        );        
+        console.log("Updated site_url and status to deployed:", JSON.stringify(result));
+      } catch (error) {
+        console.error("Error updating site:", error);
+      }
+      navigate("/");
     } catch (error) {
       setIsDeploying(false)
       console.error("Error pushing content and triggering deployment.");
@@ -292,7 +310,16 @@ const Editor: React.FC = () => {
           </Col>
           <Col span={6}>
             <Flex justify='flex-end' gap={4}>
-              {/* Right Side of navbar */}
+              <Col span={6}>
+                <Flex justify='flex-end' gap={4}>
+                  <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary"  onClick={onTestPrompt}>
+                    Prompt
+                  </Button>
+                  <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary" icon={<RocketOutlined />}  onClick={onDeploy}>
+                    Deploy
+                  </Button>
+                </Flex>
+              </Col>
             </Flex>
           </Col>
         </Row>

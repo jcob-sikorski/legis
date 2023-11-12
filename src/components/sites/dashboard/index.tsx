@@ -77,8 +77,8 @@ export const Dashboard: React.FC = () => {
       description: "Your Site Description",
       deleted: 0,
       image_url: "https://picsum.photos/200/300",
-      site_url: "https://legisbiz.github.io/" + newId,
-      status: 1,
+      site_url: "",
+      status: 0,
       share_image_url: '',
       favicon_url: '',
       cname: ''
@@ -106,12 +106,10 @@ export const Dashboard: React.FC = () => {
       console.log("Created GitHub repository:", githubRepoResponse.data);
   
       setSites((prevSites) => [...prevSites, {
-            ...newSite,
-            user_id: newSite.user_id.toString(),
-            _id: site_id,
-          }]);
-
-          // editSite(site_id);
+        ...newSite,
+        user_id: newSite.user_id.toString(),
+        _id: site_id,
+      }]);
     } catch (error) {
       console.error("Error creating site:", error);
     }
