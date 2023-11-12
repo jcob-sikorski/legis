@@ -207,26 +207,26 @@ const Editor: React.FC = () => {
     getData();
   }, []); // Include site_id in the dependency array if it may change
   
+  const updateSite = async () => {
+    if (data) {
+      try {
+        const result = await site_collection.updateOne(
+          { _id: new Realm.BSON.ObjectId(site_id) }, // Specify the query to find the site by site_id
+          {
+            $set: { bodyTemplate: data }, // Use $set to update the data field
+          }
+        );
+
+        console.log("Updated site:", JSON.stringify(result));
+      } catch (error) {
+        console.error("Error updating site:", error);
+      }
+    }
+  };
 
   React.useEffect(() => {
     console.log("Pushing the site to mongo.");
-    const updateSite = async () => {
-      if (data) {
-        try {
-          const result = await site_collection.updateOne(
-            { _id: new Realm.BSON.ObjectId(site_id) }, // Specify the query to find the site by site_id
-            {
-              $set: { bodyTemplate: data }, // Use $set to update the data field
-            }
-          );
-  
-          console.log("Updated site:", JSON.stringify(result));
-        } catch (error) {
-          console.error("Error updating site:", error);
-        }
-      }
-    };
-  
+    
     // Set a delay of 5 seconds before updating the site
     const timeoutId = setTimeout(updateSite, 5000);
   
@@ -283,7 +283,7 @@ const Editor: React.FC = () => {
 
   return (
     <Layout style={{width: '100%'}}>
-      <Header style={{ padding: '4px 4px 4px 0px',  zIndex: 10000000, borderBottom: borderStyle, width: '100%', background: '#f0f1f9', height: NAV_BAR_HEIGHT, position: 'fixed' }}>
+      <Header style={{ padding: '4px 4px 4px 0px',  zIndex: 10, borderBottom: borderStyle, width: '100%', background: '#f0f1f9', height: NAV_BAR_HEIGHT, position: 'fixed' }}>
         <Row>
           <Col span={18}>
             <Flex justify='center' style={{maxWidth: LEFT_BAR_WIDTH}}>

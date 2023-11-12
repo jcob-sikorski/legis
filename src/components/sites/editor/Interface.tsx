@@ -1,4 +1,4 @@
-import { Button, Cascader, Checkbox, DatePicker, Flex, Form, Input, InputNumber, Layout, Radio, Select, Space, Switch, TreeSelect, Typography } from 'antd';
+import { Button, Cascader, Checkbox, Col, DatePicker, Flex, Form, Input, InputNumber, Layout, Radio, Row, Select, Space, Switch, TreeSelect, Typography } from 'antd';
 import Title from 'antd/es/typography/Title';
 import TextArea from 'antd/es/input/TextArea';
 import { DEV_JSON_TO_INJECT, RIGHT_BAR_WIDTH } from './const';
@@ -81,7 +81,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       let label: string = field.label;
       let id: string = field.id;
 
-      const labelComponent = <Typography.Title color='gray' type='secondary' level={5} style={{margin: '15px 0 0 0', padding: 0, textAlign: 'center', width: '100%'}} >
+      const labelComponent = <Typography.Title color='#333' level={5} style={{margin: '15px 0 0 0', padding: 0, textAlign: 'center', width: '100%', fontWeight: 500}} >
       {label.toUpperCase()}
       </Typography.Title>
 
@@ -104,7 +104,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
           return <>
           {labelComponent}
           <Form.Item name={id} style={itemStyle}>
-          <Radio.Group>
+          <Radio.Group style={{display: 'flex', justifyContent: 'center'}}>
             <Radio value="1">Yes</Radio>
             <Radio value="">No</Radio>
           </Radio.Group>
@@ -179,6 +179,14 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
         >
           {/* {JSON.stringify(fields)} */}
           {fields && fields.map((field: JSONProfileField) => switchField(field))}
+          <Row >
+            <Col span={12}>
+              <Button style={{backgroundColor: '#090', width: '100%', color: 'white'}}>Save changes</Button>
+            </Col>
+            <Col span={12}>
+              <Button style={{backgroundColor: '#c00', width: '100%', color: 'white'}}>Cancel</Button>
+            </Col>
+          </Row>
         </Form>)}
 </>);
 }
