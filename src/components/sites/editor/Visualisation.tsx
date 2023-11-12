@@ -85,11 +85,18 @@ function Visualisation({
 
     const hasNoSections = checkIfNoSections();
 
+    function scrollToSection(section: any) {
+        setFollowedSectionId(section.section_id);
+        setFollowingCount(followingCount + 1);
+    }
+
     async function onSectionClick(section: any) {
         setSelectedSectionId((_: string) => section.section_id);
         setSelectedTemplateId((_: string) => section.template_id);
+        
+        scrollToSection(section);
     }
-
+    
     async function onSectionDuplicate(sectionToDuplicate: any) {
         if (data?.length > 0) {
             let newData: any[] = [];
@@ -103,9 +110,10 @@ function Visualisation({
                 }
             })
             setData(newData);
+            scrollToSection(sectionToDuplicate);
         }
     }
-
+    
     async function onSectionDelete(sectionToDelete: any) {
         if (data?.length > 0) {
             setData(data?.filter((section: any) => section.section_id !== sectionToDelete.section_id));
@@ -132,9 +140,10 @@ function Visualisation({
 
             setData(d);
 
-            setFollowedSectionId(sectionToMove.section_id);
-            setFollowingDirection(direction);
-            setFollowingCount(followingCount + 1);
+            scrollToSection(sectionToMove);
+            // setFollowedSectionId(sectionToMove.section_id);
+            // setFollowingDirection(direction);
+            // setFollowingCount(followingCount + 1);
 
            
 
