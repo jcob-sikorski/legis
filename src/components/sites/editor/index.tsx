@@ -21,7 +21,7 @@ import Sider from 'antd/es/layout/Sider';
 import { Content, Header } from 'antd/es/layout/layout';
 import { RocketOutlined } from '@ant-design/icons';
 import Sections from './Sections';
-import { getPromptForGeneration } from '../../../utils';
+import { getPromptForGeneration, updateCssStyles } from '../../../utils';
 import MainMenu from '../menu';
 
 // TODO: push the created site to mongodb
@@ -42,6 +42,8 @@ const Editor: React.FC = () => {
 
   const [json, setJson] = useState(DEV_START_JSON);
   const [data, setData] = useState<any[]>([]);
+  
+  const [colors, setColors] = useState<string[]>([]);
 
   const [selectedSectionId, setSelectedSectionId] = useState<string>("");
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>("");
@@ -123,6 +125,12 @@ const Editor: React.FC = () => {
     getPromptForGeneration(surveyData);
    }
 
+   useEffect(() => {
+    if (colors?.length > 0) {
+      updateCssStyles(colors);
+    }
+   }, [colors])
+
   useEffect(() => {
     if (isDeploying) {
       deploy();
@@ -152,6 +160,12 @@ const Editor: React.FC = () => {
           
           <!-- tailwindcss -->
           <script src="https://cdn.tailwindcss.com"></script>
+
+          <style>
+            .color-1 {background-color: ${colors[0]} !important;}
+            .color-2 {background-color: ${colors[1]} !important;}
+            .color-3 {background-color: ${colors[2]} !important;}
+          </style>
         </head>
         <body>
           ${htmlBodyString}
@@ -217,6 +231,14 @@ const Editor: React.FC = () => {
         else {
           console.log("Site doesn't have the bodyTemplate yet.");
         }
+
+        if (result.length > 0 && result[0].hasOwnProperty("template_colors")) {
+          console.log("Found a site with template_colors:", result[0].template_colors);
+          setColors(result[0].template_colors);
+        }
+      else {
+        console.log("Site doesn't have the template_colors yet.");
+      }
       } catch (error) {
         console.error("Error searching for this site:", error);
       }
