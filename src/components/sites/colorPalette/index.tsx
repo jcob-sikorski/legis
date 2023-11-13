@@ -1,4 +1,4 @@
-import { Layout, Card, Row, Col, Button, List, Flex, Space } from 'antd';
+import { Layout, Card, Row, Col, List, Flex, Button } from 'antd';
 
 import { valueColorMapping } from './colorMappings.tsx'
 import { useState, useEffect } from 'react';
@@ -8,7 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import * as Realm from "realm-web";
 
-const SIDE_BAR_WIDTH = 450;
+const SIDE_BAR_WIDTH = 600;
 const DEFAULT_COLORS = ["#5D74CF", "#8D88C7", "#4D4D4D"]
 
 function ColorPalette() {
@@ -16,14 +16,14 @@ function ColorPalette() {
   const {site_id} = useParams();
 
   const app = new Realm.App({ id: config.appId });
-  const currentUserID = app.currentUser!.id;
+
   const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
   const site_collection = mongodb.db("legis").collection("Site");
 
   const [data, setData] = useState<any>();
   const [buttonColor, setButtonColor] = useState("");
 
-  const groups = ['Work Ethic', 'Clarity & Problem-solvers', 'Expert & Authority', 'Accessible', 'Gritty', 'Passionate', 'Compassionate & strong', 'Fearless', 'Reliability', 'Loyalty & trust', 'Integrity', 'Excellence', 'Collaboration & working together'];
+  const groups = ['Monochromatic', 'Neutral', 'Bright', 'Bold'];
 
   function updateCssStyles(colors: string[]) {
     document.documentElement.style.setProperty('--legis-color-1', `${colors[0]}`);
@@ -31,11 +31,10 @@ function ColorPalette() {
     document.documentElement.style.setProperty('--legis-color-3', `${colors[2]}`);
   }
 
-  const getColor = (group: string, i: number) => {
-    let color1 = valueColorMapping[group][i][0];
-    let color2 = valueColorMapping[group][i][1];
-    let color3 = valueColorMapping[group][i][2];
-
+  const getColor = (group: string, index: number) => {
+    let color1 = valueColorMapping[group][index][0];
+    let color2 = valueColorMapping[group][index][1];
+    let color3 = valueColorMapping[group][index][2];
     return `linear-gradient(to right, ${color1} 33%, ${color2} 33%, ${color2} 66%, ${color3} 66%)`;
   }
 
@@ -107,7 +106,7 @@ function ColorPalette() {
         <List
           style={{ 
             flex: '1', 
-            overflowY: 'scroll', 
+            // overflowY: 'scroll', 
             height: '100vh', 
             display: 'flex', 
             flexDirection: 'column', 
@@ -116,29 +115,27 @@ function ColorPalette() {
           }}
           dataSource={groups}
           renderItem={(group, index) => (
-            <List.Item>
               <Card title={group} style={{ width: "100%", backgroundColor: 'transparent', border: 'none' }}>
-                {[...Array(1)].map((_, i) => (
+                {[...Array(2)].map((_, i) => (
                   <Row gutter={16} key={i} justify={"center"}>
-                    {[...Array(3)].map((_, j) => (
+                    {[...Array(4)].map((_, j) => (
                       <Col key={j}>
-                        <Button 
-                          onClick={() => handleClick(getColor(group, i), index*10+j)}
+                        <button 
+                          onClick={() => handleClick(getColor(group, i*4+j), index*10 + i*4+j)}
                           style={{ 
                             width: 80, 
                             height: 20,
-                            borderRadius: 30, 
-                            margin: 10,
-                            background: getColor(group, j),
-                            border: index*10+j === selectedButtonIndex ? 'solid pink' : 'none'
-                          }} 
+                            marginBottom: 10,
+                            background: getColor(group, i*4+j),
+                            border: index*10 + i*4+j === selectedButtonIndex ? 'thin pink' : 'none',
+                            borderRadius: 5
+                          }}
                         />
                       </Col>
                     ))}
                   </Row>
                 ))}
               </Card>
-            </List.Item>
           )}
         />
       </div>
