@@ -104,11 +104,6 @@ function ColorPalette() {
         <Visualisation data={data} mode='showcase' />
       </Flex>
       <div style={{width: '100%', maxWidth: SIDE_BAR_WIDTH, position: 'absolute', right: 0}}>
-        <Flex align='center' justify='center' style={{padding: 10}}>
-          <Button onClick={onNext} style={{background: '#000', color: '#fff'}} size='large'>
-            NEXT
-          </Button>
-        </Flex>
         <List
           style={{ 
             flex: '1', 
@@ -144,6 +139,20 @@ function ColorPalette() {
               </Card>
           )}
         />
+         <Button
+          type="primary"
+          onClick={onNext}
+          className="custom-button"
+          style={{
+            width: 100,
+            height: 50,
+            position: 'absolute',
+            right: 10,
+            bottom: 0
+          }}
+        >
+          Next
+        </Button>
       </div>
     </Layout>
   );
