@@ -182,7 +182,7 @@ function Survey() {
         >
           {page === 0 && (
             <div>
-              <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>What is the name of your law firm?</div>
+              <div style={{ fontSize: '30px', fontWeight: 'bolder' }}>What is the name of your law firm?</div>
               <div style={{ borderBottom: "2px solid black" }}>
                 <Input
                   value={fieldValues?.LawFirmName}
@@ -191,7 +191,7 @@ function Survey() {
                     backgroundColor: "transparent",
                     color: "black",
                     borderColor: "transparent",
-                    fontSize: 40
+                    fontSize: 20
                   }}
                   bordered={false}
                 />
@@ -200,7 +200,7 @@ function Survey() {
           )}
           {page === 1 && (
             <div>
-              <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>What is your main practice area? (e.g., Family Law)</div>
+              <div style={{ fontSize: '30px', fontWeight: 'bolder' }}>What is your main practice area? (e.g., Family Law)</div>
               <div className="custom-select">
                 <Select 
                   placeholder="Select your main practice area" 
@@ -255,7 +255,7 @@ function Survey() {
           )}
           {page === 2 && (
             <div>
-              <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>Write a one-sentence description of your law firm</div>
+              <div style={{ fontSize: '30px', fontWeight: 'bolder' }}>Write a one-sentence description of your law firm</div>
               <div style={{ borderBottom: "2px solid black" }}>
                 <Input
                   value={fieldValues?.OneSentenceDescription}
@@ -264,7 +264,7 @@ function Survey() {
                     backgroundColor: "transparent",
                     color: "black",
                     borderColor: "transparent",
-                    fontSize: 40
+                    fontSize: 20
                   }}
                   bordered={false}
                 />
@@ -273,7 +273,7 @@ function Survey() {
           )}
           {page === 3 && (
             <div>
-              <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>What smaller practice areas do you specialize in? (E.g., Divorce settlement, custody claims, drafting wills, etc)</div>
+              <div style={{ fontSize: '30px', fontWeight: 'bolder' }}>What smaller practice areas do you specialize in? (E.g., Divorce settlement, custody claims, drafting wills, etc)</div>
               <div style={{ borderBottom: "2px solid black" }}>
                 <Input
                   value={fieldValues?.SpecializedPracticeAreas}
@@ -282,7 +282,7 @@ function Survey() {
                     backgroundColor: "transparent",
                     color: "black",
                     borderColor: "transparent",
-                    fontSize: 40
+                    fontSize: 20
                   }}
                   bordered={false}
                 />
@@ -291,7 +291,7 @@ function Survey() {
           )}
           {page === 4 && (
             <div>
-              <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>How does your law firm stand out?</div>
+              <div style={{ fontSize: '30px', fontWeight: 'bolder' }}>How does your law firm stand out?</div>
               <div className="custom-checkbox">
                 <Checkbox.Group 
                   value={Array.isArray(fieldValues?.StandOutFactor) ? fieldValues?.StandOutFactor : [fieldValues?.StandOutFactor]}
@@ -315,7 +315,7 @@ function Survey() {
           )}
           {page === 5 && (
             <div>
-              <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>Which of these statements best represents your law firm?</div>
+              <div style={{ fontSize: '30px', fontWeight: 'bolder' }}>Which of these statements best represents your law firm?</div>
               <Radio.Group 
                 className="custom-radio" 
                 value={fieldValues?.FirmRepresentation}
@@ -338,7 +338,7 @@ function Survey() {
           )}
           {page === 6 && (
             <div>
-              <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>What values are most important at your law firm?</div>
+              <div style={{ fontSize: '30px', fontWeight: 'bolder' }}>What values are most important at your law firm?</div>
               <div className="custom-checkbox">
                 <Checkbox.Group 
                   value={Array.isArray(fieldValues?.ImportantValues) ? fieldValues?.ImportantValues : [fieldValues?.ImportantValues]}
@@ -365,7 +365,7 @@ function Survey() {
           )}
           {page === 7 && (
             <div>
-              <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>Tell us the strength of your firm, what are your experience levels and what you bring to the table.</div>
+              <div style={{ fontSize: '30px', fontWeight: 'bolder' }}>Tell us the strength of your firm, what are your experience levels and what you bring to the table.</div>
               <div style={{ borderBottom: "2px solid black" }}>
                 <Input
                   value={fieldValues?.FirmStrengths}
@@ -374,7 +374,7 @@ function Survey() {
                     backgroundColor: "transparent",
                     color: "black",
                     borderColor: "transparent",
-                    fontSize: 40
+                    fontSize: 20
                   }}
                   bordered={false}
                 />
@@ -383,7 +383,7 @@ function Survey() {
           )}
           {page === 8 && (
             <div>
-              <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>Name your lawyers and write a one-sentence description about your lawyer.</div>
+              <div style={{ fontSize: '30px', fontWeight: 'bolder' }}>Name your lawyers and write a one-sentence description about your lawyer.</div>
               <div style={{ borderBottom: "2px solid black" }}>
                 <Input
                   value={fieldValues?.LawyerDetails}
@@ -392,7 +392,7 @@ function Survey() {
                     backgroundColor: "transparent",
                     color: "black",
                     borderColor: "transparent",
-                    fontSize: 40
+                    fontSize: 20
                   }}
                   bordered={false}
                 />
@@ -401,7 +401,7 @@ function Survey() {
           )}
           {page === 9 && (
             <div>
-              <div style={{ fontSize: '50px', fontWeight: 'bolder' }}>Write 3 good reviews given by your clients. Separate each review by a comma.</div>
+              <div style={{ fontSize: '30px', fontWeight: 'bolder' }}>Write 3 good reviews given by your clients. Separate each review by a comma.</div>
               <div style={{ borderBottom: "2px solid black" }}>
                 <Input
                   value={fieldValues?.ClientReviews}
@@ -410,7 +410,7 @@ function Survey() {
                     backgroundColor: "transparent",
                     color: "black",
                     borderColor: "transparent",
-                    fontSize: 40
+                    fontSize: 20
                   }}
                   bordered={false}
                 />
