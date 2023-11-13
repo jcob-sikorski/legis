@@ -11,4 +11,5 @@ export default interface Site {
   share_image_url?: string;
   favicon_url?: string;
   cname?: string;
+  template_colors? : string[]
 }

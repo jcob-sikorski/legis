@@ -15,7 +15,6 @@ const { Title } = Typography;
 const SiteComponent: React.FC = () => {
   const [site] = useRedux('site');
 
-  const [siteSettings, setSiteSettings] = useState<Site | {}>({});
   const [siteTitle, setSiteTitle] = useState<string>(site?.title);
   const [siteDescription, setSiteDescription] = useState<string>(site?.description);
 
@@ -23,15 +22,6 @@ const SiteComponent: React.FC = () => {
 
   const mongodb = app.currentUser!.mongoClient('mongodb-atlas');
   const site_collection = mongodb.db('legis').collection('Site');
-
-  const githubUsername = config.githubUsername;
-  const githubToken = config.githubToken;
-
-  useEffect(() => {
-    if (site) {
-      setSiteSettings(site);
-    }
-  }, [site]);
 
   const saveChanges = async () => {
     if (siteTitle !== site?.title) {

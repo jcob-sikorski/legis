@@ -19,9 +19,6 @@ const Overview: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [domainName, setDomainName] = useState('');
 
-  const [siteSettings, setSiteSettings] = useState<Site | {}>({});
-  const [fieldValues, setFieldValues] = useState<{ [key: string]: string | number | string[] }>({});
-
   const app = new Realm.App({ id: config.appId });
 
   const mongodb = app.currentUser!.mongoClient('mongodb-atlas');
@@ -32,7 +29,6 @@ const Overview: React.FC = () => {
 
   useEffect(() => {
     if (site) {
-      setSiteSettings(site);
       setDomainName(site.cname);
     }
   }, [site]);

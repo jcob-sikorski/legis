@@ -39,47 +39,6 @@ const Media: React.FC = () => {
     }
   }, [site]);
 
-  const updateField = async (fieldName: keyof Site, value: string | number | string[]) => {
-    const updatedValues = { ...fieldValues, [fieldName]: value };
-    setFieldValues(updatedValues);
-  };
-
-  const updateDBField = async (fieldName: keyof Site) => {
-    try {
-      const updateResult = await site_collection.updateOne(
-        { _id: new Realm.BSON.ObjectId(site!._id) },
-        { $set: { [fieldName]: fieldValues[fieldName] } }
-      );
-      console.log(`Updated ${updateResult.modifiedCount} document.`);
-
-      if (fieldName === "cname" && site.cname !== fieldValues[fieldName]) {
-        const githubRepoResponse = await axios.put(`https://api.github.com/repos/${githubUsername}/${site!._id}/pages`, {
-          cname: fieldValues[fieldName] as string,
-          // https_enforced: true,
-          source: "gh-pages"
-        }, {
-          headers: {
-            'Authorization': `token ${githubToken}`,
-            'X-GitHub-Api-Version': '2022-11-28'
-          },
-        });
-        // TODO enfore https after successful DNS check
-        // const githubRepoResponse = await axios.put(`https://api.github.com/repos/${githubUsername}/${site!._id}/pages`, {
-        //   https_enforced: true,
-        //   source: "gh-pages"
-        // }, {
-        //   headers: {
-        //     'Authorization': `token ${githubToken}`,
-        //     'X-GitHub-Api-Version': '2022-11-28'
-        //   },
-        // });
-        console.log("Updated the repo: ", githubRepoResponse.data);
-      }
-    } catch (error) {
-      console.error('Error updating document:', error);
-    }
-  }
-
   return (
     <Layout hasSider style={{ minHeight: '100vh', display: 'flex' }}>
       <Sidebar />
