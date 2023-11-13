@@ -98,3 +98,9 @@ export function getPromptForGeneration(onboardingData: OnboardingData) {
   `
   console.log("prompt: ", prompt)
 }
+
+export function updateCssStyles(colors: string[]) {
+  document.documentElement.style.setProperty('--legis-color-1', `${colors[0]}`);
+  document.documentElement.style.setProperty('--legis-color-2', `${colors[1]}`);
+  document.documentElement.style.setProperty('--legis-color-3', `${colors[2]}`);
+}
