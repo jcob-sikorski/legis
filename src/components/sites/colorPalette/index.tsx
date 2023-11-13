@@ -9,7 +9,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import * as Realm from "realm-web";
 
 const SIDE_BAR_WIDTH = 600;
-const DEFAULT_COLORS = ["#5D74CF", "#8D88C7", "#4D4D4D"]
 
 function ColorPalette() {
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(-1);
@@ -21,7 +20,7 @@ function ColorPalette() {
   const site_collection = mongodb.db("legis").collection("Site");
 
   const [data, setData] = useState<any>();
-  const [buttonColor, setButtonColor] = useState("");
+  const [palette, setPalette] = useState<string[]>(["#5D74CF", "#8D88C7", "#4D4D4D"]);
 
   const groups = ['Monochromatic', 'Neutral', 'Bright', 'Bold'];
 
@@ -31,29 +30,26 @@ function ColorPalette() {
     document.documentElement.style.setProperty('--legis-color-3', `${colors[2]}`);
   }
 
-  const getColor = (group: string, index: number) => {
+  const renderButtonColor = (group: string, index: number) => {
     let color1 = valueColorMapping[group][index][0];
     let color2 = valueColorMapping[group][index][1];
     let color3 = valueColorMapping[group][index][2];
     return `linear-gradient(to right, ${color1} 33%, ${color2} 33%, ${color2} 66%, ${color3} 66%)`;
   }
 
-  const handleClick = (color: string, index: number) => {
+  const getPalette = (group: string, index: number) => {
+    return valueColorMapping[group][index];
+  }
+
+  const handleClick = (color: string[], index: number) => {
     setSelectedButtonIndex(index);
-    setButtonColor(color);
-    console.log("SELECTED BUTTON INDEX: ", index);
+    setPalette(color);
+    console.log("SELECTED COLOR: ", color);
   };
 
   useEffect(() => {
-    if (buttonColor) {
-      const regex = /#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})/g;
-      const matches = buttonColor.match(regex);
-      const uniqueMatches = Array.from(new Set(matches));
-      updateCssStyles(uniqueMatches);
-    } else {
-      updateCssStyles(DEFAULT_COLORS);
-    }
-  }, [buttonColor]);
+    updateCssStyles(palette);
+  }, [palette]);
 
   useEffect(() => {
     console.log("Fetching the site from mongo.");
@@ -79,7 +75,17 @@ function ColorPalette() {
 
   const navigate = useNavigate();
 
-  function onNext() {
+  async function onNext() {
+    try {
+      const updateResult = await site_collection.updateOne(
+        { _id: new Realm.BSON.ObjectID(site_id) },
+        { $set: { template_colors: palette } }
+      );
+      console.log(`Updated ${updateResult.modifiedCount} document.`);
+    } catch (error) {
+      console.error('Error updating document in MongoDB:', error);
+    }
+
     navigate(`/editor/${site_id}`);
   }
 
@@ -121,12 +127,12 @@ function ColorPalette() {
                     {[...Array(4)].map((_, j) => (
                       <Col key={j}>
                         <button 
-                          onClick={() => handleClick(getColor(group, i*4+j), index*10 + i*4+j)}
+                          onClick={() => handleClick(getPalette(group, i*4+j), index*10 + i*4+j)}
                           style={{ 
                             width: 80, 
                             height: 20,
                             marginBottom: 10,
-                            background: getColor(group, i*4+j),
+                            background: renderButtonColor(group, i*4+j),
                             border: index*10 + i*4+j === selectedButtonIndex ? 'thin pink' : 'none',
                             borderRadius: 5
                           }}
