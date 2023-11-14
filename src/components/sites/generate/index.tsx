@@ -12,6 +12,7 @@ import Questionnaire from "../../../models/Questionnaire";
 import { v4 } from "uuid";
 
 import 'animate.css';
+import { useApp } from "../../RealmApp";
 
 const openai = new OpenAI({
     apiKey: config.openaiApiKey,
@@ -53,7 +54,7 @@ function Generate() {
 
   const navigate = useNavigate();
 
-  const app = new Realm.App({ id: config.appId }); 
+  const app: any = useApp();
 
   const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
   const onboarding_collection = mongodb.db("legis").collection("Questionnaire");    

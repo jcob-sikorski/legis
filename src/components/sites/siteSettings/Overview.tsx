@@ -8,6 +8,7 @@ import axios from 'axios';
 
 import Sidebar from '../menu';
 import SettingsMenu from './SettingsMenu';
+import { useApp } from '../../RealmApp';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
@@ -19,7 +20,7 @@ function Overview() {
   const [visible, setVisible] = useState<boolean>(false);
   const [domainName, setDomainName] = useState('');
 
-  const app = new Realm.App({ id: config.appId });
+  const app: any = useApp();
 
   const mongodb = app.currentUser!.mongoClient('mongodb-atlas');
   const site_collection = mongodb.db('legis').collection('Site');

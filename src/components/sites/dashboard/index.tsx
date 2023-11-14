@@ -5,6 +5,7 @@ import {
 import { Layout, Menu, Button, theme, Row, Col, Flex } from 'antd';
 import SiteCard from './SiteCard';
 import * as Realm from "realm-web";
+import { useApp } from "./../../RealmApp";
 import Site from '../../../models/Site';
 import Sidebar from '../menu';
 import { config } from "../../../config";
@@ -25,7 +26,7 @@ export const Dashboard: React.FC = () => {
     token: { colorBgContainer },
   } = theme.useToken();
 
-  const app = new Realm.App({ id: config.appId });
+  const app: any = useApp();
   
   const currentUserID = app.currentUser!.id;
 

@@ -25,26 +25,26 @@ const RequireAuth: React.FC<{ children: React.ReactElement, user: any }> = ({ ch
 };
 
 function App() {
-  const [user, setUser] = useState<any>(null);
+  // const [user, setUser] = useState<any>(null);
   
-  useEffect(() => {
-    // const email = "joe@gmail.com";
-    // const password = "123456";
-    const email = "";
-    const password = "";
+  // useEffect(() => {
+  //   // const email = "joe@gmail.com";
+  //   // const password = "123456";
+  //   const email = "";
+  //   const password = "";
 
-    const app = new Realm.App({ id: config.appId });
+  //   const app = new Realm.App({ id: config.appId });
 
-    const credentials = Realm.Credentials.emailPassword(email, password);
-    app.logIn(credentials)
-      .then(user => {
-        console.log("User logged in successfully.");
-        setUser(user);
-      })
-      .catch(error => {
-        console.error("Error logging in the user:", error);
-      });
-    }, []);
+  //   const credentials = Realm.Credentials.emailPassword(email, password);
+  //   app.logIn(credentials)
+  //     .then(user => {
+  //       console.log("User logged in successfully.");
+  //       setUser(user);
+  //     })
+  //     .catch(error => {
+  //       console.error("Error logging in the user:", error);
+  //     });
+  //   }, []);
 
   return (
     <AppProvider appId={config.appId} user={user}>

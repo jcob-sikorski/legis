@@ -1,5 +1,5 @@
 import { Layout, Card, Row, Col, List, Flex, Button } from 'antd';
-
+import { useApp } from "./../../RealmApp.tsx";
 import { valueColorMapping } from './colorMappings.tsx'
 import { useState, useEffect } from 'react';
 import Visualisation from '../editor/Visualisation.tsx';
@@ -14,7 +14,7 @@ function ColorPalette() {
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(-1);
   const {site_id} = useParams();
 
-  const app = new Realm.App({ id: config.appId });
+  const app: any = useApp();
 
   const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
   const site_collection = mongodb.db("legis").collection("Site");

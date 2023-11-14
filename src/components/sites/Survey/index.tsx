@@ -13,6 +13,7 @@ import { MainPracticeArea } from './MainPracticeArea';
 import { SurveyInput } from './SurveyInput';
 import { FirmRepresentation } from './FirmRepresentation';
 import { CheckboxGroup } from './CheckboxGroup';
+import { useApp } from '../../RealmApp';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -39,9 +40,7 @@ function Survey() {
   const [animationProps, setAnimationProps] = useSpring(() => ({
   }));
 
-  const app = new Realm.App({ id: config.appId });
-  
-  const currentUserID = app.currentUser!.id;
+  const app: any = useApp();
 
   const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
   const survey_collection = mongodb.db("legis").collection("Questionnaire");
