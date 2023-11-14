@@ -1,10 +1,8 @@
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LogIn from "./sites/logIn";
 import SignUp from "./sites/signUp";
 import { config } from "./../config";
 import { AppProvider, useApp } from "./RealmApp";
-import * as Realm from "realm-web";
-// import mixpanel from 'mixpanel-browser';
-// import { inject } from '@vercel/analytics';
 import Dashboard from "./sites/dashboard";
 import Editor from "./sites/editor";
 import Survey from "./sites/Survey";
@@ -20,7 +18,7 @@ const RequireAuth: React.FC<{ children: React.ReactElement }> = ({ children }) =
   const app: any = useApp();
 
   if (!app.currentUser) {
-     return <SignUp />;
+     return <LogIn />;
   }
   return children;
 };
@@ -39,9 +37,7 @@ function App() {
           />
           <Route path="/signup" 
             element={
-              <RequireAuth>
-                <SignUp />
-              </RequireAuth>
+              <SignUp />
             } 
           />
           <Route path="/dashboard" 
