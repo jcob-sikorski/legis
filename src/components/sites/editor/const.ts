@@ -35,16 +35,16 @@ export const DEV_JSON_TO_INJECT = `
       "template_id": "TPracticeAreas1",
       "areasList": [
         {
-          "PracticeAreaTitle": "Contract Negotiation",
-          "PracticeAreaDescription": "Our team of experienced sports law attorneys specializes in contract negotiation. We understand the intricacies of sports contracts and can help you navigate the complex legal landscape to ensure your interests are protected. Whether you're an athlete, team, or sports organization, we have the expertise to secure favorable terms and maximize your opportunities."
+          "practiceAreaName": "Contract Negotiation",
+          "practiceDescription": "Our team of experienced sports law attorneys specializes in contract negotiation. We understand the intricacies of sports contracts and can help you navigate the complex legal landscape to ensure your interests are protected. Whether you're an athlete, team, or sports organization, we have the expertise to secure favorable terms and maximize your opportunities."
         },
         {
-          "PracticeAreaTitle": "Intellectual Property Issues in Sports",
-          "PracticeAreaDescription": "Intellectual property is a critical aspect of the sports industry. Our firm has extensive experience in handling intellectual property issues in sports, including trademark and copyright infringement, licensing agreements, and brand protection. We can help you safeguard your intellectual property rights and ensure that your brand is protected in the competitive sports market."
+          "practiceAreaName": "Intellectual Property Issues in Sports",
+          "practiceDescription": "Intellectual property is a critical aspect of the sports industry. Our firm has extensive experience in handling intellectual property issues in sports, including trademark and copyright infringement, licensing agreements, and brand protection. We can help you safeguard your intellectual property rights and ensure that your brand is protected in the competitive sports market."
         },
         {
-          "PracticeAreaTitle": "Athlete Endorsement Agreements",
-          "PracticeAreaDescription": "Securing endorsement deals is crucial for athletes looking to maximize their earning potential. Our sports law firm has a deep understanding of the endorsement landscape and can assist athletes in negotiating favorable endorsement agreements. We work tirelessly to protect our clients' interests and ensure they receive fair compensation for their endorsements."
+          "practiceAreaName": "Athlete Endorsement Agreements",
+          "practiceDescription": "Securing endorsement deals is crucial for athletes looking to maximize their earning potential. Our sports law firm has a deep understanding of the endorsement landscape and can assist athletes in negotiating favorable endorsement agreements. We work tirelessly to protect our clients' interests and ensure they receive fair compensation for their endorsements."
         }
       ]
     },

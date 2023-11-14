@@ -82,7 +82,7 @@ export const Dashboard: React.FC = () => {
       share_image_url: '',
       favicon_url: '',
       cname: '',
-      template_colors: ["#5D74CF", "#8D88C7", "#4D4D4D"]
+      template_colors: ["#efefee", "#a3826c", "#3e3d3d"]
     };
   
     try {

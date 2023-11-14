@@ -17,6 +17,18 @@ import TAbout1 from '../../templates/TAbout1';
 import { ArrowDownOutlined, ArrowUpOutlined, CopyFilled, DeleteFilled, EditFilled, EditOutlined } from '@ant-design/icons';
 import { v4 } from 'uuid';
 import { useEffect, useRef, useState } from 'react';
+import THero2 from '../../templates/THero2';
+import TNavBar2 from '../../templates/TNavBar2';
+import TPracticeAreas2 from '../../templates/TPracticeAreas2';
+import TValues2 from '../../templates/TValues2';
+import TTeam2 from '../../templates/TTeam2';
+import TReviews2 from '../../templates/TReviews2';
+import TAbout2 from '../../templates/TAbout2';
+import TContact4 from '../../templates/TContact4';
+import THero3 from '../../templates/THero3';
+import TNavBar3 from '../../templates/TNavBar3';
+import TPracticeAreas3 from '../../templates/TPracticeAreas3';
+import TValues3 from '../../templates/TValues3';
 // import { delay } from '../../../utils';
 
 const { Content, Footer } = Layout;
@@ -156,32 +168,32 @@ function Visualisation({
         switch(data.template_id) {
             // NavBar
             case 'TNavBar1':
-                return <TNavBar1 data={data} />
+                return <TNavBar2 data={data} />
             // Hero
             case 'THero1':
-                return <THero1 data={data} />
+                return <THero2 data={data} />
             // PracticeAreas
             case 'TPracticeAreas1':
-                return <TPracticeAreas1 data={data} />
+                return <TPracticeAreas2 data={data} />
             // Values
                 case 'TValues1':
-                return <TValues1 data={data} />
+                return <TValues2 data={data} />
             // Team
             case 'TTeam1':
-                return <TTeam1 data={data} />
+                return <TTeam2 data={data} />
             // Reviews
             case 'TReviews1':
-                return <TReviews1 data={data} />
+                return <TReviews2 data={data} />
             // About
             case 'TAbout1': case 'TAboutUs1':
-                return <TAbout1 data={data} />
+                return <TAbout2 data={data} />
             // Contact
             case 'TContact1':
                 return <TContact1 data={data} />
             case 'TContact2':
                 return <TContact2 data={data} />
             case 'TContact3':
-                return <TContact3 data={data} />
+                return <TContact4 data={data} />
             // No template ID matched
             default:
                 return <TNoTemplate data={data} /> 
@@ -190,7 +202,7 @@ function Visualisation({
 
     const selectedSectionStyle = isDeploying 
     ? {} 
-    : { outline: '4px solid #ff000077', outlineOffset: '-2px' }
+    : { outline: '2px solid #0000ff77', outlineOffset: '-2px' }
 
     const contentStyle = isDeploying 
     ? {} 
@@ -211,7 +223,7 @@ function Visualisation({
                 className={`hover-parent ${s.section_id === removedSectionId ? "animate__bounceOut" : ''}`}
                 key={s.section_id} 
                 id={'wrapper-' + s.section_id} 
-                onClick={() => onSectionClick(s)} 
+                onClick={() => mode === 'showcase' ? {} :  onSectionClick(s)} 
                 style={{
                     position: 'relative',
                     opacity: 1,

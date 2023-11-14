@@ -15,6 +15,7 @@ import Generate from "./sites/generate";
 import Overview from "./sites/siteSettings/Overview";
 import Site from "./sites/siteSettings/Site";
 import Media from "./sites/siteSettings/Media";
+import Playground from "./sites/playground";
 
 const appId = config.appId;
 
@@ -45,17 +46,28 @@ function App() {
     <AppProvider appId={appId} user={user}>
       <BrowserRouter>
         <Routes>
+          
           <Route path="/" element={<Dashboard />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/editor/:site_id" element={<Editor />} />
+
+
+          {/* Step 1 */}
           <Route path="/survey/:site_id" element={<Survey />} />
-          <Route path="/color-palette/:site_id" element={<ColorPalette />} />
+          {/* Step 2 */}
           <Route path="/generate/:site_id" element={<Generate />} />
+          {/* Step 3 */}
+          <Route path="/color-palette/:site_id" element={<ColorPalette />} />
+          {/* Step 5 */}
+          <Route path="/editor/:site_id" element={<Editor />} />
+
+
           <Route path="/html" element={<Html />} />
           <Route path="/overview-settings" Component={Overview} />
           <Route path="/site-settings" Component={Site} />
           <Route path="/media-settings" Component={Media} />
+          <Route path="/playground" element={<Playground />} />
+
         </Routes>
       </BrowserRouter>
     </AppProvider>

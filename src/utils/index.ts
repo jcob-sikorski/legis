@@ -104,3 +104,14 @@ export function updateCssStyles(colors: string[]) {
   document.documentElement.style.setProperty('--legis-color-2', `${colors[1]}`);
   document.documentElement.style.setProperty('--legis-color-3', `${colors[2]}`);
 }
+
+export function switchIcon(valueName: string) {
+  switch(valueName.toLocaleLowerCase()) {
+    case 'reliability': return "bi bi-clock";
+    case 'loyalty & trust': return "bi bi-key";
+    case 'integrity': return "bi bi-shield";
+    case 'excellence': return "bi bi-star";
+    case 'collaboration': return "bi bi-people";
+    default: return "bi bi-check";
+  }
+}

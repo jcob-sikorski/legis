@@ -7,6 +7,7 @@ import { config } from '../../../config.tsx';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import * as Realm from "realm-web";
+import { updateCssStyles } from '../../../utils/index.ts';
 
 const SIDE_BAR_WIDTH = 600;
 
@@ -23,12 +24,6 @@ function ColorPalette() {
   const [palette, setPalette] = useState<string[]>(["#5D74CF", "#8D88C7", "#4D4D4D"]);
 
   const groups = ['Monochromatic', 'Neutral', 'Bright', 'Bold'];
-
-  function updateCssStyles(colors: string[]) {
-    document.documentElement.style.setProperty('--legis-color-1', `${colors[0]}`);
-    document.documentElement.style.setProperty('--legis-color-2', `${colors[1]}`);
-    document.documentElement.style.setProperty('--legis-color-3', `${colors[2]}`);
-  }
 
   const renderButtonColor = (group: string, index: number) => {
     let color1 = valueColorMapping[group][index][0];

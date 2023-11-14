@@ -47,6 +47,9 @@ body {
   border-color: black !important;
 }
 
+div {
+  transition: background 0.4s;
+}
 
 /* TODO: !!! MAKE SURE THESE ARE ALSO GENERATED TO <style> TAG WHEN DEPLOYING SITE !!! */
 .color-1 {
@@ -61,6 +64,50 @@ body {
   background-color: var(--legis-color-3) !important;
 }
 
-div {
-  transition: background 0.4s;
+.text-color-1 {
+  color: var(--legis-color-1) !important;
+}
+
+.text-color-2 {
+  color: var(--legis-color-2) !important;
+}
+
+.text-color-3 {
+  color: var(--legis-color-3) !important;
+}
+
+.bg-primary-600 {
+  color: #ffffff;
+}
+
+.text-black {
+  color: #000000;
+}
+
+.bg-primary-100 {
+  background-color: var(--legis-color-1) !important;
+}
+
+.bg-primary-300 {
+  background-color: var(--legis-color-2) !important;
+}
+
+.bg-primary-600 {
+  background-color: var(--legis-color-3) !important;
+}
+
+.text-primary-100 {
+  color: var(--legis-color-1) !important;
+}
+
+.text-primary-300 {
+  color: var(--legis-color-2) !important;
+}
+
+.text-primary-600 {
+  color: var(--legis-color-3) !important;
+}
+
+.custom-font {
+  font-family: 'Oswald';
 }
