@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useApp } from "./RealmApp";
-import mixpanel from 'mixpanel-browser';
 import * as Realm from "realm-web";
 import "./Waitlist.css";
 import "./Common.css";
@@ -21,8 +20,6 @@ export default function Waitlist() {
   const handleEmailSubmission = async () => {
     if (email && email.length < 80) {
       await app.currentUser.functions.submitEmail(email);
-
-      mixpanel.identify(email);
 
       setTimeout(() => {
         setEmail("");

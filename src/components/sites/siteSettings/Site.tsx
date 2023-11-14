@@ -8,17 +8,18 @@ import axios from 'axios';
 
 import Sidebar from '../menu';
 import SettingsMenu from './SettingsMenu';
+import { useApp } from '../../RealmApp';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
 
-const SiteComponent: React.FC = () => {
+function SiteComponent() {
   const [site] = useRedux('site');
 
   const [siteTitle, setSiteTitle] = useState<string>(site?.title);
   const [siteDescription, setSiteDescription] = useState<string>(site?.description);
 
-  const app = new Realm.App({ id: config.appId });
+  const app: any = useApp();
 
   const mongodb = app.currentUser!.mongoClient('mongodb-atlas');
   const site_collection = mongodb.db('legis').collection('Site');

@@ -23,13 +23,14 @@ import { RocketOutlined } from '@ant-design/icons';
 import Sections from './Sections';
 import { getPromptForGeneration, updateCssStyles } from '../../../utils';
 import MainMenu from '../menu';
+import { useApp } from '../../RealmApp';
 
 // TODO: push the created site to mongodb
 // TODO: update the page every 5 seconds in mongodb
 
 const Editor: React.FC = () => {
-  const app = new Realm.App({ id: config.appId });
-  const currentUserID = app.currentUser!.id;
+  const app: any = useApp();
+
   const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
   const site_collection = mongodb.db("legis").collection("Site");
 
