@@ -12,7 +12,7 @@ import SettingsMenu from './SettingsMenu';
 const { Header, Content } = Layout;
 const { Title } = Typography;
 
-const Media: React.FC = () => {
+function Media() {
   const [site] = useRedux('site');
 
   const [siteSettings, setSiteSettings] = useState<Site | {}>({});

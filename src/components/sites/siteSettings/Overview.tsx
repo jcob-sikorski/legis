@@ -12,7 +12,7 @@ import SettingsMenu from './SettingsMenu';
 const { Header, Content } = Layout;
 const { Title } = Typography;
 
-const Overview: React.FC = () => {
+function Overview() {
   const [site] = useRedux('site');
 
   const [published, setPublished] = useState<boolean>(false);

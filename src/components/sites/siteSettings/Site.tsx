@@ -12,7 +12,7 @@ import SettingsMenu from './SettingsMenu';
 const { Header, Content } = Layout;
 const { Title } = Typography;
 
-const SiteComponent: React.FC = () => {
+function SiteComponent() {
   const [site] = useRedux('site');
 
   const [siteTitle, setSiteTitle] = useState<string>(site?.title);
