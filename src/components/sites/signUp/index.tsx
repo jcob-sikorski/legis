@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useApp } from "./RealmApp";
+import { useApp } from "../../RealmApp";
 import mixpanel from 'mixpanel-browser';
 import * as Realm from "realm-web";
-import "./SignUp.css";
-import "./Common.css";
+import "./index.css";
 
 export default function SignUp() {
   const app: any = useApp();
@@ -11,23 +10,24 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
 
   const handleRegisterUser = async () => {
-    if (email && email.length < 80 && password && password.length >= 6 && password.length <= 100) {
-      // Register new email/password user
-      await app.emailPasswordAuth.registerUser({email, password});
-      // Log in the email/password user
-      await app.logIn(Realm.Credentials.emailPassword(email, password));
+    app.logOut();
+    // if (email && email.length < 80 && password && password.length >= 6 && password.length <= 100) {
+    //   // Register new email/password user
+    //   await app.emailPasswordAuth.registerUser({email, password});
+    //   // Log in the email/password user
+    //   await app.logIn(Realm.Credentials.emailPassword(email, password));
 
-      mixpanel.identify(email);
+    //   mixpanel.identify(email);
 
-      mixpanel.track('Sign Up', {
-        'Signup Type': 'Signup page'
-      })
+    //   mixpanel.track('Sign Up', {
+    //     'Signup Type': 'Signup page'
+    //   })
 
-      setTimeout(() => {
-        setEmail("");
-        setPassword("");
-      }, 180);
-    }
+    //   setTimeout(() => {
+    //     setEmail("");
+    //     setPassword("");
+    //   }, 180);
+    // }
   };
 
   return (

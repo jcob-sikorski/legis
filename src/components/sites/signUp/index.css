@@ -14,6 +14,27 @@
   margin: 10px;
 }
 
+.screen {
+  display: flex;
+  flex-direction: column; /* Stack the items vertically */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px; /* Add a little spacing between the title and subtitle */
+}
+
+.subtitle {
+  font-size: 2rem;
+  color: #555;
+}
+
 .submitButton {
   background-color: #1D9BF0;
   color: white;
