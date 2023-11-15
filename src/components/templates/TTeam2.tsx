@@ -4,11 +4,14 @@ import { switchIcon } from "../../utils";
 
 export default function TTeam2({data} : any) {
 
-    const list = Array.from({ length: 5 }, () => ({
-        name: faker.name.fullName(),
-        description: faker.lorem.sentence(20),
-        photo: faker.image.avatar()
-      }));
+    // const list = Array.from({ length: 5 }, () => ({
+    //     name: faker.name.fullName(),
+    //     description: faker.lorem.sentence(20),
+    //     photo: faker.image.avatar()
+    //   }));
+
+      const list = data?.lawyerDetails ?? [];
+      console.log("TTeam: ", JSON.stringify(data));
 
 
     return (<section id={'section-' + data.section_id} className="text-gray-600 body-font bg-primary-100">
@@ -26,8 +29,8 @@ export default function TTeam2({data} : any) {
 
             {((list ?? []).map((area: any, i: number) => 
                 <ServiceItem 
-                    title={area?.name} 
-                    description={area?.description} 
+                    title={area?.memberName} 
+                    description={area?.details} 
                     photo={area?.photo}
                     // icon={switchIcon(area?.name)}
                     left={i % 2 == 0}

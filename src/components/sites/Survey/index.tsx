@@ -1,5 +1,5 @@
-import React, { useState, ReactNode } from 'react';
-import { Layout, Typography, Form, Input, Select, Button, Checkbox, Radio } from 'antd';
+import React, { useState, ReactNode, useEffect } from 'react';
+import { Layout, Typography, Form, Input, Select, Button, Checkbox, Radio, List, Flex, Upload } from 'antd';
 import { useSpring, animated } from '@react-spring/web';
 
 import * as Realm from "realm-web";
@@ -14,6 +14,8 @@ import { SurveyInput } from './SurveyInput';
 import { FirmRepresentation } from './FirmRepresentation';
 import { CheckboxGroup } from './CheckboxGroup';
 import { useApp } from '../../RealmApp';
+import { PlusOutlined } from '@ant-design/icons';
+import { v4 } from 'uuid';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -36,7 +38,7 @@ function Survey() {
   ];
   
   const [form] = Form.useForm();
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(8);
   const [animationProps, setAnimationProps] = useSpring(() => ({
   }));
 
@@ -68,7 +70,7 @@ function Survey() {
             };
             return modifiedDoc;
           });
-          const mergedDocuments = documents.reduce((acc, doc) => ({ ...acc, ...doc }), {});
+          const mergedDocuments = documents.reduce((acc: any, doc: any) => ({ ...acc, ...doc }), {});
           setFieldValues(prevState => ({...prevState, ...mergedDocuments}));
         }
       } catch (error) {
@@ -171,6 +173,61 @@ function Survey() {
     navigate(`/generate/${site_id}`);
   }
 
+  const [lawyersJSON, setLawyersJSON] = useState("[]");
+  const [lawyers, setLawyers] = useState<any[]>([{name: '', description: '', photo: '', id: v4()}]);
+  function handleAddLawyer() {
+    // alert("handleAddLawyer")
+    setLawyers([...lawyers, {name: '', description: '', photo: '', id: v4()}])
+  }
+
+  function handleRemoveLawyer(indexToDelete: number) {
+      if (lawyers?.length > 1) {
+
+        let newLawyers = lawyers;
+        newLawyers[indexToDelete] = undefined;
+        newLawyers = newLawyers.filter(x => x);
+        console.log("newLawyers: ", newLawyers);
+        setLawyers(newLawyers)
+      }
+    }
+
+  function changeLawyerData(value: any, key: string, index: number) {
+    let newLawyers = lawyers;
+    if (newLawyers?.length > 0) {
+
+      newLawyers[index][key] = value
+      console.log("newLawyers: ", newLawyers);
+      
+      setLawyers(newLawyers);
+      updateField("LawyerDetails", JSON.stringify(newLawyers));
+    }
+  }
+
+  useEffect(() => {
+
+    try {
+      // updateDBField("LawyerDetails", JSON.stringify(lawyers));
+      
+    } catch(e: any) {
+      alert("Error parsing lawyers to JSON.")
+    }
+
+  }, [lawyers]) 
+
+  useEffect(() => {
+
+    if (fieldValues["LawyerDetails"]) {
+      const json: string = String(fieldValues["LawyerDetails"]);
+      console.log("json: ", json)
+      try {
+        setLawyers(JSON.parse(json));
+      } catch(e: any) {
+        alert("Error parsing fetched JSON to lawyers.")
+      }
+    }
+
+  }, [fieldValues]) 
+
   return (
     <Layout style={{ display: 'flex', flexDirection: 'row', overflow: 'hidden' }}>
       <div style={{ backgroundColor: '#262627' }}>
@@ -209,20 +266,47 @@ function Survey() {
           )}
           {page === 8 && (
             <div>
-              <div style={{ fontSize: '30px', fontWeight: 'bolder' }}>Name your lawyers and write a one-sentence description about your lawyer.</div>
-              <div style={{ borderBottom: "2px solid black" }}>
-                <Input
-                  value={fieldValues?.LawyerDetails}
-                  onChange={(e) => updateField(fields[page] as keyof Questionnaire, e.target.value)}
-                  style={{
-                    backgroundColor: "transparent",
-                    color: "black",
-                    borderColor: "transparent",
-                    fontSize: 20
-                  }}
-                  bordered={false}
-                />
+              <div style={{ fontSize: '30px', fontWeight: 'bolder' }}>
+                Name your lawyersNumber and write a one-sentence description about your lawyer.
               </div>
+              <List
+                style={{
+                  flex: '1',
+                  overflowY: 'scroll',
+                  height: '30vh',
+                  // display: 'flex',
+                  // flexDirection: 'column',
+                  // alignItems: 'center',
+                  width: '100%',
+                  // background: 'red'
+                }}
+                dataSource={lawyers}
+                renderItem={({name, description, photo, id}, i:number) => <div key={id}>
+                  <Flex style={{width: '100%', height: 100, gap: 5}}>
+                    <Flex style={{width: '20%', height: '100%', background: '#ccc', borderRadius: 16}} align='center' justify='center'>
+                      <Upload>
+                        + Add Photo
+                      </Upload>
+                    </Flex>
+                    <Flex vertical style={{width: '70%', gap: 5}} align='center' justify='center'>
+                      <Input defaultValue={name} onChange={(e: any) => changeLawyerData(e.target.value, "name", i)} placeholder='Lawyer Name' style={{height: '50%'}} />
+                      <Input defaultValue={description} onChange={(e: any) => changeLawyerData(e.target.value, "description", i)} placeholder='Lawyer Description' style={{height: '50%'}}/>
+                    </Flex>
+                    <Button onClick={() => handleRemoveLawyer(i)} style={{width: '10%', height: '100%', background: '#f99', borderRadius: 16}} >
+                      X
+                    </Button>
+                  </Flex>
+                </div>}
+              />
+              <Button
+                title='Add lawyer'
+                style={{ width: '100%', fontWeight: 'bold' }}
+                type="dashed"
+                icon={<PlusOutlined />}
+                onClick={handleAddLawyer}
+              >
+                Add lawyer
+              </Button>
             </div>
           )}
           {page === 9 && (
