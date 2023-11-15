@@ -18,7 +18,7 @@ function THero2({data} : any) {
         </div>
       </div>
       <div className="relative">
-        <img src={heroImage} alt="Interior Design" />
+        <img src={data?.cdnUUID ? `https://ucarecdn.com/${data?.cdnUUID}/` : heroImage} alt="Hero Image" />
         <a href="/">
           <img
             src={getInTouchImage}

@@ -4,12 +4,15 @@ import { Button, Space, Upload, UploadFile, UploadProps, message} from 'antd';
 import ImgCrop from 'antd-img-crop';
 import Dragger from 'antd/es/upload/Dragger';
 import { RcFile } from 'antd/es/upload';
-import {uploadFile} from '@uploadcare/upload-client'
+import {uploadDirect, uploadFile, uploadFromUrl, } from '@uploadcare/upload-client'
 import { config } from '../../../config';
 import { warn } from 'console';
+import axios from 'axios';
+// import crypto from 'crypto';
+// import { createHmac } from 'crypto-browserify';
+import { sha256 } from 'js-sha256';
 
-
-const ImageUploadInput = () => {
+const ImageUploadInput = ({handleCustomFieldChange, oldUUID}: any) => {
 
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const [uploading, setUploading] = useState(false);
@@ -40,11 +43,16 @@ const ImageUploadInput = () => {
             newFileList.splice(index, 1);
             setFileList(newFileList);
           },
-          beforeUpload: (file) => {
-            setFileList([...fileList, file]);
+          beforeUpload: async file => {
+            const result = await uploadDirect(file, {
+              publicKey: 'YOUR_PUBLIC_KEY',
+              store: 'auto',
+            });
       
+            console.log(result.uuid);
             return false;
           },
+      
           fileList,
       };
 
@@ -98,9 +106,76 @@ const ImageUploadInput = () => {
 
     console.log(fileList);
 
+    const publicKey = config.pkUploadcare; //pk - is public key?
+    const privateKey = config.skUploadcare; // sk - is secret key?
+    
+    const handleDelete = async (uuid: string) => {
+      const date = new Date().toUTCString();
+      const signature = `${date}\nDELETE\n/files/${uuid}/\n`;
+      const signatureHash = sha256.hmac.create(privateKey).update(signature).hex();
+    
+      const authHeader = `Uploadcare ${publicKey}:${signatureHash}`;
+    
+      try {
+        const response = await axios.delete(`https://api.uploadcare.com/files/${uuid}/`, {
+          headers: {
+            'Authorization': authHeader,
+            'Date': date,
+            'Accept': 'application/vnd.uploadcare-v0.5+json',
+          },
+        });
+    
+        console.log("SUCCESSFULLY DELETED PHOTO OF UUID: ", uuid);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+     };
+
+    const uploadProps = {
+      beforeUpload: async (file: any) => {
+        console.log("Before upload")
+        let tempOldUUID = oldUUID;
+        const result = await uploadDirect(file, {
+          publicKey: config.pkUploadcare,
+          store: 'auto',
+        });
+  
+        console.log("result: ", result);
+        console.log("result.uuid: ", result.uuid);
+
+        handleCustomFieldChange({cdnUUID: result.uuid})
+
+        handleDelete(tempOldUUID);
+        
+        return false;
+      },
+      multiple: false,
+      maxCount: 1,
+    };
+
+    const [heroPhoto, setHeroPhoto] = useState<any>(undefined);
+
+    useEffect(() => {
+      async function fetchPhotos() {
+        const photo = await uploadFromUrl(
+          'https://source.unsplash.com/featured',
+          {
+            publicKey: 'YOUR_PUBLIC_KEY',
+          }
+        )
+
+        setHeroPhoto(photo);
+      }
+
+      fetchPhotos();
+      
+    }, [])
+    
     return <Space direction="vertical" style={{ width: '100%' }} size="large">
+      {/* <Upload {...uploadProps}>Click to Upload</Upload>; */}
         <ImgCrop rotationSlider aspect={16/8}>
-            <Dragger {...props}>
+            <Dragger {...uploadProps}>
                 <p className="ant-upload-drag-icon">
                     <InboxOutlined />
                 </p>

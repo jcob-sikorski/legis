@@ -11,7 +11,7 @@ export default function TPracticeAreas3({data} : any) {
     <div className="mt-0 mr-auto mb-10 ml-auto max-w-xl md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
       <div>
         <p className="inline-block pt-px pr-3 pb-px pl-3 mt-0 mr-0 mb-4 ml-0 text-xs font-semibold text-pink-200
-            rounded-full bg-pink-500 tracking-wider uppercase rounded-full">PRACTICE AREAS</p>
+            rounded-full bg-pink-500 tracking-wider uppercase">PRACTICE AREAS</p>
       </div>
       <div className="mt-0 mr-auto mb-6 ml-auto font-bold leading-none text-gray-900 text-3xl max-w-lg font-sans
           tracking-tight sm:text-4xl md:mx-auto">

@@ -38,9 +38,15 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       console.log("data: ", data);
       console.log("selectedSectionId: ", selectedSectionId);
     };
-
+    
     console.log("selectedTemplateId: ", selectedTemplateId);
     console.log()
+    
+    function handleCustomFieldChange(valueKeyPair: any) {
+      console.log("handleCustomFieldChange: ", valueKeyPair);
+      setData([...data].map((x: any) => x.section_id === selectedSectionId ? {...x, ...valueKeyPair} : x));
+      
+    }
 
     function onRemoveSection() {
       setData((data ?? []).filter((s: any) => s.section_id !== selectedSectionId))
@@ -109,12 +115,18 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
             <Radio value="">No</Radio>
           </Radio.Group>
         </Form.Item></>
-        case 'image':
+        case 'image': {
+
+          // Select current photo cdn uuid
+          let oldUUID = "";
+          data.map((x: any) => {if (x.section_id === selectedSectionId) oldUUID = x.cdnUUID})
+
           return <>
           {labelComponent}
           <Form.Item name={id} style={itemStyle} >
-          <ImageUploadInput />
+          <ImageUploadInput handleCustomFieldChange={handleCustomFieldChange} oldUUID={oldUUID} />
         </Form.Item></>
+        }
       }
 
     }

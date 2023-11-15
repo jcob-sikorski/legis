@@ -2,7 +2,7 @@ import THero2 from "../../templates/THero2";
 import TNavBar2 from "../../templates/TNavBar2";
 import TTest1 from "../../templates/TTest1";
 // import TNavBar1 from "../../templates/TNavBar2";
-import Body from "../../templates/alpha/Body";
+// import Body from "../../templates/alpha/Body";
 
 
 
