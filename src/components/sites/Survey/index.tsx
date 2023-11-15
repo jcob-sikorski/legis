@@ -170,7 +170,7 @@ function Survey() {
       updateDBField(fields[page] as keyof Questionnaire);
     }
 
-    navigate(`/generate/${site_id}`);
+    navigate(`/generate/${site_id}/1`);
   }
 
   const [lawyersJSON, setLawyersJSON] = useState("[]");

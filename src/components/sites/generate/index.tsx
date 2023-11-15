@@ -21,8 +21,8 @@ const openai = new OpenAI({
 });
 
 function Generate() {
-  const {site_id} = useParams();
-    
+  const {site_id, onboarding} = useParams();
+  
   const [onboardingData, setOnboardingData] = useState<any>();
   const [response, setResponse] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -121,8 +121,13 @@ function Generate() {
         );
 
         console.log("Updated site:", JSON.stringify(result));
-
-        navigate(`/color-palette/${site_id}`);
+        // TODO if useParams says onboardingflow == true then go to color-palette
+        //        else go to editor
+        if (onboarding === '1') {
+          navigate(`/color-palette/${site_id}`);
+        } else {
+          navigate(`/editor/${site_id}`);
+        }
       } catch (error) {
         console.error("Error updating site:", error);
       }
