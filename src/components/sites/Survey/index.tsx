@@ -267,22 +267,18 @@ function Survey() {
           {page === 8 && (
             <div>
               <div style={{ fontSize: '30px', fontWeight: 'bolder' }}>
-                Name your lawyersNumber and write a one-sentence description about your lawyer.
+                Name your lawyers and write a one-sentence description about your lawyer.
               </div>
               <List
                 style={{
                   flex: '1',
                   overflowY: 'scroll',
                   height: '30vh',
-                  // display: 'flex',
-                  // flexDirection: 'column',
-                  // alignItems: 'center',
                   width: '100%',
-                  // background: 'red'
                 }}
                 dataSource={lawyers}
                 renderItem={({name, description, photo, id}, i:number) => <div key={id}>
-                  <Flex style={{width: '100%', height: 100, gap: 5}}>
+                  <Flex style={{width: '100%', height: 100, gap: 5, marginBottom: 30}}>
                     <Flex style={{width: '20%', height: '100%', background: '#ccc', borderRadius: 16}} align='center' justify='center'>
                       <Upload>
                         + Add Photo
