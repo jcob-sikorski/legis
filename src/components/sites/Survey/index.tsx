@@ -1,5 +1,5 @@
 import React, { useState, ReactNode, useEffect } from 'react';
-import { Layout, Typography, Form, Input, Select, Button, Checkbox, Radio, List, Flex, Upload } from 'antd';
+import { Layout, Typography, Form, Input, Select, Button, Checkbox, Radio, List, Flex, Upload, message } from 'antd';
 import { useSpring, animated } from '@react-spring/web';
 
 import * as Realm from "realm-web";
@@ -38,7 +38,7 @@ function Survey() {
   ];
   
   const [form] = Form.useForm();
-  const [page, setPage] = useState(8);
+  const [page, setPage] = useState(0);
   const [animationProps, setAnimationProps] = useSpring(() => ({
   }));
 
@@ -140,6 +140,60 @@ function Survey() {
   
 
   const nextPage = () => {
+    switch(page) {
+      case 1:
+        if (!fieldValues["MainPracticeArea"]) {
+          message.error("Please select an option from the list.");
+          return;
+        }
+        break;
+      case 2:
+        if (!fieldValues["OneSentenceDescription"]) {
+          message.error("The field is empty. Please fill it out.");
+          return;
+        }
+        break;
+      case 3:
+        if (!fieldValues["SpecializedPracticeAreas"]) {
+          message.error("The field is empty. Please fill it out.");
+          return;
+        }
+        break;
+      case 4:
+        if ((fieldValues["StandOutFactor"] as string[]).length === 0) {
+          message.error("Please select at least one option.");
+          return;
+        }
+        break;
+      case 5:
+        if (!fieldValues["FirmRepresentation"]) {
+          message.error("Please select an option.");
+          return;
+        }
+        break;
+      case 6:
+        if ((fieldValues["ImportantValues"] as string[]).length === 0) {
+          message.error("Please select at least one option.");
+          return;
+        }
+        break;
+      case 7:
+        if (!fieldValues["FirmStrengths"]) {
+          message.error("The field is empty. Please fill it out.");
+          return;
+        }
+        break;
+      case 8:
+        // TODO the LawyerDetails
+        break;
+      default:
+        if (!fieldValues["LawFirmName"]) {
+          message.error("The field is empty. Please fill it out.");
+          return;
+        }
+        break;
+    }
+
     if (page < fields.length) {
       updateDBField(fields[page] as keyof Questionnaire);
     }
@@ -165,12 +219,17 @@ function Survey() {
   const navigate = useNavigate();
   
   const onFinish = () => {
+    if (!fieldValues["ClientReviews"]) {
+      message.error("The field is empty. Please fill it out.");
+      return;
+    }
+    
     if (page < fields.length) {
       console.log("onFinish push to ")
       updateDBField(fields[page] as keyof Questionnaire);
     }
 
-    navigate(`/generate/${site_id}`);
+    navigate(`/generate/${site_id}/1`);
   }
 
   const [lawyersJSON, setLawyersJSON] = useState("[]");
@@ -204,18 +263,6 @@ function Survey() {
   }
 
   useEffect(() => {
-
-    try {
-      // updateDBField("LawyerDetails", JSON.stringify(lawyers));
-      
-    } catch(e: any) {
-      alert("Error parsing lawyers to JSON.")
-    }
-
-  }, [lawyers]) 
-
-  useEffect(() => {
-
     if (fieldValues["LawyerDetails"]) {
       const json: string = String(fieldValues["LawyerDetails"]);
       console.log("json: ", json)
@@ -225,7 +272,6 @@ function Survey() {
         alert("Error parsing fetched JSON to lawyers.")
       }
     }
-
   }, [fieldValues]) 
 
   return (

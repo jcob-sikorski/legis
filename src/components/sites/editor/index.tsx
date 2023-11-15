@@ -117,7 +117,14 @@ const Editor: React.FC = () => {
     // console.log("el: ", element)
    }
   
-   function onTestPrompt() {
+   function onGenerate() {
+    // navigate to /generate
+    navigate(`/generate/${site_id}/0`); // (overwrites only template_body field)
+
+    // create useParams hook to know from where the request goes from onboarding or from editor?
+    // if onboarding then to color pallete
+    //  else go to editor (color pallete is already saved in mongodb)
+
     // selected during survey
     const surveyData: any = {
       templateIds: ["THero1", "TContact3", "TContact2"],
@@ -335,8 +342,8 @@ const Editor: React.FC = () => {
             <Flex justify='flex-end' gap={4}>
               <Col span={6}>
                 <Flex justify='flex-end' gap={4}>
-                  <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary"  onClick={onTestPrompt}>
-                    Prompt
+                  <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary"  onClick={onGenerate}>
+                    Generate
                   </Button>
                   <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary" icon={<RocketOutlined />}  onClick={onDeploy}>
                     Deploy

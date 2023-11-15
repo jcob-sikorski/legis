@@ -74,7 +74,7 @@ function App() {
               </RequireAuth>
             } 
           />
-          <Route path="/generate/:site_id"
+          <Route path="/generate/:site_id/:onboarding" 
             element={
               <RequireAuth>
                 <Generate />

@@ -12,12 +12,12 @@ const MainMenu = ({width = 100} : {width?: number}) => (
     >
       {[
         { key: '1', icon: <AppstoreOutlined style={{ fontSize: '24px' }}/>, to: '/dashboard' },
-        { key: '2', icon: <BarChartOutlined style={{ fontSize: '24px' }}/> },
-        { key: '3', icon: <SettingOutlined style={{ fontSize: '24px' }}/> },
-        { key: '4', icon: <UserOutlined style={{ fontSize: '24px' }}/> },
+        // { key: '2', icon: <BarChartOutlined style={{ fontSize: '24px' }}/> },
+        // { key: '3', icon: <SettingOutlined style={{ fontSize: '24px' }}/> },
+        // { key: '4', icon: <UserOutlined style={{ fontSize: '24px' }}/> },
       ].map(item => (
         <Menu.Item key={item.key} icon={item.icon} style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          {/* <Link to={item.to as string}/> */}
+          <Link to={item.to as string}/>
         </Menu.Item>
       ))}
     </Menu>
