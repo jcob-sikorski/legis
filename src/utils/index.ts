@@ -115,3 +115,7 @@ export function switchIcon(valueName: string) {
     default: return "bi bi-check";
   }
 }
+
+export function getUrl(uuid: string) {
+  return `https://ucarecdn.com/${uuid}/`;
+}

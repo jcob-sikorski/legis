@@ -4,6 +4,7 @@ import './inteo/styles/global.css';
 
 import heroImage from './inteo/images/hero-image.png'
 import getInTouchImage from './inteo/images/cta-button.svg';
+import { getUrl } from "../../utils";
 
 function THero2({data} : any) {
     return ( <section id={'section-' + data?.section_id} className="text-gray-600 body-font">
@@ -18,7 +19,7 @@ function THero2({data} : any) {
         </div>
       </div>
       <div className="relative">
-        <img src={data?.cdnUUID ? `https://ucarecdn.com/${data?.cdnUUID}/` : heroImage} alt="Hero Image" />
+        <img src={data?.cdnUUID ? getUrl(data?.cdnUUID): heroImage} alt="Hero Image" />
         <a href="/">
           <img
             src={getInTouchImage}

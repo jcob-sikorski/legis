@@ -47,11 +47,11 @@ export let function_description: ChatCompletionTool[] = [
             "items": {
               "type": "object",
               "properties": {
-                "memberName": {
+                "name": {
                   "description": "Full name of the team member",
                   "type": "string",
                 },
-                "details": {
+                "description": {
                   "description": "Short description of the team member, easy to understand and professional",
                   "type": "string",
                 }

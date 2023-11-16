@@ -13,9 +13,9 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --legis-color-1: red;
-  --legis-color-2: yellow;
-  --legis-color-3: cyan;
+  --legis-color-1: #efefee;
+  --legis-color-2: #a3826c;
+  --legis-color-3: #3e3d3d;
 }
 
 body {

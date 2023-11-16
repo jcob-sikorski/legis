@@ -1,6 +1,6 @@
 import { EditFilled } from "@ant-design/icons";
 import { faker } from "@faker-js/faker";
-import { switchIcon } from "../../utils";
+import { getUrl, switchIcon } from "../../utils";
 
 export default function TTeam2({data} : any) {
 
@@ -29,9 +29,9 @@ export default function TTeam2({data} : any) {
 
             {((list ?? []).map((area: any, i: number) => 
                 <ServiceItem 
-                    title={area?.memberName} 
-                    description={area?.details} 
-                    photo={area?.photo}
+                    title={area?.name} 
+                    description={area?.description} 
+                    photo={getUrl(area?.photo)}
                     // icon={switchIcon(area?.name)}
                     left={i % 2 == 0}
                 />

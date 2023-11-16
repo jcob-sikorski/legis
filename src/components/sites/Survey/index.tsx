@@ -14,8 +14,11 @@ import { SurveyInput } from './SurveyInput';
 import { FirmRepresentation } from './FirmRepresentation';
 import { CheckboxGroup } from './CheckboxGroup';
 import { useApp } from '../../RealmApp';
-import { PlusOutlined } from '@ant-design/icons';
+import { DeleteFilled, PlusOutlined } from '@ant-design/icons';
 import { v4 } from 'uuid';
+import { uploadDirect } from '@uploadcare/upload-client';
+import { getUrl } from '../../../utils';
+import Visualisation from '../editor/Visualisation';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -38,7 +41,7 @@ function Survey() {
   ];
   
   const [form] = Form.useForm();
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(9);
   const [animationProps, setAnimationProps] = useSpring(() => ({
   }));
 
@@ -223,6 +226,8 @@ function Survey() {
       message.error("The field is empty. Please fill it out.");
       return;
     }
+
+    console.log("here: ", fieldValues["ClientReviews"])
     
     if (page < fields.length) {
       console.log("onFinish push to ")
@@ -234,9 +239,16 @@ function Survey() {
 
   const [lawyersJSON, setLawyersJSON] = useState("[]");
   const [lawyers, setLawyers] = useState<any[]>([{name: '', description: '', photo: '', id: v4()}]);
+  const [reviews, setReviews] = useState<any[]>([{clientName: '', testimonial: '', id: v4()}]);
+  
   function handleAddLawyer() {
     // alert("handleAddLawyer")
     setLawyers([...lawyers, {name: '', description: '', photo: '', id: v4()}])
+  }
+
+  function handleAddReview() {
+    // alert("handleAddLawyer")
+    setReviews([...reviews, {clientName: '', testimonial: '', id: v4()}])
   }
 
   function handleRemoveLawyer(indexToDelete: number) {
@@ -247,6 +259,17 @@ function Survey() {
         newLawyers = newLawyers.filter(x => x);
         console.log("newLawyers: ", newLawyers);
         setLawyers(newLawyers)
+      }
+    }
+
+  function handleRemoveReview(indexToDelete: number) {
+      if (reviews?.length > 1) {
+
+        let newReviews = reviews;
+        newReviews[indexToDelete] = undefined;
+        newReviews = newReviews.filter(x => x);
+        console.log("newReviews: ", newReviews);
+        setReviews(newReviews)
       }
     }
 
@@ -262,6 +285,20 @@ function Survey() {
     }
   }
 
+  function changeReviewData(value: any, key: string, index: number) {
+    
+    // lawyers naming = reviews
+    let newReviews = reviews;
+    if (newReviews?.length > 0) {
+
+      newReviews[index][key] = value
+      console.log("newReviews: ", newReviews);
+      
+      setReviews(newReviews);
+      updateField("ClientReviews", JSON.stringify(newReviews));
+    }
+  }
+
   useEffect(() => {
     if (fieldValues["LawyerDetails"]) {
       const json: string = String(fieldValues["LawyerDetails"]);
@@ -269,17 +306,57 @@ function Survey() {
       try {
         setLawyers(JSON.parse(json));
       } catch(e: any) {
-        alert("Error parsing fetched JSON to lawyers.")
+        console.warn("Error parsing fetched JSON to LAWYER DETAILS.")
       }
     }
   }, [fieldValues]) 
 
+  useEffect(() => {
+    if (fieldValues["ClientReviews"]) {
+      const json: string = String(fieldValues["ClientReviews"]);
+      console.log("json: ", json)
+      try {
+        setReviews(JSON.parse(json));
+      } catch(e: any) {
+        console.warn("Error parsing fetched JSON to CLIENT REVIEWS.")
+      }
+    }
+  }, [fieldValues]) 
+
+  let leftStyle: any = { backgroundColor: '#262627' };
+  if (page === 8 || page === 9) {
+    leftStyle = { backgroundColor: '#262627', maxWidth: '50vw', height: '100vh', padding: 20, maxHeight: '100vh', overflowY: 'scroll'}
+  }
+
   return (
     <Layout style={{ display: 'flex', flexDirection: 'row', overflow: 'hidden' }}>
-      <div style={{ backgroundColor: '#262627' }}>
-        <img src="https://ucarecdn.com/194ed0d0-5921-4684-8ae1-02bfd645d41c/_d65e891a18e343b9bccb0adb2a065aca.jpeg" alt="Your description" style={{ width: '100%', maxHeight: '100vh' }} />
+      <div style={leftStyle}>
+      { page === 8 && 
+        <Visualisation data={[{template_id: 'TTeam1', lawyerDetails: lawyers}]} mode='showcase' />
+      }
+      { page === 9 && 
+        <Visualisation data={[{template_id: 'TReviews1', reviews}]} mode='showcase' />
+      }
+      { (page !== 8 && page !== 9) && 
+      
+      <div className="relative overflow-hidden bg-cover bg-no-repeat" style={{
+        backgroundPosition: '50%',
+        backgroundImage: "url('https://ucarecdn.com/194ed0d0-5921-4684-8ae1-02bfd645d41c/_d65e891a18e343b9bccb0adb2a065aca.jpeg')",
+        height: '100vh',
+        width: '50vw'
+      }} />
+    }
+    
+        {/* <img src="" alt="Your description" style={{ width: '100%', maxHeight: '100vh' }} /> */}
       </div>
-      <div style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+      <div style={{ 
+        flex: '1', 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        flexDirection: 'column',
+        // minWidth: 400,
+        }}>
         <Form
           name="survey"
           layout="vertical"
@@ -316,29 +393,21 @@ function Survey() {
                 Name your lawyers and write a one-sentence description about your lawyer.
               </div>
               <List
+              className='editor-scrollbar'
                 style={{
                   flex: '1',
                   overflowY: 'scroll',
-                  height: '30vh',
+                  height: '50vh',
                   width: '100%',
+                  padding: 0,
                 }}
                 dataSource={lawyers}
-                renderItem={({name, description, photo, id}, i:number) => <div key={id}>
-                  <Flex style={{width: '100%', height: 100, gap: 5, marginBottom: 30}}>
-                    <Flex style={{width: '20%', height: '100%', background: '#ccc', borderRadius: 16}} align='center' justify='center'>
-                      <Upload>
-                        + Add Photo
-                      </Upload>
-                    </Flex>
-                    <Flex vertical style={{width: '70%', gap: 5}} align='center' justify='center'>
-                      <Input defaultValue={name} onChange={(e: any) => changeLawyerData(e.target.value, "name", i)} placeholder='Lawyer Name' style={{height: '50%'}} />
-                      <Input defaultValue={description} onChange={(e: any) => changeLawyerData(e.target.value, "description", i)} placeholder='Lawyer Description' style={{height: '50%'}}/>
-                    </Flex>
-                    <Button onClick={() => handleRemoveLawyer(i)} style={{width: '10%', height: '100%', background: '#f99', borderRadius: 16}} >
-                      X
-                    </Button>
-                  </Flex>
-                </div>}
+                renderItem={(data, i:number) => <LawyerInputComponent 
+                  data={data} 
+                  index={i} 
+                  changeLawyerData={changeLawyerData} 
+                  handleRemoveLawyer={handleRemoveLawyer} 
+                />}
               />
               <Button
                 title='Add lawyer'
@@ -354,19 +423,32 @@ function Survey() {
           {page === 9 && (
             <div>
               <div style={{ fontSize: '30px', fontWeight: 'bolder' }}>Write 3 good reviews given by your clients. Separate each review by a comma.</div>
-              <div style={{ borderBottom: "2px solid black" }}>
-                <Input
-                  value={fieldValues?.ClientReviews}
-                  onChange={(e) => updateField(fields[page] as keyof Questionnaire, e.target.value)}
-                  style={{
-                    backgroundColor: "transparent",
-                    color: "black",
-                    borderColor: "transparent",
-                    fontSize: 20
-                  }}
-                  bordered={false}
-                />
-              </div>
+              <List
+              className='editor-scrollbar'
+                style={{
+                  flex: '1',
+                  overflowY: 'scroll',
+                  height: '45vh',
+                  width: '100%',
+                  padding: 0,
+                }}
+                dataSource={reviews}
+                renderItem={(data, i:number) => <ReviewInputComponent 
+                  data={data} 
+                  index={i} 
+                  changeReviewData={changeReviewData} 
+                  handleRemoveReview={handleRemoveReview} 
+                />}
+              />
+              <Button
+                title='Add review'
+                style={{ width: '100%', fontWeight: 'bold' }}
+                type="dashed"
+                icon={<PlusOutlined />}
+                onClick={handleAddReview}
+              >
+                Add review
+              </Button>
             </div>
           )}
         <div style={{ display: 'flex', flexDirection: 'row', position: 'absolute', bottom: 0, right: 0 }}>
@@ -415,5 +497,204 @@ function Survey() {
   </Layout>
 );
 }
+
+const uploadButton = (
+  <div style={{ 
+    width: '120px', 
+    height: '120px',
+    borderRadius: 12, 
+    border: '2px solid black',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    lineHeight: 1,
+    flexDirection: 'column',
+    background: "#ccc"
+     }}>
+    {/* {loading ? <LoadingOutlined /> : } */}
+    <PlusOutlined />
+    <div style={{ marginTop: 8 }}>Upload</div>
+  </div>
+);
+
+const inputStyle = {
+  backgroundColor: "transparent",
+  color: "black",
+  border: "2px solid black",
+  // outline: "2px solid red",
+  fontSize: 20,
+  height: '50%',
+  borderRadius: 4,
+}
+
+function LawyerInputComponent({ data, index, changeLawyerData, handleRemoveLawyer } : any) {
+
+  const {id, name, description, cdnUUID} = data;
+
+  const [currentUUID, setCurrentUUID] = useState<string>("");
+
+  console.log("XZCZXCCZX data: ", data)
+
+  async function beforeUpload(file: any){
+      console.log("Before upload")
+      const result = await uploadDirect(file, {
+        publicKey: config.pkUploadcare,
+        store: 'auto',
+      });
+
+      console.log("result: ", result);
+      console.log("result.uuid: ", result.uuid);
+
+      changeLawyerData(result.uuid, "cdnUUID", index);
+
+      // setCurrentUUID()
+
+      // handleDelete(tempOldUUID);
+      
+      return false;
+  }
+
+  function handleChange() {
+    // changeLawyerData('nowa wartosc', "cdnUUID", index);
+    
+  }
+
+
+  return <div key={id}>
+  <Flex style={{
+    width: '100%', 
+    gap: 5, 
+    marginBottom: 20, 
+    // background: '#f00',
+    height: '120px'
+    }}>
+    <Flex style={{
+      width: '120px', 
+      borderRadius: 4,
+      justifyContent: 'flex-end',
+      }}>
+      <Upload
+        name="avatar"
+        style={{width: '100%', height: '100%', 
+        borderRadius: 4, 
+        background: '#aaa',
+        border: '2px solid black'}}
+        // listType=""
+        showUploadList={false}
+        beforeUpload={beforeUpload}
+        onChange={handleChange}
+        >
+          {cdnUUID ? <img src={getUrl(cdnUUID)} alt="avatar" 
+          className="relative overflow-hidden bg-cover bg-no-repeat"
+          style={{ 
+            width: '120px', 
+            height: '120px',
+            borderRadius: 4, 
+            border: '2px solid black'
+             }} /> : uploadButton}
+        </Upload>
+    </Flex>
+    <Flex vertical style={{width: '70%', gap: 5}} align='center' justify='center'>
+      <Input defaultValue={name} onChange={(e: any) => changeLawyerData(e.target.value, "name", index)} placeholder='Lawyer Name' 
+        style={inputStyle}
+      // style={{}} 
+      />
+      <Input defaultValue={description} onChange={(e: any) => changeLawyerData(e.target.value, "description", index)} placeholder='Lawyer Description' 
+        style={inputStyle}
+      />
+    </Flex>
+    <Flex>
+      <Button type='default' onClick={() => handleRemoveLawyer(index)} 
+      style={{ 
+        padding: 10, 
+        height: '100%', 
+        background: '#f55', 
+        borderRadius: 4, 
+        textAlign: 'center',
+        color: 'black',
+        border: '2px solid #a33'
+      }} >
+        <DeleteFilled style={{margin: 0}} />
+      </Button>
+    </Flex>
+  </Flex>
+</div>;
+}
+
+
+function ReviewInputComponent({ data, index, changeReviewData, handleRemoveReview } : any) {
+
+  const {id, clientName, testimonial, cdnUUID} = data;
+
+  const [currentUUID, setCurrentUUID] = useState<string>("");
+
+  console.log("XZCZXCCZX data: ", data)
+
+  // async function beforeUpload(file: any){
+  //     console.log("Before upload")
+  //     const result = await uploadDirect(file, {
+  //       publicKey: config.pkUploadcare,
+  //       store: 'auto',
+  //     });
+
+  //     console.log("result: ", result);
+  //     console.log("result.uuid: ", result.uuid);
+
+  //     changeReviewData(result.uuid, "cdnUUID", index);
+
+  //     // setCurrentUUID()
+
+  //     // handleDelete(tempOldUUID);
+      
+  //     return false;
+  // }
+
+  function handleChange() {
+    // changeLawyerData('nowa wartosc', "cdnUUID", index);
+    
+  }
+
+
+  return <div key={id}>
+  <Flex style={{
+    width: '100%', 
+    gap: 5, 
+    marginBottom: 20, 
+    // background: '#f00',
+    height: '120px'
+    }}>
+    <Flex vertical style={{width: '90%', gap: 5}} align='center' justify='center'>
+      <Input defaultValue={clientName} onChange={(e: any) => changeReviewData(e.target.value, "clientName", index)} placeholder='Client Name' 
+        style={inputStyle}
+      // style={{}} 
+      />
+      <Input defaultValue={testimonial} onChange={(e: any) => changeReviewData(e.target.value, "testimonial", index)} placeholder='Enter review here...' 
+        style={inputStyle}
+      />
+    </Flex>
+    <Flex>
+      <Button type='default' onClick={() => handleRemoveReview(index)} 
+      style={{ 
+        padding: 10, 
+        height: '100%', 
+        background: '#f55', 
+        borderRadius: 4, 
+        textAlign: 'center',
+        color: 'black',
+        border: '2px solid #a33'
+      }} >
+        <DeleteFilled style={{margin: 0}} />
+      </Button>
+    </Flex>
+  </Flex>
+</div>;
+}
+
+{/* <div className="relative overflow-hidden bg-cover bg-no-repeat" style={{
+        backgroundPosition: '50%',
+        backgroundImage: "url('https://ucarecdn.com/194ed0d0-5921-4684-8ae1-02bfd645d41c/_d65e891a18e343b9bccb0adb2a065aca.jpeg')",
+        height: '100vh',
+        width: '50vw'
+    }} /> */}
 
 export default Survey;

@@ -13,6 +13,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import './../../../index.css';
+import { updateCssStyles } from '../../../utils';
 
 const { Content } = Layout;
 
@@ -90,6 +91,8 @@ export const Dashboard: React.FC = () => {
       const result = await site_collection.insertOne(newSite);
       console.log("Created site:", JSON.stringify(result));
 
+      // updateCssStyles(["#efefee", "#a3826c", "#3e3d3d"]);
+      
       const site_id: string = newSite._id.toString();
 
       navigate(`/survey/${site_id}`);

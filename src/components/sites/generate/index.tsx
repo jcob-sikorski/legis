@@ -95,7 +95,7 @@ function Generate() {
       setLoading(false);
         
       // generate site data value
-      const siteData = getSiteData(finalContent);
+      const siteData = getSiteData(finalContent, onboardingData);
       updateSite(siteData);
     }).catch((e) => {
       setError(JSON.stringify(e));
@@ -215,9 +215,19 @@ function Generate() {
     </> );
 }
 
-function getSiteData(data: any) {
+function getSiteData(data: any, onboardingData: Questionnaire) {
   
-  const {NavBar, Hero, PracticeAreas, OurTeam, TheirValues, ReviewsAndTestimonials, AboutUs} = data;
+  const {NavBar, Hero, PracticeAreas, OurTeam, TheirValues, AboutUs} = data;
+  const {ClientReviews} = onboardingData
+
+  console.log("mfmfmf: ", onboardingData);
+
+  let reviews = [];
+  try {
+    reviews = JSON.parse(ClientReviews ?? "[]");
+  } catch {
+    alert("error parsing reviews in getSiteData.")
+  }
 
   // 1. Nav bar
   // 2. Hero section - name & 1-2 sentence description
@@ -263,7 +273,7 @@ function getSiteData(data: any) {
     {
       section_id: v4(),
       template_id: 'TReviews1',
-      reviews: ReviewsAndTestimonials,
+      reviews,
     },
     // 7. About us = GENERATED
     {
