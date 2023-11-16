@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 
 import './../../../index.css';
 import { updateCssStyles } from '../../../utils';
+import Logo from '../menu/Logo';
 
 const { Content } = Layout;
 
@@ -161,7 +162,18 @@ export const Dashboard: React.FC = () => {
   
   
   return (
-    <Layout style={{minHeight: '100vh', display: 'flex'}}>
+    <>
+    <Menu
+          theme="dark"
+          mode="horizontal"
+          style={{height: 46}}
+          defaultSelectedKeys={['2']}
+          // items={}
+        >
+          <Logo />
+        </Menu>
+     <Layout style={{height: 'calc(100vh - 46px)', display: 'flex'}}>
+      
       <Sidebar/>
       <Layout>
       <div style={{
@@ -172,7 +184,7 @@ export const Dashboard: React.FC = () => {
         alignItems: 'center', // Align items vertically in the center
       }}>
         <div>
-          <h1 style={{ padding: 10 }}>DASHBOARD</h1>
+          {/* <h1 style={{ padding: 10 }}>DASHBOARD</h1> */}
           <h1 style={{ padding: 10 }}>MY SITES</h1>
         </div>
       </div>
@@ -183,7 +195,7 @@ export const Dashboard: React.FC = () => {
           onClick={createSite}
           className="custom-button"
           style={{ marginLeft: 'auto', height: 50 }} // Use marginLeft: 'auto' to push the button to the right
-        >
+          >
           New Site
         </Button>
             <Flex style={{ flexDirection: 'column', maxWidth: 1000, marginInline: 'auto', marginBottom: 50, padding: 10}} >
@@ -198,6 +210,7 @@ export const Dashboard: React.FC = () => {
         </Content>
       </Layout>
     </Layout>
+                  </>
   );
 };
 

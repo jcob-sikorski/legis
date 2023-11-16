@@ -24,6 +24,7 @@ import Sections from './Sections';
 import { getPromptForGeneration, updateCssStyles } from '../../../utils';
 import MainMenu from '../menu';
 import { useApp } from '../../RealmApp';
+import Logo from '../menu/Logo';
 
 // TODO: push the created site to mongodb
 // TODO: update the page every 5 seconds in mongodb
@@ -335,6 +336,9 @@ const Editor: React.FC = () => {
         <Row>
           <Col span={18}>
             <Flex justify='center' style={{maxWidth: LEFT_BAR_WIDTH}}>
+              <div style={{marginTop: '-16px', marginLeft: '-16px'}}>
+                <Logo />
+              </div>
               {/* Left Side of navbar */}
             </Flex>
           </Col>
