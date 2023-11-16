@@ -2,28 +2,30 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../../RealmApp";
 import * as Realm from "realm-web";
+import axios from "axios";
+import { config } from "../../../config";
 import { message } from 'antd';
 import "./index.css";
 
 export default function SignUp() {
-  const app: any = useApp();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const app: any = useApp();
 
   const navigate = useNavigate();
 
   const handleSignUp = async () => {
-    // app.logOut();
     if (email && email.length < 80 && password && password.length >= 6 && password.length <= 100) {
       try {
         // Register new email/password user
         await app.emailPasswordAuth.registerUser({email, password});
   
-        // TODO send welcome email with the authentication and wait for the confirmation before log in the user
+        // TODO send welcome email
   
         // Log in the email/password user
         await app.logIn(Realm.Credentials.emailPassword(email, password));
-        navigate('/');
+        navigate(`/${email}`);
         
         setTimeout(() => {
           setEmail("");

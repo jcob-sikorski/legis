@@ -12,6 +12,7 @@ export const config = {
     pkUploadcare: import.meta.env.VITE_REACT_pkUploadcare,
     skUploadcare: import.meta.env.VITE_REACT_skUploadcare,
     openaiApiKey: import.meta.env.VITE_REACT_openaiApiKey,
-    openaiOrg: import.meta.env.VITE_REACT_openaiOrg
+    openaiOrg: import.meta.env.VITE_REACT_openaiOrg,
+    loopsKey: import.meta.env.VITE_REACT_loopsKey
   };
   
