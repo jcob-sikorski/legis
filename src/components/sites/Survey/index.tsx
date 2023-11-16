@@ -41,7 +41,7 @@ function Survey() {
   ];
   
   const [form] = Form.useForm();
-  const [page, setPage] = useState(9);
+  const [page, setPage] = useState(0);
   const [animationProps, setAnimationProps] = useSpring(() => ({
   }));
 
