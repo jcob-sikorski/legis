@@ -34,7 +34,7 @@ function App() {
           <Route path="/html" element={<Html />} />
           <Route path="/playground" element={<Playground />} />
 
-          <Route path="/" 
+          <Route path="/:email?"
             element={
               <RequireAuth>
                 <Dashboard />

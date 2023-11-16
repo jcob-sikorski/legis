@@ -10,7 +10,7 @@ import Site from '../../../models/Site';
 import Sidebar from '../menu';
 import { config } from "../../../config";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import './../../../index.css';
 import { updateCssStyles } from '../../../utils';
@@ -19,10 +19,10 @@ import Logo from '../menu/Logo';
 const { Content } = Layout;
 
 export const Dashboard: React.FC = () => {
-  
-  const navigate = useNavigate();
-
   const [sites, setSites] = useState<Site[]>([]);
+
+  const navigate = useNavigate();
+  const { email } = useParams();
 
   const {
     token: { colorBgContainer },
@@ -34,6 +34,7 @@ export const Dashboard: React.FC = () => {
 
   const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
   const site_collection = mongodb.db("legis").collection("Site");
+  const user_collection = mongodb.db("legis").collection("User");
 
   // Set up your GitHub API credentials and repository name
   const githubUsername = config.githubUsername;
@@ -42,6 +43,25 @@ export const Dashboard: React.FC = () => {
   React.useEffect(() => {
     console.log("sites: ", sites);
   }, [sites]);
+
+  React.useEffect(() => {
+    const insertUser = async () => {
+      if (email) {
+        // Create a new user document
+        const newUser = {
+          _id: new Realm.BSON.ObjectId(app.currentUser!.id),
+          email: email
+        };
+                
+        // Insert the new user document into the collection
+        const result = await user_collection.insertOne(newUser);
+        console.log("Created user:", JSON.stringify(result));
+      }
+    };
+  
+    insertUser();
+  }, []);
+  
 
   const userQuery = { "user_id": new Realm.BSON.ObjectId(currentUserID) };
 
@@ -68,14 +88,17 @@ export const Dashboard: React.FC = () => {
     searchDocuments();
   }, []);
 
-  async function createSite() {
+  async function logOut() {
+    app.logOut();
+  }
 
+  async function createSite() {
     const newId = new Realm.BSON.ObjectId()
 
     const newSite = {
       user_id: new Realm.BSON.ObjectId(currentUserID),
       _id: newId,
-      title: "Your Site Title",
+      title: `${newId}`,
       subtitle: "Your Site Subtitle",
       description: "Your Site Description",
       deleted: 0,
@@ -183,12 +206,28 @@ export const Dashboard: React.FC = () => {
         flexDirection: 'row', // Change flexDirection to 'row'
         alignItems: 'center', // Align items vertically in the center
       }}>
-        <div>
-          {/* <h1 style={{ padding: 10 }}>DASHBOARD</h1> */}
-          <h1 style={{ padding: 10 }}>MY SITES</h1>
+        {/* <div> */}
+        <div style={{
+          background: '#f0f2f5',
+          fontSize: 14,
+          display: 'flex',
+          flexDirection: 'row', // Change flexDirection to 'row'
+          alignItems: 'center', // Align items vertically in the center
+        }}>
+          <div>
+            <h1 style={{ padding: 10 }}>DASHBOARD</h1>
+            <h1 style={{ padding: 10 }}>MY SITES</h1>
+          </div>
+          <Button
+            type="primary"
+            onClick={logOut}
+            className="custom-button"
+            style={{ marginLeft: 'auto', height: 30 }} // Use marginLeft: 'auto' to push the button to the right
+          >
+            Log Out
+          </Button>
         </div>
-      </div>
-
+        </div>
         <Content style={{background: colorBgContainer, padding: 0}}>
         <Button
           type="primary"

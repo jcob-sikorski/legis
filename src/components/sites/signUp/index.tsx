@@ -2,15 +2,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../../RealmApp";
 import * as Realm from "realm-web";
+import axios from "axios";
+import { config } from "../../../config";
 import { message } from 'antd';
 import "./index.css";
-import { config } from "../../../config";
-import axios from "axios";
+// import { config } from "../../../config";
+// import axios from "axios";
 
 export default function SignUp() {
-  const app: any = useApp();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const app: any = useApp();
 
   const navigate = useNavigate();
 
