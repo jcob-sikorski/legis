@@ -18,18 +18,16 @@ export default function SignUp() {
   const navigate = useNavigate();
 
   const handleSignUp = async () => {
-    if (true || email && email.length < 80 && password && password.length >= 6 && password.length <= 100) {
+    if (email && email.length < 80 && password && password.length >= 6 && password.length <= 100) {
       try {
-        // EMAIL FOR TESTING IS CHANGED TEMPORARILY HERE
-        const email = "envytristan@gmail.com";
         // Register new email/password user
-        // await app.emailPasswordAuth.registerUser({email, password: "123456"});
+        await app.emailPasswordAuth.registerUser({email, password});
   
         // Log in the email/password user
-        await app.logIn(Realm.Credentials.emailPassword(email, "123456"));
+        await app.logIn(Realm.Credentials.emailPassword(email, password));
 
         // TODO send welcome email
-        // navigate(`/${email}`);
+        navigate(`/${email}`);
 
         const data = {
           email: email,

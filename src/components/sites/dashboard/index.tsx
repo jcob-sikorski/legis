@@ -93,6 +93,26 @@ export const Dashboard: React.FC = () => {
   }
 
   async function createSite() {
+    if (sites.length === 0) {
+      const data = {
+        email: email,
+        eventName: "onboardingGuidelines"
+      };
+      
+      const tsx = {
+        method: 'post',
+        url: 'https://app.loops.so/api/v1/events/send',
+        headers: { 
+          Authorization: `Bearer ${config.loopsKey}`
+        },
+        data : data
+      };
+      
+      const response = await axios(tsx);
+
+      console.log("LOOPS RESPONSE: ", (response));
+    }
+    
     const newId = new Realm.BSON.ObjectId()
 
     const newSite = {
@@ -186,12 +206,11 @@ export const Dashboard: React.FC = () => {
   
   return (
     <>
-    <Menu
+      <Menu
           theme="dark"
           mode="horizontal"
           style={{height: 46}}
           defaultSelectedKeys={['2']}
-          // items={}
         >
           <Logo />
         </Menu>
