@@ -118,7 +118,7 @@ export const Dashboard: React.FC = () => {
     const newSite = {
       user_id: new Realm.BSON.ObjectId(currentUserID),
       _id: newId,
-      title: `${newId}`,
+      title: `Title ${sites.length}`,
       subtitle: "Your Site Subtitle",
       description: "Your Site Description",
       deleted: 0,
