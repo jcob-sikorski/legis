@@ -664,12 +664,12 @@ function ReviewInputComponent({ data, index, changeReviewData, handleRemoveRevie
     height: '120px'
     }}>
     <Flex vertical style={{width: '90%', gap: 5}} align='center' justify='center'>
+      <Input defaultValue={testimonial} onChange={(e: any) => changeReviewData(e.target.value, "testimonial", index)} placeholder='Enter review here...' 
+        style={inputStyle}
+      />
       <Input defaultValue={clientName} onChange={(e: any) => changeReviewData(e.target.value, "clientName", index)} placeholder='Client Name' 
         style={inputStyle}
       // style={{}} 
-      />
-      <Input defaultValue={testimonial} onChange={(e: any) => changeReviewData(e.target.value, "testimonial", index)} placeholder='Enter review here...' 
-        style={inputStyle}
       />
     </Flex>
     <Flex>

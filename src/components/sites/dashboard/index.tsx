@@ -94,23 +94,28 @@ export const Dashboard: React.FC = () => {
 
   async function createSite() {
     if (sites.length === 0) {
-      const data = {
-        email: email,
-        eventName: "onboardingGuidelines"
-      };
-      
-      const tsx = {
-        method: 'post',
-        url: 'https://app.loops.so/api/v1/events/send',
-        headers: { 
-          Authorization: `Bearer ${config.loopsKey}`
-        },
-        data : data
-      };
-      
-      const response = await axios(tsx);
+      try {
 
-      console.log("LOOPS RESPONSE: ", (response));
+        const data = {
+          email: email,
+          eventName: "onboardingGuidelines"
+        };
+        
+        const tsx = {
+          method: 'post',
+          url: 'https://app.loops.so/api/v1/events/send',
+          headers: { 
+            Authorization: `Bearer ${config.loopsKey}`
+          },
+          data : data
+        };
+        
+        const response = await axios(tsx);
+        
+        console.log("LOOPS RESPONSE: ", (response));
+      } catch {
+        console.warn("ERROR SENDING LOOPS onboardingGuidelines")
+      }
     }
     
     const newId = new Realm.BSON.ObjectId()
