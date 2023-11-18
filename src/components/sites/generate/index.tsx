@@ -14,8 +14,11 @@ import { v4 } from "uuid";
 import 'animate.css';
 import { useApp } from "../../RealmApp";
 
+console.log("Before running new OpenAI: OPENAI_API_KEY: ", config.OPENAI_API_KEY);
+console.log("Before running new OpenAI: config ", config);
+
 const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: config.OPENAI_API_KEY,
     organization: config.openaiOrg,
     dangerouslyAllowBrowser: true,
 });
