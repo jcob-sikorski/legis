@@ -1,7 +1,7 @@
 import { Button, Cascader, Checkbox, Col, DatePicker, Flex, Form, Input, InputNumber, Layout, Radio, Row, Select, Space, Switch, TreeSelect, Typography } from 'antd';
 import Title from 'antd/es/typography/Title';
 import TextArea from 'antd/es/input/TextArea';
-import { DEV_JSON_TO_INJECT, RIGHT_BAR_WIDTH } from './const';
+import { DEV_JSON_TO_INJECT, RIGHT_BAR_WIDTH, TEMPLATES_HEROS, templatesMap } from './const';
 import { useEffect, useState } from 'react';
 import { SizeType } from 'antd/es/config-provider/SizeContext';
 import { useParams } from 'react-router-dom';
@@ -133,6 +133,14 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
 
     const sectionsCount = data?.length ?? 0;
 
+    const selectedTemplateProfile: any = profiles[selectedTemplateId]
+    let selectOptions: any[] = [];
+
+    if (selectedTemplateProfile) {
+      const category: string = selectedTemplateProfile.metadata.category;
+      selectOptions = templatesMap[category];
+    }
+
     return ( 
       <>
         <Space>
@@ -170,12 +178,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
             key={selectedSectionId + '-select'}
             style={{ width: 120 }}
             onChange={onTemplateChange}
-            options={[
-              { value: 'THero1', label: 'Hero 1' },
-              { value: 'TContact1', label: 'Contact 1' },
-              { value: 'TContact2', label: 'Contact 2' },
-              { value: 'TContact3', label: 'Contact 3' },
-            ]}
+            options={selectOptions}
           />
         </>
         }

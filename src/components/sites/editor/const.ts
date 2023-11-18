@@ -1,3 +1,5 @@
+import { faker } from "@faker-js/faker";
+
 export const LEFT_BAR_WIDTH = 120;
 export const RIGHT_BAR_WIDTH = 325;
 export const NAV_BAR_HEIGHT = 42;
@@ -19,20 +21,16 @@ export const DEV_START_JSON = `[
 export const DEV_JSON_TO_INJECT = `
 [
     {
-      "section_id": "69d0492f-6e94-455c-b89d-869744d026e9",
-      "template_id": "TNavBar1",
-      "name": "Roomba & Associates"
-    },
-    {
       "section_id": "d9d3422c-aa95-4af4-8d1d-7c8f684b253e",
-      "template_id": "THero1",
+      "template_id": "LHero1",
       "heading": "Welcome to Roomba & Associates",
       "subHeading": "Passionate about the game both inside and outside the courtroom, our sports law firm excels in navigating the complex legal landscape of the sports industry, ensuring our clients score victories on and off the field.",
-      "superHeading": "ASDADSDASADSADSADSASASDDA"
+      "superHeading": "ASDADSDASADSADSADSASASDDA",
+      "logo": "Roomba & Associates"
     },
     {
       "section_id": "c2553439-5bc8-4f02-98f6-e250fb2c7d2e",
-      "template_id": "TPracticeAreas1",
+      "template_id": "LPracticeAreas1",
       "areasList": [
         {
           "practiceAreaName": "Contract Negotiation",
@@ -50,7 +48,7 @@ export const DEV_JSON_TO_INJECT = `
     },
     {
       "section_id": "c18d2b97-ac62-4f62-9145-1c451682bf88",
-      "template_id": "TValues1",
+      "template_id": "LValues1",
       "description": "At Roomba & Associates, our values are the foundation of our firm. They guide our actions and shape our relationships with clients. We believe in:",
       "valuesList": [
         {
@@ -72,30 +70,110 @@ export const DEV_JSON_TO_INJECT = `
     },
     {
       "section_id": "d775d1e1-fbc6-4f11-b6bc-a1b62c3223fa",
-      "template_id": "TTeam1",
+      "template_id": "LTeam1",
       "lawyerDetails": [
-        "Jessica Taylor, Esq.: A former collegiate athlete turned sports law expert, Jessica combines her passion for the game with extensive legal knowledge, specializing in contract negotiations and athlete representation.",
-        "Michael Rodriguez, Esq.: With over two decades of experience in sports law, Michael is a seasoned advocate for athletes, excelling in dispute resolution and intellectual property matters.",
-        "Sarah Chang, Esq.: A rising star in the field, Sarah brings a fresh perspective to sports law, focusing on emerging legal issues, including esports and digital media rights."
+        {
+          "name": "Jessica Taylor",
+          "description": "A former collegiate athlete turned sports law expert, Jessica combines her passion for the game with extensive legal knowledge, specializing in contract negotiations and athlete representation."
+        },
+        {
+          "name": "Michael Rodriguez",
+          "description": "With over two decades of experience in sports law, Michael is a seasoned advocate for athletes, excelling in dispute resolution and intellectual property matters."
+        },
+        {
+          "name": "Sarah Chang",
+          "description": "A rising star in the field, Sarah brings a fresh perspective to sports law, focusing on emerging legal issues, including esports and digital media rights."
+        }
       ]
     },
     {
       "section_id": "d9decb2a-51e5-418f-9d8c-ee4d02c17517",
-      "template_id": "TReviews1",
+      "template_id": "LReviews1",
       "reviews": [
-        "Jessica TSarah Chang's innovative approach to our esports contract negotiations exceeded our expectations. She truly understands the evolving landscape of digital sports and provided us with expert advice every step of the way. - Esports Team Owner, ABC Gamingaylor and the team were instrumental in negotiating my contract with the professional league. Their attention to detail and understanding of the sports industry ensured I got the best deal possible! - John Smith, Professional Athlete",
-        "Michael Rodriguez provided invaluable guidance in resolving a complex intellectual property issue for our sports organization. His experience and strategic approach were key to a successful outcome. - Team Manager, XYZ Sports Club",
-        " "
+        {
+          "clientName": "John Smith",
+          "testimonial": "Jessica TSarah Chang's innovative approach to our esports contract negotiations exceeded our expectations. She truly understands the evolving landscape of digital sports and provided us with expert advice every step of the way."
+        },
+        {
+          "clientName": "Team Manager at XYZ Sports Club",
+          "testimonial": "Michael Rodriguez provided invaluable guidance in resolving a complex intellectual property issue for our sports organization. His experience and strategic approach were key to a successful outcome."
+        },
+        {
+          "clientName": "Tabitha Toffoe",
+          "testimonial": "ABC Gamingaylor and the team were instrumental in negotiating my contract with the professional league. Their attention to detail and understanding of the sports industry ensured I got the best deal possible!"
+        }
       ]
     },
     {
       "section_id": "ba656dce-1753-4620-8bdd-737be12709ec",
-      "template_id": "TAbout1",
+      "template_id": "LAbout1",
       "paragraph": "At Roomba & Associates, we are a clarity-focused sports law firm. We are problem solvers at heart, dedicated to finding innovative solutions for our clients. With our domain expertise in sports law, we bring a fresh perspective to every case. Our accessible approach ensures that quality legal help reaches as many people as possible. We pride ourselves on our gritty representation, never afraid to get our hands dirty to achieve optimal outcomes for our clients. With a team of dedicated attorneys deeply entrenched in the world of sports law, we provide comprehensive and tailored solutions for athletes, teams, and sports organizations alike. Our firm is committed to helping our clients not only play the game but win it, both on and off the field."
     },
     {
       "section_id": "dab71b51-a6a0-48ff-a655-cf9dda361df0",
-      "template_id": "TContact3"
+      "template_id": "LContact3"
     }
   ]
 `.trim()
+
+
+
+export const TEMPLATES_HEROS = [
+  {
+    value: 'LHero1',
+    label: 'Hero 1',
+    image: faker.image.url(),
+  },
+  {
+    value: 'LHero2',
+    label: 'Hero 2',
+    image: faker.image.url(),
+  },
+  {
+    value: 'LHero3',
+    label: 'Hero 3',
+    image: faker.image.url(),
+  },
+]
+
+export const TEMPLATES_PRACTICE = [
+  {
+    value: 'LPracticeArea1',
+    label: 'Practice Areas 1',
+    image: faker.image.url(),
+  },
+  {
+    value: 'LPracticeArea2',
+    label: 'Practice Areas 2',
+    image: faker.image.url(),
+  },
+  {
+    value: 'LPracticeArea3',
+    label: 'Practice Areas 3',
+    image: faker.image.url(),
+  },
+]
+
+export const TEMPLATES_VALUES = [
+  {
+    value: 'LValues1',
+    label: 'Values 1',
+    image: faker.image.url(),
+  },
+  {
+    value: 'LValues2',
+    label: 'Values 2',
+    image: faker.image.url(),
+  },
+  {
+    value: 'LValues3',
+    label: 'Values 3',
+    image: faker.image.url(),
+  },
+]
+
+export const templatesMap: any = {
+  "hero": TEMPLATES_HEROS,
+  "practice": TEMPLATES_HEROS,
+  "values": TEMPLATES_VALUES,
+}

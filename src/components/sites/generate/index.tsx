@@ -218,7 +218,7 @@ function Generate() {
 function getSiteData(data: any, onboardingData: Questionnaire) {
   
   const {NavBar, Hero, PracticeAreas, OurTeam, TheirValues, AboutUs} = data;
-  const {ClientReviews} = onboardingData
+  const {ClientReviews, LawFirmName} = onboardingData
 
   console.log("mfmfmf: ", onboardingData);
 
@@ -239,17 +239,18 @@ function getSiteData(data: any, onboardingData: Questionnaire) {
 
   return [
     // 1. Nav bar = QUESTION 1
-    {
-      section_id: v4(),
-      template_id: 'TNavBar1',
-      name: NavBar,
-    },
+    // {
+    //   section_id: v4(),
+    //   template_id: 'TNavBar1',
+    //   name: NavBar,
+    // },
     // 2. Hero section = GENERATED
     {
       section_id: v4(),
       template_id: 'THero1',
       heading: Hero.headline,
       subHeading: Hero.subHeadline,
+      logo: LawFirmName,
     },
     // 3. Practice areas = GENERATED
     {

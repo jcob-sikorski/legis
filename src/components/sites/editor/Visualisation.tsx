@@ -29,6 +29,27 @@ import THero3 from '../../templates/THero3';
 import TNavBar3 from '../../templates/TNavBar3';
 import TPracticeAreas3 from '../../templates/TPracticeAreas3';
 import TValues3 from '../../templates/TValues3';
+import { LHero1 } from '../../templates/LHero1';
+import LHero2 from '../../templates/LHero2';
+import LHero3 from '../../templates/LHero3';
+import LPracticeAreas1 from '../../templates/LPracticeAreas1';
+import LPracticeAreas2 from '../../templates/LPracticeAreas2';
+import LPracticeAreas3 from '../../templates/LPracticeAreas3';
+import LValues1 from '../../templates/LValues1';
+import LValues2 from '../../templates/LValues2';
+import LValues3 from '../../templates/LValues3';
+import LTeam1 from '../../templates/LTeam1';
+import LTeam2 from '../../templates/LTeam2';
+import LTeam3 from '../../templates/LTeam3';
+import LReviews1 from '../../templates/LReviews1';
+import LReviews2 from '../../templates/LReviews2';
+import LReviews3 from '../../templates/LReviews3';
+import LAbout1 from '../../templates/LAbout1';
+import LContact1 from '../../templates/LContact1';
+import LContact2 from '../../templates/LContact2';
+import LContact3 from '../../templates/LContact3';
+import LAbout2 from '../../templates/LAbout2';
+import LAbout3 from '../../templates/LAbout3';
 // import { delay } from '../../../utils';
 
 const { Content, Footer } = Layout;
@@ -166,34 +187,55 @@ function Visualisation({
 
     function switchTemplate(data: any) {
         switch(data.template_id) {
-            // NavBar
-            case 'TNavBar1':
-                return <TNavBar2 data={data} />
             // Hero
-            case 'THero1':
-                return <THero2 data={data} />
+            case 'LHero1':
+                return <LHero1 data={data} />
+            case 'LHero2':
+                return <LHero2 data={data} />
+            case 'LHero3':
+                return <LHero3 data={data} />
             // PracticeAreas
-            case 'TPracticeAreas1':
-                return <TPracticeAreas2 data={data} />
+            case 'LPracticeAreas1':
+                return <LPracticeAreas1 data={data} />
+            case 'LPracticeAreas2':
+                return <LPracticeAreas2 data={data} />
+            case 'LPracticeAreas3':
+                return <LPracticeAreas3 data={data} />
             // Values
-                case 'TValues1':
-                return <TValues2 data={data} />
+            case 'LValues1':
+                return <LValues1 data={data} />
+            case 'LValues2':
+                return <LValues2 data={data} />
+            case 'LValues3':
+                return <LValues3 data={data} />
             // Team
-            case 'TTeam1':
-                return <TTeam2 data={data} />
+            case 'LTeam1':
+                return <LTeam1 data={data} />
+            case 'LTeam2':
+                return <LTeam2 data={data} />
+            case 'LTeam3':
+                return <LTeam3 data={data} />
             // Reviews
-            case 'TReviews1':
-                return <TReviews2 data={data} />
+            case 'LReviews1':
+                return <LReviews1 data={data} />
+            case 'LReviews2':
+                return <LReviews2 data={data} />
+            case 'LReviews3':
+                return <LReviews3 data={data} />
             // About
-            case 'TAbout1': case 'TAboutUs1':
-                return <TAbout2 data={data} />
+            case 'LAbout1':
+                return <LAbout1 data={data} />
+            case 'LAbout2':
+                return <LAbout2 data={data} />
+            case 'LAbout3':
+                return <LAbout3 data={data} />
             // Contact
-            case 'TContact1':
-                return <TContact1 data={data} />
-            case 'TContact2':
-                return <TContact2 data={data} />
-            case 'TContact3':
-                return <TContact4 data={data} />
+            case 'LContact1':
+                return <LContact1 data={data} />
+            case 'LContact2':
+                return <LContact2 data={data} />
+            case 'LContact3':
+                return <LContact3 data={data} />
             // No template ID matched
             default:
                 return <TNoTemplate data={data} /> 
@@ -204,13 +246,27 @@ function Visualisation({
     ? {} 
     : { outline: '2px solid #0000ff77', outlineOffset: '-2px' }
 
-    const contentStyle = isDeploying 
+    const contentStyle: any = isDeploying 
     ? {} 
-    : { maxWidth: '1200px', margin: '24px 12px 0', overflow: 'initial' }
+    : { 
+        // maxWidth: '', 
+        position: 'absolute', 
+        // left: 0, 
+        top: 0, 
+        margin: '24px 12px 0', 
+        overflow: 'initial', 
+        marginTop: '60px', 
+        marginLeft: '-310px',
+        transform: 'scale(0.5)', 
+        transformOrigin: 'top',
+    }
 
     const layoutStyle = isDeploying
     ? { marginInline: 'auto' }
-    : { background: '#fff', maxWidth: '1200px'}
+    : { background: '#f00', 
+    // maxWidth: '2000px',  
+    width: '100vw'
+    }
 
     return ( <Layout className="site-layout" style={layoutStyle} ref={containerRef}>
     <Flex style={contentStyle} vertical>
@@ -288,7 +344,7 @@ function Visualisation({
         <Title style={{cursor:'pointer'}} onClick={onAddSection}>+ New section</Title>
     </Flex>
     } */}
-    <Footer style={{ textAlign: 'center' }}>Generated with Legis &middot; 2023</Footer>
+    {/* <Footer style={{ textAlign: 'center' }}>Generated with Legis &middot; 2023</Footer> */}
   </Layout> );
 }
 

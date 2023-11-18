@@ -1,5 +1,5 @@
 {
-    "THero1": {
+    "LHero1": {
         "metadata": {
             "category": "hero"
         },
@@ -39,7 +39,17 @@
             }
         ]
     },
-    "TContact1": {
+    "LHero2": {
+        "metadata": {
+            "category": "hero"
+        }
+    },
+    "LHero3": {
+        "metadata": {
+            "category": "hero"
+        }
+    },
+    "LContact1": {
         "metadata": {
             "category": "contact"
         },
@@ -78,7 +88,7 @@
             }
         ]
     },
-    "TContact2": {
+    "LContact2": {
         "metadata": {
             "category": "contact"
         },
@@ -146,7 +156,7 @@
             }
         ]
     },
-    "TContact3": {
+    "LContact3": {
         "metadata": {
             "category": "contact"
         },
