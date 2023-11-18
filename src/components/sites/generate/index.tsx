@@ -15,7 +15,7 @@ import 'animate.css';
 import { useApp } from "../../RealmApp";
 
 const openai = new OpenAI({
-    apiKey: config.openaiApiKey,
+    apiKey: config.OPENAI_API_KEY,
     organization: config.openaiOrg,
     dangerouslyAllowBrowser: true,
 });
