@@ -14,9 +14,6 @@ import { v4 } from "uuid";
 import 'animate.css';
 import { useApp } from "../../RealmApp";
 
-console.log("Before running new OpenAI: config.openaiKey: ", config.openaiKey);
-console.log("Before running new OpenAI: config ", config);
-
 const openai = new OpenAI({
     apiKey: config.openaiKey,
     organization: config.openaiOrg,
