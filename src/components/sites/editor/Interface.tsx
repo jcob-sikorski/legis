@@ -111,7 +111,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
           <TextArea rows={10} />
         </Form.Item></div>
         case 'checkbox':
-          return <div key={generatedKey} className='animate__slideIn'>
+          return <div key={generatedKey}>
           {labelComponent}
           <Form.Item className='animate__slideIn' name={id} style={itemStyle}>
           <Radio.Group style={{display: 'flex', justifyContent: 'center'}}>
@@ -125,9 +125,9 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
           let oldUUID = "";
           data.map((x: any) => {if (x.section_id === selectedSectionId) oldUUID = x.cdnUUID})
 
-          return <div key={generatedKey} className='animate__slideIn'>
+          return <div key={generatedKey} >
           {labelComponent}
-          <Form.Item name={id} style={itemStyle} >
+          <Form.Item className='animate__slideIn' name={id} style={itemStyle} >
           <ImageUploadInput ratio={ratio} handleCustomFieldChange={handleCustomFieldChange} oldUUID={oldUUID} />
         </Form.Item></div>
         }
@@ -150,18 +150,18 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
 
     return ( 
       <>
-        <Flex vertical className='my-5'>
+        {/* <Flex vertical className='my-5'>
           <Typography.Text>
             key: <b>{context?.key}</b> <br />
           </Typography.Text>
           <Typography.Text>
             type: <b>{context?.type}</b> <br />
           </Typography.Text>            
-        </Flex>
-        <Space>
+        </Flex> */}
+        {/* <Space>
             dev mode
             <Switch checked={isDevMode} onClick={() => setIsDevMode(!isDevMode)} />
-        </Space>
+        </Space> */}
         {isDevMode && !isDeploying && <>
             <button onClick={injectData}>Inject hard-coded data JSON</button>
             <Space>
