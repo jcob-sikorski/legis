@@ -14,5 +14,6 @@ export const config = {
     OPENAI_API_KEY: import.meta.env.OPENAI_API_KEY,
     openaiOrg: import.meta.env.VITE_REACT_openaiOrg,
     loopsKey: import.meta.env.VITE_REACT_loopsKey,
+    abc: import.meta.env.VITE_REACT_abc,
   };
   
