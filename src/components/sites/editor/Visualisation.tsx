@@ -277,6 +277,10 @@ function Visualisation({
         }
        }
 
+       useEffect(() => {
+        document.documentElement.style.setProperty('--vw-scale', `${calculateScale()}`);
+       }, [])
+
     window.addEventListener('resize', () => {
         document.documentElement.style.setProperty('--vw-scale', `${calculateScale()}`);
     });
