@@ -217,7 +217,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
           key={selectedSectionId + '-form'}
           layout="vertical"
           initialValues={data.filter((d: any) => d.section_id === selectedSectionId)[0] ?? {}}
-          style={{ width: '100%', maxWidth: 600, padding: 10 }}
+          style={{ width: RIGHT_BAR_WIDTH, padding: 10 }}
         >
           {/* {JSON.stringify(fields)} */}
           {/* {fields && fields.map((field: JSONProfileField) => switchField(field))} */}

@@ -385,7 +385,6 @@ const Editor: React.FC = () => {
             justifyContent: 'center',
             display: 'flex',
             alignItems: 'flex-start',
-            width: '100%',
             boxShadow: '12px 4px solid black',
             scrollBehavior: 'smooth',
           }}>

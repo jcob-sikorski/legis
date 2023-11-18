@@ -105,7 +105,7 @@ function Visualisation({
             const wrapperHeight = wrapper.getBoundingClientRect().height;
             const betweenHeight = clientHeight - (wrapperHeight);
             const finalY = 
-                yAfterMoving - betweenHeight * 0.5
+                yAfterMoving - betweenHeight * 0.5 * 4; // might need to make more precise later
                 // *   
                 // (followingDirection === "up" ? 1 : -1);
 
@@ -248,28 +248,48 @@ function Visualisation({
 
     const selectedSectionStyle = isDeploying 
     ? {} 
-    : { outline: '2px solid #0000ff77', outlineOffset: '-2px' }
+    : { outline: '4px dotted #0000ff77', outlineOffset: '-2px' }
 
     const contentStyle: any = isDeploying 
     ? {} 
     : { 
-        // maxWidth: '', 
         position: 'absolute', 
-        // left: 0, 
+        minHeight: '100vh',
         top: 0, 
         margin: '24px 12px 0', 
         overflow: 'initial', 
-        marginTop: '60px', 
-        marginLeft: '-310px',
-        transform: 'scale(0.5)', 
+        width: '200%',
+        transform: 'scale(0.49)',
+        marginLeft: 'calc(-50% - 10px)', 
         transformOrigin: 'top',
     }
 
+    function calculateScale() {
+        var viewportWidth = window.innerWidth;
+        if (viewportWidth >= 1600) {
+            let newVal = 1 + 0.5 * ((viewportWidth - 1600) / (2000 - 1600));
+            console.log("newVal: ", newVal)
+            if (newVal > 1.5) return 1.5;
+            else return newVal;
+         return 
+        } else {
+         return 1;
+        }
+       }
+
+    window.addEventListener('resize', () => {
+        document.documentElement.style.setProperty('--vw-scale', `${calculateScale()}`);
+    });
+
     const layoutStyle = isDeploying
     ? { marginInline: 'auto' }
-    : { background: '#f00', 
-    // maxWidth: '2000px',  
-    width: '100vw'
+    : { 
+        // background: '#f00',
+        padding: 10, 
+        minHeight: '100vh',
+        transform: 'scale(var(--vw-scale))', 
+        transformOrigin: 'top',
+        width: '100vw'
     }
 
     return ( <Layout className="site-layout" style={layoutStyle} ref={containerRef}>
