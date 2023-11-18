@@ -96,7 +96,9 @@ function ColorPalette() {
         width: '100%',
         marginRight: SIDE_BAR_WIDTH,
         }}>
+          <div style={{transform: 'scale(0.7)', transformOrigin: 'top'}}>
         <Visualisation data={data} mode='showcase' />
+          </div>
       </Flex>
       <div style={{width: '100%', maxWidth: SIDE_BAR_WIDTH, position: 'absolute', right: 0}}>
         <List

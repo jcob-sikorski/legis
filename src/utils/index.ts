@@ -119,3 +119,9 @@ export function switchIcon(valueName: string) {
 export function getUrl(uuid: string) {
   return `https://ucarecdn.com/${uuid}/`;
 }
+
+export function getRandomTemplate(category: string) {
+  switch (category) {
+    
+  }
+}

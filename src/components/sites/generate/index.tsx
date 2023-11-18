@@ -247,7 +247,7 @@ function getSiteData(data: any, onboardingData: Questionnaire) {
     // 2. Hero section = GENERATED
     {
       section_id: v4(),
-      template_id: 'THero1',
+      template_id: 'LHero1',
       heading: Hero.headline,
       subHeading: Hero.subHeadline,
       logo: LawFirmName,
@@ -255,37 +255,37 @@ function getSiteData(data: any, onboardingData: Questionnaire) {
     // 3. Practice areas = GENERATED
     {
       section_id: v4(),
-      template_id: 'TPracticeAreas1',
+      template_id: 'LPracticeAreas1',
       areasList: PracticeAreas,
     },
     // 4. Their values = GENERATED 
     {
       section_id: v4(),
-      template_id: 'TValues1',
+      template_id: 'LValues1',
       description: TheirValues,
     },
     // 5. The team = QUESTION 9
     {
       section_id: v4(),
-      template_id: 'TTeam1',
+      template_id: 'LTeam1',
       lawyerDetails: OurTeam
     },
     // 6. Reviews and testimonials = GENERATED
     {
       section_id: v4(),
-      template_id: 'TReviews1',
+      template_id: 'LReviews2',
       reviews,
     },
     // 7. About us = GENERATED
     {
       section_id: v4(),
-      template_id: 'TAbout1',
+      template_id: 'LAbout1',
       paragraph: AboutUs
     },
     // 7. Contact us form / CTA = NO DATA
     {
       section_id: v4(),
-      template_id: 'TContact3',
+      template_id: 'LContact3',
     },
   ]
 }

@@ -325,17 +325,17 @@ function Survey() {
 
   let leftStyle: any = { backgroundColor: '#262627' };
   if (page === 8 || page === 9) {
-    leftStyle = { backgroundColor: '#262627', maxWidth: '50vw', height: '100vh', padding: 20, maxHeight: '100vh', overflowY: 'scroll'}
+    leftStyle = { backgroundColor: '#262627', minWidth: '50vw', maxWidth: '50vw', height: '100vh', padding: 20, maxHeight: '100vh', overflowY: 'scroll'}
   }
 
   return (
     <Layout style={{ display: 'flex', flexDirection: 'row', overflow: 'hidden' }}>
       <div style={leftStyle}>
       { page === 8 && 
-        <Visualisation data={[{template_id: 'TTeam1', lawyerDetails: lawyers}]} mode='showcase' />
+        <Visualisation data={[{template_id: 'LTeam1', lawyerDetails: lawyers}]} mode='showcase' />
       }
       { page === 9 && 
-        <Visualisation data={[{template_id: 'TReviews1', reviews}]} mode='showcase' />
+        <Visualisation data={[{template_id: 'LReviews2', reviews}]} mode='showcase' />
       }
       { (page !== 8 && page !== 9) && 
       

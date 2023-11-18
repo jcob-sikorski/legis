@@ -125,6 +125,9 @@ function Visualisation({
     }
 
     async function onSectionClick(section: any) {
+
+        // setContext({});
+
         setSelectedSectionId((_: string) => section.section_id);
         setSelectedTemplateId((_: string) => section.template_id);
         
@@ -192,9 +195,9 @@ function Visualisation({
             case 'LHero1':
                 return <LHero1 data={data} setContext={setContext} />
             case 'LHero2':
-                return <LHero2 data={data} />
+                return <LHero2 data={data} setContext={setContext} />
             case 'LHero3':
-                return <LHero3 data={data} />
+                return <LHero3 data={data} setContext={setContext} />
             // PracticeAreas
             case 'LPracticeAreas1':
                 return <LPracticeAreas1 data={data} />

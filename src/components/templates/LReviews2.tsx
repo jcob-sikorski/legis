@@ -23,7 +23,7 @@ export default function LReviews2({data}: any) {
                 <div className="sm:flex sm:items-start">
                 <img 
                     className="flex-shrink-0 object-cover w-24 h-24 rounded-full" 
-                    src={faker.image.urlLoremFlickr({category: 'portrait'})} alt="" 
+                    src={"https://loremflickr.com/cache/resized/65535_52263219211_a888bd0f39_z_640_480_nofilter.jpg"} alt="" 
                 />
                 <div className="mt-6 sm:ml-6 sm:mt-0">
                     <blockquote>

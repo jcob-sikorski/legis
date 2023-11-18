@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { getUrl } from "../../utils";
 
-export default function LHero3({data} : any) {
+export default function LHero3({data, setContext} : any) {
     return <div className="relative">
     <header className="absolute inset-x-0 top-0 z-10 w-full">
         <div className="px-4 mx-auto sm:px-6 lg:px-8">
@@ -53,10 +53,10 @@ export default function LHero3({data} : any) {
                 </div>
 
                 <div className="relative px-4 pt-24 pb-16 text-center sm:px-6 md:px-24 2xl:px-32 lg:py-24 lg:text-left">
-                    <h1 className="text-4xl font-bold text-black sm:text-6xl xl:text-8xl">
+                    <h1 onClick={() => setContext({key: 'heading', type: 'text', label: 'Heading'})}  className="editable text-4xl font-bold text-black sm:text-6xl xl:text-8xl">
                         {data?.heading ?? ""}
                     </h1>
-                    <p className="mt-8 text-xl text-black">
+                    <p onClick={() => setContext({key: 'subHeading', type: 'textarea', label: 'Sub-Heading'})}  className="editable mt-8 text-xl text-black">
                         {data?.subHeading ?? ""}
                     </p>
 
@@ -88,16 +88,20 @@ export default function LHero3({data} : any) {
                     {/* <p className="mt-5 text-base text-black">Instant access . No credit card required</p> */}
                 </div>
 
-                <div className="absolute right-0 z-10 -bottom-16 lg:top-24 lg:-left-20">
+                {/* <div className="absolute right-0 z-10 -bottom-16 lg:top-24 lg:-left-20"> */}
                     {/* <img className="w-32 h-32 md:w-40 md:h-40" src="https://cdn.rareblocks.xyz/collection/celebration/images/hero/3/circular-text.png" alt="" /> */}
-                </div>
+                {/* </div> */}
             </div>
 
             <div className="relative w-full overflow-hidden lg:order-1 h-96 lg:h-auto lg:w-5/12">
                 <div className="absolute inset-0">
                     <img 
-                    className="object-cover w-full h-full scale-150" 
-                    src={getUrl(data?.cdnUUID)} alt="" />
+                    onClick={() => setContext({type: 'image', ratio: 8/10, label: 'Hero Image'})} 
+                    className="editable object-cover w-full h-full scale-150" 
+                    src={data?.cdnUUID ? getUrl(data?.cdnUUID) : "https://loremflickr.com/cache/resized/65535_52623052755_338d4ebf43_c_640_480_nofilter.jpg"}
+                    // src={getUrl(data?.cdnUUID)} 
+                    alt=""
+                     />
                 </div>
 {/* ok now replace the img (will later be used for image upload) */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>

@@ -31,7 +31,7 @@ export default function LReviews3({data}: any) {
                         <div className="flex items-center">
                             <img 
                                 className="flex-shrink-0 object-cover w-10 h-10 rounded-full" 
-                                src={faker.image.url()} 
+                                src={"https://loremflickr.com/cache/resized/65535_52263219211_a888bd0f39_z_640_480_nofilter.jpg"} 
                                 alt="" 
                             />
                             <div className="min-w-0 ml-3">

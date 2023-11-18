@@ -183,18 +183,30 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
             New section
         </Button> */}
 
+        
         {sectionsCount && <>
           {/* <Button style={{maxWidth: '190px', fontWeight: 'bold', backgroundColor: '#c00'}} type="primary" icon={<MinusOutlined />} size='large' onClick={onRemoveSection}>
               Remove section
           </Button> */}
-  
-          <Select
-            defaultValue={selectedTemplateId}
-            key={selectedSectionId + '-select'}
-            style={{ width: 120 }}
-            onChange={onTemplateChange}
-            options={selectOptions}
-          />
+          <Flex justify='center' vertical align='center' className='p-3 text-gray-500'>
+            <Typography.Title style={{fontSize: 18}} className='uppercase'>
+              Try other templates
+            </Typography.Title>
+            
+            <Radio.Group onChange={(e) => onTemplateChange(e.target.value)} style={{gap: 5, display: 'flex', maxWidth: '100%'}}>
+              {selectOptions?.map((option: any) => <Radio.Button value={option.value} style={{width: 120, height: 60}}>
+                <img src={option.image} style={{width: 100, height: 50}} />
+                {option.label}
+              </Radio.Button>)}
+            </Radio.Group>
+            {/* <Select
+              defaultValue={selectedTemplateId}
+              key={selectedSectionId + '-select'}
+              style={{ width: 120 }}
+              onChange={onTemplateChange}
+              options={selectOptions}
+            /> */}
+          </Flex>
         </>
         }
         

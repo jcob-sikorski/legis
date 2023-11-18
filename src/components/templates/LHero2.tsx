@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
+import { getUrl } from "../../utils";
 
-export default function LHero2({data} : any) {
+export default function LHero2({data, setContext} : any) {
 
     let heading = data?.heading ?? "";
 
@@ -62,7 +63,7 @@ export default function LHero2({data} : any) {
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
                 <div>
-                    <h1 className="text-4xl font-bold text-black sm:text-6xl lg:text-7xl">
+                    <h1 onClick={() => setContext({key: 'heading', type: 'text', label: 'Heading'})} className="editable text-4xl font-bold text-black sm:text-6xl lg:text-7xl">
                         {allButLastWord}
                         <div className="relative inline-flex">
                             <span className="absolute inset-x-0 bottom-0 border-b-[30px] border-[var(--legis-color-2)]"></span>
@@ -70,7 +71,7 @@ export default function LHero2({data} : any) {
                         </div>
                     </h1>
 
-                    <p className="mt-8 text-base text-black sm:text-xl">
+                    <p onClick={() => setContext({key: 'subHeading', type: 'textarea', label: 'Sub-Heading'})} className="editable mt-8 text-base text-black sm:text-xl">
                         {data?.subHeading ?? ""} 
                     </p>
 
@@ -88,7 +89,11 @@ export default function LHero2({data} : any) {
                 </div>
 
                 <div>
-                    <img className="w-full rounded-xl" src={faker.image.url()} alt="" />
+                    <img 
+                    onClick={() => setContext({type: 'image', ratio: 8/10, label: 'Hero Image'})}  
+                    className="editable w-full rounded-xl"
+                    src={data?.cdnUUID ? getUrl(data?.cdnUUID) : "https://loremflickr.com/cache/resized/65535_52623052755_338d4ebf43_c_640_480_nofilter.jpg"}
+                     alt="" />
                 </div>
             </div>
         </div>

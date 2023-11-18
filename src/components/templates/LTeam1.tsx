@@ -22,7 +22,7 @@ export default function LTeam1({data} : any) {
                     {i !== 0 && <div className="w-full h-px bg-gradient-to-r from-[var(--legis-color-1)] to-[var(--legis-color-2)]"></div>}
                     <div className="items-start sm:flex">
                         <img className="object-cover rounded-full w-44 h-44 shrink-0" 
-                        src={faker.image.urlLoremFlickr({category: 'portrait'})} alt="" 
+                        src={data?.cdnUUID ? getUrl(data.cdnUUID) : "https://ucarecdn.com/8aea75a1-4036-48d7-8924-cfbe9375de7f/"} alt="" 
                         />
                         <div className="mt-6 sm:ml-10">
                             <div className="sm:items-center sm:flex">
