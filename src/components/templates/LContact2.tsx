@@ -7,7 +7,7 @@ export default function LContact2({data} : any) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-8 gap-x-36">
             <div>
                 <h2 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">Love to hear from you, Get in touch</h2>
-                <p className="mt-4 text-base font-normal leading-7 text-gray-600 lg:text-lg lg:mt-6 lg:leading-8">Clarity gives you the blocks and components you need to create a truly professional website, landing page or admin panel for your SaaS and gives the blocks.</p>
+                {/* <p className="mt-4 text-base font-normal leading-7 text-gray-600 lg:text-lg lg:mt-6 lg:leading-8">Clarity gives you the blocks and components you need to create a truly professional website, landing page or admin panel for your SaaS and gives the blocks.</p> */}
             </div>
 
             <div>
