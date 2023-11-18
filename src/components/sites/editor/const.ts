@@ -30,7 +30,7 @@ export const DEV_JSON_TO_INJECT = `
     },
     {
       "section_id": "c2553439-5bc8-4f02-98f6-e250fb2c7d2e",
-      "template_id": "LPracticeAreas1",
+      "template_id": "LPracticeAreas2",
       "areasList": [
         {
           "practiceAreaName": "Contract Negotiation",
@@ -48,7 +48,7 @@ export const DEV_JSON_TO_INJECT = `
     },
     {
       "section_id": "c18d2b97-ac62-4f62-9145-1c451682bf88",
-      "template_id": "LValues1",
+      "template_id": "LValues2",
       "description": "At Roomba & Associates, our values are the foundation of our firm. They guide our actions and shape our relationships with clients. We believe in:",
       "valuesList": [
         {
@@ -88,7 +88,7 @@ export const DEV_JSON_TO_INJECT = `
     },
     {
       "section_id": "d9decb2a-51e5-418f-9d8c-ee4d02c17517",
-      "template_id": "LReviews1",
+      "template_id": "LReviews3",
       "reviews": [
         {
           "clientName": "John Smith",
