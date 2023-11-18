@@ -12,7 +12,7 @@ import axios from 'axios';
 // import { createHmac } from 'crypto-browserify';
 import { sha256 } from 'js-sha256';
 
-const ImageUploadInput = ({handleCustomFieldChange, oldUUID}: any) => {
+const ImageUploadInput = ({handleCustomFieldChange, oldUUID, ratio}: any) => {
 
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const [uploading, setUploading] = useState(false);
@@ -174,7 +174,7 @@ const ImageUploadInput = ({handleCustomFieldChange, oldUUID}: any) => {
     
     return <Space direction="vertical" style={{ width: '100%' }} size="large">
       {/* <Upload {...uploadProps}>Click to Upload</Upload>; */}
-        <ImgCrop rotationSlider aspect={16/8}>
+        <ImgCrop rotationSlider aspect={ratio}>
             <Dragger {...uploadProps}>
                 <p className="ant-upload-drag-icon">
                     <InboxOutlined />

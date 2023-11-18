@@ -111,3 +111,29 @@ div {
 .custom-font {
   font-family: 'Oswald';
 }
+
+.editable {
+  transition: outline 0.05s;
+}
+
+.editable:hover {
+  outline: 3px dotted #4391ff;
+}
+
+.animate__slideIn {
+  animation: animationSlideIn 0.2s forwards;
+  /* background: red; */
+  transform-origin: top;
+}
+
+@keyframes animationSlideIn {
+  from {
+    opacity: 0.5;
+    transform: scaleY(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}

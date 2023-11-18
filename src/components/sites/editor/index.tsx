@@ -25,6 +25,7 @@ import { getPromptForGeneration, updateCssStyles } from '../../../utils';
 import MainMenu from '../menu';
 import { useApp } from '../../RealmApp';
 import Logo from '../menu/Logo';
+import { FieldContext } from '../../../models';
 
 // TODO: push the created site to mongodb
 // TODO: update the page every 5 seconds in mongodb
@@ -54,6 +55,8 @@ const Editor: React.FC = () => {
 
   const [isDeploying, setIsDeploying] = useState<boolean>(false);
   const [isDevMode, setIsDevMode] = useState<boolean>(false);
+
+  const [context, setContext] = useState<FieldContext>();
 
   const dummyRef = useRef<any>(null);
   const containerRef = useRef(null);
@@ -304,6 +307,7 @@ const Editor: React.FC = () => {
     selectedTemplateId,
     isDevMode,
     isDeploying,
+    context
   }} 
   />;
 
@@ -316,6 +320,7 @@ const Editor: React.FC = () => {
     setSelectedTemplateId,
     setIsDevMode,
     setData,
+    setContext,
   }} 
   // setSelectedTemplateId={setSelectedTemplateId}
   variables={{

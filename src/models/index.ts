@@ -6,7 +6,7 @@ export interface JSONProfileField {
     generative?: number,
   }
 
-export type FieldType = "input" | "textarea" | "checkbox" | "image";
+
 
 export interface JSONProfile {
     metadata: any,
@@ -16,4 +16,14 @@ export interface JSONProfile {
 export interface OnboardingData {
   templateIds: string[],
   lawyerField: string,
+}
+
+
+export type FieldType = 'text' | 'number' | 'image' | 'textarea' | 'checkbox';
+export interface FieldContext {
+  key: string;
+  type: FieldType;
+  label: string;
+  ratio: number; // used for image input's crop aspect ratio
+  index: number; // used for collection datas like: lawyers or reviews.
 }

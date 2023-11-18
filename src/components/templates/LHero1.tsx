@@ -1,14 +1,17 @@
 import { faker } from "@faker-js/faker";
 import { getUrl } from "../../utils";
 
-export function LHero1({data} : any) {
+export function LHero1({data, setContext} : {data: any, setContext: Function}) {
     return ( <div style={{fontFamily: 'IBM Plex Sans'}}>
     <div className="py-4 bg-black sm:py-6" x-data="{expanded: false}">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="flex items-center justify-between">
                 <div className="shrink-0">
                     <a href="#" title="" className="flex text-white font-black">
-                        LEGIS
+                        {/* {data?.logo} */}
+                        <h1 style={{fontWeight: 700, fontSize: 28}}>
+                            {data?.logo ?? "Your logo"}
+                        </h1>
                         {/* <img className="w-auto h-9" src="https://landingfoliocom.imgix.net/store/collection/dusk/images/logo.svg" alt="" /> */}
                     </a>
                 </div>
@@ -41,7 +44,7 @@ export function LHero1({data} : any) {
 
                 <div className="relative hidden md:items-center md:justify-center md:inline-flex group">
                     <div className="absolute transition-all duration-200 rounded-full -inset-px bg-gradient-to-r from-cyan-500 to-purple-500 group-hover:shadow-lg group-hover:shadow-cyan-500/50"></div>
-                    <a href="#" title="" className="relative inline-flex items-center justify-center px-6 py-2 text-base font-normal text-white bg-black border border-transparent rounded-full" role="button"> Start free trial </a>
+                    {/* <a href="#" title="" className="relative inline-flex items-center justify-center px-6 py-2 text-base font-normal text-white bg-black border border-transparent rounded-full" role="button"> Start free trial </a> */}
                 </div>
             </div>
 
@@ -68,8 +71,12 @@ export function LHero1({data} : any) {
         <div className="px-4 mx-auto relativea sm:px-6 lg:px-8 max-w-7xl">
             <div className="grid items-center grid-cols-1 gap-y-12 lg:grid-cols-2 gap-x-16">
                 <div>
-                    <h1 className="text-4xl font-normal text-white sm:text-5xl lg:text-6xl xl:text-7xl">{data?.heading ?? ""}</h1>
-                    <p className="mt-4 text-lg font-normal text-gray-400 sm:mt-8">{data?.subHeading ?? ""}</p>
+                    <h1 onClick={() => setContext({key: 'heading', type: 'text', label: 'Heading'})} className="text-4xl font-normal text-white sm:text-5xl lg:text-6xl xl:text-7xl editable">
+                        {data?.heading ?? ""}
+                    </h1>
+                    <p onClick={() => setContext({key: 'subHeading', type: 'textarea', label: 'Sub-Heading'})} className="mt-4 text-lg font-normal text-gray-400 sm:mt-8 editable">
+                        {data?.subHeading ?? ""}
+                    </p>
 
                     <form action="#" method="POST" className="relative mt-8 rounded-full sm:mt-12">
                         <div className="relative">
@@ -136,12 +143,13 @@ export function LHero1({data} : any) {
                     </div>
 
                     <div className="absolute inset-0">
-                        <img className="object-cover w-full h-full opacity-50" src="https://landingfoliocom.imgix.net/store/collection/dusk/images/noise.png" alt="" />
+                        <img  className="object-cover w-full h-full opacity-50" src="https://landingfoliocom.imgix.net/store/collection/dusk/images/noise.png" alt="" />
                     </div>
 
-                    <img className="relative w-full max-w-md mx-auto rounded-xl" 
+                    <img className="editable relative w-full max-w-md mx-auto rounded-xl"
+                    onClick={() => setContext({type: 'image', ratio: 8/10, label: 'Hero Image'})}  
                     // src="https://landingfoliocom.imgix.net/store/collection/dusk/images/hero/2/illustration.png" 
-                    src={faker.image.url()}
+                    src={getUrl(data?.cdnUUID)}
                     alt="" />
                 </div>
             </div>

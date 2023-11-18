@@ -61,7 +61,7 @@ function Visualisation({
     mode = '',
 } : any) {
 
-    const { onAddSection, checkIfNoSections, setSelectedSectionId, setSelectedTemplateId, setData }
+    const { onAddSection, checkIfNoSections, setSelectedSectionId, setSelectedTemplateId, setData, setContext }
      = mode === "showcase" 
      ? {
         onAddSection: () => {},
@@ -69,6 +69,7 @@ function Visualisation({
         setSelectedSectionId: () => {},
         setSelectedTemplateId: () => {},
         setData: () => {},
+        setContext: () => {},
     } : functions;
     const { selectedSectionId, selectedTemplateId, isDevMode, isDeploying, dummyRef, containerRef } 
      = mode === "showcase"
@@ -189,7 +190,7 @@ function Visualisation({
         switch(data.template_id) {
             // Hero
             case 'LHero1':
-                return <LHero1 data={data} />
+                return <LHero1 data={data} setContext={setContext} />
             case 'LHero2':
                 return <LHero2 data={data} />
             case 'LHero3':

@@ -11,12 +11,12 @@ import PROFILES from '../../templates/profiles.json';
 
 import { EditOutlined, FireOutlined, MinusOutlined, PlusOutlined, RocketOutlined } from '@ant-design/icons';
 import ImageUploadInput from './ImageUploadInput';
-import { FieldType, JSONProfileField } from '../../../models';
+import { FieldContext, FieldType, JSONProfileField } from '../../../models';
 
 function Interface({json, setJson, data, setData, processJson, functions, variables} : any) {
 
   const { onAddSection, setSelectedSectionId, setSelectedTemplateId, onDeploy, setIsDevMode, setIsDeploying } = functions ?? {};
-  const { selectedSectionId, selectedTemplateId, isDevMode, isDeploying } = variables;
+  const { selectedSectionId, selectedTemplateId, isDevMode, isDeploying, context } = variables;
 
     const { site_id } = useParams();
 
@@ -79,53 +79,60 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
     // "bg-image": 1
 
 
-    
+    function switchField(field: FieldContext) {
 
-    function switchField(field: JSONProfileField) {
+      if (!field) return <>No field selected rn!</>
 
       let type: FieldType = field.type;
       let label: string = field.label;
-      let id: string = field.id;
+      let id: string = field.key;
+      let index: number = field.index;
+      let ratio: number = field.ratio;
+
+      const generatedKey = 'field' + type + label + id + index + ratio;
 
       const labelComponent = <Typography.Title color='#333' level={5} style={{margin: '15px 0 0 0', padding: 0, textAlign: 'center', width: '100%', fontWeight: 500}} >
-      {label.toUpperCase()}
+      {label?.toUpperCase()}
       </Typography.Title>
 
       const itemStyle = { margin: '0', padding: 0,}
 
       switch(type) {
-        case 'input':
-          return <>
+        case 'text':
+          return <div key={generatedKey} >
           {labelComponent}
-          <Form.Item name={id} style={itemStyle}>
+          <Form.Item className='animate__slideIn' name={id} style={itemStyle}>
           <Input />
-        </Form.Item></>;
+        </Form.Item></div>;
         case 'textarea': 
-          return <>
+          return <div key={generatedKey} >
           {labelComponent}
-          <Form.Item name={id} style={itemStyle}>
-          <TextArea rows={3} />
-        </Form.Item></>
+          <Form.Item className='animate__slideIn' name={id} style={itemStyle}>
+          <TextArea rows={10} />
+        </Form.Item></div>
         case 'checkbox':
-          return <>
+          return <div key={generatedKey} className='animate__slideIn'>
           {labelComponent}
-          <Form.Item name={id} style={itemStyle}>
+          <Form.Item className='animate__slideIn' name={id} style={itemStyle}>
           <Radio.Group style={{display: 'flex', justifyContent: 'center'}}>
             <Radio value="1">Yes</Radio>
             <Radio value="">No</Radio>
           </Radio.Group>
-        </Form.Item></>
+        </Form.Item></div>
         case 'image': {
 
           // Select current photo cdn uuid
           let oldUUID = "";
           data.map((x: any) => {if (x.section_id === selectedSectionId) oldUUID = x.cdnUUID})
 
-          return <>
+          return <div key={generatedKey} className='animate__slideIn'>
           {labelComponent}
           <Form.Item name={id} style={itemStyle} >
-          <ImageUploadInput handleCustomFieldChange={handleCustomFieldChange} oldUUID={oldUUID} />
-        </Form.Item></>
+          <ImageUploadInput ratio={ratio} handleCustomFieldChange={handleCustomFieldChange} oldUUID={oldUUID} />
+        </Form.Item></div>
+        }
+        default: {
+          return <>No input of type <b>{type}</b> matched</>
         }
       }
 
@@ -143,6 +150,14 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
 
     return ( 
       <>
+        <Flex vertical className='my-5'>
+          <Typography.Text>
+            key: <b>{context?.key}</b> <br />
+          </Typography.Text>
+          <Typography.Text>
+            type: <b>{context?.type}</b> <br />
+          </Typography.Text>            
+        </Flex>
         <Space>
             dev mode
             <Switch checked={isDevMode} onClick={() => setIsDevMode(!isDevMode)} />
@@ -193,16 +208,19 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
           style={{ width: '100%', maxWidth: 600, padding: 10 }}
         >
           {/* {JSON.stringify(fields)} */}
-          {fields && fields.map((field: JSONProfileField) => switchField(field))}
-          <Row >
+          {/* {fields && fields.map((field: JSONProfileField) => switchField(field))} */}
+          Field
+          {switchField(context)}
+          {/* <Row >
             <Col span={12}>
               <Button style={{backgroundColor: '#090', width: '100%', color: 'white'}}>Save changes</Button>
             </Col>
             <Col span={12}>
               <Button style={{backgroundColor: '#c00', width: '100%', color: 'white'}}>Cancel</Button>
             </Col>
-          </Row>
-        </Form>)}
+          </Row> */}
+        </Form>)
+        }
 </>);
 }
 
