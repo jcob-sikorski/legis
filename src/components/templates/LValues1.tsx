@@ -1,3 +1,5 @@
+import { switchIcon } from "../../utils";
+
 export default function LValues1({data} : any) {
     console.log("values: ", data);
     return <section className="py-12 bg-white sm:py-16 lg:py-20">
@@ -15,7 +17,7 @@ export default function LValues1({data} : any) {
 
             {((data?.valuesList ?? []).map((value: any, i: number) => 
                 <div className="md:p-8 lg:p-14 md:border-l md:border-gray-200" style={ i === 0 ? {borderLeft: 0} : {}}>
-                    <i className="bi bi-shield" style={{fontSize: 68, color: 'var(--legis-color-2)'}}></i>
+                    <i className={switchIcon(value?.name)} style={{fontSize: 68, color: 'var(--legis-color-2)'}}></i>
                     <h3 className="mt-12 text-xl font-bold text-gray-900 font-pj">{value?.name}</h3>
                     <p className="mt-5 text-base text-gray-600 font-pj">{value?.description}</p>
                 </div>
