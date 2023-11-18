@@ -138,17 +138,17 @@ export const TEMPLATES_HEROS = [
 
 export const TEMPLATES_PRACTICE = [
   {
-    value: 'LPracticeArea1',
+    value: 'LPracticeAreas1',
     label: 'Practice Areas 1',
     image: faker.image.url(),
   },
   {
-    value: 'LPracticeArea2',
+    value: 'LPracticeAreas2',
     label: 'Practice Areas 2',
     image: faker.image.url(),
   },
   {
-    value: 'LPracticeArea3',
+    value: 'LPracticeAreas3',
     label: 'Practice Areas 3',
     image: faker.image.url(),
   },
@@ -172,8 +172,86 @@ export const TEMPLATES_VALUES = [
   },
 ]
 
+
+export const TEMPLATES_TEAM = [
+  {
+    value: 'LTeam1',
+    label: 'Team 1',
+    image: faker.image.url(),
+  },
+  {
+    value: 'LTeam2',
+    label: 'Team 2',
+    image: faker.image.url(),
+  },
+  {
+    value: 'LTeam3',
+    label: 'Team 3',
+    image: faker.image.url(),
+  },
+]
+
+export const TEMPLATES_REVIEWS = [
+  {
+    value: 'LReviews1',
+    label: 'Reviews 1',
+    image: faker.image.url(),
+  },
+  {
+    value: 'LReviews2',
+    label: 'Reviews 2',
+    image: faker.image.url(),
+  },
+  {
+    value: 'LReviews3',
+    label: 'Reviews 3',
+    image: faker.image.url(),
+  },
+]
+
+export const TEMPLATES_ABOUT = [
+  {
+    value: 'LAbout1',
+    label: 'About Us 1',
+    image: faker.image.url(),
+  },
+  {
+    value: 'LAbout2',
+    label: 'About Us 2',
+    image: faker.image.url(),
+  },
+  {
+    value: 'LAbout3',
+    label: 'About Us 3',
+    image: faker.image.url(),
+  },
+]
+
+export const TEMPLATES_CONTACT = [
+  {
+    value: 'LContact1',
+    label: 'Contact 1',
+    image: faker.image.url(),
+  },
+  {
+    value: 'LContact2',
+    label: 'Contact 2',
+    image: faker.image.url(),
+  },
+  {
+    value: 'LContact3',
+    label: 'Contact 3',
+    image: faker.image.url(),
+  },
+]
+
+
 export const templatesMap: any = {
   "hero": TEMPLATES_HEROS,
-  "practice": TEMPLATES_HEROS,
+  "practice": TEMPLATES_PRACTICE,
   "values": TEMPLATES_VALUES,
+  "team": TEMPLATES_TEAM,
+  "reviews": TEMPLATES_REVIEWS,
+  "about": TEMPLATES_ABOUT,
+  "contact": TEMPLATES_CONTACT,
 }

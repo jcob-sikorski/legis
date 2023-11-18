@@ -224,5 +224,80 @@
                 "subtype": 1
             }
         ]
+    },
+    "LAbout1": {
+        "metadata": {
+            "category": "about"
+        }
+    },
+    "LAbout2": {
+        "metadata": {
+            "category": "about"
+        }
+    },
+    "LAbout3": {
+        "metadata": {
+            "category": "about"
+        }
+    },
+    "LPracticeAreas1": {
+        "metadata": {
+            "category": "practice"
+        }
+    },
+    "LPracticeAreas2": {
+        "metadata": {
+            "category": "practice"
+        }
+    },
+    "LPracticeAreas3": {
+        "metadata": {
+            "category": "practice"
+        }
+    },
+    "LReviews1": {
+        "metadata": {
+            "category": "reviews"
+        }
+    },
+    "LReviews2": {
+        "metadata": {
+            "category": "reviews"
+        }
+    },
+    "LReviews3": {
+        "metadata": {
+            "category": "reviews"
+        }
+    },
+    "LTeam1": {
+        "metadata": {
+            "category": "team"
+        }
+    },
+    "LTeam2": {
+        "metadata": {
+            "category": "team"
+        }
+    },
+    "LTeam3": {
+        "metadata": {
+            "category": "team"
+        }
+    },
+    "LValues1": {
+        "metadata": {
+            "category": "values"
+        }
+    },
+    "LValues2": {
+        "metadata": {
+            "category": "values"
+        }
+    },
+    "LValues3": {
+        "metadata": {
+            "category": "values"
+        }
     }
 }

@@ -221,7 +221,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
         >
           {/* {JSON.stringify(fields)} */}
           {/* {fields && fields.map((field: JSONProfileField) => switchField(field))} */}
-          Field
+          {/* Field */}
           {switchField(context)}
           {/* <Row >
             <Col span={12}>
