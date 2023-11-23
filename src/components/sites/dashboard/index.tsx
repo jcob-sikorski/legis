@@ -92,72 +92,6 @@ export const Dashboard: React.FC = () => {
     app.logOut();
   }
 
-  async function createSubdomain(site_id: string) {
-    // curl -u legiavmi:sZhrVksVJLFC -d "rootdomain=legis.live&domain=hello" "https://host51.registrar-servers.com:2083/json-api/cpanel?cpanel_jsonapi_func=addsubdomain&cpanel_jsonapi_module=SubDomain&cpanel_jsonapi_version=2"
-    
-    // Replace these variables with your own information
-    const cpanelUsername = config.cpanelUsername;
-    const cpanelPassword = config.cpanelPassword;
-    const domain = 'legis.live';
-  
-    // API endpoint and request payload
-    const apiURL = 'https://host51.registrar-servers.com:2083/json-api/cpanel';
-    const payload = {
-      cpanel_jsonapi_version: '2',
-      cpanel_jsonapi_module: 'SubDomain',
-      cpanel_jsonapi_func: 'addsubdomain',
-      domain: domain,
-      rootdomain: domain,
-      dir: `/public_html/${site_id}`,
-      subdomain: site_id,
-    };
-  
-    const base64Content = btoa(unescape(encodeURIComponent(`${cpanelUsername}:${cpanelPassword}`)));
-  
-    // Axios request configuration
-    const axios_config = {
-      headers: {
-        Authorization: `Basic ${base64Content}`,
-        'Content-Type': 'application/json',
-      },
-    };
-  
-    // Make the API request
-    try {
-      const response = await axios.post(apiURL, payload, axios_config);
-      if (response.status === 200) {
-        console.log('Subdomain created successfully!');
-      } else {
-        console.log('Failed to create subdomain. Status code:', response.status);
-        console.log('Error message:', response.data);
-      }
-    } catch (error) {
-      console.error('Error creating subdomain:', error);
-    }
-
-    try {
-      const updateResult = await site_collection.updateOne(
-        { _id: new Realm.BSON.ObjectId(site_id) },
-        { $set: { cname: `${site_id}.legis.live` } }
-      );
-      console.log(`Updated ${updateResult.modifiedCount} document.`);
-      const githubRepoResponse = await axios.put(`https://api.github.com/repos/${githubUsername}/${site_id}/pages`, {
-        cname: `${site_id}.legis.live`,
-        https_enforced: true,
-        source: "gh-pages"
-      }, {
-        headers: {
-          'Authorization': `token ${githubToken}`,
-          'X-GitHub-Api-Version': '2022-11-28'
-        },
-      });
-      console.log("Updated the domain of the site: ", githubRepoResponse.data);
-    }
-    catch (error) {
-      console.error('Error updating the domain of the site:', error);
-    }
-}
-
   async function createSite() {
     if (sites.length === 0) {
       try {
@@ -233,8 +167,6 @@ export const Dashboard: React.FC = () => {
     } catch (error) {
       console.error("Error creating site:", error);
     }
-
-    createSubdomain(site_id);
   }
 
   async function editSite(siteId: string) {
