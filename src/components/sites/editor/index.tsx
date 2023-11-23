@@ -205,11 +205,10 @@ const Editor: React.FC = () => {
       const githubRepoResponse = await axios.put(`https://api.github.com/repos/${githubUsername}/${site_id}/pages`, {
         cname: `${site_id}.legis.live`,
         https_enforced: true,
-        source: "gh-pages"
+        branch: "gh-pages"
       }, {
         headers: {
-          'Authorization': `token ${githubToken}`,
-          'X-GitHub-Api-Version': '2022-11-28'
+          'Authorization': `token ${githubToken}`
         },
       });
       console.log("Updated the domain of the site: ", githubRepoResponse.data);
