@@ -19,7 +19,7 @@ import axios from 'axios';
 import './index.css';
 import Sider from 'antd/es/layout/Sider';
 import { Content, Header } from 'antd/es/layout/layout';
-import { RocketOutlined } from '@ant-design/icons';
+import { RedoOutlined } from '@ant-design/icons';
 import Sections from './Sections';
 import { getPromptForGeneration, updateCssStyles } from '../../../utils';
 import MainMenu from '../menu';
@@ -407,7 +407,7 @@ const Editor: React.FC = () => {
   const borderStyle = '1px solid #0002';
 
   return (
-    <Layout style={{width: '100%'}}>
+    <Layout style={{width: '100%', height: 'calc(100vh - 46px)'}}>
       <Header style={{ padding: '4px 4px 4px 0px',  zIndex: 10, borderBottom: borderStyle, width: '100%', background: '#f0f1f9', height: NAV_BAR_HEIGHT, position: 'fixed' }}>
         <Row>
           <Col span={18}>
@@ -415,18 +415,26 @@ const Editor: React.FC = () => {
               <div style={{marginTop: '-16px', marginLeft: '-16px'}}>
                 <Logo />
               </div>
-              {/* Left Side of navbar */}
             </Flex>
           </Col>
           <Col span={6}>
             <Flex justify='flex-end' gap={4}>
               <Col span={6}>
                 <Flex justify='flex-end' gap={4}>
-                  <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary"  onClick={onGenerate}>
-                    Generate
-                  </Button>
-                  <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary" icon={<RocketOutlined />}  onClick={onDeploy}>
-                    Deploy
+                  <Button
+                    type="primary"
+                    onClick={onGenerate}
+                    className="custom-button"
+                    icon={<RedoOutlined />}
+                    style={{ marginLeft: 'auto', height: 50, minWidth: 50 }} // Use marginLeft: 'auto' to push the button to the right
+                  />
+                  <Button
+                    type="primary"
+                    onClick={onDeploy}
+                    className="custom-button"
+                    style={{ marginLeft: 'auto', height: 50 }} // Use marginLeft: 'auto' to push the button to the right
+                    >
+                    Publish
                   </Button>
                 </Flex>
               </Col>
@@ -435,7 +443,6 @@ const Editor: React.FC = () => {
         </Row>
       </Header>
     <Layout hasSider style={{ marginTop: NAV_BAR_HEIGHT}}>
-      
       <Layout>
         {/* Left side */}
         <Flex  style={{ width: LEFT_BAR_WIDTH, background: '#EDF3F9', borderRight: borderStyle, position: 'fixed', height: '100vh', left: 0 }}>
