@@ -116,7 +116,7 @@ function Generate() {
         const result = await site_collection.updateOne(
           { _id: new Realm.BSON.ObjectId(site_id) }, // Specify the query to find the site by site_id
           {
-            $set: { bodyTemplate: data }, // Use $set to update the data field
+            $set: { body_template: data }, // Use $set to update the data field
           }
         );
 

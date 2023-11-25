@@ -53,12 +53,12 @@ function ColorPalette() {
         // Include a query to find the site by its site_id
         const result = await site_collection.find({ _id: new Realm.BSON.ObjectId(site_id) });
   
-        if (result.length > 0 && result[0].hasOwnProperty("bodyTemplate")) {
-            console.log("Found a site with bodyTemplate:", result[0].bodyTemplate);
-            setData(result[0].bodyTemplate);
+        if (result.length > 0 && result[0].hasOwnProperty("body_template")) {
+            console.log("Found a site with body_template:", result[0].body_template);
+            setData(result[0].body_template);
           }
         else {
-          console.log("Site doesn't have the bodyTemplate yet.");
+          console.log("Site doesn't have the body_template yet.");
         }
       } catch (error) {
         console.error("Error searching for this site:", error);
