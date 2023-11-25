@@ -103,7 +103,7 @@ export const Dashboard: React.FC = () => {
         
         const tsx = {
           method: 'post',
-          url: 'https://app.loops.so/api/v1/events/send',
+          url: 'https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://app.loops.so/api/v1/events/send',
           headers: { 
             Authorization: `Bearer ${config.loopsKey}`
           },
@@ -135,14 +135,14 @@ export const Dashboard: React.FC = () => {
       cname: '',
       template_colors: ["#efefee", "#a3826c", "#3e3d3d"]
     };
+    
+    const site_id: string = newSite._id.toString();
   
     try {
       const result = await site_collection.insertOne(newSite);
       console.log("Created site:", JSON.stringify(result));
 
       // updateCssStyles(["#efefee", "#a3826c", "#3e3d3d"]);
-      
-      const site_id: string = newSite._id.toString();
 
       navigate(`/survey/${site_id}`);
   
@@ -167,7 +167,8 @@ export const Dashboard: React.FC = () => {
     } catch (error) {
       console.error("Error creating site:", error);
     }
-  }
+  };
+    
 
   async function editSite(siteId: string) {
     navigate(`/editor/${siteId}`);

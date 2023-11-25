@@ -26,7 +26,6 @@ export default function SignUp() {
         // Log in the email/password user
         await app.logIn(Realm.Credentials.emailPassword(email, password));
 
-        // TODO send welcome email
         navigate(`/${email}`);
 
         const data = {
@@ -36,7 +35,7 @@ export default function SignUp() {
         
         const tsx = {
           method: 'post',
-          url: 'https://app.loops.so/api/v1/events/send',
+          url: 'https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://app.loops.so/api/v1/events/send',
           headers: { 
             Authorization: `Bearer ${config.loopsKey}`
           },

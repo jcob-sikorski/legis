@@ -19,21 +19,21 @@ import axios from 'axios';
 import './index.css';
 import Sider from 'antd/es/layout/Sider';
 import { Content, Header } from 'antd/es/layout/layout';
-import { RocketOutlined } from '@ant-design/icons';
+import { RedoOutlined } from '@ant-design/icons';
 import Sections from './Sections';
 import { getPromptForGeneration, updateCssStyles } from '../../../utils';
 import MainMenu from '../menu';
 import { useApp } from '../../RealmApp';
 import Logo from '../menu/Logo';
 import { FieldContext } from '../../../models';
-
-// TODO: push the created site to mongodb
-// TODO: update the page every 5 seconds in mongodb
+import { getOnboardingData } from '../generate/getOnboardingData';
+import Questionnaire from '../../../models/Questionnaire';
 
 const Editor: React.FC = () => {
   const app: any = useApp();
 
   const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
+  const onboarding_collection = mongodb.db("legis").collection("Questionnaire");    
   const site_collection = mongodb.db("legis").collection("Site");
 
   // Set up your GitHub API credentials and repository name
@@ -45,7 +45,7 @@ const Editor: React.FC = () => {
 
   const [json, setJson] = useState(DEV_START_JSON);
   const [data, setData] = useState<any[]>([]);
-  
+  const [lawFirmName, setLawFirmName] = useState<string>();
   const [colors, setColors] = useState<string[]>([]);
 
   const [selectedSectionId, setSelectedSectionId] = useState<string>("");
@@ -145,12 +145,73 @@ const Editor: React.FC = () => {
 
   useEffect(() => {
     if (isDeploying) {
-      deploy();
-    }
+      deploy(); // TODO check if you can redeploy the content of the html when user made some changes
+    }           // TODO update the crecords only once in github pages oon page deployment
   }, [isDeploying])
 
   async function onDeploy() {
     setIsDeploying(true);    
+  }
+
+  async function createSubdomain(site_id: string) {
+    const updateResult = await site_collection.updateOne(
+      { _id: new Realm.BSON.ObjectId(site_id) },
+      { $set: { cname: `${lawFirmName}.legis.live` } }
+    );
+    console.log(`Updated ${updateResult.modifiedCount} document.`);
+
+    const domain = 'legis.live';
+    const cnameTarget = 'legisbiz.github.io.';
+    
+    // API endpoint and request payload
+    const apiURL = 'https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://host51.registrar-servers.com:2083/json-api/cpanel';
+    const payload = {
+      cpanel_jsonapi_version: '2',
+      cpanel_jsonapi_module: 'ZoneEdit',
+      cpanel_jsonapi_func: 'add_zone_record',
+      domain: domain,
+      name: `${lawFirmName}.${domain}.`,
+      type: 'CNAME',
+      cname: cnameTarget,
+    };
+    
+    const base64Content = btoa(unescape(encodeURIComponent(`${config.cpanelUsername}:${config.cpanelPassword}`)));
+    
+    // Axios request configuration
+    const axios_config = {
+      headers: {
+        Authorization: `Basic ${base64Content}`,
+        'Content-Type': 'application/json',
+      }
+    };
+    
+    // Make the API request
+    try {
+      const response = await axios.post(apiURL, payload, axios_config);
+      if (response.status === 200) {
+        console.log('CNAME record created successfully!');
+      } else {
+        console.log('Failed to create CNAME record. Status code:', response.status);
+        console.log('Error message:', response.data);
+      }
+    } catch (error) {
+      console.error('Error creating CNAME record:', error);
+    }
+
+    try {
+      const githubRepoResponse = await axios.put(`https://api.github.com/repos/${githubUsername}/${site_id}/pages`, {
+        cname: `${lawFirmName}.legis.live`,
+        source: "gh-pages"
+      }, {
+        headers: {
+          'Authorization': `token ${githubToken}`
+        },
+      });
+      console.log("Updated the github domain of the site: ", githubRepoResponse.data);
+    }
+    catch (error) {
+      console.error('Error updating the domain of the site:', error);
+    }
   }
 
   // deploy() function MUST be triggered by useEffect, because it depends on state reactive rendered data. (It must wait for tree to re-render and then generate an html string).
@@ -243,6 +304,8 @@ const Editor: React.FC = () => {
       console.error("Error pushing content and triggering deployment.");
       throw error;
     }
+
+    createSubdomain(site_id as string);
   }
 
   React.useEffect(() => {
@@ -269,6 +332,14 @@ const Editor: React.FC = () => {
       }
       } catch (error) {
         console.error("Error searching for this site:", error);
+      }
+      try {
+        const result = await onboarding_collection.find({ site_id: new Realm.BSON.ObjectId(site_id) });
+        const onboardingData: Questionnaire = result.length > 0 ? result[0] : {};
+
+        setLawFirmName(onboardingData.LawFirmName);
+      } catch (error) {
+        console.error("Error fetching for Questionnaire data for this site:", error);
       }
     }
   
@@ -352,7 +423,7 @@ const Editor: React.FC = () => {
   const borderStyle = '1px solid #0002';
 
   return (
-    <Layout style={{width: '100%'}}>
+    <Layout style={{width: '100%', height: 'calc(100vh - 46px)'}}>
       <Header style={{ padding: '4px 4px 4px 0px',  zIndex: 10, borderBottom: borderStyle, width: '100%', background: '#f0f1f9', height: NAV_BAR_HEIGHT, position: 'fixed' }}>
         <Row>
           <Col span={18}>
@@ -360,18 +431,26 @@ const Editor: React.FC = () => {
               <div style={{marginTop: '-16px', marginLeft: '-16px'}}>
                 <Logo />
               </div>
-              {/* Left Side of navbar */}
             </Flex>
           </Col>
           <Col span={6}>
             <Flex justify='flex-end' gap={4}>
               <Col span={6}>
                 <Flex justify='flex-end' gap={4}>
-                  <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary"  onClick={onGenerate}>
-                    Generate
-                  </Button>
-                  <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary" icon={<RocketOutlined />}  onClick={onDeploy}>
-                    Deploy
+                  <Button
+                    type="primary"
+                    onClick={onGenerate}
+                    className="custom-button"
+                    icon={<RedoOutlined />}
+                    style={{ marginLeft: 'auto', height: 50, minWidth: 50 }} // Use marginLeft: 'auto' to push the button to the right
+                  />
+                  <Button
+                    type="primary"
+                    onClick={onDeploy}
+                    className="custom-button"
+                    style={{ marginLeft: 'auto', height: 50 }} // Use marginLeft: 'auto' to push the button to the right
+                    >
+                    Publish
                   </Button>
                 </Flex>
               </Col>
@@ -380,7 +459,6 @@ const Editor: React.FC = () => {
         </Row>
       </Header>
     <Layout hasSider style={{ marginTop: NAV_BAR_HEIGHT}}>
-      
       <Layout>
         {/* Left side */}
         <Flex  style={{ width: LEFT_BAR_WIDTH, background: '#EDF3F9', borderRight: borderStyle, position: 'fixed', height: '100vh', left: 0 }}>
