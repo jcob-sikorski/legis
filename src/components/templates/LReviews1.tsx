@@ -4,9 +4,9 @@ export default function LReviews1({data}: any) {
     const list = data?.reviews ?? [];
     console.log("TReviews: ", JSON.stringify(data));
 
-   return <section className="py-12 bg-white sm:py-16 lg:py-20 xl:py-24">
+   return <section className="py-12 bg-black sm:py-16 lg:py-20 xl:py-24">
     <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-        <h2 className="text-center text-3xl font-bold leading-tight text-gray-900 sm:text-4xl xl:text-5xl font-pj">
+        <h2 className="text-center text-3xl font-bold leading-tight text-gray-100 sm:text-4xl xl:text-5xl font-pj">
             Testimonials
         </h2>
         <div className="grid grid-cols-1 gap-12 mt-12 text-center md:grid-cols-3 sm:mt-16">
@@ -15,11 +15,11 @@ export default function LReviews1({data}: any) {
             {((list ?? []).map((obj: any, i: number) => 
                 <div>
                     <blockquote>
-                        <p className="text-lg font-medium leading-8 text-gray-900">
+                        <p className="text-lg font-medium leading-8 text-gray-400">
                             “{obj?.testimonial ?? ""}”
                         </p>
                     </blockquote>
-                    <p className="mt-8 text-base font-semibold text-gray-900">{obj.clientName}</p>
+                    <p className="mt-8 text-base font-semibold text-gray-200">{obj.clientName}</p>
                     {/* <p className="mt-1 text-sm font-normal text-gray-500">Product Manager at Jomanar</p> */}
                 </div>
             ))}

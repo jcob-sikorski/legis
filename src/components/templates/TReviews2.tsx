@@ -3,14 +3,14 @@ import { faker } from "@faker-js/faker";
 
 export default function TReviews2({data} : any) {
 
-    console.log("TReviews: ", JSON.stringify(data));
-
+    
     // const list = Array.from({ length: 3 }, () => ({
-    //     clientName: faker.name.fullName(),
-    //     testimonial: faker.lorem.sentence(40),
-    //   }));
-
-      const list = data?.reviews ?? [];
+        //     clientName: faker.name.fullName(),
+        //     testimonial: faker.lorem.sentence(40),
+        //   }));
+        
+        const list = data?.reviews ?? [];
+        console.log("TReviews: ", JSON.stringify(data));
 
 
     return (<section id={'section-' + data.section_id} className="text-gray-600 body-font">

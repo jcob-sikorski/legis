@@ -1,9 +1,9 @@
-export default function LPracticeAreas1({data}: any) {
-    return <section className="py-12 bg-black sm:py-16 lg:py-20">
+export default function LPracticeAreas1({data, setContext}: any) {
+    return <section className="py-12 bg-white sm:py-16 lg:py-20 bg-[var(--legis-color-1)]x">
     <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div className="text-center">
-            <h2 className="text-3xl font-bold text-white sm:text-4xl xl:text-5xl font-pj">
-                Our practice areas
+        <div className="text-center text-black">
+            <h2 onClick={() => setContext({key: 'title', type: 'text', label: 'Section Title'})} className="editable text-3xl font-bold text-whitex sm:text-4xl xl:text-5xl font-pj">
+                {data?.title || "Our practice areas"}
             </h2>
         </div>
 
@@ -36,15 +36,17 @@ export default function LPracticeAreas1({data}: any) {
             </svg>
         </div> */}
 
-        <div className="grid grid-cols-1 mt-16 text-center sm:text-left gap-y-12 gap-x-8 sm:grid-cols-3 lg:gap-0">
+        <div className="grid grid-cols-1 mt-16 text-center sm:text-left gap-y-12 gap-x-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-0">
             
             
             {((data?.areasList ?? []).map((area: any, i:number) => 
                 <div className="relative lg:px-14">
-                    {i!==0&& <div className="absolute top-0 left-0 hidden w-px h-16 bg-[var(--legis-color-1)] lg:block"></div>}
+                    {i!==0&& <div className="absolute top-0 left-0 hidden w-px h-16 bg-[var(--legis-color-3)]x lg:block"></div>}
                 
-                <p className="text-5xl font-bold text-white font-pj">{area?.practiceAreaName}</p>
-                <p className="mt-5 text-lg font-normal text-gray-300">
+                <p onClick={() => setContext({collection: 'areasList', key: 'practiceAreaName', label: 'Practice Area Name', type: 'text', index: i})} className="editable text-5xl font-bold text-whitex text-black font-pj">
+                    {area?.practiceAreaName}
+                </p>
+                <p onClick={() => setContext({collection: 'areasList', key: 'practiceDescription', label: 'Practice Area Description', type: 'textarea', index: i})} className="editable mt-5 text-lg font-normal text-gray-700">
                     {area?.practiceDescription}
                 </p>
             </div>
