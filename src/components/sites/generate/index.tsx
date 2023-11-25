@@ -28,6 +28,8 @@ function Generate() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<any>(); 
   const [textIndex, setTextIndex] = useState(0);
+  
+  const [bodyTemplate, setBodyTemplate] = useState<any>([]);
 
   const waitingRoomTexts = [
     'Spinning the Magic...',
@@ -72,6 +74,26 @@ function Generate() {
       }
     }
     fetchOnboardingData();
+
+    console.log("Fetching site's body_template from mongo.");
+    async function fetchBodyTemplate() {
+      try {
+        // Include a query to find the site by its site_id
+        const result = await site_collection.find({ _id: new Realm.BSON.ObjectId(site_id) });
+  
+        if (result.length > 0 && result[0].hasOwnProperty("body_template")) {
+            console.log("Found a site with body_template:", result[0].body_template);
+            setBodyTemplate(result[0].body_template);
+          }
+        else {
+          console.log("Site doesn't have the body_template yet.");
+        }
+      } catch (error) {
+        console.error("Error searching for this site:", error);
+      }
+    }
+
+    fetchBodyTemplate();
   }, []);
 
   async function getResponseFromGPT() {
@@ -95,7 +117,7 @@ function Generate() {
       setLoading(false);
         
       // generate site data value
-      const siteData = getSiteData(finalContent, onboardingData);
+      const siteData =  getSiteData(finalContent, onboardingData, bodyTemplate);
       updateSite(siteData);
     }).catch((e) => {
       setError(JSON.stringify(e));
@@ -215,16 +237,17 @@ function Generate() {
     </> );
 }
 
-function getSiteData(data: any, onboardingData: Questionnaire) {
+function getSiteData(data: any, onboardingData: Questionnaire, bodyTemplate: any) {
   
   const {NavBar, Hero, PracticeAreas, OurTeam, TheirValues, AboutUs} = data;
   const {ClientReviews, LawFirmName} = onboardingData
 
-  console.log("mfmfmf: ", onboardingData);
+  console.log("getSiteData.onboardingData: ", onboardingData);
+  console.log("getSiteData.bodyTemplate: ", bodyTemplate);
 
   let reviews = [];
   try {
-    reviews = JSON.parse(ClientReviews ?? "[]");
+    reviews = JSON.parse(ClientReviews || "[]");
   } catch {
     alert("error parsing reviews in getSiteData.")
   }
@@ -237,7 +260,7 @@ function getSiteData(data: any, onboardingData: Questionnaire) {
   // 6. Reviews and testimonials
   // 7. Contact us form / CTA
 
-  return [
+  let arr = [
     // 1. Nav bar = QUESTION 1
     // {
     //   section_id: v4(),
@@ -255,13 +278,13 @@ function getSiteData(data: any, onboardingData: Questionnaire) {
     // 3. Practice areas = GENERATED
     {
       section_id: v4(),
-      template_id: 'LPracticeAreas1',
+      template_id: 'LPracticeAreas2',
       areasList: PracticeAreas,
     },
     // 4. Their values = GENERATED 
     {
       section_id: v4(),
-      template_id: 'LValues1',
+      template_id: 'LValues2',
       description: TheirValues,
     },
     // 5. The team = QUESTION 9
@@ -285,9 +308,15 @@ function getSiteData(data: any, onboardingData: Questionnaire) {
     // 7. Contact us form / CTA = NO DATA
     {
       section_id: v4(),
-      template_id: 'LContact3',
+      template_id: 'LContact1',
     },
   ]
+
+  if (bodyTemplate?.length > 0) {
+    arr = arr.map((section: any, i: number) => (i < bodyTemplate?.length ? {...section, template_id: bodyTemplate[i].template_id} : section))
+  }
+
+  return arr;
 }
 
 export default Generate;

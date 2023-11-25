@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   PlusOutlined
 } from '@ant-design/icons';
@@ -13,7 +13,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import './../../../index.css';
-import { updateCssStyles } from '../../../utils';
+import { getBodyTemplateFromTemplateSetId, switchTemplateSet, updateCssStyles } from '../../../utils';
 import Logo from '../menu/Logo';
 
 const { Content } = Layout;
@@ -23,6 +23,7 @@ export const Dashboard: React.FC = () => {
 
   const navigate = useNavigate();
   const { email } = useParams();
+  // console.log('email: ', email);
 
   const {
     token: { colorBgContainer },
@@ -60,6 +61,11 @@ export const Dashboard: React.FC = () => {
     };
   
     insertUser();
+
+    console.log('creating? ', sessionStorage.getItem('legis_template_set_id'))
+    if (sessionStorage.getItem('legis_template_set_id')) {
+      createSite();
+    }
   }, []);
   
 
@@ -118,6 +124,16 @@ export const Dashboard: React.FC = () => {
       }
     }
     
+    // seeded template id section
+
+    let templateIds: string[] = [];
+    const sessionTemplateSetId = sessionStorage.getItem('legis_template_set_id') || '';
+    if (sessionTemplateSetId) {
+      // legis_template_set_id exists in session storage
+      templateIds = switchTemplateSet(sessionTemplateSetId);
+      sessionStorage.removeItem('legis_template_set_id');
+    }
+
     const newId = new Realm.BSON.ObjectId()
 
     const newSite = {
@@ -133,7 +149,8 @@ export const Dashboard: React.FC = () => {
       share_image_url: '',
       favicon_url: '',
       cname: '',
-      template_colors: ["#efefee", "#a3826c", "#3e3d3d"]
+      template_colors: ["#efefee", "#a3826c", "#3e3d3d"],
+      body_template: getBodyTemplateFromTemplateSetId(templateIds),
     };
     
     const site_id: string = newSite._id.toString();
