@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { getUrl } from "../../utils";
+import { getUrl } from "../../../utils";
 
 export default function LTeam1({data} : any) {
 

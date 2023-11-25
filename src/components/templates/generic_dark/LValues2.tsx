@@ -1,4 +1,4 @@
-import { switchIcon } from "../../utils";
+import { switchIcon } from "../../../utils";
 
 export default function LValues2({data} : any) {
     return <section className="py-10 bg-black sm:py-16 lg:py-24">

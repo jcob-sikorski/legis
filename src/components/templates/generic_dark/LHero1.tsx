@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { getUrl } from "../../utils";
+import { getUrl } from "../../../utils";
 
 export function LHero1({data, setContext} : {data: any, setContext: Function}) {
     return ( <div style={{fontFamily: 'IBM Plex Sans'}}>
