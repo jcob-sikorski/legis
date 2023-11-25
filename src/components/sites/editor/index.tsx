@@ -173,10 +173,26 @@ const Editor: React.FC = () => {
           <!-- tailwindcss -->
           <script src="https://cdn.tailwindcss.com"></script>
 
+          <!-- Google Fonts -->
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+          <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">      
+
+          <!-- Bootstrap Icons -->
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
           <style>
-            .color-1 {background-color: ${colors[0]} !important;}
-            .color-2 {background-color: ${colors[1]} !important;}
-            .color-3 {background-color: ${colors[2]} !important;}
+            :root {
+              --legis-color-1: ${colors[0]};
+              --legis-color-2: ${colors[1]};
+              --legis-color-3: ${colors[2]};
+            }
+
+            .color-1 {background-color: var(--legis-color-1) !important;}
+            .color-2 {background-color: var(--legis-color-2) !important;}
+            .color-3 {background-color: var(--legis-color-3) !important;}
+
           </style>
         </head>
         <body>
@@ -236,12 +252,12 @@ const Editor: React.FC = () => {
         // Include a query to find the site by its site_id
         const result = await site_collection.find({ _id: new Realm.BSON.ObjectId(site_id) });
   
-        if (result.length > 0 && result[0].hasOwnProperty("bodyTemplate")) {
-            console.log("Found a site with bodyTemplate:", result[0].bodyTemplate);
-            setData(result[0].bodyTemplate);
+        if (result.length > 0 && result[0].hasOwnProperty("body_template")) {
+            console.log("Found a site with body_template:", result[0].body_template);
+            setData(result[0].body_template);
           }
         else {
-          console.log("Site doesn't have the bodyTemplate yet.");
+          console.log("Site doesn't have the body_template yet.");
         }
 
         if (result.length > 0 && result[0].hasOwnProperty("template_colors")) {
@@ -265,7 +281,7 @@ const Editor: React.FC = () => {
         const result = await site_collection.updateOne(
           { _id: new Realm.BSON.ObjectId(site_id) }, // Specify the query to find the site by site_id
           {
-            $set: { bodyTemplate: data }, // Use $set to update the data field
+            $set: { body_template: data }, // Use $set to update the data field
           }
         );
 
