@@ -26,4 +26,5 @@ export interface FieldContext {
   label: string;
   ratio: number; // used for image input's crop aspect ratio
   index: number; // used for collection datas like: lawyers or reviews.
+  collection: string; // used to specify collection within section.
 }

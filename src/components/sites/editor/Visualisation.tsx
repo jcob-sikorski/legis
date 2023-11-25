@@ -109,7 +109,7 @@ function Visualisation({
                 // *   
                 // (followingDirection === "up" ? 1 : -1);
 
-            containerRef.current.scrollTo({top: finalY, behavior: 'smooth'})
+            // containerRef.current.scrollTo({top: finalY, behavior: 'smooth'})
             console.log("yAfterMoving: ", yAfterMoving);
             console.log("clientHeight: ", clientHeight);
             console.log("betweenHeight: ", betweenHeight);
@@ -200,49 +200,49 @@ function Visualisation({
                 return <LHero3 data={data} setContext={setContext} />
             // PracticeAreas
             case 'LPracticeAreas1':
-                return <LPracticeAreas1 data={data} />
+                return <LPracticeAreas1 data={data} setContext={setContext} />
             case 'LPracticeAreas2':
-                return <LPracticeAreas2 data={data} />
+                return <LPracticeAreas2 data={data} setContext={setContext} />
             case 'LPracticeAreas3':
-                return <LPracticeAreas3 data={data} />
+                return <LPracticeAreas3 data={data} setContext={setContext} />
             // Values
             case 'LValues1':
-                return <LValues1 data={data} />
+                return <LValues1 data={data} setContext={setContext} />
             case 'LValues2':
-                return <LValues2 data={data} />
+                return <LValues2 data={data} setContext={setContext} />
             case 'LValues3':
-                return <LValues3 data={data} />
+                return <LValues3 data={data} setContext={setContext} />
             // Team
             case 'LTeam1':
-                return <LTeam1 data={data} />
+                return <LTeam1 data={data} setContext={setContext} />
             case 'LTeam2':
-                return <LTeam2 data={data} />
+                return <LTeam2 data={data} setContext={setContext} />
             case 'LTeam3':
-                return <LTeam3 data={data} />
+                return <LTeam3 data={data} setContext={setContext} />
             // Reviews
             case 'LReviews1':
-                return <LReviews1 data={data} />
+                return <LReviews1 data={data} setContext={setContext} />
             case 'LReviews2':
-                return <LReviews2 data={data} />
+                return <LReviews2 data={data} setContext={setContext} />
             case 'LReviews3':
-                return <LReviews3 data={data} />
+                return <LReviews3 data={data} setContext={setContext} />
             // About
             case 'LAbout1':
-                return <LAbout1 data={data} />
+                return <LAbout1 data={data} setContext={setContext} />
             case 'LAbout2':
-                return <LAbout2 data={data} />
+                return <LAbout2 data={data} setContext={setContext} />
             case 'LAbout3':
-                return <LAbout3 data={data} />
+                return <LAbout3 data={data} setContext={setContext} />
             // Contact
             case 'LContact1':
-                return <LContact1 data={data} />
+                return <LContact1 data={data} setContext={setContext} />
             case 'LContact2':
-                return <LContact2 data={data} />
+                return <LContact2 data={data} setContext={setContext} />
             case 'LContact3':
-                return <LContact3 data={data} />
+                return <LContact3 data={data} setContext={setContext} />
             // No template ID matched
             default:
-                return <TNoTemplate data={data} /> 
+                return <TNoTemplate data={data} setContext={setContext} /> 
         }
       }
 
@@ -314,8 +314,7 @@ function Visualisation({
                     ...(selectedSectionId === s.section_id ? selectedSectionStyle : {})
                 }}
             >
-
-                <div 
+            {!isDeploying && <div 
                 className='hover-child'
                 style={{
                     background: '#fff', 
@@ -329,7 +328,7 @@ function Visualisation({
                     top: 0, 
                     zIndex: 10,
                 }}>
-                    {!isDeploying && [
+                    {[
                         {
                             label: 'Duplicate section',
                             icon: <CopyFilled />,
@@ -345,11 +344,11 @@ function Visualisation({
                             icon: <ArrowDownOutlined />,
                             onClick: () => onSectionMove(s, "down"),
                         },
-                        {
-                            label: 'Edit section',
-                            icon: <EditFilled />,
-                            onClick: () => onSectionClick(s),
-                        },
+                        // {
+                        //     label: 'Edit section',
+                        //     icon: <EditFilled />,
+                        //     onClick: () => onSectionClick(s),
+                        // },
                         {
                             label: 'Delete section',
                             icon: <DeleteFilled />,
@@ -357,9 +356,9 @@ function Visualisation({
                         },
 
                     ].map(({label, icon, onClick}) => 
-                    <Button style={{border: 0}} title={label} icon={icon} onClick={onClick} />)
-                    }
+                    <Button style={{border: 0}} title={label} icon={icon} onClick={onClick} />)}
                 </div>
+                }
                 {isDevMode && <>
                     [section_id]: {s.section_id}
                 </>}

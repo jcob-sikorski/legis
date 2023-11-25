@@ -424,6 +424,9 @@ const Editor: React.FC = () => {
 
   return (
     <Layout style={{width: '100%', height: 'calc(100vh - 46px)'}}>
+      <div style={{position: 'absolute', zIndex: 100, left: 150, bottom: 50, background: '#fff9', width: 200, height: 80}}> 
+      MADE WITH LEGIS 
+      </div>
       <Header style={{ padding: '4px 4px 4px 0px',  zIndex: 10, borderBottom: borderStyle, width: '100%', background: '#f0f1f9', height: NAV_BAR_HEIGHT, position: 'fixed' }}>
         <Row>
           <Col span={18}>
