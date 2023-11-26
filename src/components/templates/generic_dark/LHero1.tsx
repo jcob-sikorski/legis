@@ -80,7 +80,7 @@ export function LHero1({data, setContext} : {data: any, setContext: Function}) {
         backgroundPosition: '50%',
         backgroundImage: `url('${data?.cdnUUID ? getUrl(data?.cdnUUID) : 'https://mdbcdn.b-cdn.net/img/new/slides/146.webp'}')`,
         height: '500px',
-    }}>backgroundImage: ``, 
+    }}> 
         {/* <div className="relative overflow-hidden bg-cover bg-no-repeat" style={{
         }}>
             Hello
