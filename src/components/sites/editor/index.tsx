@@ -313,7 +313,6 @@ const Editor: React.FC = () => {
       } catch (error) {
         console.error("Error updating site:", error);
       }
-      navigate("/");
     } catch (error) {
       setIsDeploying(false)
       console.error("Error pushing content and triggering deployment.");
