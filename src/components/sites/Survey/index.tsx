@@ -222,7 +222,7 @@ function Survey() {
 
   const navigate = useNavigate();
   
-  const onFinish = () => {
+  const onFinish = async () => {
     if (!fieldValues["ClientReviews"]) {
       message.error("The field is empty. Please fill it out.");
       return;
@@ -232,10 +232,11 @@ function Survey() {
     
     if (page < fields.length) {
       console.log("onFinish push to ")
-      updateDBField(fields[page] as keyof Questionnaire);
+      await updateDBField(fields[page] as keyof Questionnaire).then(() => {
+        navigate(`/generate/${site_id}/1`);
+      })
     }
 
-    navigate(`/generate/${site_id}/1`);
   }
 
   const [lawyersJSON, setLawyersJSON] = useState("[]");
