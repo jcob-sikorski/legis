@@ -90,7 +90,7 @@ export default function LHero2({data, setContext} : any) {
 
                 <div>
                     <img 
-                    onClick={() => setContext({type: 'image', ratio: 8/10, label: 'Hero Image'})}  
+                    onClick={() => setContext({key: '_', type: 'image', ratio: 8/10, label: 'Hero Image'})}  
                     className="editable w-full rounded-xl"
                     src={data?.cdnUUID ? getUrl(data?.cdnUUID) : "https://loremflickr.com/cache/resized/65535_52623052755_338d4ebf43_c_640_480_nofilter.jpg"}
                      alt="" />

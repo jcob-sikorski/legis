@@ -1,9 +1,12 @@
 import { faker } from "@faker-js/faker";
 import { getUrl } from "../../../utils";
+import { useState } from "react";
 
 export function LHero1({data, setContext} : {data: any, setContext: Function}) {
 
     // let data = {...mockData, blockVariant: 'center', buttonVariant: 'center', headingVariant: 'center', subHeadingVariant: 'center' };
+
+    const [bgEditable, setBgEditable] = useState(true);
 
     return ( <div id='home' style={{fontFamily: 'var(--legis-font-main)'}}>
         
@@ -70,12 +73,14 @@ export function LHero1({data, setContext} : {data: any, setContext: Function}) {
         </div>
     </div>
 
-    <section className="
-    relative overflow-hidden bg-cover bg-no-repeat py-12 bg-blackx sm:pb-16 lg:pb-20 xl:pb-24" style={{
+    <section 
+    className={`${bgEditable && 'editable'} relative overflow-hidden bg-cover bg-no-repeat py-12 bg-blackx sm:pb-16 lg:pb-20 xl:pb-24`} 
+    onClick={() => bgEditable ?  setContext({key: '_', type: 'image', ratio: 14/8, label: 'Hero Image'}) : () => {}}  
+    style={{
         backgroundPosition: '50%',
-        backgroundImage: "url('https://mdbcdn.b-cdn.net/img/new/slides/146.webp')",
+        backgroundImage: `url('${data?.cdnUUID ? getUrl(data?.cdnUUID) : 'https://mdbcdn.b-cdn.net/img/new/slides/146.webp'}')`,
         height: '500px',
-    }}>
+    }}>backgroundImage: ``, 
         {/* <div className="relative overflow-hidden bg-cover bg-no-repeat" style={{
         }}>
             Hello
@@ -85,12 +90,17 @@ export function LHero1({data, setContext} : {data: any, setContext: Function}) {
             <div className="px-4 mx-auto relativea h-full sm:px-6 lg:px-8 max-w-7xl">
                 <div className="flex justify-centerx h-full items-center" style={{justifyContent: data?.blockVariant || 'center'}}>
                     <div className="flex bg-yellow-500x flex-col" style={{width: '60vw'}}>
-                        <h1  onClick={() => setContext({key: 'heading', type: 'text', label: 'Heading', variantProperty: 'textAlign'})} className="text-4xl font-normal text-white sm:text-5xl lg:text-6xl xl:text-7xl editable"
-                            style={{textAlign: data?.headingVariant || 'center'}}
+                        <h1  
+                            onMouseEnter={() => setBgEditable(false)}
+                            onMouseLeave={() => setBgEditable(true)}
+                            onClick={() => setContext({key: 'heading', type: 'text', label: 'Heading', variantProperty: 'textAlign'})} className="text-4xl font-normal text-white sm:text-5xl lg:text-6xl xl:text-7xl editable"
+                            style={{textAlign: data?.headingVariant || 'center', pointerEvents: 'auto'}}
                         >
                             {data?.heading ?? ""}
                         </h1>
                         <p 
+                        onMouseEnter={() => setBgEditable(false)}
+                        onMouseLeave={() => setBgEditable(true)}
                         style={{textAlign: data?.subHeadingVariant || 'center'}}
                         onClick={() => setContext({key: 'subHeading', type: 'textarea', label: 'Sub-Heading', variantProperty: 'textAlign'})} 
                         className="mt-4 text-lg font-normal text-gray-400 sm:mt-8 editable">
@@ -101,11 +111,13 @@ export function LHero1({data, setContext} : {data: any, setContext: Function}) {
                         // style={{justifyContent: data?.buttonVariant || 'center'}}
                         >
                             <button
+                             onMouseEnter={() => setBgEditable(false)}
+                             onMouseLeave={() => setBgEditable(true)}
                              className="editable mt-6 rounded-full -inset-px h-14 w-60 text-lg bg-gradient-to-r font-black bg-[var(--legis-color-2)]"
                              style={{marginInline: data?.buttonVariant || 'auto auto'}} 
                              onClick={() => setContext({key: 'button', type: 'button', label: 'Button', variantProperty: 'marginInline'})}
                              >
-                                REGISTER {data?.buttonVariant}
+                                REGISTER
                             </button>
                         </div>
                         {/* <form action="#" method="POST" className="relative mt-8 rounded-full sm:mt-12"> */}
