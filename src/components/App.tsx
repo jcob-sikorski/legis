@@ -96,7 +96,7 @@ function App() {
               </RequireAuth>
             } 
           />
-          <Route path="/custom-domain-deployment" 
+          <Route path="/custom-domain-deployment/:site_id" 
             element={
               <RequireAuth>
                 <CustomDomainDeployment />

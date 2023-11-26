@@ -1,10 +1,56 @@
-import { Layout, Typography, Button, Steps, Input } from 'antd';
-import React from 'react';
+import { Layout, Typography, Button, Steps, Input, Result } from 'antd';
+import { useState } from 'react';
+
+import { useApp } from '../../RealmApp';
+import * as Realm from "realm-web";
+
+import { useParams } from 'react-router-dom';
 
 const { Step } = Steps;
 const { Title } = Typography;
 
 function AddCustomDomain({ nextPage }: any) {
+  const [domain, setDomain] = useState('');
+  const [checkDomainAgain, setCheckDomainAgain] = useState<boolean>(true);
+  const [showResult, setShowResult] = useState<boolean>(false);
+
+  const app: any = useApp();
+
+  const mongodb = app.currentUser!.mongoClient("mongodb-atlas");  
+  const site_collection = mongodb.db("legis").collection("Site");
+
+  const { site_id } = useParams();
+
+  async function onSubmit() {
+    const updateResult = await site_collection.updateOne(
+      { _id: new Realm.BSON.ObjectId(site_id) },
+      { $set: { cname: domain } }
+    );
+    console.log(`Updated ${updateResult.modifiedCount} document.`);
+
+    try {
+      // DNS lookup for NS records
+      fetch(`https://dns.google/resolve?name=${domain}&type=NS`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Check if domain exists
+        const domainExists = data.Status === 0;
+        console.log('Domain exists: ', domainExists);
+
+        setCheckDomainAgain(!domainExists);
+        if (domainExists) {
+          nextPage();
+        } else {
+          setShowResult(true);
+        }
+      })
+    } catch (error) {
+      setCheckDomainAgain(true);
+      setShowResult(true);
+      console.error('Error performing DNS lookup:', error);
+    }
+  }
+
   return (
     <Layout style={{ height: '100vh', backgroundColor: 'white' }}>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'white', marginTop: '50px' }}>
@@ -28,11 +74,21 @@ function AddCustomDomain({ nextPage }: any) {
             height: '40px',
             backgroundColor: 'white',
           }}
-          placeholder={"company.com"} // Set the value here
+          placeholder={"company.com"}
+          onChange={e => setDomain(e.target.value)}
         />
       </div>
+      {showResult && (checkDomainAgain ?
+        <Result
+          status="warning"
+          title="Such Domain Does Not Exist"
+          subTitle=""
+        />
+        : 
+        null
+      )}
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button onClick={() => nextPage()}  className="custom-button" type="primary" size="large" style={{ marginTop: 50 }}>
+        <Button onClick={() => onSubmit()}  className="custom-button" type="primary" size="large" style={{ marginTop: 50 }}>
           Submit
         </Button>
       </div>

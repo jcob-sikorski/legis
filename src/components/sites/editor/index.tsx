@@ -153,8 +153,7 @@ const Editor: React.FC = () => {
       if (legisSubdomain) {
         deployWithDefaultSubdomain();
       } else {
-        // deployCustomDomain();
-        navigate('/custom-domain-deployment');
+        navigate(`/custom-domain-deployment/${site_id}`);
       }
     } 
   }, [isDeploying])
