@@ -476,7 +476,7 @@ const Editor: React.FC = () => {
                           <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>Click here to publish your website on the legis</h2>
                           <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>subdomain for free.</h2>
                         </button>
-                        <button onClick={() => { setLegisSubdomain(true); setIsDeploying(true); }} style={{ height: 85, width: '95%', marginInline: 10, padding: 5, borderRadius: 5, backgroundColor: '#ECECEC', display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', }}>
+                        <button onClick={() => { setLegisSubdomain(false); setIsDeploying(true); }} style={{ height: 85, width: '95%', marginInline: 10, padding: 5, borderRadius: 5, backgroundColor: '#ECECEC', display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', }}>
                           <h2 style={{ fontSize: 16, fontWeight: '600', wordWrap: 'break-word', lineHeight: '35px', marginLeft: 5 }}>Connect your custom domain</h2>
                           <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>Become a Legis pro member & connect your</h2>
                           <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>custom domain for $49 a year.</h2>

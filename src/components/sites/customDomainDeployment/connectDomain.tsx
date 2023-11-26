@@ -1,10 +1,82 @@
-import { Layout, Typography, Button, Steps, Input } from 'antd';
+import { Layout, Typography, Button, Steps, Input, Result, message } from 'antd';
+import { useState } from 'react';
+
+import { useApp } from '../../RealmApp';
+import * as Realm from "realm-web";
+
+import { useParams } from 'react-router-dom';
+
 import React from 'react';
 
 const { Step } = Steps;
 const { Title } = Typography;
 
 function ConnectDomain({ nextPage }: any) {
+  const [domain, setDomain] = useState('');
+  const [checkDomainAgain, setCheckDomainAgain] = useState<boolean>(true);
+  const [showResult, setShowResult] = useState<boolean>(false);
+
+  const app: any = useApp();
+
+  const mongodb = app.currentUser!.mongoClient("mongodb-atlas");  
+  const site_collection = mongodb.db("legis").collection("Site");
+
+  const { site_id } = useParams();
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const result = await site_collection.findOne(
+        { _id: new Realm.BSON.ObjectId(site_id) },
+        { projection: { cname: 1 } }
+      );
+      console.log(`Fetched document: ${JSON.stringify(result.cname)}`);
+      setDomain(result.cname);
+    };
+  
+    fetchData();
+  }, []);
+
+  async function onConnectDomain() {
+    let CNAMECheck: boolean = false;
+
+    try {
+      // DNS lookup for NS records
+      fetch(`https://dns.google/resolve?name=${domain}&type=A`)
+      .then((response) => response.json())
+      .then((data) => {
+        CNAMECheck = data.Answer[0].data === "legisbiz.github.io.";
+        console.log('CNAME check: ', CNAMECheck);
+
+        setCheckDomainAgain(!CNAMECheck);
+        if (CNAMECheck) {
+          nextPage();
+        } else {
+          setShowResult(true);
+        }
+      })
+    } catch (error) {
+      setCheckDomainAgain(true);
+      setShowResult(true);
+      console.error('Error performing DNS lookup:', error);
+    }
+  }
+
+  const copyUrl = () => {
+    const urlToCopy = "legisbiz.github.io";
+
+    if (urlToCopy) {
+      navigator.clipboard.writeText(urlToCopy)
+        .then(() => {
+          console.log('URL copied to clipboard:', urlToCopy);
+          message.success('Copied URL to clipboard');
+        })
+        .catch((error) => {
+          console.error('Failed to copy URL to clipboard', error);
+          message.error('Failed to copy URL to clipboard');
+        });
+    }
+  };
+
   return (
     <Layout style={{ height: '100vh', backgroundColor: 'white' }}>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'white', marginTop: '50px' }}>
@@ -29,19 +101,29 @@ function ConnectDomain({ nextPage }: any) {
             height: '40px',
             backgroundColor: 'white',
           }}
-          value={"legisbiz.github.io"} // Set the value here
-          readOnly // Make the input read-only
+          value={"legisbiz.github.io"}
+          readOnly
         />
         <Button
           type="primary"
           className="custom-button"
-          style={{ height: 40, borderRadius: 30 }} // Use marginLeft: 'auto' to push the button to the right
+          onClick={copyUrl}
+          style={{ height: 40, borderRadius: 30 }}
         >
           Copy
         </Button>
       </div>
+      {showResult && (checkDomainAgain ?
+        <Result
+          status="warning"
+          title='The CNAME Record "legisbiz.github.io" Does Not Exist'
+          subTitle=""
+        />
+        : 
+        null
+      )}
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button onClick={() => nextPage()}  className="custom-button" type="primary" size="large" style={{ marginTop: 50 }}>
+        <Button onClick={() => onConnectDomain()}  className="custom-button" type="primary" size="large" style={{ marginTop: 50 }}>
           Connect domain
         </Button>
       </div>
