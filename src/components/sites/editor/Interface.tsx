@@ -9,9 +9,10 @@ const { Sider } = Layout;
 
 import PROFILES from '../../templates/profiles.json';
 
-import { EditOutlined, FireOutlined, MinusOutlined, PlusOutlined, RocketOutlined } from '@ant-design/icons';
+import { EditOutlined, FireOutlined, MinusOutlined, PlusOutlined, RocketOutlined, SwapOutlined } from '@ant-design/icons';
 import ImageUploadInput from './ImageUploadInput';
 import { FieldContext, FieldType, JSONProfileField } from '../../../models';
+import { switchTemplateSet } from '../../../utils';
 
 function Interface({json, setJson, data, setData, processJson, functions, variables} : any) {
 
@@ -48,6 +49,20 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       
     }
 
+    function handleSerialFieldChange(valueKeyPair: any, index: number) {
+
+    }
+
+    function onDesignSetSelected(value: string) {
+      assertTemplateIds(switchTemplateSet(value));
+    }
+
+    function assertTemplateIds(templateIds: string[]) {
+      let newData = [...data]?.map((x: any, i: number) => ({...x, template_id: templateIds[i]}));
+      setData(newData);
+      // newData = newData?.map 
+    }
+
     function onRemoveSection() {
       setData((data ?? []).filter((s: any) => s.section_id !== selectedSectionId))
       setSelectedSectionId("");
@@ -78,18 +93,24 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
     // "btn-label": 1,
     // "bg-image": 1
 
+    function getSerialFieldValue(collection: string, key: string, index: number) {
+      const res = data?.filter(({section_id}: any) => section_id === selectedSectionId)[0][collection][index][key];
+      console.log("getSerialFieldValue: ", res)
+      return res;
+    }
 
     function switchField(field: FieldContext) {
 
       if (!field) return <>No field selected rn!</>
 
-      let type: FieldType = field.type;
-      let label: string = field.label;
-      let id: string = field.key;
-      let index: number = field.index;
-      let ratio: number = field.ratio;
+      let type: FieldType = field?.type;
+      let label: string = field?.label;
+      let key: string = field?.key;
+      let index: number = field?.index;
+      let ratio: number = field?.ratio;
+      let collection: string = field?.collection;
 
-      const generatedKey = 'field' + type + label + id + index + ratio;
+      const generatedKey = 'field' + type + label + key + index + ratio;
 
       const labelComponent = <Typography.Title color='#333' level={5} style={{margin: '15px 0 0 0', padding: 0, textAlign: 'center', width: '100%', fontWeight: 500}} >
       {label?.toUpperCase()}
@@ -97,52 +118,98 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
 
       const itemStyle = { margin: '0', padding: 0,}
 
-      switch(type) {
-        case 'text':
+      if (index || index === 0) {
+
+        switch(type) {
+          case 'text':
+            return <div key={generatedKey} >
+          {labelComponent} + {getSerialFieldValue(collection, key, index)}
+          <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
+          <Input value={getSerialFieldValue(collection, key, index)} onChange={
+            (e) => handleSerialFieldChange({[key]: e.target.value}, index)} />
+        </Form.Item></div>;
+          case 'textarea': 
           return <div key={generatedKey} >
+            {labelComponent}
+            <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
+            <TextArea rows={10} />
+          </Form.Item></div>
+          case 'checkbox':
+            return <div key={generatedKey}>
+            {labelComponent}
+            <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
+            <Radio.Group style={{display: 'flex', justifyContent: 'center'}}>
+              <Radio value="1">Yes</Radio>
+              <Radio value="">No</Radio>
+            </Radio.Group>
+          </Form.Item></div>
+          case 'image': {
+            
+            // Select current photo cdn uuid
+            let oldUUID = "";
+            data.map((x: any) => {if (x.section_id === selectedSectionId) oldUUID = x.cdnUUID})
+            
+            return <div key={generatedKey} >
+            {labelComponent}
+            <Form.Item className='animate__slideIn' name={key} style={itemStyle} >
+            <ImageUploadInput ratio={ratio} handleCustomFieldChange={handleCustomFieldChange} oldUUID={oldUUID} />
+          </Form.Item></div>
+          }
+          default: {
+            return <>No input of type <b>{type}</b> matched</>
+          }
+        }
+
+      } else {
+
+        switch(type) {
+          case 'text':
+            return <div key={generatedKey} >
           {labelComponent}
-          <Form.Item className='animate__slideIn' name={id} style={itemStyle}>
+          <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
           <Input />
         </Form.Item></div>;
         case 'textarea': 
-          return <div key={generatedKey} >
+        return <div key={generatedKey} >
           {labelComponent}
-          <Form.Item className='animate__slideIn' name={id} style={itemStyle}>
+          <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
           <TextArea rows={10} />
         </Form.Item></div>
         case 'checkbox':
           return <div key={generatedKey}>
           {labelComponent}
-          <Form.Item className='animate__slideIn' name={id} style={itemStyle}>
+          <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
           <Radio.Group style={{display: 'flex', justifyContent: 'center'}}>
             <Radio value="1">Yes</Radio>
             <Radio value="">No</Radio>
           </Radio.Group>
         </Form.Item></div>
         case 'image': {
-
+          
           // Select current photo cdn uuid
           let oldUUID = "";
           data.map((x: any) => {if (x.section_id === selectedSectionId) oldUUID = x.cdnUUID})
-
+          
           return <div key={generatedKey} >
           {labelComponent}
-          <Form.Item className='animate__slideIn' name={id} style={itemStyle} >
+          <Form.Item className='animate__slideIn' name={key} style={itemStyle} >
           <ImageUploadInput ratio={ratio} handleCustomFieldChange={handleCustomFieldChange} oldUUID={oldUUID} />
         </Form.Item></div>
         }
         default: {
-          return <>No input of type <b>{type}</b> matched</>
+          return <>No serial input of type <b>{type}</b> matched</>
         }
       }
 
+      }
+      
     }
-
+    
     const sectionsCount = data?.length ?? 0;
-
+    
     const selectedTemplateProfile: any = profiles[selectedTemplateId]
     let selectOptions: any[] = [];
-
+    
     if (selectedTemplateProfile) {
       const category: string = selectedTemplateProfile.metadata.category;
       selectOptions = templatesMap[category];
@@ -158,10 +225,10 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
             type: <b>{context?.type}</b> <br />
           </Typography.Text>            
         </Flex> */}
-        {/* <Space>
+        <Space style={{padding: 25}}>
             dev mode
             <Switch checked={isDevMode} onClick={() => setIsDevMode(!isDevMode)} />
-        </Space> */}
+        </Space>
         {isDevMode && !isDeploying && <>
             <button onClick={injectData}>Inject hard-coded data JSON</button>
             <Space>
@@ -182,14 +249,27 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
         {/* <Button style={{maxWidth: '150px', fontWeight: 'bold', backgroundColor: 'black'}} type="primary" icon={<PlusOutlined />} onClick={onAddSection}>
             New section
         </Button> */}
-
+        
         
         {sectionsCount && <>
           {/* <Button style={{maxWidth: '190px', fontWeight: 'bold', backgroundColor: '#c00'}} type="primary" icon={<MinusOutlined />} size='large' onClick={onRemoveSection}>
               Remove section
           </Button> */}
           <Flex justify='center' vertical align='center' className='p-3 text-gray-500'>
-            <Typography.Title style={{fontSize: 18}} className='uppercase'>
+            {/* <Typography.Title style={{fontSize: 18}} className='uppercase'>
+              design sets
+            </Typography.Title>
+
+            <Radio.Group onChange={(e) => onDesignSetSelected(e.target.value)} style={{gap: 5, display: 'flex', maxWidth: '100%'}}>
+              <Radio.Button value={'generic-dark'} >
+                Generic Dark
+              </Radio.Button>
+              <Radio.Button value={'casual-light'} >
+                Casual Light
+              </Radio.Button>
+            </Radio.Group> */}
+            
+            {/* <Typography.Title style={{fontSize: 18}} className='uppercase'>
               Try other templates
             </Typography.Title>
             
@@ -198,7 +278,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
                 <img src={option.image} style={{width: 100, height: 50}} />
                 {option.label}
               </Radio.Button>)}
-            </Radio.Group>
+            </Radio.Group> */}
             {/* <Select
               defaultValue={selectedTemplateId}
               key={selectedSectionId + '-select'}

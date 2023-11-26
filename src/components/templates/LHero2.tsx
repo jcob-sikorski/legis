@@ -15,10 +15,10 @@ export default function LHero2({data, setContext} : any) {
         lastWord = words[words.length - 1];
     }
 
-    return <div className="bg-gradient-to-b color-1" style={{fontFamily: 'ui-sans-serif, system-ui'}}>
+    return <div className="bg-gradient-to-b bg-white " style={{fontFamily: 'ui-sans-serif, system-ui', transition: '0.5s'}}>
     <header className="">
         <div className="px-4 mx-auto sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16 lg:h-20 bg-yellow-400x">
+            <div className="flex items-center justify-between h-16 lg:h-20">
                 <div className="flex-shrink-0 ">
                     <a href="#" title="" className="flex">
                         {/* <img className="w-auto h-8" src="https://cdn.rareblocks.xyz/collection/celebration/images/hero/2/logo.svg" alt="" /> */}

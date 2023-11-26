@@ -14,6 +14,7 @@ import Overview from "./sites/siteSettings/Overview";
 import Site from "./sites/siteSettings/Site";
 import Media from "./sites/siteSettings/Media";
 import Playground from "./sites/playground";
+import FromTemplate from "./sites/fromTemplate";
 
 
 const RequireAuth: React.FC<{ children: React.ReactElement }> = ({ children }) => {
@@ -34,6 +35,12 @@ function App() {
           {/* DEV */}
           <Route path="/html" element={<Html />} />
           <Route path="/playground" element={<Playground />} />
+
+          <Route path="/from-template/:template_set_id" 
+            element={
+              <FromTemplate />
+            } 
+          />
 
           <Route path="/:email?"
             element={

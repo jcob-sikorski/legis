@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { getUrl } from "../../utils";
+import { getUrl } from "../../../utils";
 
 export default function LContact1({data} : any) {
     return ( <section className="relative py-12 overflow-hidden bg-black sm:py-16 lg:py-20 xl:py-24">

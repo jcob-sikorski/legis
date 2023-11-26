@@ -141,14 +141,14 @@ function ColorPalette() {
           onClick={onNext}
           className="custom-button"
           style={{
-            width: 100,
+            // width: 100,
             height: 50,
             position: 'absolute',
             right: 10,
             bottom: 0
           }}
         >
-          Next
+          Click to customize
         </Button>
       </div>
     </Layout>

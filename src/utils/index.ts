@@ -125,3 +125,14 @@ export function getRandomTemplate(category: string) {
     
   }
 }
+
+export function switchTemplateSet(template_set_id: string) {
+  switch(template_set_id) {
+    case 'casual-light': return ['LHero2', 'LPracticeAreas1', 'LValues3', 'LTeam2', 'LReviews3', 'LAbout3', 'LContact2'];
+    default: case 'generic-dark': return ['LHero1', 'LPracticeAreas2', 'LValues2', 'LTeam1', 'LReviews1', 'LAbout1', 'LContact1'];
+  }
+}
+
+export function getBodyTemplateFromTemplateSetId(templateIds: string[]) {
+  return Array(7).fill({}).map((_, i: number) => i < templateIds.length ? ({template_id: templateIds[i]}) : ({}));
+}

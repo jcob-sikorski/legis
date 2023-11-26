@@ -33,7 +33,9 @@ export default function LTeam3({data} : any) {
             
             {((list ?? []).map((person: any, i: number) => 
                 <div className="flex flex-col overflow-hidden transition-all duration-200 transform bg-gray-800 rounded hover:-translate-y-2">
-                <img className="object-cover w-full" src={faker.image.urlLoremFlickr({category: 'portrait', width: 200, height: 200,})} alt="" />
+                <img className="object-cover w-full" 
+                 src={data?.cdnUUID ? getUrl(data.cdnUUID) : "https://ucarecdn.com/8aea75a1-4036-48d7-8924-cfbe9375de7f/"}
+                 alt="" />
                 <div className="flex-1 px-4 py-5 sm:p-6">
                     <p className="text-lg font-semibold text-white">{person?.name ?? ""}</p>
                     <p className="text-base font-normal text-gray-400">{person?.description ?? ""}</p>

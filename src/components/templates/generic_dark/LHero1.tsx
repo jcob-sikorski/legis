@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { getUrl } from "../../utils";
+import { getUrl } from "../../../utils";
 
 export function LHero1({data, setContext} : {data: any, setContext: Function}) {
     return ( <div style={{fontFamily: 'IBM Plex Sans'}}>
@@ -150,7 +150,7 @@ export function LHero1({data, setContext} : {data: any, setContext: Function}) {
                     onClick={() => setContext({type: 'image', ratio: 8/10, label: 'Hero Image'})}  
                     // src="https://landingfoliocom.imgix.net/store/collection/dusk/images/hero/2/illustration.png" 
                     // src={getUrl(data?.cdnUUID)}
-                    src={data?.cdnUUID ? getUrl(data?.cdnUUID) : "https://loremflickr.com/cache/resized/65535_52623052755_338d4ebf43_c_640_480_nofilter.jpg"}
+                    src={data?.cdnUUID || true ? getUrl(data?.cdnUUID) : "https://loremflickr.com/cache/resized/65535_52623052755_338d4ebf43_c_640_480_nofilter.jpg"}
                     alt="" />
                 </div>
             </div>

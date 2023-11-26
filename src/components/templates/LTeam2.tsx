@@ -13,8 +13,9 @@ export default function LTeam2({data} : any) {
             {((list ?? []).map((person: any, i: number) => 
                 <div className="flex flex-col sm:flex-row sm:items-center">
                 <img 
-                    className="object-cover w-48 rounded-2xl rotate-2"  
-                    src={faker.image.urlLoremFlickr({category: 'portrait'})} alt="" 
+                    className={`object-cover w-48 rounded-2xl ${i % 2 == 1 ? '-':''}rotate-2`}  
+                    src={data?.cdnUUID ? getUrl(data.cdnUUID) : "https://ucarecdn.com/8aea75a1-4036-48d7-8924-cfbe9375de7f/"}
+                    alt="" 
                 />
 
                 <div className="mt-8 sm:mt-0 sm:ml-10">
