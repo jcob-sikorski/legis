@@ -40,7 +40,7 @@ const cardContent = [
   }
 ];
 
-function PitchCards() {
+function PitchCards({ nextPage }: any) {
   return (
     <Layout style={{ height: '100vh', backgroundColor: 'white' }}>
       <Header style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }}>
@@ -73,7 +73,7 @@ function PitchCards() {
         ))}
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
-        <Button className="custom-button" type="primary" size="large">
+        <Button onClick={() => nextPage()}  className="custom-button" type="primary" size="large">
           Go pro for $49 per year
         </Button>
       </div>
