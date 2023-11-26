@@ -1,10 +1,9 @@
-import { Layout } from 'antd';
+import PitchCards from "./pitchCards";
 
 function CustomDomainDeployment() {
   return (
-    <Layout style={{ display: 'flex', flexDirection: 'row', overflow: 'hidden' }}>
-    </Layout>
-);
+      <PitchCards/>
+  );
 };
 
 export default CustomDomainDeployment;
