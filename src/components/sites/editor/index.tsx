@@ -53,7 +53,10 @@ const Editor: React.FC = () => {
 
   const [isAddingNewSection, setIsAddingNewSection] = useState<boolean>(false);
 
+  const [displayHostingBox, setDisplayHostingBox] = useState<boolean>(false);
   const [isDeploying, setIsDeploying] = useState<boolean>(false);
+  const [legisSubdomain, setLegisSubdomain] = useState<boolean>(true);
+
   const [isDevMode, setIsDevMode] = useState<boolean>(false);
 
   const [context, setContext] = useState<FieldContext>();
@@ -145,15 +148,22 @@ const Editor: React.FC = () => {
 
   useEffect(() => {
     if (isDeploying) {
-      deploy(); // TODO check if you can redeploy the content of the html when user made some changes
-    }           // TODO update the crecords only once in github pages oon page deployment
+      deploySiteOnGithub();
+
+      if (legisSubdomain) {
+        deployWithDefaultSubdomain();
+      } else {
+        // deployCustomDomain();
+        navigate('/custom-domain-deployment');
+      }
+    } 
   }, [isDeploying])
 
-  async function onDeploy() {
-    setIsDeploying(true);    
+  async function handlePublishButton() {
+    setDisplayHostingBox(!displayHostingBox);
   }
 
-  async function createSubdomain(site_id: string) {
+  async function deployWithDefaultSubdomain() {
     const updateResult = await site_collection.updateOne(
       { _id: new Realm.BSON.ObjectId(site_id) },
       { $set: { cname: `${lawFirmName}.legis.live` } }
@@ -214,8 +224,8 @@ const Editor: React.FC = () => {
     }
   }
 
-  // deploy() function MUST be triggered by useEffect, because it depends on state reactive rendered data. (It must wait for tree to re-render and then generate an html string).
-  async function deploy() {
+
+  async function deploySiteOnGithub() {
     const pageTitle = `Best Lawyer Page Ever`;
 
     const htmlBodyString = ReactDOMServer.renderToString(visualisationComponent);
@@ -304,8 +314,6 @@ const Editor: React.FC = () => {
       console.error("Error pushing content and triggering deployment.");
       throw error;
     }
-
-    createSubdomain(site_id as string);
   }
 
   React.useEffect(() => {
@@ -385,7 +393,7 @@ const Editor: React.FC = () => {
     onAddSection,
     setSelectedSectionId,
     setSelectedTemplateId,
-    onDeploy,
+    handlePublishButton,
     setIsDevMode,
     setIsDeploying,
   }}
@@ -447,58 +455,72 @@ const Editor: React.FC = () => {
                     icon={<RedoOutlined />}
                     style={{ marginLeft: 'auto', height: 50, minWidth: 50 }} // Use marginLeft: 'auto' to push the button to the right
                   />
-                  <Button
-                    type="primary"
-                    onClick={onDeploy}
-                    className="custom-button"
-                    style={{ marginLeft: 'auto', height: 50 }} // Use marginLeft: 'auto' to push the button to the right
-                    >
-                    Publish
-                  </Button>
+                  <div style={{ position: 'relative' }}>
+                    <Button
+                      type="primary"
+                      onClick={handlePublishButton}
+                      className="custom-button"
+                      style={{ marginLeft: 'auto', height: 50 }} // Use marginLeft: 'auto' to push the button to the right
+                      >
+                      Publish
+                    </Button>
+                    {displayHostingBox ? (
+                      <div style={{ position: 'absolute', backgroundColor: '#ffffff', zIndex: 1, right: 10, height: 255, width: 430, borderRadius: 8 }}>
+                        <h1 style={{ fontSize: 20, fontWeight: '600', marginLeft: 10 }}>Choose Where to Publish</h1>
+                        <button onClick={() => { setLegisSubdomain(true); setIsDeploying(true); }} style={{ height: 85, width: '95%', marginInline: 10, marginBottom: 10, padding: 5, borderRadius: 5, backgroundColor: '#ECECEC', display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', }}>
+                          <h2 style={{ fontSize: 16, fontWeight: '600', wordWrap: 'break-word', lineHeight: '35px', marginLeft: 5 }}>Connect to legis subdomain</h2>
+                          <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>Click here to publish your website on the legis</h2>
+                          <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>subdomain for free.</h2>
+                        </button>
+                        <button onClick={() => { setLegisSubdomain(true); setIsDeploying(true); }} style={{ height: 85, width: '95%', marginInline: 10, padding: 5, borderRadius: 5, backgroundColor: '#ECECEC', display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', }}>
+                          <h2 style={{ fontSize: 16, fontWeight: '600', wordWrap: 'break-word', lineHeight: '35px', marginLeft: 5 }}>Connect your custom domain</h2>
+                          <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>Become a Legis pro member & connect your</h2>
+                          <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>custom domain for $49 a year.</h2>
+                        </button>
+                      </div>
+                    ) : (
+                      null
+                    )}
+                  </div>
                 </Flex>
               </Col>
             </Flex>
           </Col>
         </Row>
       </Header>
-    <Layout hasSider style={{ marginTop: NAV_BAR_HEIGHT}}>
-      <Layout>
-        {/* Left side */}
-        <Flex  style={{ width: LEFT_BAR_WIDTH, background: '#EDF3F9', borderRight: borderStyle, position: 'fixed', height: '100vh', left: 0 }}>
-          {sectionsComponent}
-        </Flex>
-
-        {/* Center */}
-        <Flex 
-          id='visualisation-container' 
-          className='editor-scrollbar'
-          ref={containerRef} 
-          style={{
-            maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`, 
-            overflowY: 'scroll', 
-            marginLeft: LEFT_BAR_WIDTH, 
-            marginRight: RIGHT_BAR_WIDTH, 
-            background: '#f9fafb', 
-            justifyContent: 'center',
-            display: 'flex',
-            alignItems: 'flex-start',
-            boxShadow: '12px 4px solid black',
-            scrollBehavior: 'smooth',
-          }}>
-          {visualisationComponent}
-        </Flex>
-
-        {/* Right side */}
-        <Flex vertical style={{ width: RIGHT_BAR_WIDTH, background: '#EDF3F9', borderLeft: borderStyle, position: 'fixed', height: '100vh', right: 0 }}>
-          {interfaceComponent}
-        </Flex>
-        
+      <Layout hasSider style={{ marginTop: NAV_BAR_HEIGHT}}>
+        <Layout>
+          {/* Left side */}
+          <Flex  style={{ width: LEFT_BAR_WIDTH, background: '#EDF3F9', borderRight: borderStyle, position: 'fixed', height: '100vh', left: 0 }}>
+            {sectionsComponent}
+          </Flex>
+          {/* Center */}
+          <Flex 
+            id='visualisation-container' 
+            className='editor-scrollbar'
+            ref={containerRef} 
+            style={{
+              maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`, 
+              overflowY: 'scroll', 
+              marginLeft: LEFT_BAR_WIDTH, 
+              marginRight: RIGHT_BAR_WIDTH, 
+              background: '#f9fafb', 
+              justifyContent: 'center',
+              display: 'flex',
+              alignItems: 'flex-start',
+              boxShadow: '12px 4px solid black',
+              scrollBehavior: 'smooth',
+            }}>
+            {visualisationComponent}
+          </Flex>
+          {/* Right side */}
+          <Flex vertical style={{ width: RIGHT_BAR_WIDTH, background: '#EDF3F9', borderLeft: borderStyle, position: 'fixed', height: '100vh', right: 0 }}>
+            {interfaceComponent}
+          </Flex>  
+        </Layout>
+        <ChooseTemplateModal onTemplateSelected={onTemplateSelected} open={isAddingNewSection} setOpen={setIsAddingNewSection} />
       </Layout>
-      
-      
-      <ChooseTemplateModal onTemplateSelected={onTemplateSelected} open={isAddingNewSection} setOpen={setIsAddingNewSection} />
     </Layout>
-            </Layout>
   );
 };
 

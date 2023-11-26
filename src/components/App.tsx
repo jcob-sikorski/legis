@@ -9,6 +9,7 @@ import Survey from "./sites/Survey";
 import ColorPalette from "./sites/colorPalette";
 import Html from "./sites/html";
 import Generate from "./sites/generate";
+import CustomDomainDeployment from "./sites/customDomainDeployment";
 import Overview from "./sites/siteSettings/Overview";
 import Site from "./sites/siteSettings/Site";
 import Media from "./sites/siteSettings/Media";
@@ -92,6 +93,13 @@ function App() {
             element={
               <RequireAuth>
                 <Html />
+              </RequireAuth>
+            } 
+          />
+          <Route path="/custom-domain-deployment" 
+            element={
+              <RequireAuth>
+                <CustomDomainDeployment />
               </RequireAuth>
             } 
           />
