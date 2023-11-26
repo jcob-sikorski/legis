@@ -59,8 +59,20 @@ export let function_description: ChatCompletionTool[] = [
             },
           },
           "TheirValues": {
-            "type": "string",
-            "description": "Two exceptional sentences based on Stand Out Factor, Firm Representation and Important Values",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "description": "Full name of the value",
+                  "type": "string",
+                },
+                "description": {
+                  "description": "Short description of the value, easy to understand and professional, dont repeat values name.",
+                  "type": "string",
+                }
+              }
+            },
           },
           "ReviewsAndTestimonials": {
             "type": "array",

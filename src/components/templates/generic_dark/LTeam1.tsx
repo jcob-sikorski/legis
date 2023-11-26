@@ -24,16 +24,18 @@ export default function LTeam1({data} : any) {
                     {i !== 0 && <div className="w-full h-px bg-gradient-to-r from-[var(--legis-color-1)] to-[var(--legis-color-2)]"></div>}
                     <div className="items-start sm:flex">
                         <img className="object-cover rounded-full w-44 h-44 shrink-0" 
-                        src={data?.cdnUUID ? getUrl(data.cdnUUID) : "https://ucarecdn.com/8aea75a1-4036-48d7-8924-cfbe9375de7f/"} 
+                        src={person?.cdnUUID ? getUrl(person.cdnUUID) : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"} 
                         alt="" 
                         />
                         <div className="mt-6 sm:ml-10">
                             <div className="sm:items-center sm:flex">
-                                <p className="text-2xl font-normal text-white">{person?.name ?? ""}</p>
+                                <p className="break-all text-2xl font-normal text-white">
+                                    {person?.name || "[Lawyer Name here]"}
+                                </p>
                                 <p className="mt-2 text-base font-normal text-gray-400 sm:mt-0 sm:ml-4">Team member</p>
                             </div>
-                            <p className="mt-5 text-base font-normal text-gray-400">
-                                {person?.description}
+                            <p className="break-all mt-5 text-base font-normal text-gray-400">
+                                {person?.description || "[Lawyer description here]"}
                             </p>
                         </div>
                     </div>

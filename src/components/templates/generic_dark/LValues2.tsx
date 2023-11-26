@@ -1,6 +1,9 @@
 import { switchIcon } from "../../../utils";
 
 export default function LValues2({data} : any) {
+
+    console.log(data?.valuesList)
+
     return <section id='our-values' className="py-10 bg-black sm:py-16 lg:py-24" style={{fontFamily: 'var(--legis-font-main)'}}>
     <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="max-w-xl mx-auto text-center">
@@ -17,7 +20,7 @@ export default function LValues2({data} : any) {
 
         <div className="grid grid-cols-1 gap-5 mt-12 sm:grid-cols-3 lg:mt-20 lg:gap-x-12">
             
-            {((data?.valuesList ?? []).map((value: any, i: number) => 
+            {((typeof data?.valuesList === 'object' ? data?.valuesList : [])?.map((value: any, i: number) => 
                 <div className="transition-all duration-200 bg-gray-950 hover:shadow-xl">
                 <div className="py-10 px-9">
                 <i className={switchIcon(value?.name ?? "")} style={{fontSize: 64, color: 'var(--legis-color-2)'}}></i>

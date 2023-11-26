@@ -19,6 +19,7 @@ import { v4 } from 'uuid';
 import { uploadDirect } from '@uploadcare/upload-client';
 import { getUrl } from '../../../utils';
 import Visualisation from '../editor/Visualisation';
+import ImgCrop from 'antd-img-crop';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -221,7 +222,7 @@ function Survey() {
 
   const navigate = useNavigate();
   
-  const onFinish = () => {
+  const onFinish = async () => {
     if (!fieldValues["ClientReviews"]) {
       message.error("The field is empty. Please fill it out.");
       return;
@@ -231,10 +232,11 @@ function Survey() {
     
     if (page < fields.length) {
       console.log("onFinish push to ")
-      updateDBField(fields[page] as keyof Questionnaire);
+      await updateDBField(fields[page] as keyof Questionnaire).then(() => {
+        navigate(`/generate/${site_id}/1`);
+      })
     }
 
-    navigate(`/generate/${site_id}/1`);
   }
 
   const [lawyersJSON, setLawyersJSON] = useState("[]");
@@ -573,26 +575,28 @@ function LawyerInputComponent({ data, index, changeLawyerData, handleRemoveLawye
       borderRadius: 4,
       justifyContent: 'flex-end',
       }}>
-      <Upload
-        name="avatar"
-        style={{width: '100%', height: '100%', 
-        borderRadius: 4, 
-        background: '#aaa',
-        border: '2px solid black'}}
-        // listType=""
-        showUploadList={false}
-        beforeUpload={beforeUpload}
-        onChange={handleChange}
-        >
-          {cdnUUID ? <img src={getUrl(cdnUUID)} alt="avatar" 
-          className="relative overflow-hidden bg-cover bg-no-repeat"
-          style={{ 
-            width: '120px', 
-            height: '120px',
-            borderRadius: 4, 
-            border: '2px solid black'
-             }} /> : uploadButton}
-        </Upload>
+      <ImgCrop rotationSlider aspect={1}>
+        <Upload
+          name="avatar"
+          style={{width: '100%', height: '100%', 
+          borderRadius: 4, 
+          background: '#aaa',
+          border: '2px solid black'}}
+          // listType=""
+          showUploadList={false}
+          beforeUpload={beforeUpload}
+          onChange={handleChange}
+          >
+            {cdnUUID ? <img src={getUrl(cdnUUID)} alt="avatar" 
+            className="relative overflow-hidden bg-cover bg-no-repeat"
+            style={{ 
+              width: '120px', 
+              height: '120px',
+              borderRadius: 4, 
+              border: '2px solid black'
+              }} /> : uploadButton}
+          </Upload>
+        </ImgCrop>
     </Flex>
     <Flex vertical style={{width: '70%', gap: 5}} align='center' justify='center'>
       <Input defaultValue={name} onChange={(e: any) => changeLawyerData(e.target.value, "name", index)} placeholder='Lawyer Name' 
@@ -630,6 +634,26 @@ function ReviewInputComponent({ data, index, changeReviewData, handleRemoveRevie
 
   console.log("XZCZXCCZX data: ", data)
 
+  async function beforeUpload(file: any){
+    console.log("Before upload")
+    const result = await uploadDirect(file, {
+      publicKey: config.pkUploadcare,
+      store: 'auto',
+    });
+
+    console.log("result: ", result);
+    console.log("result.uuid: ", result.uuid);
+
+    changeReviewData(result.uuid, "cdnUUID", index);
+
+    // setCurrentUUID()
+
+    // handleDelete(tempOldUUID);
+    
+    return false;
+}
+
+
   // async function beforeUpload(file: any){
   //     console.log("Before upload")
   //     const result = await uploadDirect(file, {
@@ -663,6 +687,34 @@ function ReviewInputComponent({ data, index, changeReviewData, handleRemoveRevie
     // background: '#f00',
     height: '120px'
     }}>
+      <Flex style={{
+      width: '120px', 
+      borderRadius: 4,
+      justifyContent: 'flex-end',
+      }}>
+      <ImgCrop rotationSlider aspect={1}>
+        <Upload
+          name="avatar"
+          style={{width: '100%', height: '100%', 
+          borderRadius: 4, 
+          background: '#aaa',
+          border: '2px solid black'}}
+          // listType=""
+          showUploadList={false}
+          beforeUpload={beforeUpload}
+          onChange={handleChange}
+          >
+            {cdnUUID ? <img src={getUrl(cdnUUID)} alt="avatar" 
+            className="relative overflow-hidden bg-cover bg-no-repeat"
+            style={{ 
+              width: '120px', 
+              height: '120px',
+              borderRadius: 4, 
+              border: '2px solid black'
+              }} /> : uploadButton}
+          </Upload>
+        </ImgCrop>
+    </Flex>
     <Flex vertical style={{width: '90%', gap: 5}} align='center' justify='center'>
       <Input defaultValue={testimonial} onChange={(e: any) => changeReviewData(e.target.value, "testimonial", index)} placeholder='Enter review here...' 
         style={inputStyle}

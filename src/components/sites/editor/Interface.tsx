@@ -48,15 +48,14 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       setData(
         [...data].map((x: any) => x.section_id === selectedSectionId ? {...x, ...valueKeyPair} : x)
       );
-      
     }
 
-    function handleSerialFieldChange(collection: string, valueKeyPair: any, index: number) {
+    function handleSerialFieldChange(section_id: string, collection: string, valueKeyPair: any, index: number) {
       console.log("collection", collection)
       console.log("valueKeyPair", valueKeyPair)
       console.log("index", index)
       const newData = [...data].map((x: any) => 
-      x.section_id === selectedSectionId 
+      x.section_id === section_id 
         ? {...x, [collection]: [...x[collection].map( // x yes
           (y: any, i: number) => i === index 
 
@@ -70,26 +69,26 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       console.log('setting data to: ', newData)
     }
 
-    function onDesignSetSelected(value: string) {
-      assertTemplateIds(switchTemplateSet(value));
-    }
+    // function onDesignSetSelected(value: string) {
+    //   assertTemplateIds(switchTemplateSet(value));
+    // }
 
-    function assertTemplateIds(templateIds: string[]) {
-      let newData = [...data]?.map((x: any, i: number) => ({...x, template_id: templateIds[i]}));
-      setData(newData);
-      // newData = newData?.map 
-    }
+    // function assertTemplateIds(templateIds: string[]) {
+    //   let newData = [...data]?.map((x: any, i: number) => ({...x, template_id: templateIds[i]}));
+    //   setData(newData);
+    //   // newData = newData?.map 
+    // }
 
-    function onRemoveSection() {
-      setData((data ?? []).filter((s: any) => s.section_id !== selectedSectionId))
-      setSelectedSectionId("");
-      setSelectedTemplateId("");
-    }
+    // function onRemoveSection() {
+    //   setData((data ?? []).filter((s: any) => s.section_id !== selectedSectionId))
+    //   setSelectedSectionId("");
+    //   setSelectedTemplateId("");
+    // }
 
-    function onTemplateChange(template_id: string) {
-      setSelectedTemplateId(template_id);
-      setData((data ?? []).map((s: any) => s.section_id === selectedSectionId ? {...s, template_id} : s))
-    }
+    // function onTemplateChange(template_id: string) {
+    //   setSelectedTemplateId(template_id);
+    //   setData((data ?? []).map((s: any) => s.section_id === selectedSectionId ? {...s, template_id} : s))
+    // }
 
     function injectData() {
       try {
@@ -110,8 +109,8 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
     // "btn-label": 1,
     // "bg-image": 1
 
-    function getSerialFieldValue(collection: string, key: string, index: number) {
-      const col = data?.filter(({section_id}: any) => section_id === selectedSectionId)[0][collection];
+    function getSerialFieldValue(section_id: string, collection: string, key: string, index: number) {
+      const col = data?.filter((x: any) => x.section_id === section_id)[0][collection];
       if (col.length > index) {
         return col[index][key];
       } else {
@@ -137,7 +136,8 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       let index: number = field?.index;
       let ratio: number = field?.ratio;
       let collection: string = field?.collection;
-
+      
+      let section_id: string = field?.section_id;
       
       const generatedKey = 'field' + type + label + key + index + ratio;
       
@@ -155,15 +155,15 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
             return <div key={generatedKey} >
           {labelComponent()}
           <Form.Item className='animate__slideIn' name={generatedKey} style={itemStyle}>
-          <Input defaultValue={getSerialFieldValue(collection, key, index)} onChange={
-            (e) => handleSerialFieldChange(collection, {[key]: e.target.value}, index)} />
+          <Input defaultValue={getSerialFieldValue(section_id, collection, key, index)} onChange={
+            (e) => handleSerialFieldChange(section_id, collection, {[key]: e.target.value}, index)} />
         </Form.Item></div>;
           case 'textarea': 
           return <div key={generatedKey} >
             {labelComponent()}
             <Form.Item className='animate__slideIn' name={generatedKey} style={itemStyle}>
-            <TextArea rows={10} defaultValue={getSerialFieldValue(collection, key, index)} onChange={
-            (e) => handleSerialFieldChange(collection, {[key]: e.target.value}, index)} />
+            <TextArea rows={10} defaultValue={getSerialFieldValue(section_id, collection, key, index)} onChange={
+            (e) => handleSerialFieldChange(section_id, collection, {[key]: e.target.value}, index)} />
           </Form.Item></div>
           case 'checkbox':
             return <div key={generatedKey}>
@@ -344,15 +344,15 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
     }
 
     function switchAddSeriableField(context: FieldContext) {
-      return <Flex key={`remove-field-${JSON.stringify(context)}`} style={{padding: 10}} className='animate__slideIn'>
-        <Button onClick={() => onAddSeriable(context)} type='primary' className='bg-blue-500 mx-auto' style={{marginInline: 'auto'}} icon={<PlusOutlined />}> Add new practice area</Button>
+      return <Flex key={`remove-field-${JSON.stringify(context)}`} style={{paddingTop: 6}} className='animate__slideIn'>
+        <Button onClick={() => onAddSeriable(context)} type='primary' className='bg-blue-500 mx-auto w-full' style={{marginInline: 'auto'}} icon={<PlusOutlined />}> Add new practice area</Button>
       </Flex>
     }
 
     
     function switchRemoveSeriableField(context: FieldContext) {
       return <Flex key={`add-field-${JSON.stringify(context)}`} style={{paddingTop: 10}} className='animate__slideIn'>
-        <Button onClick={() => onRemoveSeriable(context)} type='primary' className='bg-red-600 mx-auto' style={{marginInline: 'auto'}} icon={<DeleteFilled />}>Delete this practice area</Button>
+        <Button onClick={() => onRemoveSeriable(context)} type='primary' danger className='bg-red-600 mx-auto w-full hover:text-white' style={{marginInline: 'auto'}} icon={<DeleteFilled />}>Delete this practice area</Button>
       </Flex>
     }
 
@@ -454,7 +454,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
           {/* {fields && fields.map((field: JSONProfileField) => switchField(field))} */}
           {/* Field */}
           
-          {context?.key ?
+          {(context.section_id === selectedSectionId && context?.key) ?
           <>
             {(context?.index || context?.index === 0) && <>
             {switchRemoveSeriableField(context)}

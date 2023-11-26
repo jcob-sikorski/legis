@@ -285,7 +285,8 @@ function getSiteData(data: any, onboardingData: Questionnaire, bodyTemplate: any
     {
       section_id: v4(),
       template_id: 'LValues2',
-      description: TheirValues,
+      // description: TheirValues,
+      valuesList: TheirValues,
     },
     // 5. The team = QUESTION 9
     {

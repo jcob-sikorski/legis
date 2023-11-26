@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+import { getUrl } from "../../utils";
 
 export default function LReviews2({data}: any) {
    
@@ -16,19 +17,20 @@ export default function LReviews2({data}: any) {
            </h2>
        </div>
 
-       <div className="grid grid-cols-1 gap-16 mt-12 lg:grid-cols-2 md:mt-16 lg:gap-y-20">
+       <div className="grid break-all grid-cols-1 gap-16 mt-12 lg:grid-cols-1 xl:grid-cols-2 md:mt-16 lg:gap-y-20">
            
            
             {((list ?? []).map((obj: any, i: number) => 
                 <div className="sm:flex sm:items-start">
                 <img 
                     className="flex-shrink-0 object-cover w-24 h-24 rounded-full" 
-                    src={"https://loremflickr.com/cache/resized/65535_52263219211_a888bd0f39_z_640_480_nofilter.jpg"} alt="" 
+                    src={obj?.cdnUUID ? getUrl(obj.cdnUUID) : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"} 
+                    alt="" 
                 />
                 <div className="mt-6 sm:ml-6 sm:mt-0">
                     <blockquote>
                         <p className="font-sans text-xl font-normal text-opacity-50 text-white">
-                            {obj?.testimonial}
+                            {obj?.testimonial || "[Client Review here...]"}
                         </p>
                     </blockquote>
                     <p className="mt-6 font-sans text-2xl font-normal text-white">{obj?.clientName}</p>
