@@ -19,7 +19,7 @@ export interface OnboardingData {
 }
 
 
-export type FieldType = 'text' | 'number' | 'image' | 'textarea' | 'checkbox';
+export type FieldType = 'text' | 'number' | 'image' | 'textarea' | 'checkbox' | 'button';
 export interface FieldContext {
   key: string;
   type: FieldType;
@@ -27,4 +27,5 @@ export interface FieldContext {
   ratio: number; // used for image input's crop aspect ratio
   index: number; // used for collection datas like: lawyers or reviews.
   collection: string; // used to specify collection within section.
+  variantProperty: string // used to specify which element connected by key is going to have different variations
 }

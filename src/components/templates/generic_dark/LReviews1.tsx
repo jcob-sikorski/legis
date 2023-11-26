@@ -2,11 +2,11 @@ export default function LReviews1({data}: any) {
    
    
     const list = data?.reviews ?? [];
-    console.log("TReviews: ", JSON.stringify(data));
+    // console.log("TReviews: ", JSON.stringify(data));
 
-   return <section className="py-12 bg-black sm:py-16 lg:py-20 xl:py-24">
+   return <section className="py-12 bg-black sm:py-16 lg:py-20 xl:py-24" style={{fontFamily: 'var(--legis-font-main)'}}>
     <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-        <h2 className="text-center text-3xl font-bold leading-tight text-gray-100 sm:text-4xl xl:text-5xl font-pj">
+        <h2 className="text-center text-3xl font-bold leading-tight text-gray-100 sm:text-4xl xl:text-5xl">
             Testimonials
         </h2>
         <div className="grid grid-cols-1 gap-12 mt-12 text-center md:grid-cols-3 sm:mt-16">

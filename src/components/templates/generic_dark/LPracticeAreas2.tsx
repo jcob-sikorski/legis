@@ -1,6 +1,8 @@
 export default function LPracticeAreas2({data}: any) {
-    return <section className="relative py-12 overflow-hidden bg-black sm:py-16 lg:py-20 xl:py-24" style={{fontFamily: 'IBM Plex Sans'}}>
-    <div className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+    return <section id='practice-areas' className="relative py-12 overflow-hidden bg-black sm:py-16 lg:py-20 xl:py-24" 
+    style={{fontFamily: 'var(--legis-font-main)'}}
+    >
+    <div className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 ">
         <svg className="blur-3xl filter opacity-40" style={{filter: "blur(64px)"}} width="756" height="202" viewBox="0 0 756 202" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M434.095 21.8754C619.918 21.8754 755.509 -33.413 755.509 31.8038C755.509 97.0206 268.41 201.855 82.5876 201.855C-103.234 201.855 82.5876 97.0207 82.5876 31.8039C82.5876 -33.4129 248.273 21.8754 434.095 21.8754Z" fill="url(#d)" />
             <defs>
