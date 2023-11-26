@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 
 export default function LAbout1({data}: any) {
-    return <section className="py-12 bg-black sm:py-16 lg:py-20 xl:py-24">
+    return <section id='about-us' className="py-12 bg-black sm:py-16 lg:py-20 xl:py-24" style={{fontFamily: 'var(--legis-font-main)'}}>
     <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="grid items-center grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
             <div className="md:order-last">
@@ -16,8 +16,9 @@ export default function LAbout1({data}: any) {
                 {/* <p className="text-sm font-normal tracking-widest uppercase">
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-purple-500"> FAQ </span>
                 </p> */}
-                <h2 className="mt-6 text-3xl font-normal text-white sm:mt-8 sm:text-4xl lg:text-5xl xl:text-6xl">About Us</h2>
-
+                <h2 className="mt-6 text-3xl font-bold text-white sm:text-4xl xl:text-5xl font-pj">
+                    About us
+                </h2>
                 <ul className="mt-12 space-y-12 sm:mt-16">
                     <li>
                         {/* <h3 className="text-2xl font-normal text-white">What is Tailwind CSS?</h3> */}

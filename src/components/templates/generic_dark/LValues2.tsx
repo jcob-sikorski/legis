@@ -1,13 +1,15 @@
 import { switchIcon } from "../../../utils";
 
 export default function LValues2({data} : any) {
-    return <section className="py-10 bg-black sm:py-16 lg:py-24">
+    return <section id='our-values' className="py-10 bg-black sm:py-16 lg:py-24" style={{fontFamily: 'var(--legis-font-main)'}}>
     <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="max-w-xl mx-auto text-center">
             <div className="inline-flex px-4 py-1.5 mx-auto rounded-full bg-gradient-to-r from-[var(--legis-color-2)] to-[var(--legis-color-3)]">
                 <p className="text-xs font-semibold tracking-widest text-white uppercase">Find out about...</p>
             </div>
-            <h2 className="mt-6 text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">OUR VALUES</h2>
+            <h2 className="mt-6 text-3xl font-bold text-whitex text-gray-100 sm:text-4xl xl:text-5xl font-pj">
+                Our values
+            </h2>
             <p className="mt-4 text-base leading-relaxed text-gray-400">
                 {data?.description ?? ""}
             </p>

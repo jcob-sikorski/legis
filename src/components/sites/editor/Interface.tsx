@@ -9,7 +9,7 @@ const { Sider } = Layout;
 
 import PROFILES from '../../templates/profiles.json';
 
-import { EditOutlined, FireOutlined, MinusOutlined, PlusOutlined, RocketOutlined, SwapOutlined } from '@ant-design/icons';
+import { AlignCenterOutlined, AlignLeftOutlined, AlignRightOutlined, EditOutlined, FireOutlined, LeftSquareOutlined, MinusOutlined, PlusOutlined, RocketOutlined, SwapOutlined } from '@ant-design/icons';
 import ImageUploadInput from './ImageUploadInput';
 import { FieldContext, FieldType, JSONProfileField } from '../../../models';
 import { switchTemplateSet } from '../../../utils';
@@ -99,6 +99,8 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       return res;
     }
 
+    const itemStyle = { margin: '0', padding: 0,}
+
     function switchField(field: FieldContext) {
 
       if (!field) return <>No field selected rn!</>
@@ -112,11 +114,11 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
 
       const generatedKey = 'field' + type + label + key + index + ratio;
 
-      const labelComponent = <Typography.Title color='#333' level={5} style={{margin: '15px 0 0 0', padding: 0, textAlign: 'center', width: '100%', fontWeight: 500}} >
-      {label?.toUpperCase()}
+      const labelComponent = (forcedLabel?: string) => <Typography.Title color='#333' level={5} style={{margin: '15px 0 0 0', padding: 0, textAlign: 'center', width: '100%', fontWeight: 500}} >
+      {forcedLabel ? forcedLabel : label?.toUpperCase()}
       </Typography.Title>
 
-      const itemStyle = { margin: '0', padding: 0,}
+      
 
       if (index || index === 0) {
 
@@ -130,13 +132,13 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
         </Form.Item></div>;
           case 'textarea': 
           return <div key={generatedKey} >
-            {labelComponent}
+            {labelComponent()}
             <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
             <TextArea rows={10} />
           </Form.Item></div>
           case 'checkbox':
             return <div key={generatedKey}>
-            {labelComponent}
+            {labelComponent()}
             <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
             <Radio.Group style={{display: 'flex', justifyContent: 'center'}}>
               <Radio value="1">Yes</Radio>
@@ -150,7 +152,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
             data.map((x: any) => {if (x.section_id === selectedSectionId) oldUUID = x.cdnUUID})
             
             return <div key={generatedKey} >
-            {labelComponent}
+            {labelComponent()}
             <Form.Item className='animate__slideIn' name={key} style={itemStyle} >
             <ImageUploadInput ratio={ratio} handleCustomFieldChange={handleCustomFieldChange} oldUUID={oldUUID} />
           </Form.Item></div>
@@ -165,19 +167,19 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
         switch(type) {
           case 'text':
             return <div key={generatedKey} >
-          {labelComponent}
+          {labelComponent()}
           <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
           <Input />
         </Form.Item></div>;
         case 'textarea': 
         return <div key={generatedKey} >
-          {labelComponent}
+          {labelComponent()}
           <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
           <TextArea rows={10} />
         </Form.Item></div>
         case 'checkbox':
           return <div key={generatedKey}>
-          {labelComponent}
+          {labelComponent()}
           <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
           <Radio.Group style={{display: 'flex', justifyContent: 'center'}}>
             <Radio value="1">Yes</Radio>
@@ -191,11 +193,23 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
           data.map((x: any) => {if (x.section_id === selectedSectionId) oldUUID = x.cdnUUID})
           
           return <div key={generatedKey} >
-          {labelComponent}
+          {labelComponent()}
           <Form.Item className='animate__slideIn' name={key} style={itemStyle} >
           <ImageUploadInput ratio={ratio} handleCustomFieldChange={handleCustomFieldChange} oldUUID={oldUUID} />
         </Form.Item></div>
         }
+        case 'button':
+          return <div key={generatedKey} >
+            BUTTON
+          {labelComponent("LABEL")}
+          <Form.Item className='animate__slideIn' name={key + 'Label'} style={itemStyle}>
+            <Input />
+          </Form.Item>
+          {labelComponent("ACTION")}
+          <Form.Item className='animate__slideIn' name={key + 'Link'} style={itemStyle}>
+            <Input />
+          </Form.Item>
+        </div>;
         default: {
           return <>No serial input of type <b>{type}</b> matched</>
         }
@@ -205,6 +219,66 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       
     }
     
+    function switchVariantField(field: FieldContext) {
+
+      if (!field) return <>No field selected rn!</>
+
+      console.log('field: ', field)
+
+      let type: FieldType = field?.type;
+      let label: string = field?.label;
+      let key: string = field?.key;
+      let index: number = field?.index;
+      let ratio: number = field?.ratio;
+      let collection: string = field?.collection;
+      let variantProperty: string = field?.variantProperty;
+
+      const generatedKey = 'field-variant-' + type + label + key + index + ratio;
+
+      const labelComponent = <Typography.Title color='#333' level={5} style={{margin: '15px 0 0 0', padding: 0, textAlign: 'center', width: '100%', fontWeight: 500}} >
+      {'VARIANT'?.toUpperCase()}
+      </Typography.Title>
+
+      switch(variantProperty) {
+        case 'marginInline':
+          return <div key={generatedKey} >
+        {labelComponent}
+        <Form.Item className='animate__slideIn' name={key + 'Variant'} style={itemStyle}>
+          <Radio.Group style={{display: 'flex', justifyContent: 'center'}}>
+            <Radio.Button value="0 auto"><AlignLeftOutlined /></Radio.Button>
+            <Radio.Button value="auto auto"><AlignCenterOutlined /></Radio.Button>
+            <Radio.Button value="auto 0"><AlignRightOutlined /></Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+        </div>;
+      case 'textAlign':
+        return <div key={generatedKey}>
+        {labelComponent}
+        <Form.Item className='animate__slideIn' name={key + 'Variant'} style={itemStyle}>
+        <Radio.Group style={{display: 'flex', justifyContent: 'center'}}>
+          <Radio.Button value="start"><AlignLeftOutlined /></Radio.Button>
+          <Radio.Button value="center"><AlignCenterOutlined /></Radio.Button>
+          <Radio.Button value="end"><AlignRightOutlined /></Radio.Button>
+        </Radio.Group>
+      </Form.Item></div>
+      case 'image': {
+        
+        // Select current photo cdn uuid
+        let oldUUID = "";
+        data.map((x: any) => {if (x.section_id === selectedSectionId) oldUUID = x.cdnUUID})
+        
+        return <div key={generatedKey} >
+        {labelComponent}
+        <Form.Item className='animate__slideIn' name={key} style={itemStyle} >
+        <ImageUploadInput ratio={ratio} handleCustomFieldChange={handleCustomFieldChange} oldUUID={oldUUID} />
+      </Form.Item></div>
+      }
+      default: {
+        return <>No serial input of type <b>{type}</b> matched</>
+      }
+    }
+    }
+
     const sectionsCount = data?.length ?? 0;
     
     const selectedTemplateProfile: any = profiles[selectedTemplateId]
@@ -303,6 +377,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
           {/* {fields && fields.map((field: JSONProfileField) => switchField(field))} */}
           {/* Field */}
           {switchField(context)}
+          {switchVariantField(context)}
           {/* <Row >
             <Col span={12}>
               <Button style={{backgroundColor: '#090', width: '100%', color: 'white'}}>Save changes</Button>

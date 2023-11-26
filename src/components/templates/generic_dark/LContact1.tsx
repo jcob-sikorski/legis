@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import { getUrl } from "../../../utils";
 
 export default function LContact1({data} : any) {
-    return ( <section className="relative py-12 overflow-hidden bg-black sm:py-16 lg:py-20 xl:py-24">
+    return ( <section id='contact-us' className="relative py-12 overflow-hidden bg-black sm:py-16 lg:py-20 xl:py-24" style={{fontFamily: 'var(--legis-font-main)'}}>
     <div className="absolute bottom-0 transform -translate-x-1/2 translate-y-96 left-1/2">
         <svg className="blur-3xl filter" style={{filter: "blur(64px)"}} width="643" height="408" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M183.151 216.787C86.498 123.868-62.309 137.493 30.03 41.445c92.337-96.049 494.126-6.876 590.779 86.043 96.652 92.919-148.432 154.396-240.769 250.445-92.338 96.048-100.237-68.228-196.889-161.146Z" fill="url(#c)" />
@@ -21,7 +21,10 @@ export default function LContact1({data} : any) {
 
     <div className="relative px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="max-w-sm mx-auto text-center">
-            <h2 className="text-3xl font-normal text-white sm:text-4xl lg:text-5xl">Contact us</h2>
+            {/* <h2 className="text-3xl font-normal text-white sm:text-4xl lg:text-5xl">Contact us</h2> */}
+            <h2 className="mt-6 text-3xl font-bold text-white sm:text-4xl xl:text-5xl font-pj">
+                Contact us
+            </h2>
             {/* <p className="mt-4 text-base font-normal text-gray-400 sm:text-lg sm:mt-6"></p> */}
         </div>
 
