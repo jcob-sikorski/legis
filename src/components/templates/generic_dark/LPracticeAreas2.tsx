@@ -20,7 +20,7 @@ export default function LPracticeAreas2({data, setContext}: any) {
 
     <div className="text-center mb-14" style={{maxWidth: 1200, marginInline: 'auto'}}>
         <h2 
-        onClick={() => setContext({key: 'title', type: 'text', label: 'Title', variantProperty: 'textAlign'})} 
+        onClick={() => setContext({section_id: data?.section_id, key: 'title', type: 'text', label: 'Title', variantProperty: 'textAlign'})} 
         className="py-4 editable text-3xl font-bold text-white sm:text-4xl xl:text-5xl font-pj"
         style={{textAlign: data?.titleVariant || 'center'}}
         >
@@ -38,10 +38,10 @@ export default function LPracticeAreas2({data, setContext}: any) {
                 wordWrap: 'break-word',
                 wordBreak: 'break-word',
                 }}
-                 onClick={() => setContext({collection: 'areasList', key: 'practiceAreaName', label: 'Practice Area Name', type: 'text', index: i})} className="editable text-3xl font-normal text-white lg:text-5xl sm:text-4xl">
+                 onClick={() => setContext({section_id: data?.section_id, collection: 'areasList', key: 'practiceAreaName', label: 'Practice Area Name', type: 'text', index: i})} className="editable text-3xl font-normal text-white lg:text-5xl sm:text-4xl">
                 {area?.practiceAreaName}
             </p>
-            <p onClick={() => setContext({collection: 'areasList', key: 'practiceDescription', label: 'Practice Area Description', type: 'textarea', index: i})} className="editable mt-4 text-base font-normal text-gray-400">
+            <p onClick={() => setContext({section_id: data?.section_id, collection: 'areasList', key: 'practiceDescription', label: 'Practice Area Description', type: 'textarea', index: i})} className="editable mt-4 text-base font-normal text-gray-400">
                 {area?.practiceDescription}
             </p>
                 <div className="w-full h-px mt-5 bg-gradient-to-r from-[var(--legis-color-1)] to-[var(--legis-color-2)]"></div>

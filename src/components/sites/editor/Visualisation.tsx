@@ -190,59 +190,64 @@ function Visualisation({
     }
 
     function switchTemplate(data: any) {
+
+        const setContextMiddleware = (obj: any) => {
+            setContext({...obj, section_id: data?.section_id});
+        }
+
         switch(data.template_id) {
             // Hero
             case 'LHero1':
-                return <LHero1 data={data} setContext={setContext} />
+                return <LHero1 data={data} setContext={setContextMiddleware} />
             case 'LHero2':
-                return <LHero2 data={data} setContext={setContext} />
+                return <LHero2 data={data} setContext={setContextMiddleware} />
             case 'LHero3':
-                return <LHero3 data={data} setContext={setContext} />
+                return <LHero3 data={data} setContext={setContextMiddleware} />
             // PracticeAreas
             case 'LPracticeAreas1':
-                return <LPracticeAreas1 data={data} setContext={setContext} />
+                return <LPracticeAreas1 data={data} setContext={setContextMiddleware} />
             case 'LPracticeAreas2':
-                return <LPracticeAreas2 data={data} setContext={setContext} />
+                return <LPracticeAreas2 data={data} setContext={setContextMiddleware} />
             case 'LPracticeAreas3':
-                return <LPracticeAreas3 data={data} setContext={setContext} />
+                return <LPracticeAreas3 data={data} setContext={setContextMiddleware} />
             // Values
             case 'LValues1':
-                return <LValues1 data={data} setContext={setContext} />
+                return <LValues1 data={data} setContext={setContextMiddleware} />
             case 'LValues2':
-                return <LValues2 data={data} setContext={setContext} />
+                return <LValues2 data={data} setContext={setContextMiddleware} />
             case 'LValues3':
-                return <LValues3 data={data} setContext={setContext} />
+                return <LValues3 data={data} setContext={setContextMiddleware} />
             // Team
             case 'LTeam1':
-                return <LTeam1 data={data} setContext={setContext} />
+                return <LTeam1 data={data} setContext={setContextMiddleware} />
             case 'LTeam2':
-                return <LTeam2 data={data} setContext={setContext} />
+                return <LTeam2 data={data} setContext={setContextMiddleware} />
             case 'LTeam3':
-                return <LTeam3 data={data} setContext={setContext} />
+                return <LTeam3 data={data} setContext={setContextMiddleware} />
             // Reviews
             case 'LReviews1':
-                return <LReviews1 data={data} setContext={setContext} />
+                return <LReviews1 data={data} setContext={setContextMiddleware} />
             case 'LReviews2':
-                return <LReviews2 data={data} setContext={setContext} />
+                return <LReviews2 data={data} setContext={setContextMiddleware} />
             case 'LReviews3':
-                return <LReviews3 data={data} setContext={setContext} />
+                return <LReviews3 data={data} setContext={setContextMiddleware} />
             // About
             case 'LAbout1':
-                return <LAbout1 data={data} setContext={setContext} />
+                return <LAbout1 data={data} setContext={setContextMiddleware} />
             case 'LAbout2':
-                return <LAbout2 data={data} setContext={setContext} />
+                return <LAbout2 data={data} setContext={setContextMiddleware} />
             case 'LAbout3':
-                return <LAbout3 data={data} setContext={setContext} />
+                return <LAbout3 data={data} setContext={setContextMiddleware} />
             // Contact
             case 'LContact1':
-                return <LContact1 data={data} setContext={setContext} />
+                return <LContact1 data={data} setContext={setContextMiddleware} />
             case 'LContact2':
-                return <LContact2 data={data} setContext={setContext} />
+                return <LContact2 data={data} setContext={setContextMiddleware} />
             case 'LContact3':
-                return <LContact3 data={data} setContext={setContext} />
+                return <LContact3 data={data} setContext={setContextMiddleware} />
             // No template ID matched
             default:
-                return <TNoTemplate data={data} setContext={setContext} /> 
+                return <TNoTemplate data={data} setContext={setContextMiddleware} /> 
         }
       }
 
