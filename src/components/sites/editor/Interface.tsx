@@ -9,14 +9,14 @@ const { Sider } = Layout;
 
 import PROFILES from '../../templates/profiles.json';
 
-import { AlignCenterOutlined, AlignLeftOutlined, AlignRightOutlined, EditOutlined, FireOutlined, LeftSquareOutlined, MinusOutlined, PlusOutlined, RocketOutlined, SwapOutlined } from '@ant-design/icons';
+import { AlignCenterOutlined, AlignLeftOutlined, AlignRightOutlined, DeleteFilled, EditOutlined, FireOutlined, LeftSquareOutlined, MinusOutlined, PlusOutlined, RocketOutlined, SwapOutlined } from '@ant-design/icons';
 import ImageUploadInput from './ImageUploadInput';
 import { FieldContext, FieldType, JSONProfileField } from '../../../models';
 import { switchTemplateSet } from '../../../utils';
 
 function Interface({json, setJson, data, setData, processJson, functions, variables} : any) {
 
-  const { onAddSection, setSelectedSectionId, setSelectedTemplateId, onDeploy, setIsDevMode, setIsDeploying } = functions ?? {};
+  const { onAddSection, setSelectedSectionId, setSelectedTemplateId, onDeploy, setIsDevMode, setIsDeploying, setContext } = functions ?? {};
   const { selectedSectionId, selectedTemplateId, isDevMode, isDeploying, context } = variables;
 
     const { site_id } = useParams();
@@ -45,12 +45,29 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
     
     function handleCustomFieldChange(valueKeyPair: any) {
       console.log("handleCustomFieldChange: ", valueKeyPair);
-      setData([...data].map((x: any) => x.section_id === selectedSectionId ? {...x, ...valueKeyPair} : x));
+      setData(
+        [...data].map((x: any) => x.section_id === selectedSectionId ? {...x, ...valueKeyPair} : x)
+      );
       
     }
 
-    function handleSerialFieldChange(valueKeyPair: any, index: number) {
+    function handleSerialFieldChange(collection: string, valueKeyPair: any, index: number) {
+      console.log("collection", collection)
+      console.log("valueKeyPair", valueKeyPair)
+      console.log("index", index)
+      const newData = [...data].map((x: any) => 
+      x.section_id === selectedSectionId 
+        ? {...x, [collection]: [...x[collection].map( // x yes
+          (y: any, i: number) => i === index 
 
+            ? {...y, ...valueKeyPair} // y yes
+            : y)] } // y no
+
+        : x) // x no
+      setData(
+        newData
+      );
+      console.log('setting data to: ', newData)
     }
 
     function onDesignSetSelected(value: string) {
@@ -94,9 +111,18 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
     // "bg-image": 1
 
     function getSerialFieldValue(collection: string, key: string, index: number) {
-      const res = data?.filter(({section_id}: any) => section_id === selectedSectionId)[0][collection][index][key];
-      console.log("getSerialFieldValue: ", res)
-      return res;
+      const col = data?.filter(({section_id}: any) => section_id === selectedSectionId)[0][collection];
+      if (col.length > index) {
+        return col[index][key];
+      } else {
+        if (col.length > 0) {
+          return col[index - 1][key];
+        } else {
+          return {};
+        }
+      }
+      // console.log("getSerialFieldValue: ", res)
+      // return res;
     }
 
     const itemStyle = { margin: '0', padding: 0,}
@@ -112,29 +138,32 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       let ratio: number = field?.ratio;
       let collection: string = field?.collection;
 
+      
       const generatedKey = 'field' + type + label + key + index + ratio;
-
+      
       const labelComponent = (forcedLabel?: string) => <Typography.Title color='#333' level={5} style={{margin: '15px 0 0 0', padding: 0, textAlign: 'center', width: '100%', fontWeight: 500}} >
       {forcedLabel ? forcedLabel : label?.toUpperCase()}
       </Typography.Title>
 
-      
+
 
       if (index || index === 0) {
-
+        console.log('seriable field: ', field);
+        // field is SERIABLE
         switch(type) {
           case 'text':
             return <div key={generatedKey} >
-          {labelComponent} + {getSerialFieldValue(collection, key, index)}
-          <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
-          <Input value={getSerialFieldValue(collection, key, index)} onChange={
-            (e) => handleSerialFieldChange({[key]: e.target.value}, index)} />
+          {labelComponent()}
+          <Form.Item className='animate__slideIn' name={generatedKey} style={itemStyle}>
+          <Input defaultValue={getSerialFieldValue(collection, key, index)} onChange={
+            (e) => handleSerialFieldChange(collection, {[key]: e.target.value}, index)} />
         </Form.Item></div>;
           case 'textarea': 
           return <div key={generatedKey} >
             {labelComponent()}
-            <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
-            <TextArea rows={10} />
+            <Form.Item className='animate__slideIn' name={generatedKey} style={itemStyle}>
+            <TextArea rows={10} defaultValue={getSerialFieldValue(collection, key, index)} onChange={
+            (e) => handleSerialFieldChange(collection, {[key]: e.target.value}, index)} />
           </Form.Item></div>
           case 'checkbox':
             return <div key={generatedKey}>
@@ -274,9 +303,57 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       </Form.Item></div>
       }
       default: {
-        return <>No serial input of type <b>{type}</b> matched</>
+        return <></>
       }
     }
+    }
+
+    function onAddSeriable(context: FieldContext) {
+      const collection = context?.collection;
+      let lastIndex = 0;
+
+      const newData = [...data].map((x: any) => {
+        if (x.section_id === selectedSectionId) {
+          lastIndex = x[collection]?.length || 0; 
+          return ({...x, [collection] : [...x[collection], {
+            practiceAreaName: `Practice Area ${lastIndex + 1}`,
+            practiceDescription: `Description of Practice Area ${lastIndex + 1}`,
+          }]}) 
+
+        } else return x;
+      })
+
+      setContext({...context, index: lastIndex});
+      setData(newData);
+    }
+
+    function onRemoveSeriable(context: FieldContext) {
+      const collection = context?.collection;
+      const indexToRemove = context?.index;
+
+      
+      const newData = [...data].map((x: any) => {
+        if (x.section_id === selectedSectionId) {
+          return ({...x, [collection] : [...x[collection].filter((_: any, i: number) => i !== indexToRemove)]}) 
+          
+        } else return x;
+      })
+      
+      setContext(null);
+      setData(newData);
+    }
+
+    function switchAddSeriableField(context: FieldContext) {
+      return <Flex key={`remove-field-${JSON.stringify(context)}`} style={{padding: 10}} className='animate__slideIn'>
+        <Button onClick={() => onAddSeriable(context)} type='primary' className='bg-blue-500 mx-auto' style={{marginInline: 'auto'}} icon={<PlusOutlined />}> Add new practice area</Button>
+      </Flex>
+    }
+
+    
+    function switchRemoveSeriableField(context: FieldContext) {
+      return <Flex key={`add-field-${JSON.stringify(context)}`} style={{paddingTop: 10}} className='animate__slideIn'>
+        <Button onClick={() => onRemoveSeriable(context)} type='primary' className='bg-red-600 mx-auto' style={{marginInline: 'auto'}} icon={<DeleteFilled />}>Delete this practice area</Button>
+      </Flex>
     }
 
     const sectionsCount = data?.length ?? 0;
@@ -376,8 +453,16 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
           {/* {JSON.stringify(fields)} */}
           {/* {fields && fields.map((field: JSONProfileField) => switchField(field))} */}
           {/* Field */}
+          
+          {context?.key ?
+          <>
+            {(context?.index || context?.index === 0) && <>
+            {switchRemoveSeriableField(context)}
+            {switchAddSeriableField(context)}
+          </>}
           {switchField(context)}
           {switchVariantField(context)}
+          </> : <></>}
           {/* <Row >
             <Col span={12}>
               <Button style={{backgroundColor: '#090', width: '100%', color: 'white'}}>Save changes</Button>
@@ -388,6 +473,8 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
           </Row> */}
         </Form>)
         }
+
+        {!context?.key && <Flex className='flex items-center text-center bg-gray-200 h-80'>Select any element on canvas to open its settings</Flex>}
 </>);
 }
 

@@ -254,6 +254,11 @@ const Editor: React.FC = () => {
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
           <style>
+
+            * {
+              scroll-behavior: smooth;
+            }
+
             :root {
               --legis-color-1: ${colors[0]};
               --legis-color-2: ${colors[1]};
@@ -396,6 +401,7 @@ const Editor: React.FC = () => {
     handlePublishButton,
     setIsDevMode,
     setIsDeploying,
+    setContext,
   }}
   variables={{
     selectedSectionId,
