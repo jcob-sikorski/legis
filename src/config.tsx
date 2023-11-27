@@ -16,5 +16,7 @@ export const config = {
     openaiKey: import.meta.env.VITE_REACT_openaiKey,
     cpanelUsername: import.meta.env.VITE_REACT_cpanelUsername,
     cpanelPassword: import.meta.env.VITE_REACT_cpanelPassword,
+    stripePk: import.meta.env.VITE_REACT_stripePk,
+    stripeProPlanPriceId: import.meta.env.VITE_REACT_stripeProPlanPriceId
   };
   

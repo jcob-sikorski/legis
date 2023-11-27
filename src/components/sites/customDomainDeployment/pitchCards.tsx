@@ -1,6 +1,11 @@
 import { Layout, Typography, Card, Button } from 'antd';
 import { ApartmentOutlined, HomeOutlined, UserOutlined, EditOutlined, StarOutlined, TeamOutlined } from '@ant-design/icons';
 import React from 'react';
+import { useParams } from 'react-router-dom';
+
+import axios from 'axios';
+import { loadStripe } from "@stripe/stripe-js";
+import { config } from "../../../config";
 
 const { Header } = Layout;
 const { Title } = Typography;
@@ -41,6 +46,27 @@ const cardContent = [
 ];
 
 function PitchCards({ nextPage }: any) {
+  const { site_id } = useParams();
+
+  const stripePromise = loadStripe(config.stripePk);
+
+  const redirectToCheckout = async () => {
+    const stripe = await stripePromise;
+  
+    // Get Checkout Session ID from the server
+    const { data: { sessionId } } = await axios.post('http://localhost:4242/create-checkout-session', {
+      params: { site_id: site_id }
+    });
+  
+    const { error } = await stripe!.redirectToCheckout({
+      sessionId,
+    });
+  
+    if (error) {
+      console.warn('Error:', error);
+    }
+  };
+
   return (
     <Layout style={{ height: '100vh', backgroundColor: 'white' }}>
       <Header style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }}>
@@ -73,7 +99,7 @@ function PitchCards({ nextPage }: any) {
         ))}
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
-        <Button onClick={() => nextPage()}  className="custom-button" type="primary" size="large">
+        <Button onClick={redirectToCheckout}  className="custom-button" type="primary" size="large">
           Go pro for $49 per year
         </Button>
       </div>
