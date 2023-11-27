@@ -9,10 +9,10 @@ const { Sider } = Layout;
 
 import PROFILES from '../../templates/profiles.json';
 
-import { AlignCenterOutlined, AlignLeftOutlined, AlignRightOutlined, DeleteFilled, EditOutlined, FireOutlined, LeftSquareOutlined, MinusOutlined, PlusOutlined, RocketOutlined, SwapOutlined } from '@ant-design/icons';
+import { AlignCenterOutlined, AlignLeftOutlined, AlignRightOutlined, ArrowRightOutlined, DeleteFilled, EditOutlined, FireOutlined, LeftSquareOutlined, LinkOutlined, MinusOutlined, PlusOutlined, RocketOutlined, SwapOutlined } from '@ant-design/icons';
 import ImageUploadInput from './ImageUploadInput';
 import { FieldContext, FieldType, JSONProfileField } from '../../../models';
-import { switchTemplateSet } from '../../../utils';
+import { camelCase, switchTemplateSet } from '../../../utils';
 
 function Interface({json, setJson, data, setData, processJson, functions, variables} : any) {
 
@@ -124,6 +124,15 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       // return res;
     }
 
+    function getFieldValue(section_id: string, key: string) {
+      const col = data?.filter((x: any) => x?.section_id === section_id)[0];
+      if (col[key]) {
+        return col[key];
+      } else return '';
+      // console.log("getSerialFieldValue: ", res)
+      // return res;
+    }
+
     const itemStyle = { margin: '0', padding: 0,}
 
     function switchField(field: FieldContext) {
@@ -229,15 +238,22 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
         }
         case 'button':
           return <div key={generatedKey} >
-            BUTTON
+            BUTTON {key + 'Label'} {key + 'Link'}
           {labelComponent("LABEL")}
           <Form.Item className='animate__slideIn' name={key + 'Label'} style={itemStyle}>
-            <Input />
+            <Input  />
           </Form.Item>
-          {labelComponent("ACTION")}
+          {labelComponent("LINK")}
           <Form.Item className='animate__slideIn' name={key + 'Link'} style={itemStyle}>
             <Input />
           </Form.Item>
+          {getFieldValue(section_id, key + 'Link') ?
+          <a href={getFieldValue(section_id, key + 'Link')}>
+            <Button type='primary' className='bg-blue-500 mt-1 w-full' style={{marginInline: 'auto'}} icon={<ArrowRightOutlined />}> Simulate button click </Button>
+          </a>
+          : <Button disabled type='primary' className='bg-blue-500 mt-1 w-full' style={{marginInline: 'auto'}} icon={<ArrowRightOutlined />}> Simulate button click </Button>
+        }
+          
         </div>;
         default: {
           return <>No serial input of type <b>{type}</b> matched</>
@@ -310,15 +326,28 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
 
     function onAddSeriable(context: FieldContext) {
       const collection = context?.collection;
+      const seriableLabel = context?.seriableLabel || "";
+      const emptyObjectLabel = camelCase(seriableLabel);
       let lastIndex = 0;
+
+      const emptyObject = (lastIndex: number) => {switch(collection) {
+        case 'areasList': return {
+          practiceAreaName: `${emptyObjectLabel} ${lastIndex + 1}`,
+          practiceDescription: `Description of ${emptyObjectLabel} ${lastIndex + 1}`,
+        };
+        case 'valuesList': return {
+          name: `${emptyObjectLabel} ${lastIndex + 1}`,
+          description: `Description of ${emptyObjectLabel} ${lastIndex + 1}`,
+        };
+        default: return {};
+      }};
+
+      
 
       const newData = [...data].map((x: any) => {
         if (x?.section_id === selectedSectionId) {
           lastIndex = x[collection]?.length || 0; 
-          return ({...x, [collection] : [...x[collection], {
-            practiceAreaName: `Practice Area ${lastIndex + 1}`,
-            practiceDescription: `Description of Practice Area ${lastIndex + 1}`,
-          }]}) 
+          return ({...x, [collection] : [...x[collection], emptyObject(lastIndex)]}) 
 
         } else return x;
       })
@@ -330,10 +359,12 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
     function onRemoveSeriable(context: FieldContext) {
       const collection = context?.collection;
       const indexToRemove = context?.index;
-
+      let lastIndex = 0;
       
       const newData = [...data].map((x: any) => {
         if (x?.section_id === selectedSectionId) {
+          lastIndex = x[collection]?.length || 0; 
+          if (lastIndex === 1 || lastIndex === 0) return x;
           return ({...x, [collection] : [...x[collection].filter((_: any, i: number) => i !== indexToRemove)]}) 
           
         } else return x;
@@ -345,14 +376,14 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
 
     function switchAddSeriableField(context: FieldContext) {
       return <Flex key={`remove-field-${JSON.stringify(context)}`} style={{paddingTop: 6}} className='animate__slideIn'>
-        <Button onClick={() => onAddSeriable(context)} type='primary' className='bg-blue-500 mx-auto w-full' style={{marginInline: 'auto'}} icon={<PlusOutlined />}> Add new practice area</Button>
+        <Button onClick={() => onAddSeriable(context)} type='primary' className='bg-blue-500 mx-auto w-full' style={{marginInline: 'auto'}} icon={<PlusOutlined />}> Add new {context?.seriableLabel || "element"}</Button>
       </Flex>
     }
 
     
     function switchRemoveSeriableField(context: FieldContext) {
       return <Flex key={`add-field-${JSON.stringify(context)}`} style={{paddingTop: 10}} className='animate__slideIn'>
-        <Button onClick={() => onRemoveSeriable(context)} type='primary' danger className='bg-red-600 mx-auto w-full hover:text-white' style={{marginInline: 'auto'}} icon={<DeleteFilled />}>Delete this practice area</Button>
+        <Button onClick={() => onRemoveSeriable(context)} type='primary' danger className='bg-red-600 mx-auto w-full hover:text-white' style={{marginInline: 'auto'}} icon={<DeleteFilled />}>Delete this {context?.seriableLabel || "element"}</Button>
       </Flex>
     }
 
@@ -376,10 +407,13 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
             type: <b>{context?.type}</b> <br />
           </Typography.Text>            
         </Flex> */}
-        <Space style={{padding: 25}}>
+        {/* <Space style={{padding: 25}}>
             dev mode
             <Switch checked={isDevMode} onClick={() => setIsDevMode(!isDevMode)} />
-        </Space>
+        </Space> */}
+        <div className='text-center mt-2 mb-0 font-medium p-0' style={{color: '#333'}}>
+            ELEMENTS SETTINGS
+          </div>
         {isDevMode && !isDeploying && <>
             <button onClick={injectData}>Inject hard-coded data JSON</button>
             <Space>
@@ -407,7 +441,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
               Remove section
           </Button> */}
           <Flex justify='center' vertical align='center' className='p-3 text-gray-500'>
-            <Typography.Title style={{fontSize: 18}} className='uppercase'>
+            {/* <Typography.Title style={{fontSize: 18}} className='uppercase'>
               design sets
             </Typography.Title>
 
@@ -418,7 +452,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
               <Radio.Button value={'casual-light'} >
                 Casual Light
               </Radio.Button>
-            </Radio.Group>
+            </Radio.Group> */}
             
             {/* <Typography.Title style={{fontSize: 18}} className='uppercase'>
               Try other templates

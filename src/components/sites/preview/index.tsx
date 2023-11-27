@@ -45,14 +45,20 @@ export default function Preview () {
   const githubToken = config.githubToken;
 
   const { site_id } = useParams();
-  console.warn("site_id editor", site_id);
-
+  
 //   const [json, setJson] = useState(DEV_START_JSON);
   const [data, setData] = useState<any[]>([]);
 //   const [lawFirmName, setLawFirmName] = useState<string>();
-//   const [colors, setColors] = useState<string[]>([]);
+  const [colors, setColors] = useState<string[]>([]);
 
   const containerRef = useRef(null);
+
+  console.warn("site_id editor", site_id);
+  useEffect(() => {
+    if (colors?.length > 0) {
+      updateCssStyles(colors);
+    }
+   }, [colors])
 
   React.useEffect(() => {
     console.log("Fetching the site from mongo.");
@@ -71,7 +77,7 @@ export default function Preview () {
 
         if (result.length > 0 && result[0].hasOwnProperty("template_colors")) {
           console.log("Found a site with template_colors:", result[0].template_colors);
-        //   setColors(result[0].template_colors);
+          setColors(result[0].template_colors);
         }
       else {
         console.log("Site doesn't have the template_colors yet.");
@@ -94,9 +100,23 @@ export default function Preview () {
 
   return (
     <Layout style={{width: '100%', height: 'calc(100vh - 46px)'}}>
-      <div style={{position: 'absolute', zIndex: 100, left: 150, bottom: 50, background: '#fff9', width: 200, height: 80}}> 
-        MADE WITH LEGIS 
+      <a target='_blank' href='https://pyramid-tread-336939.framer.app/template1' style={{color: '#000'}}>
+      <div style={{
+        position: 'fixed', 
+        zIndex: 100, 
+        left: 0, 
+        bottom: 0, 
+        background: '#fffa', 
+        // width: 200, 
+        padding: '12px 40px',
+        // height: 80,
+        fontSize: 20,
+        margin: 10,
+        borderRadius: 6,
+    }}> 
+            MADE WITH LEGIS 
       </div>
+        </a>
         <Flex 
             id='visualisation-container' 
             className='editor-scrollbar'

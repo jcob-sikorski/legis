@@ -28,6 +28,7 @@ import Logo from '../menu/Logo';
 import { FieldContext } from '../../../models';
 import { getOnboardingData } from '../generate/getOnboardingData';
 import Questionnaire from '../../../models/Questionnaire';
+import MobilePreviewModal from './modals/MobilePreviewModal';
 
 const Editor: React.FC = () => {
   const app: any = useApp();
@@ -52,6 +53,7 @@ const Editor: React.FC = () => {
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>("");
 
   const [isAddingNewSection, setIsAddingNewSection] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
 
   const [displayHostingBox, setDisplayHostingBox] = useState<boolean>(false);
   const [isDeploying, setIsDeploying] = useState<boolean>(false);
@@ -124,6 +126,11 @@ const Editor: React.FC = () => {
     // console.log("el: ", element)
    }
   
+  function onMobile() {
+    // setIsMobile(true);
+    window.open(`/preview/${site_id}`, '', 'width=410,height=700');
+  }
+
    function onGenerate() {
     // navigate to /generate
     navigate(`/generate/${site_id}/0`); // (overwrites only template_body field)
@@ -451,9 +458,9 @@ const Editor: React.FC = () => {
 
   return (
     <Layout style={{width: '100%', height: 'calc(100vh - 46px)'}}>
-      <div style={{position: 'absolute', zIndex: 100, left: 150, bottom: 50, background: '#fff9', width: 200, height: 80}}> 
+      {/* <div style={{position: 'absolute', zIndex: 100, left: 150, bottom: 50, background: '#fff9', width: 200, height: 80}}> 
       MADE WITH LEGIS 
-      </div>
+      </div> */}
       <Header style={{ padding: '4px', paddingLeft: 0, zIndex: 10, borderBottom: borderStyle, width: '100%', background: '#f0f1f9', height: NAV_BAR_HEIGHT, position: 'fixed' }}>
         <Row>
           <Col span={18}>
@@ -469,7 +476,7 @@ const Editor: React.FC = () => {
                 <Flex justify='flex-end' className='h-fullx bg-yellow-500x' gap={6}>
                     <Button
                       type="primary"
-                      onClick={onGenerate}
+                      onClick={onMobile}
                       className="custom-button"
                       icon={<MobileFilled />}
                       style={{ padding: 24, margin: 0 }}
@@ -539,11 +546,19 @@ const Editor: React.FC = () => {
             {visualisationComponent}
           </Flex>
           {/* Right side */}
-          <Flex vertical style={{ width: RIGHT_BAR_WIDTH, background: '#EDF3F9', borderLeft: borderStyle, position: 'fixed', height: '100vh', right: 0 }}>
+          <Flex vertical style={{ 
+            width: RIGHT_BAR_WIDTH, 
+            background: '#EDF3F9', 
+            borderLeft: borderStyle, 
+            position: 'fixed', 
+            height: '100vh', 
+            right: 0 }}>
+
             {interfaceComponent}
           </Flex>  
         </Layout>
         <ChooseTemplateModal onTemplateSelected={onTemplateSelected} open={isAddingNewSection} setOpen={setIsAddingNewSection} />
+        {/* <MobilePreviewModal data={data} open={isMobile} setOpen={setIsMobile} /> */}
       </Layout>
     </Layout>
   );

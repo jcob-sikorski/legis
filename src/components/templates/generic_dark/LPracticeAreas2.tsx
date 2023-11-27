@@ -20,16 +20,16 @@ export default function LPracticeAreas2({data, setContext}: any) {
 
     <div className="text-center mb-14" style={{maxWidth: 1200, marginInline: 'auto'}}>
         <h2 
-        onClick={() => setContext({section_id: data?.section_id, key: 'title', type: 'text', label: 'Title', variantProperty: 'textAlign'})} 
+        onClick={() => setContext({ key: 'title', type: 'text', label: 'Title', variantProperty: 'textAlign'})} 
         className="py-4 editable text-3xl font-bold text-white sm:text-4xl xl:text-5xl font-pj"
         style={{textAlign: data?.titleVariant || 'center'}}
         >
-            Our practice areas
+            {data?.title || ""}
         </h2>
     </div>
 
     <div className="relative px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl flex justify-center items-center">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-14 gap-y-12">
+        <div className="grid grid-cols-1 xl:grid-cols-2 md:grid-cols-2 sm-grid-cols-1 gap-x-14 gap-y-12" >
         
         {((data?.areasList ?? []).map((area: any, i:number) => 
             <div>
@@ -38,10 +38,13 @@ export default function LPracticeAreas2({data, setContext}: any) {
                 wordWrap: 'break-word',
                 wordBreak: 'break-word',
                 }}
-                 onClick={() => setContext({section_id: data?.section_id, collection: 'areasList', key: 'practiceAreaName', label: 'Practice Area Name', type: 'text', index: i})} className="editable text-3xl font-normal text-white lg:text-5xl sm:text-4xl">
+                 onClick={() => setContext({collection: 'areasList', seriableLabel: 'practice area', key: 'practiceAreaName', label: 'Practice Area Name', type: 'text', index: i})} 
+                 className="editable text-3xl font-normal text-white lg:text-5xl sm:text-4xl">
                 {area?.practiceAreaName}
             </p>
-            <p onClick={() => setContext({section_id: data?.section_id, collection: 'areasList', key: 'practiceDescription', label: 'Practice Area Description', type: 'textarea', index: i})} className="editable mt-4 text-base font-normal text-gray-400">
+            <p 
+            onClick={() => setContext({ collection: 'areasList', seriableLabel: 'practice area', key: 'practiceDescription', label: 'Practice Area Description', type: 'textarea', index: i})} 
+            className="editable mt-4 text-base font-normal text-gray-400">
                 {area?.practiceDescription}
             </p>
                 <div className="w-full h-px mt-5 bg-gradient-to-r from-[var(--legis-color-1)] to-[var(--legis-color-2)]"></div>

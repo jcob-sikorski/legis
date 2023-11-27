@@ -274,12 +274,15 @@ function getSiteData(data: any, onboardingData: Questionnaire, bodyTemplate: any
       heading: Hero.headline,
       subHeading: Hero.subHeadline,
       logo: LawFirmName,
+      "buttonLabel": "REGISTER",
+      "buttonLink": "#Contact-us",
     },
     // 3. Practice areas = GENERATED
     {
       section_id: v4(),
       template_id: 'LPracticeAreas2',
       areasList: PracticeAreas,
+      "title": "Our practice areas",
     },
     // 4. Their values = GENERATED 
     {
@@ -287,29 +290,39 @@ function getSiteData(data: any, onboardingData: Questionnaire, bodyTemplate: any
       template_id: 'LValues2',
       // description: TheirValues,
       valuesList: TheirValues,
+      "superTitle": "Find out about...",
+      "title": "Our values",
     },
     // 5. The team = QUESTION 9
     {
       section_id: v4(),
       template_id: 'LTeam1',
-      lawyerDetails: OurTeam
+      lawyerDetails: OurTeam,
+      "superTitle": "Learn more about...",
+      "title": "Our team",
     },
     // 6. Reviews and testimonials = GENERATED
     {
       section_id: v4(),
       template_id: 'LReviews2',
       reviews,
+      "title": "See what our clients are saying",
     },
     // 7. About us = GENERATED
     {
       section_id: v4(),
       template_id: 'LAbout1',
-      paragraph: AboutUs
+      paragraph: AboutUs,
+      "title": "About us",
     },
     // 7. Contact us form / CTA = NO DATA
     {
       section_id: v4(),
       template_id: 'LContact1',
+      "title": "Contact us",
+      "email": "example@example.com",
+      "phone": "1-234-567-890",
+      "address": "Address, A1 234BC"
     },
   ]
 

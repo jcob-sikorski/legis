@@ -14,7 +14,7 @@ export function LHero1({data, setContext, isDeploying} : {data: any, setContext:
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             
             {/* NavBar */}
-            <div className="flex items-center justify-between bg-black" style={isDeploying ? {} : {}}>
+            <div className="flex flex-col sm:flex-row items-center justify-between bg-black" style={isDeploying ? {} : {}}>
                 <div className="shrink-0">
                     <a href="#" title="" className="flex text-white font-black">
                         {/* {data?.logo} */}
@@ -25,7 +25,7 @@ export function LHero1({data, setContext, isDeploying} : {data: any, setContext:
                     </a>
                 </div>
 
-                <div className="flex md:hidden">
+                <div className="hidden">
                     <button type="button" className="text-white">
                         <span x-show="!expanded" aria-hidden="true">
                             <svg className="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -41,7 +41,7 @@ export function LHero1({data, setContext, isDeploying} : {data: any, setContext:
                     </button>
                 </div>
 
-                <nav className="hidden ml-10 mr-auto space-x-10 lg:ml-20 lg:space-x-12 md:flex md:items-center md:justify-start">
+                <nav className="hidden md:inline sm:hidden ml-10 mr-auto space-x-10 lg:ml-20 lg:space-x-12 md:items-center md:justify-start">
                     <a href="#home" title="" className="text-base font-normal text-gray-400 transition-all duration-200 hover:text-white"> Home </a>
                     <a href="#practice-areas" title="" className="text-base font-normal text-gray-400 transition-all duration-200 hover:text-white"> Practice Areas </a>
                     <a href="#our-values" title="" className="text-base font-normal text-gray-400 transition-all duration-200 hover:text-white"> Our Values </a>
@@ -50,8 +50,8 @@ export function LHero1({data, setContext, isDeploying} : {data: any, setContext:
                     {/* <a href="#contact-us" title="" className="text-base font-normal text-gray-400 transition-all duration-200 hover:text-white"> Contact Us</a> */}
                 </nav>
 
-                <div className="relative hidden md:items-center md:justify-center md:inline-flex group">
-                    <div className="absolute transition-all duration-200 rounded-full -inset-px bg-gradient-to-r from-[var(--legis-color-1)] to-[var(--legis-color-3)] group-hover:shadow-lg group-hover:shadow-cyan-500/50"></div>
+                <div className="relative sm:inline-flex md:items-center md:justify-center md:inline-flex group">
+                    <div className="absolute transition-all duration-200 rounded-full -inset-px bg-gradient-to-r from-[var(--legis-color-1)] to-[var(--legis-color-3)] group-hover:shadow-lg group-hover:shadow-[#fff]/50"></div>
                     <a href="#contact-us" title="" className="relative inline-flex items-center justify-center px-6 py-2 text-base font-normalx text-black font-black bg-blackx border border-transparent rounded-full" role="button">Contact Us</a>
                 </div>
             </div>
@@ -114,15 +114,19 @@ export function LHero1({data, setContext, isDeploying} : {data: any, setContext:
                         <div className='flex' 
                         // style={{justifyContent: data?.buttonVariant || 'center'}}
                         >
+                            <a 
+                            style={{marginInline: data?.buttonVariant || 'auto auto', color: '#000'}}  
+                            href={isDeploying ? data?.buttonLink || "#" : '#hero'}>
                             <button
                              onMouseEnter={() => setBgEditable(false)}
                              onMouseLeave={() => setBgEditable(true)}
                              className="editable mt-6 rounded-full -inset-px sm:h-10 lg:h-14 sm:w-40 lg:w-60 text-lg bg-gradient-to-r font-black bg-[var(--legis-color-2)]"
-                             style={{marginInline: data?.buttonVariant || 'auto auto'}} 
+                             
                              onClick={() => setContext({key: 'button', type: 'button', label: 'Button', variantProperty: 'marginInline'})}
                              >
-                                REGISTER
+                                {data?.buttonLabel || "REGISTER"}
                             </button>
+                                 </a>
                         </div>
                         {/* <form action="#" method="POST" className="relative mt-8 rounded-full sm:mt-12"> */}
                             {/* <div className="relative"> */}

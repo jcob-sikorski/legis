@@ -29,4 +29,5 @@ export interface FieldContext {
   collection: string; // used to specify collection within section.
   variantProperty: string // used to specify which element connected by key is going to have different variations
   section_id: string // mirror for data's section_id
+  seriableLabel: string // noun to name your seriable field in buttons' labels
 }

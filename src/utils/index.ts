@@ -136,3 +136,10 @@ export function switchTemplateSet(template_set_id: string) {
 export function getBodyTemplateFromTemplateSetId(templateIds: string[]) {
   return Array(7).fill({}).map((_, i: number) => i < templateIds.length ? ({template_id: templateIds[i]}) : ({}));
 }
+
+export function camelCase(str: string) {
+  return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+      return index == 0 ? word.toLowerCase() : word.toUpperCase();
+  }).replace(/\s+/g, '');
+}
+console.log(camelCase("Click the button to convert to camelCase"));
