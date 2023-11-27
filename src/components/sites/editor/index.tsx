@@ -19,7 +19,7 @@ import axios from 'axios';
 import './index.css';
 import Sider from 'antd/es/layout/Sider';
 import { Content, Header } from 'antd/es/layout/layout';
-import { RedoOutlined } from '@ant-design/icons';
+import { EyeFilled, EyeOutlined, MobileFilled, MobileOutlined, RedoOutlined } from '@ant-design/icons';
 import Sections from './Sections';
 import { getPromptForGeneration, updateCssStyles } from '../../../utils';
 import MainMenu from '../menu';
@@ -434,60 +434,92 @@ const Editor: React.FC = () => {
 
   const borderStyle = '1px solid #0002';
 
+  const containerStyle: any = {
+    maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`, 
+    overflowY: 'scroll', 
+    marginLeft: LEFT_BAR_WIDTH, 
+    marginRight: RIGHT_BAR_WIDTH, 
+    background: '#f9fafb', 
+    justifyContent: 'center',
+    display: 'flex',
+    alignItems: 'flex-start',
+    boxShadow: '12px 4px solid black',
+    // scrollBehavior: 'smooth',
+    scrollBehavior: 'smooth',
+    scroll: 'smooth',
+  }
+
   return (
     <Layout style={{width: '100%', height: 'calc(100vh - 46px)'}}>
       <div style={{position: 'absolute', zIndex: 100, left: 150, bottom: 50, background: '#fff9', width: 200, height: 80}}> 
       MADE WITH LEGIS 
       </div>
-      <Header style={{ padding: '4px 4px 4px 0px',  zIndex: 10, borderBottom: borderStyle, width: '100%', background: '#f0f1f9', height: NAV_BAR_HEIGHT, position: 'fixed' }}>
+      <Header style={{ padding: '4px', paddingLeft: 0, zIndex: 10, borderBottom: borderStyle, width: '100%', background: '#f0f1f9', height: NAV_BAR_HEIGHT, position: 'fixed' }}>
         <Row>
           <Col span={18}>
             <Flex justify='center' style={{maxWidth: LEFT_BAR_WIDTH}}>
-              <div style={{marginTop: '-16px', marginLeft: '-16px'}}>
+              <div style={{marginTop: '0px', marginLeft: '-20px'}}>
                 <Logo />
               </div>
             </Flex>
           </Col>
           <Col span={6}>
-            <Flex justify='flex-end' gap={4}>
-              <Col span={6}>
-                <Flex justify='flex-end' gap={4}>
-                  <Button
-                    type="primary"
-                    onClick={onGenerate}
-                    className="custom-button"
-                    icon={<RedoOutlined />}
-                    style={{ marginLeft: 'auto', height: 50, minWidth: 50 }} // Use marginLeft: 'auto' to push the button to the right
-                  />
-                  <div style={{ position: 'relative' }}>
+            <Flex justify='flex-end' align='center' className='bg-red-500x items-center h-full' style={{marginTop: -4}} gap={0}>
+              {/* <Col span={6}> */}
+                <Flex justify='flex-end' className='h-fullx bg-yellow-500x' gap={6}>
                     <Button
                       type="primary"
-                      onClick={handlePublishButton}
+                      onClick={onGenerate}
                       className="custom-button"
-                      style={{ marginLeft: 'auto', height: 50 }} // Use marginLeft: 'auto' to push the button to the right
-                      >
-                      Publish
-                    </Button>
-                    {displayHostingBox ? (
-                      <div style={{ position: 'absolute', backgroundColor: '#ffffff', zIndex: 1, right: 10, height: 255, width: 430, borderRadius: 8 }}>
-                        <h1 style={{ fontSize: 20, fontWeight: '600', marginLeft: 10 }}>Choose Where to Publish</h1>
-                        <button onClick={() => { setLegisSubdomain(true); setIsDeploying(true); }} style={{ height: 85, width: '95%', marginInline: 10, marginBottom: 10, padding: 5, borderRadius: 5, backgroundColor: '#ECECEC', display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', }}>
-                          <h2 style={{ fontSize: 16, fontWeight: '600', wordWrap: 'break-word', lineHeight: '35px', marginLeft: 5 }}>Connect to legis subdomain</h2>
-                          <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>Click here to publish your website on the legis</h2>
-                          <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>subdomain for free.</h2>
-                        </button>
-                        <button onClick={() => { setLegisSubdomain(false); setIsDeploying(true); }} style={{ height: 85, width: '95%', marginInline: 10, padding: 5, borderRadius: 5, backgroundColor: '#ECECEC', display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', }}>
-                          <h2 style={{ fontSize: 16, fontWeight: '600', wordWrap: 'break-word', lineHeight: '35px', marginLeft: 5 }}>Connect your custom domain</h2>
-                          <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>Become a Legis pro member & connect your</h2>
-                          <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>custom domain for $49 a year.</h2>
-                        </button>
-                      </div>
-                    ) : (
-                      null
-                    )}
-                  </div>
+                      icon={<MobileFilled />}
+                      style={{ padding: 24, margin: 0 }}
+                    />
+                    <Button
+                      type="primary"
+                      onClick={onGenerate}
+                      className="custom-button"
+                      icon={<RedoOutlined />}
+                      style={{ padding: 24, margin: 0 }}
+                    />
+                    <a href={`/preview/${site_id}`} target='_blank'>
+                      <Button
+                        type="primary"
+                        // onClick={onPreview}
+                        className="custom-button"
+                        icon={<EyeFilled />}
+                        style={{ padding: 24, margin: 0 }}
+                      />
+                    </a>
+                    <Button
+                        type="primary"
+                        onClick={handlePublishButton}
+                        className="custom-button bg-blue-500"
+                        style={{padding: 24, margin: 0 }} // Use marginLeft: 'auto' to push the button to the right
+                        >
+                        Publish
+                      </Button>
+                    <div style={{ position: 'relative' }}>
+                      
+                      {displayHostingBox ? (
+                        <div style={{ position: 'absolute', top: NAV_BAR_HEIGHT , backgroundColor: '#ffffff', zIndex: 1, right: 10, height: 255, width: 430, borderRadius: 8 }}>
+                          <h1 style={{ fontSize: 20, fontWeight: '600', marginLeft: 10 }}>Choose Where to Publish</h1>
+                          <button onClick={() => { setLegisSubdomain(true); setIsDeploying(true); }} style={{ height: 85, width: '95%', marginInline: 10, marginBottom: 10, padding: 5, borderRadius: 5, backgroundColor: '#ECECEC', display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', }}>
+                            <h2 style={{ fontSize: 16, fontWeight: '600', wordWrap: 'break-word', lineHeight: '35px', marginLeft: 5 }}>Connect to legis subdomain</h2>
+                            <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>Click here to publish your website on the legis</h2>
+                            <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>subdomain for free.</h2>
+                          </button>
+                          <button onClick={() => { setLegisSubdomain(false); setIsDeploying(true); }} style={{ height: 85, width: '95%', marginInline: 10, padding: 5, borderRadius: 5, backgroundColor: '#ECECEC', display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', }}>
+                            <h2 style={{ fontSize: 16, fontWeight: '600', wordWrap: 'break-word', lineHeight: '35px', marginLeft: 5 }}>Connect your custom domain</h2>
+                            <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>Become a Legis pro member & connect your</h2>
+                            <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>custom domain for $49 a year.</h2>
+                          </button>
+                        </div>
+                      ) : (
+                        null
+                      )}
+                    </div>
                 </Flex>
-              </Col>
+              {/* </Col> */}
             </Flex>
           </Col>
         </Row>
@@ -503,18 +535,7 @@ const Editor: React.FC = () => {
             id='visualisation-container' 
             className='editor-scrollbar'
             ref={containerRef} 
-            style={{
-              maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`, 
-              overflowY: 'scroll', 
-              marginLeft: LEFT_BAR_WIDTH, 
-              marginRight: RIGHT_BAR_WIDTH, 
-              background: '#f9fafb', 
-              justifyContent: 'center',
-              display: 'flex',
-              alignItems: 'flex-start',
-              boxShadow: '12px 4px solid black',
-              scrollBehavior: 'smooth',
-            }}>
+            style={containerStyle} >
             {visualisationComponent}
           </Flex>
           {/* Right side */}

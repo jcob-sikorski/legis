@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 
 export const LEFT_BAR_WIDTH = 120;
 export const RIGHT_BAR_WIDTH = 325;
-export const NAV_BAR_HEIGHT = 42;
+export const NAV_BAR_HEIGHT = 68;
 export const DEV_START_JSON = `[
 {
     "template_id": "THero1",
@@ -88,7 +88,7 @@ export const DEV_JSON_TO_INJECT = `
     },
     {
       "section_id": "d9decb2a-51e5-418f-9d8c-ee4d02c17517",
-      "template_id": "LReviews3",
+      "template_id": "LReviews2",
       "reviews": [
         {
           "clientName": "John Smith",
@@ -111,7 +111,7 @@ export const DEV_JSON_TO_INJECT = `
     },
     {
       "section_id": "dab71b51-a6a0-48ff-a655-cf9dda361df0",
-      "template_id": "LContact3"
+      "template_id": "LContact1"
     }
   ]
 `.trim()

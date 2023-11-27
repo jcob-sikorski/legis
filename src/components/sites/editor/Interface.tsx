@@ -35,7 +35,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
 
     const handleFormChange = (changedValues: any, allValues: any) => {
       console.log("allValues: ", allValues);
-      setData([...data].map((x: any) => x.section_id === selectedSectionId ? {...x, ...allValues} : x));
+      setData([...data].map((x: any) => x?.section_id === selectedSectionId ? {...x, ...allValues} : x));
       console.log("data: ", data);
       console.log("selectedSectionId: ", selectedSectionId);
     };
@@ -46,7 +46,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
     function handleCustomFieldChange(valueKeyPair: any) {
       console.log("handleCustomFieldChange: ", valueKeyPair);
       setData(
-        [...data].map((x: any) => x.section_id === selectedSectionId ? {...x, ...valueKeyPair} : x)
+        [...data].map((x: any) => x?.section_id === selectedSectionId ? {...x, ...valueKeyPair} : x)
       );
     }
 
@@ -55,7 +55,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       console.log("valueKeyPair", valueKeyPair)
       console.log("index", index)
       const newData = [...data].map((x: any) => 
-      x.section_id === section_id 
+      x?.section_id === section_id 
         ? {...x, [collection]: [...x[collection].map( // x yes
           (y: any, i: number) => i === index 
 
@@ -69,15 +69,15 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       console.log('setting data to: ', newData)
     }
 
-    // function onDesignSetSelected(value: string) {
-    //   assertTemplateIds(switchTemplateSet(value));
-    // }
+    function onDesignSetSelected(value: string) {
+      assertTemplateIds(switchTemplateSet(value));
+    }
 
-    // function assertTemplateIds(templateIds: string[]) {
-    //   let newData = [...data]?.map((x: any, i: number) => ({...x, template_id: templateIds[i]}));
-    //   setData(newData);
-    //   // newData = newData?.map 
-    // }
+    function assertTemplateIds(templateIds: string[]) {
+      let newData = [...data]?.map((x: any, i: number) => ({...x, template_id: templateIds[i]}));
+      setData(newData);
+      // newData = newData?.map 
+    }
 
     // function onRemoveSection() {
     //   setData((data ?? []).filter((s: any) => s.section_id !== selectedSectionId))
@@ -110,7 +110,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
     // "bg-image": 1
 
     function getSerialFieldValue(section_id: string, collection: string, key: string, index: number) {
-      const col = data?.filter((x: any) => x.section_id === section_id)[0][collection];
+      const col = data?.filter((x: any) => x?.section_id === section_id)[0][collection];
       if (col.length > index) {
         return col[index][key];
       } else {
@@ -178,7 +178,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
             
             // Select current photo cdn uuid
             let oldUUID = "";
-            data.map((x: any) => {if (x.section_id === selectedSectionId) oldUUID = x.cdnUUID})
+            data.map((x: any) => {if (x?.section_id === selectedSectionId) oldUUID = x.cdnUUID})
             
             return <div key={generatedKey} >
             {labelComponent()}
@@ -219,7 +219,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
           
           // Select current photo cdn uuid
           let oldUUID = "";
-          data.map((x: any) => {if (x.section_id === selectedSectionId) oldUUID = x.cdnUUID})
+          data.map((x: any) => {if (x?.section_id === selectedSectionId) oldUUID = x.cdnUUID})
           
           return <div key={generatedKey} >
           {labelComponent()}
@@ -294,7 +294,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
         
         // Select current photo cdn uuid
         let oldUUID = "";
-        data.map((x: any) => {if (x.section_id === selectedSectionId) oldUUID = x.cdnUUID})
+        data.map((x: any) => {if (x?.section_id === selectedSectionId) oldUUID = x.cdnUUID})
         
         return <div key={generatedKey} >
         {labelComponent}
@@ -313,7 +313,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       let lastIndex = 0;
 
       const newData = [...data].map((x: any) => {
-        if (x.section_id === selectedSectionId) {
+        if (x?.section_id === selectedSectionId) {
           lastIndex = x[collection]?.length || 0; 
           return ({...x, [collection] : [...x[collection], {
             practiceAreaName: `Practice Area ${lastIndex + 1}`,
@@ -333,7 +333,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
 
       
       const newData = [...data].map((x: any) => {
-        if (x.section_id === selectedSectionId) {
+        if (x?.section_id === selectedSectionId) {
           return ({...x, [collection] : [...x[collection].filter((_: any, i: number) => i !== indexToRemove)]}) 
           
         } else return x;
@@ -407,7 +407,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
               Remove section
           </Button> */}
           <Flex justify='center' vertical align='center' className='p-3 text-gray-500'>
-            {/* <Typography.Title style={{fontSize: 18}} className='uppercase'>
+            <Typography.Title style={{fontSize: 18}} className='uppercase'>
               design sets
             </Typography.Title>
 
@@ -418,7 +418,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
               <Radio.Button value={'casual-light'} >
                 Casual Light
               </Radio.Button>
-            </Radio.Group> */}
+            </Radio.Group>
             
             {/* <Typography.Title style={{fontSize: 18}} className='uppercase'>
               Try other templates
@@ -442,19 +442,19 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
         }
         
       
-      {sectionsCount > 0 && data.filter((d: any) => d.section_id === selectedSectionId).map(() => <Form
+      {sectionsCount > 0 && data.filter((d: any) => d?.section_id === selectedSectionId).map(() => <Form
           size='large'
           onValuesChange={handleFormChange}
           key={selectedSectionId + '-form'}
           layout="vertical"
-          initialValues={data.filter((d: any) => d.section_id === selectedSectionId)[0] ?? {}}
+          initialValues={data.filter((d: any) => d?.section_id === selectedSectionId)[0] ?? {}}
           style={{ width: RIGHT_BAR_WIDTH, padding: 10 }}
         >
           {/* {JSON.stringify(fields)} */}
           {/* {fields && fields.map((field: JSONProfileField) => switchField(field))} */}
           {/* Field */}
           
-          {(context.section_id === selectedSectionId && context?.key) ?
+          {(context?.section_id === selectedSectionId && context?.key) ?
           <>
             {(context?.index || context?.index === 0) && <>
             {switchRemoveSeriableField(context)}

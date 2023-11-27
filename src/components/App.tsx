@@ -15,6 +15,7 @@ import Site from "./sites/siteSettings/Site";
 import Media from "./sites/siteSettings/Media";
 import Playground from "./sites/playground";
 import FromTemplate from "./sites/fromTemplate";
+import Preview from "./sites/preview";
 
 
 const RequireAuth: React.FC<{ children: React.ReactElement }> = ({ children }) => {
@@ -58,6 +59,13 @@ function App() {
             element={
               <RequireAuth>
                 <Dashboard />
+              </RequireAuth>
+            } 
+          />
+          <Route path="/preview/:site_id" 
+            element={
+              <RequireAuth>
+                <Preview />
               </RequireAuth>
             } 
           />

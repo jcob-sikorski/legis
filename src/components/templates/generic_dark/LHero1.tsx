@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import { getUrl } from "../../../utils";
 import { useState } from "react";
 
-export function LHero1({data, setContext} : {data: any, setContext: Function}) {
+export function LHero1({data, setContext, isDeploying} : {data: any, setContext: Function, isDeploying: boolean}) {
 
     // let data = {...mockData, blockVariant: 'center', buttonVariant: 'center', headingVariant: 'center', subHeadingVariant: 'center' };
 
@@ -12,7 +12,9 @@ export function LHero1({data, setContext} : {data: any, setContext: Function}) {
         
     <div className="py-4 bg-black sm:py-6" x-data="{expanded: false}">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between">
+            
+            {/* NavBar */}
+            <div className="flex items-center justify-between bg-black" style={isDeploying ? {} : {}}>
                 <div className="shrink-0">
                     <a href="#" title="" className="flex text-white font-black">
                         {/* {data?.logo} */}
@@ -80,6 +82,7 @@ export function LHero1({data, setContext} : {data: any, setContext: Function}) {
         backgroundPosition: '50%',
         backgroundImage: `url('${data?.cdnUUID ? getUrl(data?.cdnUUID) : 'https://mdbcdn.b-cdn.net/img/new/slides/146.webp'}')`,
         height: '500px',
+        // ...(isDeploying ? {marginTop: 100} : {})
     }}> 
         {/* <div className="relative overflow-hidden bg-cover bg-no-repeat" style={{
         }}>
@@ -93,7 +96,8 @@ export function LHero1({data, setContext} : {data: any, setContext: Function}) {
                         <h1  
                             onMouseEnter={() => setBgEditable(false)}
                             onMouseLeave={() => setBgEditable(true)}
-                            onClick={() => setContext({key: 'heading', type: 'text', label: 'Heading', variantProperty: 'textAlign'})} className="text-4xl font-normal text-white sm:text-5xl lg:text-6xl xl:text-7xl editable"
+                            onClick={() => setContext({key: 'heading', type: 'text', label: 'Heading', variantProperty: 'textAlign'})} 
+                            className="text-4xl font-normal text-white sm:text-5xl lg:text-6xl xl:text-7xl editable"
                             style={{textAlign: data?.headingVariant || 'center', pointerEvents: 'auto'}}
                         >
                             {data?.heading ?? ""}
@@ -113,7 +117,7 @@ export function LHero1({data, setContext} : {data: any, setContext: Function}) {
                             <button
                              onMouseEnter={() => setBgEditable(false)}
                              onMouseLeave={() => setBgEditable(true)}
-                             className="editable mt-6 rounded-full -inset-px h-14 w-60 text-lg bg-gradient-to-r font-black bg-[var(--legis-color-2)]"
+                             className="editable mt-6 rounded-full -inset-px sm:h-10 lg:h-14 sm:w-40 lg:w-60 text-lg bg-gradient-to-r font-black bg-[var(--legis-color-2)]"
                              style={{marginInline: data?.buttonVariant || 'auto auto'}} 
                              onClick={() => setContext({key: 'button', type: 'button', label: 'Button', variantProperty: 'marginInline'})}
                              >
