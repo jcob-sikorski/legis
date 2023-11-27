@@ -229,14 +229,6 @@ export const Dashboard: React.FC = () => {
   
   return (
     <>
-      <Menu
-          theme="dark"
-          mode="horizontal"
-          style={{height: 46}}
-          defaultSelectedKeys={['2']}
-        >
-          <Logo />
-        </Menu>
      <Layout style={{height: 'calc(100vh - 46px)', display: 'flex'}}>
       
       <Sidebar/>
@@ -260,14 +252,6 @@ export const Dashboard: React.FC = () => {
             <h1 style={{ padding: 10 }}>DASHBOARD</h1>
             <h1 style={{ padding: 10 }}>MY SITES</h1>
           </div>
-          <Button
-            type="primary"
-            onClick={logOut}
-            className="custom-button"
-            style={{ marginLeft: 'auto', height: 30 }} // Use marginLeft: 'auto' to push the button to the right
-          >
-            Log Out
-          </Button>
         </div>
         </div>
         <Content style={{background: colorBgContainer, padding: 0}}>
