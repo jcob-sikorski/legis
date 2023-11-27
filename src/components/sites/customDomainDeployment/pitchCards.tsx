@@ -48,7 +48,7 @@ const cardContent = [
 function PitchCards({ nextPage }: any) {
   const { site_id } = useParams();
 
-  const stripePromise = loadStripe(config.stripePk);
+  const stripePromise = loadStripe(config.stripePk as string);
 
   const redirectToCheckout = async () => {
     const stripe = await stripePromise;
