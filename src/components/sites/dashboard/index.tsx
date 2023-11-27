@@ -233,27 +233,6 @@ export const Dashboard: React.FC = () => {
       
       <Sidebar/>
       <Layout>
-      <div style={{
-        background: '#f0f2f5',
-        fontSize: 14,
-        display: 'flex',
-        flexDirection: 'row', // Change flexDirection to 'row'
-        alignItems: 'center', // Align items vertically in the center
-      }}>
-        {/* <div> */}
-        <div style={{
-          background: '#f0f2f5',
-          fontSize: 14,
-          display: 'flex',
-          flexDirection: 'row', // Change flexDirection to 'row'
-          alignItems: 'center', // Align items vertically in the center
-        }}>
-          <div>
-            <h1 style={{ padding: 10 }}>DASHBOARD</h1>
-            <h1 style={{ padding: 10 }}>MY SITES</h1>
-          </div>
-        </div>
-        </div>
         <Content style={{background: colorBgContainer, padding: 0}}>
         <Button
           type="primary"
