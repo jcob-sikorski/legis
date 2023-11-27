@@ -20,15 +20,12 @@ function CustomDomainDeployment() {
   // React component
   useEffect(() => {
     const checkSubscription = async () => {
-      // const email = await user_collection.findOne(
-      //   { _id: new Realm.BSON.ObjectId(app.currentUser!.id) },
-      //   { projection: { email: 1 } }
-      // );
-      const email = 'def@gmail.com';
+      const res = await user_collection.findOne(
+        { _id: new Realm.BSON.ObjectId(app.currentUser!.id) }
+      );
 
-      // Replace 'email@example.com' with the actual email
       const { data } = await axios.get(`${import.meta.env.DEV ? "http://localhost:4242" : "https://legis-cors-anywhere-xmo76.ondigitalocean.app/http://api.legis.live"}/check-subscription`, {
-        params: { email: email }
+        params: { email: res.email }
       });
       setPage(data.hasActiveSubscription ? 1 : 0);
     };
