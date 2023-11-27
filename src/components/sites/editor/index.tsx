@@ -155,7 +155,7 @@ const Editor: React.FC = () => {
 
   useEffect(() => {
     if (isDeploying) {
-      deploySiteOnGithub();
+      // deploySiteOnGithub();
 
       if (legisSubdomain) {
         deployWithDefaultSubdomain();
