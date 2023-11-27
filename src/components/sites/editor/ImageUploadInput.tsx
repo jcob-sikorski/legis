@@ -172,7 +172,7 @@ const ImageUploadInput = ({handleCustomFieldChange, oldUUID, ratio}: any) => {
       
     }, [])
     
-    return <Space direction="vertical" style={{ width: '100%' }} size="large">
+    return <Space direction="vertical" style={{ width: '100%', borderRadius: 12, backgroundColor: 'white' }} size="large">
       {/* <Upload {...uploadProps}>Click to Upload</Upload>; */}
         <ImgCrop rotationSlider aspect={ratio}>
             <Dragger {...uploadProps}>
@@ -180,7 +180,7 @@ const ImageUploadInput = ({handleCustomFieldChange, oldUUID, ratio}: any) => {
                     <InboxOutlined />
                 </p>
                 <p className="ant-upload-text">
-                    Click or drag file to this area to upload
+                  UPLOAD NEW IMAGE
                 </p>
             </Dragger>
         </ImgCrop>

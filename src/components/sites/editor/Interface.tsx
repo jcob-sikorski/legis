@@ -133,7 +133,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       // return res;
     }
 
-    const itemStyle = { margin: '0', padding: 0,}
+    const itemStyle = { margin: '0', padding: 0}
 
     function switchField(field: FieldContext) {
 
@@ -150,118 +150,164 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       
       const generatedKey = 'field' + type + label + key + index + ratio;
       
-      const labelComponent = (forcedLabel?: string) => <Typography.Title color='#333' level={5} style={{margin: '15px 0 0 0', padding: 0, textAlign: 'center', width: '100%', fontWeight: 500}} >
-      {forcedLabel ? forcedLabel : label?.toUpperCase()}
-      </Typography.Title>
-
-
+      const labelComponent = (forcedLabel?: string) => (        
+        <Typography.Title color='#333' level={5} style={{margin: '15px 0 0 0', padding: 0, width: '100%', fontWeight: 300}} >
+          {forcedLabel ? forcedLabel : label?.toUpperCase()}
+        </Typography.Title>
+      );
 
       if (index || index === 0) {
         console.log('seriable field: ', field);
         // field is SERIABLE
         switch(type) {
           case 'text':
-            return <div key={generatedKey} >
-          {labelComponent()}
-          <Form.Item className='animate__slideIn' name={generatedKey} style={itemStyle}>
-          <Input defaultValue={getSerialFieldValue(section_id, collection, key, index)} onChange={
-            (e) => handleSerialFieldChange(section_id, collection, {[key]: e.target.value}, index)} />
-        </Form.Item></div>;
+            return (
+              <div key={generatedKey} >
+                {labelComponent()}
+                <Form.Item className='animate__slideIn' name={generatedKey} style={itemStyle}>
+                  <Input 
+                    defaultValue={getSerialFieldValue(section_id, collection, key, index)} 
+                    onChange={(e) => handleSerialFieldChange(section_id, collection, {[key]: e.target.value}, index)}
+                    bordered={false} 
+                    style={{ borderRadius: 12, backgroundColor: 'white', height: 40 }}
+                  />
+                </Form.Item>
+              </div>
+            );
           case 'textarea': 
-          return <div key={generatedKey} >
-            {labelComponent()}
-            <Form.Item className='animate__slideIn' name={generatedKey} style={itemStyle}>
-            <TextArea rows={10} defaultValue={getSerialFieldValue(section_id, collection, key, index)} onChange={
-            (e) => handleSerialFieldChange(section_id, collection, {[key]: e.target.value}, index)} />
-          </Form.Item></div>
+            return (
+              <div key={generatedKey} >
+                {labelComponent()}
+                <Form.Item className='animate__slideIn' name={generatedKey} style={itemStyle}>
+                  <TextArea 
+                    rows={10}
+                    defaultValue={getSerialFieldValue(section_id, collection, key, index)} 
+                    onChange={(e) => handleSerialFieldChange(section_id, collection, {[key]: e.target.value}, index)}
+                    bordered={false}
+                    style={{ borderRadius: 12, backgroundColor: 'white' }}
+                  />
+                </Form.Item>
+              </div>
+            );
           case 'checkbox':
-            return <div key={generatedKey}>
-            {labelComponent()}
-            <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
-            <Radio.Group style={{display: 'flex', justifyContent: 'center'}}>
-              <Radio value="1">Yes</Radio>
-              <Radio value="">No</Radio>
-            </Radio.Group>
-          </Form.Item></div>
+            return ( // DEPRACATED
+              <div key={generatedKey}>
+                {labelComponent()}
+                <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
+                  <Radio.Group style={{display: 'flex', justifyContent: 'center'}}>
+                    <Radio value="1">Yes</Radio>
+                    <Radio value="">No</Radio>
+                  </Radio.Group>
+                </Form.Item>
+              </div>
+            );
           case 'image': {
-            
             // Select current photo cdn uuid
             let oldUUID = "";
             data.map((x: any) => {if (x?.section_id === selectedSectionId) oldUUID = x.cdnUUID})
             
-            return <div key={generatedKey} >
-            {labelComponent()}
-            <Form.Item className='animate__slideIn' name={key} style={itemStyle} >
-            <ImageUploadInput ratio={ratio} handleCustomFieldChange={handleCustomFieldChange} oldUUID={oldUUID} />
-          </Form.Item></div>
+            return (
+              <div key={generatedKey} >
+                {labelComponent()}
+                <Form.Item className='animate__slideIn' name={key} style={itemStyle} >
+                  <ImageUploadInput 
+                    ratio={ratio} 
+                    handleCustomFieldChange={handleCustomFieldChange} 
+                    oldUUID={oldUUID}
+                  />
+                </Form.Item>
+              </div>
+            );
           }
           default: {
             return <>No input of type <b>{type}</b> matched</>
           }
         }
-
       } else {
-
         switch(type) {
           case 'text':
-            return <div key={generatedKey} >
-          {labelComponent()}
-          <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
-          <Input />
-        </Form.Item></div>;
-        case 'textarea': 
-        return <div key={generatedKey} >
-          {labelComponent()}
-          <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
-          <TextArea rows={10} />
-        </Form.Item></div>
-        case 'checkbox':
-          return <div key={generatedKey}>
-          {labelComponent()}
-          <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
-          <Radio.Group style={{display: 'flex', justifyContent: 'center'}}>
-            <Radio value="1">Yes</Radio>
-            <Radio value="">No</Radio>
-          </Radio.Group>
-        </Form.Item></div>
-        case 'image': {
-          
-          // Select current photo cdn uuid
-          let oldUUID = "";
-          data.map((x: any) => {if (x?.section_id === selectedSectionId) oldUUID = x.cdnUUID})
-          
-          return <div key={generatedKey} >
-          {labelComponent()}
-          <Form.Item className='animate__slideIn' name={key} style={itemStyle} >
-          <ImageUploadInput ratio={ratio} handleCustomFieldChange={handleCustomFieldChange} oldUUID={oldUUID} />
-        </Form.Item></div>
-        }
-        case 'button':
-          return <div key={generatedKey} >
-            BUTTON {key + 'Label'} {key + 'Link'}
-          {labelComponent("LABEL")}
-          <Form.Item className='animate__slideIn' name={key + 'Label'} style={itemStyle}>
-            <Input  />
-          </Form.Item>
-          {labelComponent("LINK")}
-          <Form.Item className='animate__slideIn' name={key + 'Link'} style={itemStyle}>
-            <Input />
-          </Form.Item>
-          {getFieldValue(section_id, key + 'Link') ?
-          <a href={getFieldValue(section_id, key + 'Link')}>
-            <Button type='primary' className='bg-blue-500 mt-1 w-full' style={{marginInline: 'auto'}} icon={<ArrowRightOutlined />}> Simulate button click </Button>
-          </a>
-          : <Button disabled type='primary' className='bg-blue-500 mt-1 w-full' style={{marginInline: 'auto'}} icon={<ArrowRightOutlined />}> Simulate button click </Button>
-        }
-          
-        </div>;
-        default: {
-          return <>No serial input of type <b>{type}</b> matched</>
+            return (
+              <div key={generatedKey} >
+                {labelComponent()}
+                <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
+                  <Input bordered={false} style={{ borderRadius: 12, backgroundColor: 'white', height: 40 }} />
+                </Form.Item>
+              </div>
+            );
+          case 'textarea': 
+            return (
+              <div key={generatedKey} >
+                {labelComponent()}
+                <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
+                  <TextArea 
+                    rows={10}
+                    bordered={false}
+                    style={{ borderRadius: 12, backgroundColor: 'white' }}
+                  />
+                </Form.Item>
+              </div>
+            );
+          case 'checkbox':
+            return ( // DEPRACATED
+              <div key={generatedKey}>
+                {labelComponent()}
+                <Form.Item className='animate__slideIn' name={key} style={itemStyle}>
+                  <Radio.Group style={{display: 'flex', justifyContent: 'center'}}>
+                    <Radio value="1">Yes</Radio>
+                    <Radio value="">No</Radio>
+                  </Radio.Group>
+                </Form.Item>
+              </div>
+            );
+          case 'image': {
+            // Select current photo cdn uuid
+            let oldUUID = "";
+            data.map((x: any) => {if (x?.section_id === selectedSectionId) oldUUID = x.cdnUUID})
+            
+            return (
+              <div key={generatedKey} >
+                {labelComponent()}
+                <Form.Item className='animate__slideIn' name={key} style={itemStyle} >
+                  <ImageUploadInput 
+                    ratio={ratio} 
+                    handleCustomFieldChange={handleCustomFieldChange} 
+                    oldUUID={oldUUID}
+                  />
+                </Form.Item>
+              </div>  
+            );
+          }
+          case 'button':
+            return (
+              <div key={generatedKey} >
+                {labelComponent("BUTTON")}
+                {labelComponent("LABEL")}
+                <Form.Item className='animate__slideIn' name={key + 'Label'} style={itemStyle}>
+                  <Input  
+                    bordered={false} 
+                    style={{ borderRadius: 12, backgroundColor: 'white', height: 40 }}
+                  />
+                </Form.Item>
+                {labelComponent("LINK")}
+                <Form.Item className='animate__slideIn' name={key + 'Link'} style={itemStyle}>
+                  <Input  
+                    bordered={false} 
+                    style={{ borderRadius: 12, backgroundColor: 'white', height: 40 }}
+                  />
+                </Form.Item>
+                {getFieldValue(section_id, key + 'Link') ?
+                <a href={getFieldValue(section_id, key + 'Link')}>
+                  <Button type='primary' className='bg-blue-500 mt-1 w-full' style={{marginInline: 'auto'}} icon={<ArrowRightOutlined />}> Simulate button click </Button>
+                </a>
+                : <Button disabled type='primary' className='bg-blue-500 mt-1 w-full' style={{marginInline: 'auto'}} icon={<ArrowRightOutlined />}> Simulate button click </Button>
+                }
+              </div>
+            );
+          default: {
+            return <>No serial input of type <b>{type}</b> matched</>
+          }
         }
       }
-
-      }
-      
     }
     
     function switchVariantField(field: FieldContext) {
@@ -280,32 +326,39 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
 
       const generatedKey = 'field-variant-' + type + label + key + index + ratio;
 
-      const labelComponent = <Typography.Title color='#333' level={5} style={{margin: '15px 0 0 0', padding: 0, textAlign: 'center', width: '100%', fontWeight: 500}} >
-      {'VARIANT'?.toUpperCase()}
-      </Typography.Title>
+      const labelComponent = (
+        <Typography.Title color='#333' level={5} style={{margin: '15px 0 0 0', padding: 0, width: '100%', fontWeight: 300}} >
+          {'ALIGNMENT'?.toUpperCase()}
+        </Typography.Title>
+      );
 
       switch(variantProperty) {
         case 'marginInline':
-          return <div key={generatedKey} >
-        {labelComponent}
-        <Form.Item className='animate__slideIn' name={key + 'Variant'} style={itemStyle}>
-          <Radio.Group style={{display: 'flex', justifyContent: 'center'}}>
-            <Radio.Button value="0 auto"><AlignLeftOutlined /></Radio.Button>
-            <Radio.Button value="auto auto"><AlignCenterOutlined /></Radio.Button>
-            <Radio.Button value="auto 0"><AlignRightOutlined /></Radio.Button>
-          </Radio.Group>
-        </Form.Item>
-        </div>;
+          return (
+            <div key={generatedKey} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+              {labelComponent}
+              <Form.Item className='animate__slideIn' name={key + 'Variant'} style={itemStyle}>
+                <Radio.Group style={{display: 'flex', justifyContent: 'center', paddingTop: 15 }}>
+                  <Radio.Button value="0 auto"><AlignLeftOutlined /></Radio.Button>
+                  <Radio.Button value="auto auto"><AlignCenterOutlined /></Radio.Button>
+                  <Radio.Button value="auto 0"><AlignRightOutlined /></Radio.Button>
+                </Radio.Group>
+              </Form.Item>
+            </div>
+          );
       case 'textAlign':
-        return <div key={generatedKey}>
-        {labelComponent}
-        <Form.Item className='animate__slideIn' name={key + 'Variant'} style={itemStyle}>
-        <Radio.Group style={{display: 'flex', justifyContent: 'center'}}>
-          <Radio.Button value="start"><AlignLeftOutlined /></Radio.Button>
-          <Radio.Button value="center"><AlignCenterOutlined /></Radio.Button>
-          <Radio.Button value="end"><AlignRightOutlined /></Radio.Button>
-        </Radio.Group>
-      </Form.Item></div>
+        return (
+          <div key={generatedKey} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            {labelComponent}
+            <Form.Item className='animate__slideIn' name={key + 'Variant'} style={itemStyle}>
+            <Radio.Group style={{display: 'flex', justifyContent: 'center', paddingTop: 15 }}>
+              <Radio.Button value="start"><AlignLeftOutlined /></Radio.Button>
+              <Radio.Button value="center"><AlignCenterOutlined /></Radio.Button>
+              <Radio.Button value="end"><AlignRightOutlined /></Radio.Button>
+            </Radio.Group>
+            </Form.Item>
+          </div>
+        );
       case 'image': {
         
         // Select current photo cdn uuid
@@ -374,17 +427,32 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       setData(newData);
     }
 
-    function switchAddSeriableField(context: FieldContext) {
-      return <Flex key={`remove-field-${JSON.stringify(context)}`} style={{paddingTop: 6}} className='animate__slideIn'>
-        <Button onClick={() => onAddSeriable(context)} type='primary' className='bg-blue-500 mx-auto w-full' style={{marginInline: 'auto'}} icon={<PlusOutlined />}> Add new {context?.seriableLabel || "element"}</Button>
-      </Flex>
+    function switchRemoveSeriableField(context: FieldContext) {
+      return (
+        <Flex key={`add-field-${JSON.stringify(context)}`} style={{paddingTop: 10}} className='animate__slideIn'>
+          <Button 
+            onClick={() => onRemoveSeriable(context)} 
+            type='primary' 
+            danger
+            className='bg-red-900 mx-auto w-full hover:text-white' 
+            style={{marginInline: 'auto'}} 
+            icon={<DeleteFilled />}>Delete this {context?.seriableLabel || "element"}
+          </Button>
+        </Flex>
+      );
     }
 
-    
-    function switchRemoveSeriableField(context: FieldContext) {
-      return <Flex key={`add-field-${JSON.stringify(context)}`} style={{paddingTop: 10}} className='animate__slideIn'>
-        <Button onClick={() => onRemoveSeriable(context)} type='primary' danger className='bg-red-600 mx-auto w-full hover:text-white' style={{marginInline: 'auto'}} icon={<DeleteFilled />}>Delete this {context?.seriableLabel || "element"}</Button>
-      </Flex>
+    function switchAddSeriableField(context: FieldContext) {
+      return (
+        <Flex key={`remove-field-${JSON.stringify(context)}`} style={{paddingTop: 6}} className='animate__slideIn'>
+          <Button 
+            onClick={() => onAddSeriable(context)} 
+            type='primary' className='bg-blue-600 mx-auto w-full' 
+            style={{marginInline: 'auto'}} 
+            icon={<PlusOutlined />}> Add new {context?.seriableLabel || "element"}
+          </Button>
+        </Flex>
+      );
     }
 
     const sectionsCount = data?.length ?? 0;
@@ -411,9 +479,6 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
             dev mode
             <Switch checked={isDevMode} onClick={() => setIsDevMode(!isDevMode)} />
         </Space> */}
-        <div className='text-center mt-2 mb-0 font-medium p-0' style={{color: '#333'}}>
-            ELEMENTS SETTINGS
-          </div>
         {isDevMode && !isDeploying && <>
             <button onClick={injectData}>Inject hard-coded data JSON</button>
             <Space>
