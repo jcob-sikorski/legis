@@ -50,6 +50,7 @@ function Survey() {
 
   const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
   const survey_collection = mongodb.db("legis").collection("Questionnaire");
+  const site_collection = mongodb.db('legis').collection('Site');
 
   React.useEffect(() => {
     console.log("Fetching the survey data from mongo.");
@@ -137,6 +138,15 @@ function Survey() {
         { $set: { [fieldName]: fieldValues[fieldName] } }
       );
       console.log(`Updated ${updateResult.modifiedCount} document.`);
+
+      if (fieldName === 'LawFirmName' || fieldName === 'OneSentenceDescription') {
+        const field = fieldName === 'LawFirmName' ? 'title' : 'description';
+
+        const updateResult = await site_collection.updateOne(
+          { _id: new Realm.BSON.ObjectID(site_id) },
+          { $set: { [field]: fieldValues[fieldName] } }
+        );
+      }
     } catch (error) {
       console.error('Error updating document in MongoDB:', error);
     }
