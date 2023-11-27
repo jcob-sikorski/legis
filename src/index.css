@@ -18,6 +18,12 @@
   --legis-color-3: #3e3d3d;
 
   --legis-font-main: 'IBM Plex Sans';
+
+  --legis-editable-outline: 3px dotted #4391ff;
+}
+
+*, html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -122,7 +128,7 @@ div {
 }
 
 .editable:hover {
-  outline: 3px dotted #4391ff;
+  outline: var(--legis-editable-outline);
 }
 
 .animate__slideIn {

@@ -50,6 +50,8 @@ import LContact2 from '../../templates/LContact2';
 import LContact3 from '../../templates/LContact3';
 import LAbout2 from '../../templates/LAbout2';
 import LAbout3 from '../../templates/LAbout3';
+import EHero1 from '../../templates/editorial/EHero1';
+import EPracticeAreas1 from '../../templates/editorial/EPracticeAreas1';
 // import { delay } from '../../../utils';
 
 const { Content, Footer } = Layout;
@@ -62,7 +64,7 @@ function Visualisation({
 } : any) {
 
     const { onAddSection, checkIfNoSections, setSelectedSectionId, setSelectedTemplateId, setData, setContext }
-     = mode === "showcase" 
+     = mode === "showcase" || mode === "preview"
      ? {
         onAddSection: () => {},
         checkIfNoSections: () => {},
@@ -72,7 +74,7 @@ function Visualisation({
         setContext: () => {},
     } : functions;
     const { selectedSectionId, selectedTemplateId, isDevMode, isDeploying, dummyRef, containerRef } 
-     = mode === "showcase"
+     = mode === "showcase" || mode === "preview"
      ? {
         selectedSectionId: "",
         selectedTemplateId: "",
@@ -88,6 +90,10 @@ function Visualisation({
      const [followingDirection, setFollowingDirection] = useState<"up" | "down">("down");
      const [followingCount, setFollowingCount] = useState<number>(0);
 
+     if (mode === 'preview') {
+        document.documentElement.style.setProperty('--legis-editable-outline', `0`);
+     }
+     
      useEffect(() => {
         // alert(containerRef.current);
         var wrapper = document.getElementById('wrapper-' + followedSectionId);
@@ -198,7 +204,7 @@ function Visualisation({
         switch(data.template_id) {
             // Hero
             case 'LHero1':
-                return <LHero1 data={data} setContext={setContextMiddleware} />
+                return <LHero1 isDeploying={isDeploying || mode === 'preview'} data={data} setContext={setContextMiddleware} />
             case 'LHero2':
                 return <LHero2 data={data} setContext={setContextMiddleware} />
             case 'LHero3':
@@ -267,6 +273,7 @@ function Visualisation({
         transform: 'scale(0.49)',
         marginLeft: 'calc(-50% - 10px)', 
         transformOrigin: 'top',
+        scroll: 'smooth',
     }
 
     function calculateScale() {
@@ -290,15 +297,15 @@ function Visualisation({
         document.documentElement.style.setProperty('--vw-scale', `${calculateScale()}`);
     });
 
-    const layoutStyle = isDeploying
-    ? { marginInline: 'auto' }
+    const layoutStyle = isDeploying || mode === 'preview'
+    ? { marginInline: 'auto', scroll: 'smooth' }
     : { 
         // background: '#f00',
         padding: 10, 
         minHeight: '100vh',
         transform: 'scale(var(--vw-scale))', 
         transformOrigin: 'top',
-        width: '100vw'
+        width: '100vw',
     }
 
     return ( <Layout className="site-layout" style={layoutStyle} ref={containerRef}>

@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 
 export const LEFT_BAR_WIDTH = 120;
 export const RIGHT_BAR_WIDTH = 325;
-export const NAV_BAR_HEIGHT = 42;
+export const NAV_BAR_HEIGHT = 68;
 export const DEV_START_JSON = `[
 {
     "template_id": "THero1",
@@ -25,12 +25,14 @@ export const DEV_JSON_TO_INJECT = `
       "template_id": "LHero1",
       "heading": "Welcome to Roomba & Associates",
       "subHeading": "Passionate about the game both inside and outside the courtroom, our sports law firm excels in navigating the complex legal landscape of the sports industry, ensuring our clients score victories on and off the field.",
-      "superHeading": "ASDADSDASADSADSADSASASDDA",
-      "logo": "Roomba & Associates"
+      "logo": "Roomba & Associates",
+      "buttonLabel": "REGISTER",
+      "buttonLink": "#Contact-us"
     },
     {
       "section_id": "c2553439-5bc8-4f02-98f6-e250fb2c7d2e",
       "template_id": "LPracticeAreas2",
+      "title": "Our practice areas",
       "areasList": [
         {
           "practiceAreaName": "Contract Negotiation",
@@ -49,6 +51,8 @@ export const DEV_JSON_TO_INJECT = `
     {
       "section_id": "c18d2b97-ac62-4f62-9145-1c451682bf88",
       "template_id": "LValues2",
+      "superTitle": "Find out about...",
+      "title": "Our values",
       "description": "At Roomba & Associates, our values are the foundation of our firm. They guide our actions and shape our relationships with clients. We believe in:",
       "valuesList": [
         {
@@ -71,6 +75,8 @@ export const DEV_JSON_TO_INJECT = `
     {
       "section_id": "d775d1e1-fbc6-4f11-b6bc-a1b62c3223fa",
       "template_id": "LTeam1",
+      "superTitle": "Learn more about...",
+      "title": "Our team",
       "lawyerDetails": [
         {
           "name": "Jessica Taylor",
@@ -88,7 +94,8 @@ export const DEV_JSON_TO_INJECT = `
     },
     {
       "section_id": "d9decb2a-51e5-418f-9d8c-ee4d02c17517",
-      "template_id": "LReviews3",
+      "template_id": "LReviews2",
+      "title": "See what our clients are saying",
       "reviews": [
         {
           "clientName": "John Smith",
@@ -107,11 +114,15 @@ export const DEV_JSON_TO_INJECT = `
     {
       "section_id": "ba656dce-1753-4620-8bdd-737be12709ec",
       "template_id": "LAbout1",
+      "title": "About us",
       "paragraph": "At Roomba & Associates, we are a clarity-focused sports law firm. We are problem solvers at heart, dedicated to finding innovative solutions for our clients. With our domain expertise in sports law, we bring a fresh perspective to every case. Our accessible approach ensures that quality legal help reaches as many people as possible. We pride ourselves on our gritty representation, never afraid to get our hands dirty to achieve optimal outcomes for our clients. With a team of dedicated attorneys deeply entrenched in the world of sports law, we provide comprehensive and tailored solutions for athletes, teams, and sports organizations alike. Our firm is committed to helping our clients not only play the game but win it, both on and off the field."
     },
     {
+      "title": "Contact us",
       "section_id": "dab71b51-a6a0-48ff-a655-cf9dda361df0",
-      "template_id": "LContact3"
+      "template_id": "LContact1",
+      "email": "example@example.com",
+      "phone": "1-234-567-890"
     }
   ]
 `.trim()
