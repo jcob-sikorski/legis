@@ -54,7 +54,7 @@ function PitchCards({ nextPage }: any) {
     const stripe = await stripePromise;
   
     // Get Checkout Session ID from the server
-    const { data: { sessionId } } = await axios.post(`${import.meta.env.DEV ? "http://localhost:4242" : "https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.legis.live"}/create-checkout-session`, {
+    const { data: { sessionId } } = await axios.post(`${import.meta.env.DEV ? "http://localhost:4242" : "https://legis-cors-anywhere-xmo76.ondigitalocean.app/http://api.legis.live"}/create-checkout-session`, {
       params: { site_id: site_id }
     });
   

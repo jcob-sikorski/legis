@@ -27,7 +27,7 @@ function CustomDomainDeployment() {
       const email = 'def@gmail.com';
 
       // Replace 'email@example.com' with the actual email
-      const { data } = await axios.get(`${import.meta.env.DEV ? "http://localhost:4242" : "https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.legis.live"}/check-subscription`, {
+      const { data } = await axios.get(`${import.meta.env.DEV ? "http://localhost:4242" : "https://legis-cors-anywhere-xmo76.ondigitalocean.app/http://api.legis.live"}/check-subscription`, {
         params: { email: email }
       });
       setPage(data.hasActiveSubscription ? 1 : 0);
