@@ -97,14 +97,14 @@ function SiteComponent() {
             <div style={{ backgroundColor: 'black', height: 30, width: 30, borderRadius: 50, marginLeft: 10 }} />
             <div style={{ marginLeft: 10, color: 'black' }}>Publish to custom domain</div>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
+          {/* <div style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
             <div style={{ backgroundColor: 'black', height: 30, width: 30, borderRadius: 50, marginLeft: 10 }} />
             <div style={{ marginLeft: 10, color: 'black' }}>Save as a template</div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
             <div style={{ backgroundColor: 'black', height: 30, width: 30, borderRadius: 50, marginLeft: 10 }} />
             <div style={{ marginLeft: 10, color: 'black' }}>Save as an offline draft</div>
-          </div>
+          </div> */}
           <Button
             type="primary"
             className="custom-button"
