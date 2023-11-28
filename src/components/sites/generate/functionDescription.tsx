@@ -58,7 +58,7 @@ export let function_description: ChatCompletionTool[] = [
               }
             },
           },
-          "TheirValues": {
+          "OurValues": {
             "type": "array",
             "items": {
               "type": "object",
@@ -68,7 +68,7 @@ export let function_description: ChatCompletionTool[] = [
                   "type": "string",
                 },
                 "description": {
-                  "description": "Short description of the value, easy to understand and professional, dont repeat values name.",
+                  "description": "Short description of the value, easy to understand and professional, don't repeat values name.",
                   "type": "string",
                 }
               }

@@ -239,7 +239,7 @@ function Generate() {
 
 function getSiteData(data: any, onboardingData: Questionnaire, bodyTemplate: any) {
   
-  const {NavBar, Hero, PracticeAreas, OurTeam, TheirValues, AboutUs} = data;
+  const {NavBar, Hero, PracticeAreas, OurTeam, OurValues, AboutUs} = data;
   const {ClientReviews, LawFirmName} = onboardingData
 
   console.log("getSiteData.onboardingData: ", onboardingData);
@@ -288,8 +288,8 @@ function getSiteData(data: any, onboardingData: Questionnaire, bodyTemplate: any
     {
       section_id: v4(),
       template_id: 'LValues2',
-      // description: TheirValues,
-      valuesList: TheirValues,
+      // description: OurValues,
+      valuesList: OurValues,
       "superTitle": "Find out about...",
       "title": "Our values",
     },

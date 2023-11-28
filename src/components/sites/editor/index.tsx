@@ -169,14 +169,44 @@ const Editor: React.FC = () => {
     setDisplayHostingBox(!displayHostingBox);
   }
 
+  function convertToValidDomainName(lawFirmName: string): string {
+    // Remove spaces
+    lawFirmName = lawFirmName.replace(/\s/g, '');
+
+    // Convert to lowercase
+    lawFirmName = lawFirmName.toLowerCase();
+
+    // Check if the domain name starts or ends with a dash
+    if (lawFirmName.startsWith('-')) {
+      lawFirmName = lawFirmName.substring(1);
+    }
+    if (lawFirmName.endsWith('-')) {
+      lawFirmName = lawFirmName.slice(0, -1);
+    }
+
+    // Trim the domain name if it's longer than 63 characters
+    if (lawFirmName.length > 63) {
+        lawFirmName = lawFirmName.substring(0, 63);
+    }
+
+    // Check if the domain name contains any characters other than a-z, 0-9, and -
+    if (!/^[a-z0-9-]+$/.test(lawFirmName)) {
+      lawFirmName = lawFirmName.replace(/[^a-z0-9-]/g, '');
+    }
+
+
+    return `${lawFirmName}.legis.live`;
+}
+
   async function deployWithDefaultSubdomain() {
+    const validDomain = convertToValidDomainName(lawFirmName!);
+
     const updateResult = await site_collection.updateOne(
       { _id: new Realm.BSON.ObjectId(site_id) },
-      { $set: { cname: `${lawFirmName}.legis.live` } }
+      { $set: { cname: validDomain } }
     );
     console.log(`Updated ${updateResult.modifiedCount} document.`);
 
-    const domain = 'legis.live';
     const cnameTarget = 'legisbiz.github.io.';
     
     // API endpoint and request payload
@@ -185,8 +215,8 @@ const Editor: React.FC = () => {
       cpanel_jsonapi_version: '2',
       cpanel_jsonapi_module: 'ZoneEdit',
       cpanel_jsonapi_func: 'add_zone_record',
-      domain: domain,
-      name: `${lawFirmName}.${domain}.`,
+      domain: 'legis.live',
+      name: validDomain,
       type: 'CNAME',
       cname: cnameTarget,
     };
@@ -216,7 +246,7 @@ const Editor: React.FC = () => {
 
     try {
       const githubRepoResponse = await axios.put(`https://api.github.com/repos/${githubUsername}/${site_id}/pages`, {
-        cname: `${lawFirmName}.legis.live`,
+        cname: validDomain,
         source: "gh-pages"
       }, {
         headers: {
