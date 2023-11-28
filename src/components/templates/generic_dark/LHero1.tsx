@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { getUrl } from "../../../utils";
 import { useState } from "react";
+import { DEFAULT_IMAGE_URL } from "../../sites/dashboard/SiteCard";
 
 export function LHero1({data, setContext, isDeploying} : {data: any, setContext: Function, isDeploying: boolean}) {
 
@@ -80,7 +81,7 @@ export function LHero1({data, setContext, isDeploying} : {data: any, setContext:
     onClick={() => bgEditable ?  setContext({key: '_', type: 'image', ratio: 14/8, label: 'Hero Image'}) : () => {}}  
     style={{
         backgroundPosition: '50%',
-        backgroundImage: `url('${data?.cdnUUID ? getUrl(data?.cdnUUID) : 'https://mdbcdn.b-cdn.net/img/new/slides/146.webp'}')`,
+        backgroundImage: `url('${data?.cdnUUID ? getUrl(data?.cdnUUID) : DEFAULT_IMAGE_URL}')`,
         height: '500px',
         // ...(isDeploying ? {marginTop: 100} : {})
     }}> 

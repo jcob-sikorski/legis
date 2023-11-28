@@ -1,7 +1,5 @@
 import Visualisation from "../sites/editor/Visualisation";
 
-
-
 export default function ScaledVisualisation({data, mode, width, height} : {data: any, mode: string, width?: string, height?: string}) {
 
     const WIDTH = width || '150vw';

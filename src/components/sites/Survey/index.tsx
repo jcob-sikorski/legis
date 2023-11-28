@@ -585,7 +585,7 @@ function LawyerInputComponent({ data, index, changeLawyerData, handleRemoveLawye
       borderRadius: 4,
       justifyContent: 'flex-end',
       }}>
-      <ImgCrop rotationSlider aspect={1}>
+      <ImgCrop cropShape='round' rotationSlider aspect={1}>
         <Upload
           name="avatar"
           style={{width: '100%', height: '100%', 
@@ -702,7 +702,7 @@ function ReviewInputComponent({ data, index, changeReviewData, handleRemoveRevie
       borderRadius: 4,
       justifyContent: 'flex-end',
       }}>
-      <ImgCrop rotationSlider aspect={1}>
+      <ImgCrop cropShape='round' rotationSlider aspect={1}>
         <Upload
           name="avatar"
           style={{width: '100%', height: '100%', 

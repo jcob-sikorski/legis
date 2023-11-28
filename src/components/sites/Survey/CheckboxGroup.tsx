@@ -3,7 +3,7 @@ import { Checkbox } from 'antd';
 
 import Questionnaire from '../../../models/Questionnaire';
 
-export function CheckboxGroup({ value, question, values, page, fields, fieldValues, updateField }: any) {
+export function CheckboxGroup({ value, question, values, page, fields, fieldValues, updateField, chooseMax }: any) {
   return (
     <div>
       <div style={{ fontSize: '30px', fontWeight: 'bolder' }}>{question}</div>

@@ -29,6 +29,7 @@ import { FieldContext } from '../../../models';
 import { getOnboardingData } from '../generate/getOnboardingData';
 import Questionnaire from '../../../models/Questionnaire';
 import MobilePreviewModal from './modals/MobilePreviewModal';
+import Site from '../../../models/Site';
 
 const Editor: React.FC = () => {
   const app: any = useApp();
@@ -46,8 +47,11 @@ const Editor: React.FC = () => {
 
   const [json, setJson] = useState(DEV_START_JSON);
   const [data, setData] = useState<any[]>([]);
+
   const [lawFirmName, setLawFirmName] = useState<string>();
   const [colors, setColors] = useState<string[]>([]);
+  const [siteTitle, setSiteTitle] = useState<string>();
+  const [siteDescription, setSiteDescription] = useState<string>();
 
   const [selectedSectionId, setSelectedSectionId] = useState<string>("");
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>("");
@@ -152,6 +156,11 @@ const Editor: React.FC = () => {
       updateCssStyles(colors);
     }
    }, [colors])
+
+   
+   useEffect(() => {
+    document.title = "Legis | " + (siteTitle || lawFirmName || "Edit your site");
+   }, [siteTitle])
 
   useEffect(() => {
     if (isDeploying) {
@@ -274,6 +283,12 @@ const Editor: React.FC = () => {
           <meta charset="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+          <!-- IE -->
+          <link rel="shortcut icon" type="image/x-icon" href="https://ucarecdn.com/1f9d5fc9-ee6b-4254-afe1-7633dd94c37c/" />
+          <!-- other browsers -->
+          <link rel="icon" type="image/x-icon" href="https://ucarecdn.com/1f9d5fc9-ee6b-4254-afe1-7633dd94c37c/" />
+
+
           <!-- customizable page variables -->
           <title>${pageTitle}</title>
           
@@ -288,6 +303,8 @@ const Editor: React.FC = () => {
 
           <!-- Bootstrap Icons -->
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+
 
           <style>
 
@@ -363,21 +380,41 @@ const Editor: React.FC = () => {
         // Include a query to find the site by its site_id
         const result = await site_collection.find({ _id: new Realm.BSON.ObjectId(site_id) });
   
-        if (result.length > 0 && result[0].hasOwnProperty("body_template")) {
-            console.log("Found a site with body_template:", result[0].body_template);
-            setData(result[0].body_template);
-          }
+        let fieldName = 'body_template';
+        if (result.length > 0 && result[0].hasOwnProperty(fieldName)) {
+            console.log(`Found a site with ${fieldName}:`, result[0][fieldName]);
+            setData(result[0][fieldName]);
+        }
         else {
-          console.log("Site doesn't have the body_template yet.");
+          console.log(`Site doesn't have ${fieldName} value yet.`);
         }
 
-        if (result.length > 0 && result[0].hasOwnProperty("template_colors")) {
-          console.log("Found a site with template_colors:", result[0].template_colors);
-          setColors(result[0].template_colors);
+        fieldName = 'template_colors';
+        if (result.length > 0 && result[0].hasOwnProperty(fieldName)) {
+            console.log(`Found a site with ${fieldName}:`, result[0][fieldName]);
+            setColors(result[0][fieldName]);
         }
-      else {
-        console.log("Site doesn't have the template_colors yet.");
-      }
+        else {
+          console.log(`Site doesn't have ${fieldName} value yet.`);
+        }
+        
+        fieldName = 'title';
+        if (result.length > 0 && result[0].hasOwnProperty(fieldName)) {
+            console.log(`Found a site with ${fieldName}:`, result[0][fieldName]);
+            setSiteTitle(result[0][fieldName]);
+        }
+        else {
+          console.log(`Site doesn't have ${fieldName} value yet.`);
+        }
+
+        fieldName = 'description';
+        if (result.length > 0 && result[0].hasOwnProperty(fieldName)) {
+            console.log(`Found a site with ${fieldName}:`, result[0][fieldName]);
+            setSiteDescription(result[0][fieldName]);
+        }
+        else {
+          console.log(`Site doesn't have ${fieldName} value yet.`);
+        }
       } catch (error) {
         console.error("Error searching for this site:", error);
       }
@@ -386,6 +423,21 @@ const Editor: React.FC = () => {
         const onboardingData: Questionnaire = result.length > 0 ? result[0] : {};
 
         setLawFirmName(onboardingData.LawFirmName);
+      } catch (error) {
+        console.error("Error fetching for Questionnaire data for this site:", error);
+      }
+
+      try {
+        const result = await site_collection.find({ _id: new Realm.BSON.ObjectId(site_id) });
+        const site: Site = result.length > 0 ? result[0] : {};
+
+        if (result.length > 0 && result[0].hasOwnProperty("title")) {
+          console.log("Found a site with template_colors:", result[0].template_colors);
+          setColors(result[0].template_colors);
+        }
+        else {
+          console.log("Site doesn't have the template_colors yet.");
+        }
       } catch (error) {
         console.error("Error fetching for Questionnaire data for this site:", error);
       }
