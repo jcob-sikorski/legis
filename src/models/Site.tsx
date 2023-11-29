@@ -7,5 +7,6 @@ export default interface Site {
   published?: number;
   favicon_url?: string;
   cname?: string;
-  template_colors? : string[]
+  template_colors? : string[];
+  edited? : number;
 }

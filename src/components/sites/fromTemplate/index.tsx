@@ -92,6 +92,7 @@ function FromTemplate() {
           favicon_url: '',
           cname: '',
           template_colors: ["#efefee", "#a3826c", "#3e3d3d"],
+          edited: 0,
           body_template: mockData,
         };
         
