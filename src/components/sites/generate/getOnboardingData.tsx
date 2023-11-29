@@ -20,7 +20,6 @@ export const getOnboardingData = ({
   "SpecializedPracticeAreas": "${SpecializedPracticeAreas}",
   "FirmRepresentation": "${FirmRepresentation}",
   "LawyerDetails": "${LawyerDetails}",
-  "ClientReviews: "${ClientReviews}",
   "FirmStrengths": "${FirmStrengths}",
   "StandOutFactor": ${JSON.stringify(StandOutFactor?.join("; "))},
   "ImportantValues": ${JSON.stringify(ImportantValues?.join("; "))},

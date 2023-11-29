@@ -64,27 +64,11 @@ export let function_description: ChatCompletionTool[] = [
               "type": "object",
               "properties": {
                 "name": {
-                  "description": "Full name of the value",
+                  "description": "Full name of the value from OurValues",
                   "type": "string",
                 },
                 "description": {
-                  "description": "Short description of the value, easy to understand and professional, don't repeat values name.",
-                  "type": "string",
-                }
-              }
-            },
-          },
-          "ReviewsAndTestimonials": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "clientName": {
-                  "description": "Name of the client",
-                  "type": "string",
-                },
-                "testimonial": {
-                  "description": "Testimonial from a client",
+                  "description": "Short description of the value, easy to understand and professional - don’t mention the full name of the value",
                   "type": "string",
                 }
               }
@@ -95,7 +79,7 @@ export let function_description: ChatCompletionTool[] = [
             "description": "Two exceptional sentences based on Firm Strengths",
           },
         },
-        "required": ["NavBar", "Hero", "Practice areas", "Our Team", "Their values", "Reviews and Testimonials", "About us"],
+        "required": ["NavBar", "Hero", "PracticeAreas", "OurTeam", "OurValues", "AboutUs"],
       },
     }
   }
