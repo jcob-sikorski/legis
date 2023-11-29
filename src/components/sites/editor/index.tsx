@@ -164,7 +164,8 @@ const Editor: React.FC = () => {
 
   useEffect(() => {
     if (isDeploying) {
-      // deploySiteOnGithub();
+      deploySiteOnGithub(); // if sth changed in the site then change the status of edited to true
+                            // and only then user can run deploySiteOnGithub - which sets the edited to false
 
       if (legisSubdomain) {
         deployWithDefaultSubdomain();
@@ -358,7 +359,7 @@ const Editor: React.FC = () => {
           {
             $set: {
               site_url: "https://legisbiz.github.io/" + site_id,
-              status: 1,
+              published: 1,
             },
           }
         );        

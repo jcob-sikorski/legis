@@ -140,13 +140,9 @@ export const Dashboard: React.FC = () => {
       user_id: Realm.BSON.ObjectId;
       _id: Realm.BSON.ObjectId;
       title: string;
-      subtitle: string;
       description: string;
-      deleted: number;
-      image_url: string;
       site_url: string;
-      status: number;
-      share_image_url: string;
+      published: number;
       favicon_url: string;
       cname: string;
       template_colors: string[];
@@ -157,13 +153,9 @@ export const Dashboard: React.FC = () => {
       user_id: new Realm.BSON.ObjectId(currentUserID),
       _id: newId,
       title: `Title ${sites.length}`,
-      subtitle: "Your Site Subtitle",
       description: "Your Site Description",
-      deleted: 0,
-      image_url: "https://picsum.photos/200/300",
       site_url: "",
-      status: 0,
-      share_image_url: '',
+      published: 0,
       favicon_url: '',
       cname: '',
       template_colors: ["#efefee", "#a3826c", "#3e3d3d"]
