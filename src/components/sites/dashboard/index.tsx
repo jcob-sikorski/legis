@@ -142,11 +142,10 @@ export const Dashboard: React.FC = () => {
       title: string;
       description: string;
       site_url: string;
-      published: number;
+      domainConnected: number;
       favicon_url: string;
       cname: string;
       template_colors: string[];
-      edited: number;
       body_template?: any; // replace 'any' with the actual type of 'body_template'
     };
     
@@ -156,11 +155,10 @@ export const Dashboard: React.FC = () => {
       title: `Title ${sites.length}`,
       description: "Your Site Description",
       site_url: "",
-      published: 0,
+      domainConnected: 0,
       favicon_url: '',
       cname: '',
-      template_colors: ["#efefee", "#a3826c", "#3e3d3d"],
-      edited: 0
+      template_colors: ["#efefee", "#a3826c", "#3e3d3d"]
     };
     
     if (templateIds.length > 0) {

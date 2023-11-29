@@ -4,9 +4,8 @@ export default interface Site {
   title?: string;
   description?: string;
   site_url?: string;
-  published?: number;
+  domainConnected?: number;
   favicon_url?: string;
   cname?: string;
   template_colors? : string[];
-  edited? : number;
 }

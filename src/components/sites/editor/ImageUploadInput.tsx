@@ -117,7 +117,7 @@ const ImageUploadInput = ({handleCustomFieldChange, oldUUID, ratio}: any) => {
       const authHeader = `Uploadcare ${publicKey}:${signatureHash}`;
     
       try {
-        const response = await axios.delete(`https://api.uploadcare.com/files/${uuid}/`, {
+        const response = await axios.delete(`https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.uploadcare.com/files/${uuid}/`, {
           headers: {
             'Authorization': authHeader,
             'Date': date,

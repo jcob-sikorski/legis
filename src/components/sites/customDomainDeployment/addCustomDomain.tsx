@@ -30,7 +30,7 @@ function AddCustomDomain({ nextPage }: any) {
 
     try {
       // DNS lookup for NS records
-      fetch(`https://dns.google/resolve?name=${domain}&type=NS`)
+      fetch(`https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://dns.google/resolve?name=${domain}&type=NS`)
       .then((response) => response.json())
       .then((data) => {
         // Check if domain exists

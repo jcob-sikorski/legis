@@ -88,11 +88,10 @@ function FromTemplate() {
           title: `Title ${template_set_id}`,
           description: "Created from the template set with id: " + template_set_id,
           site_url: "",
-          published: 0,
+          domainConnected: 0,
           favicon_url: '',
           cname: '',
           template_colors: ["#efefee", "#a3826c", "#3e3d3d"],
-          edited: 0,
           body_template: mockData,
         };
         
@@ -108,7 +107,7 @@ function FromTemplate() {
           console.log('Trying to naviage to editor!')
       
           // Create a new GitHub repository
-          const githubRepoResponse = await axios.post(`https://api.github.com/user/repos`, {
+          const githubRepoResponse = await axios.post(`https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/user/repos`, {
             name: site_id,
             private: false, // Set to true if you want a private repository
           }, {

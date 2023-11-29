@@ -31,6 +31,9 @@ import Questionnaire from '../../../models/Questionnaire';
 import MobilePreviewModal from './modals/MobilePreviewModal';
 import Site from '../../../models/Site';
 
+import { useDispatch } from 'react-redux';
+import { setSite } from '../../../redux/actions';
+
 const Editor: React.FC = () => {
   const app: any = useApp();
 
@@ -41,6 +44,8 @@ const Editor: React.FC = () => {
   // Set up your GitHub API credentials and repository name
   const githubUsername = config.githubUsername;
   const githubToken = config.githubToken;
+
+  const dispatch = useDispatch();
 
   const { site_id } = useParams();
   console.warn("site_id editor", site_id);
@@ -162,18 +167,36 @@ const Editor: React.FC = () => {
     document.title = "Legis | " + (siteTitle || lawFirmName || "Edit your site");
    }, [siteTitle])
 
-  useEffect(() => {
-    if (isDeploying) {
-      deploySiteOnGithub(); // if sth changed in the site then change the status of edited to true
-                            // and only then user can run deploySiteOnGithub - which sets the edited to false
+   useEffect(() => {
+    const connectDomainsFlow = async () => {
+      if (isDeploying) {
+        console.log("COMITING INDEX HTML TO GITHUB");
+        commitIndexHtmlToGithub();
+        
+        const site = await site_collection.find({ _id: new Realm.BSON.ObjectId(site_id) });
 
-      if (legisSubdomain) {
-        deployWithDefaultSubdomain();
-      } else {
-        navigate(`/custom-domain-deployment/${site_id}`);
+        if (!site.domainConnected) {
+          if (legisSubdomain) {
+            console.log("CONNECTING DEFAULT SUBDOMAIN");
+            connectDefaultSubdomain();
+
+            console.log("NAVIGATING TO OVERVIEW SETTINGS");
+            dispatch(setSite(site));
+            navigate('/overview-settings')
+          } else {
+            navigate(`/custom-domain-deployment/${site_id}`);
+          }
+        } else {
+          console.log("NAVIGATING TO OVERVIEW SETTINGS");
+          dispatch(setSite(site));
+          navigate('/overview-settings')
+        }
       }
-    } 
-  }, [isDeploying])
+    };
+  
+    connectDomainsFlow();
+  }, [isDeploying]);
+  
 
   async function handlePublishButton() {
     setDisplayHostingBox(!displayHostingBox);
@@ -205,18 +228,12 @@ const Editor: React.FC = () => {
     }
 
 
-    return `${lawFirmName}.legis.live`;
+    return `${lawFirmName}`;
 }
 
-  async function deployWithDefaultSubdomain() {
+  async function connectDefaultSubdomain() {
     const validDomain = convertToValidDomainName(lawFirmName!);
-
-    const updateResult = await site_collection.updateOne(
-      { _id: new Realm.BSON.ObjectId(site_id) },
-      { $set: { cname: validDomain } }
-    );
-    console.log(`Updated ${updateResult.modifiedCount} document.`);
-
+    
     const cnameTarget = 'legisbiz.github.io.';
     
     // API endpoint and request payload
@@ -255,8 +272,8 @@ const Editor: React.FC = () => {
     }
 
     try {
-      const githubRepoResponse = await axios.put(`https://api.github.com/repos/${githubUsername}/${site_id}/pages`, {
-        cname: validDomain,
+      const githubRepoResponse = await axios.put(`https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${site_id}/pages`, {
+        cname: `${validDomain}.legis.live`,
         source: "gh-pages"
       }, {
         headers: {
@@ -268,10 +285,20 @@ const Editor: React.FC = () => {
     catch (error) {
       console.error('Error updating the domain of the site:', error);
     }
+
+    const updateResult = await site_collection.updateOne(
+      { _id: new Realm.BSON.ObjectId(site_id) },
+      { $set: { 
+        cname: `${validDomain}.legis.live`,
+        domainConnected: 1
+        }
+      }
+    );
+    console.log(`Updated ${updateResult.modifiedCount} document.`);
   }
 
 
-  async function deploySiteOnGithub() {
+  async function commitIndexHtmlToGithub() {
     const pageTitle = `Best Lawyer Page Ever`;
 
     const htmlBodyString = ReactDOMServer.renderToString(visualisationComponent);
@@ -335,7 +362,7 @@ const Editor: React.FC = () => {
   
     try {
       const base64Content = btoa(unescape(encodeURIComponent(htmlString))); // Convert HTML string to base64
-      const response = await axios.put(`https://api.github.com/repos/${githubUsername}/${site_id}/contents/index.html`, {
+      const response = await axios.put(`https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${site_id}/contents/index.html`, {
         message: 'Initial commit',
         content: base64Content,
         branch: 'gh-pages', // Specify the 'gh-pages' branch
@@ -359,7 +386,6 @@ const Editor: React.FC = () => {
           {
             $set: {
               site_url: "https://legisbiz.github.io/" + site_id,
-              published: 1,
             },
           }
         );        
