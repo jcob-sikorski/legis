@@ -136,7 +136,7 @@ export const Dashboard: React.FC = () => {
 
     const newId = new Realm.BSON.ObjectId()
 
-    const newSite = {
+    let newSite: any = {
       user_id: new Realm.BSON.ObjectId(currentUserID),
       _id: newId,
       title: `Title ${sites.length}`,
@@ -150,8 +150,11 @@ export const Dashboard: React.FC = () => {
       favicon_url: '',
       cname: '',
       template_colors: ["#efefee", "#a3826c", "#3e3d3d"],
-      body_template: getBodyTemplateFromTemplateSetId(templateIds),
+      // body_template: templateIds ? getBodyTemplateFromTemplateSetId(templateIds),
     };
+    if (templateIds.length > 0) {
+      newSite.body_template = getBodyTemplateFromTemplateSetId(templateIds);
+    }
     
     const site_id: string = newSite._id.toString();
   
