@@ -136,7 +136,24 @@ export const Dashboard: React.FC = () => {
 
     const newId = new Realm.BSON.ObjectId()
 
-    const newSite = {
+    type Site = {
+      user_id: Realm.BSON.ObjectId;
+      _id: Realm.BSON.ObjectId;
+      title: string;
+      subtitle: string;
+      description: string;
+      deleted: number;
+      image_url: string;
+      site_url: string;
+      status: number;
+      share_image_url: string;
+      favicon_url: string;
+      cname: string;
+      template_colors: string[];
+      body_template?: any; // replace 'any' with the actual type of 'body_template'
+    };
+    
+    const newSite: Site = {
       user_id: new Realm.BSON.ObjectId(currentUserID),
       _id: newId,
       title: `Title ${sites.length}`,
@@ -149,9 +166,12 @@ export const Dashboard: React.FC = () => {
       share_image_url: '',
       favicon_url: '',
       cname: '',
-      template_colors: ["#efefee", "#a3826c", "#3e3d3d"],
-      body_template: getBodyTemplateFromTemplateSetId(templateIds),
+      template_colors: ["#efefee", "#a3826c", "#3e3d3d"]
     };
+    
+    if (templateIds.length > 0) {
+      newSite.body_template = getBodyTemplateFromTemplateSetId(templateIds);
+    }
     
     const site_id: string = newSite._id.toString();
   
