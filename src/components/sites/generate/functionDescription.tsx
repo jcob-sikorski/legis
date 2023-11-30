@@ -17,11 +17,11 @@ export let function_description: ChatCompletionTool[] = [
             "type": "object",
             "properties": {
               "headline": {
-                "description": "Main Practice Area",
+                "description": "Law Firm Name",
                 "type": "string",
               },
               "subHeadline": {
-                "description": "Eye-catching One Sentence Description of the company. Must be really exceptional and professional looking",
+                "description": "One Sentence Description",
                 "type": "string",
               }
             }

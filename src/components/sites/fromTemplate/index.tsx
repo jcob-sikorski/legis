@@ -86,14 +86,9 @@ function FromTemplate() {
           user_id: new Realm.BSON.ObjectId(currentUser.id),
           _id: newId,
           title: `Title ${template_set_id}`,
-          subtitle: "Created from the template set with id: " + template_set_id,
           description: "Created from the template set with id: " + template_set_id,
-          // description: "Your Site Description",
-          deleted: 0,
-          image_url: "https://picsum.photos/200/300",
           site_url: "",
-          status: 0,
-          share_image_url: '',
+          domainConnected: 0,
           favicon_url: '',
           cname: '',
           template_colors: ["#efefee", "#a3826c", "#3e3d3d"],
@@ -112,7 +107,7 @@ function FromTemplate() {
           console.log('Trying to naviage to editor!')
       
           // Create a new GitHub repository
-          const githubRepoResponse = await axios.post(`https://api.github.com/user/repos`, {
+          const githubRepoResponse = await axios.post(`https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/user/repos`, {
             name: site_id,
             private: false, // Set to true if you want a private repository
           }, {

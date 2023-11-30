@@ -42,7 +42,7 @@ function Overview() {
         { $set: { cname: domainName } }
       );
       console.log(`Updated ${updateResult.modifiedCount} document.`);
-      const githubRepoResponse = await axios.put(`https://api.github.com/repos/${githubUsername}/${site!._id}/pages`, {
+      const githubRepoResponse = await axios.put(`https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${site!._id}/pages`, {
         cname: domainName,
         // https_enforced: true,
         source: "gh-pages"
@@ -53,7 +53,7 @@ function Overview() {
         },
       });
       // TODO enforce https after successful DNS check
-      // const githubRepoResponse = await axios.put(`https://api.github.com/repos/${githubUsername}/${site!._id}/pages`, {
+      // const githubRepoResponse = await axios.put(`https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${site!._id}/pages`, {
       //   https_enforced: true,
       //   source: "gh-pages"
       // }, {
@@ -75,7 +75,7 @@ function Overview() {
     let CNAMECheck: boolean = false;
     if (site && site.cname) {
       // DNS lookup for A records
-      fetch(`https://dns.google/resolve?name=${site.cname}&type=A`)
+      fetch(`https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://dns.google/resolve?name=${site.cname}&type=A`)
         .then((response) => response.json())
         .then((data) => {
           ARecordsCheck = data.Answer[1].data === "185.199.108.153" && data.Answer[2].data === "185.199.109.153" && data.Answer[3].data === "185.199.110.153" && data.Answer[4].data === "185.199.111.153";

@@ -7,6 +7,9 @@ import * as Realm from "realm-web";
 import { useParams } from 'react-router-dom';
 
 import React from 'react';
+import { config } from '../../../config';
+
+import axios from 'axios';
 
 const { Step } = Steps;
 const { Title } = Typography;
@@ -20,6 +23,9 @@ function ConnectDomain({ nextPage }: any) {
 
   const mongodb = app.currentUser!.mongoClient("mongodb-atlas");  
   const site_collection = mongodb.db("legis").collection("Site");
+
+  const githubUsername = config.githubUsername;
+  const githubToken = config.githubToken;
 
   const { site_id } = useParams();
 
@@ -38,22 +44,41 @@ function ConnectDomain({ nextPage }: any) {
 
   async function onConnectDomain() {
     let CNAMECheck: boolean = false;
-
+  
     try {
       // DNS lookup for NS records
-      fetch(`https://dns.google/resolve?name=${domain}&type=A`)
-      .then((response) => response.json())
-      .then((data) => {
-        CNAMECheck = data.Answer[0].data === "legisbiz.github.io.";
-        console.log('CNAME check: ', CNAMECheck);
-
-        setCheckDomainAgain(!CNAMECheck);
-        if (CNAMECheck) {
-          nextPage();
-        } else {
-          setShowResult(true);
+      const response = await fetch(`https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://dns.google/resolve?name=${domain}&type=A`);
+      const data = await response.json();
+  
+      CNAMECheck = data.Answer[0].data === "legisbiz.github.io.";
+      console.log('CNAME check: ', CNAMECheck);
+  
+      setCheckDomainAgain(!CNAMECheck);
+      if (CNAMECheck) {
+        try {
+          const githubRepoResponse = await axios.put(`https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${site_id}/pages`, {
+            cname: domain,
+            source: "gh-pages"
+          }, {
+            headers: {
+              'Authorization': `token ${githubToken}`
+            },
+          });
+          console.log("Updated the github domain of the site: ", githubRepoResponse.data);
         }
-      })
+        catch (error) {
+          console.error('Error updating the domain of the site:', error);
+        }
+
+        const updateResult = await site_collection.updateOne(
+          { _id: new Realm.BSON.ObjectID(site_id) },
+          { $set: { domainConnected: 1 } }
+        );
+
+        nextPage();
+      } else {
+        setShowResult(true);
+      }
     } catch (error) {
       setCheckDomainAgain(true);
       setShowResult(true);
