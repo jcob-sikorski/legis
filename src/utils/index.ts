@@ -4,6 +4,7 @@ import PROFILES_METADATA_MAP from '../components/templates/profiles_metadata_map
 import { JSONProfile, JSONProfileField, OnboardingData } from '../models';
 import { EditOutlined, FrownFilled, FrownOutlined } from '@ant-design/icons';
 import { v4 } from 'uuid';
+import { DEFAULT_IMAGE_URL } from '../components/sites/dashboard/SiteCard';
 
 async function copyTextToClipboard(text: any) {
     if ('clipboard' in navigator) {
@@ -143,3 +144,14 @@ export function camelCase(str: string) {
   }).replace(/\s+/g, '');
 }
 console.log(camelCase("Click the button to convert to camelCase"));
+
+export function getHeroImageURLFromBodyTemplate(body_template: object[]) {
+  let image_url;
+  
+  (body_template || []).map((section: any) => { 
+      if (section?.template_id?.toLowerCase()?.indexOf("hero") > -1) // "has hero in template_id name"
+        image_url = section?.cdnUUID ? getUrl(section?.cdnUUID) : DEFAULT_IMAGE_URL
+    });
+    
+  return image_url;
+}

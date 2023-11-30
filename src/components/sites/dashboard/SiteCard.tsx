@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from 'react-redux';
 import { setSite } from '../../../redux/actions';
+import { getHeroImageURLFromBodyTemplate } from "../../../utils";
 
 export const DEFAULT_IMAGE_URL = 'https://mdbcdn.b-cdn.net/img/new/slides/146.webp';
 
@@ -12,10 +13,7 @@ export default function SiteCard({ data, onEdit, onClone, onDelete }: any) {
 
     const { title, description, body_template} = data;
 
-    let image_url;
-    (body_template || []).map((section: any) => section?.template_id?.indexOf("hero") > -1 
-      ? image_url = section?.cdnUUID || DEFAULT_IMAGE_URL 
-      : image_url = DEFAULT_IMAGE_URL)
+    let image_url = getHeroImageURLFromBodyTemplate(body_template);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();

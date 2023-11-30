@@ -21,7 +21,7 @@ import Sider from 'antd/es/layout/Sider';
 import { Content, Header } from 'antd/es/layout/layout';
 import { EyeFilled, EyeOutlined, MobileFilled, MobileOutlined, RedoOutlined } from '@ant-design/icons';
 import Sections from './Sections';
-import { getPromptForGeneration, updateCssStyles } from '../../../utils';
+import { getHeroImageURLFromBodyTemplate, getPromptForGeneration, updateCssStyles } from '../../../utils';
 import MainMenu from '../menu';
 import { useApp } from '../../RealmApp';
 import Logo from '../menu/Logo';
@@ -53,10 +53,12 @@ const Editor: React.FC = () => {
   const [json, setJson] = useState(DEV_START_JSON);
   const [data, setData] = useState<any[]>([]);
 
+  const [onboardingData, setOnboardingData] = useState<Questionnaire | null>(null);
   const [lawFirmName, setLawFirmName] = useState<string>();
   const [colors, setColors] = useState<string[]>([]);
   const [siteTitle, setSiteTitle] = useState<string>();
   const [siteDescription, setSiteDescription] = useState<string>();
+  const [faviconURL, setFaviconURL] = useState<string>();
 
   const [selectedSectionId, setSelectedSectionId] = useState<string>("");
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>("");
@@ -299,7 +301,22 @@ const Editor: React.FC = () => {
 
 
   async function commitIndexHtmlToGithub() {
-    const pageTitle = `Best Lawyer Page Ever`;
+    const title = lawFirmName;
+
+    // SEO data
+    const city = 'San Francisco';
+    const state = 'CA, California';
+    const practiceAreas = onboardingData ? onboardingData.MainPracticeArea + ', ' + onboardingData.SpecializedPracticeAreas : '';
+    const userAddedKeywords = 'TOP 3 in California';
+    const image = getHeroImageURLFromBodyTemplate(data);
+
+    // Final SEO data to put in HTML
+    const metadata = {
+      description: siteDescription,
+      keywords: `lawyers, legal services, ${practiceAreas}, ${city} attorneys, ${state} law firm, litigation, legal advice, legal consultation, ${userAddedKeywords}`,
+      author: lawFirmName,
+      image,
+    }
 
     const htmlBodyString = ReactDOMServer.renderToString(visualisationComponent);
     console.log("htmlBodyString: ", htmlBodyString);
@@ -312,13 +329,34 @@ const Editor: React.FC = () => {
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
           <!-- IE -->
-          <link rel="shortcut icon" type="image/x-icon" href="https://ucarecdn.com/1f9d5fc9-ee6b-4254-afe1-7633dd94c37c/" />
+          <link rel="shortcut icon" type="image/x-icon" href="${faviconURL}" />
           <!-- other browsers -->
-          <link rel="icon" type="image/x-icon" href="https://ucarecdn.com/1f9d5fc9-ee6b-4254-afe1-7633dd94c37c/" />
+          <link rel="icon" type="image/x-icon" href="${faviconURL}" />
 
 
           <!-- customizable page variables -->
-          <title>${pageTitle}</title>
+          <title>${title}</title>
+
+          <!-- SEO section! -->
+          <meta name="description" content="${metadata.description}">
+          <meta name="keywords" content="${metadata.keywords}">
+          <meta name="author" content="${metadata.author}">
+
+          <!-- Web Crawlers -->
+          <meta name="robots" content="index, follow">
+
+          <!-- Facebook Meta Tags (Open Graph) -->
+          <meta property="og:type" content="website">
+          <meta property="og:title" content="${lawFirmName}">
+          <meta property="og:description" content="${metadata.description}">
+          <meta property="og:image" content="${metadata.image}">
+
+          <!-- Twitter Meta Tags -->
+          <meta name="twitter:card" content="summary_large_image">
+          <meta name="twitter:title" content="${lawFirmName}">
+          <meta name="twitter:description" content="${metadata.description}">
+          <meta name="twitter:image" content="${metadata.image}">
+
           
           <!-- tailwindcss -->
           <script src="https://cdn.tailwindcss.com"></script>
@@ -326,13 +364,11 @@ const Editor: React.FC = () => {
           <!-- Google Fonts -->
           <link rel="preconnect" href="https://fonts.googleapis.com">
           <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-          <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-          <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">      
+          <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700;800;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
 
           <!-- Bootstrap Icons -->
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-
-
 
           <style>
 
@@ -344,6 +380,8 @@ const Editor: React.FC = () => {
               --legis-color-1: ${colors[0]};
               --legis-color-2: ${colors[1]};
               --legis-color-3: ${colors[2]};
+
+              --legis-font-main: 'IBM Plex Sans';
             }
 
             .color-1 {background-color: var(--legis-color-1) !important;}
@@ -407,41 +445,22 @@ const Editor: React.FC = () => {
         // Include a query to find the site by its site_id
         const result = await site_collection.find({ _id: new Realm.BSON.ObjectId(site_id) });
   
-        let fieldName = 'body_template';
-        if (result.length > 0 && result[0].hasOwnProperty(fieldName)) {
+        const getFromMongoDB = (fieldName: string, setter: any) => {
+          if (result.length > 0 && result[0].hasOwnProperty(fieldName)) {
             console.log(`Found a site with ${fieldName}:`, result[0][fieldName]);
-            setData(result[0][fieldName]);
-        }
-        else {
-          console.log(`Site doesn't have ${fieldName} value yet.`);
+            setter(result[0][fieldName]);
+          }
+          else {
+            console.log(`Site doesn't have ${fieldName} value yet.`);
+          }
         }
 
-        fieldName = 'template_colors';
-        if (result.length > 0 && result[0].hasOwnProperty(fieldName)) {
-            console.log(`Found a site with ${fieldName}:`, result[0][fieldName]);
-            setColors(result[0][fieldName]);
-        }
-        else {
-          console.log(`Site doesn't have ${fieldName} value yet.`);
-        }
+        getFromMongoDB('body_template', setData);
+        getFromMongoDB('template_colors', setColors);
+        getFromMongoDB('title', setSiteTitle);
+        getFromMongoDB('description', setSiteDescription);
+        getFromMongoDB('favicon_url', setFaviconURL);
         
-        fieldName = 'title';
-        if (result.length > 0 && result[0].hasOwnProperty(fieldName)) {
-            console.log(`Found a site with ${fieldName}:`, result[0][fieldName]);
-            setSiteTitle(result[0][fieldName]);
-        }
-        else {
-          console.log(`Site doesn't have ${fieldName} value yet.`);
-        }
-
-        fieldName = 'description';
-        if (result.length > 0 && result[0].hasOwnProperty(fieldName)) {
-            console.log(`Found a site with ${fieldName}:`, result[0][fieldName]);
-            setSiteDescription(result[0][fieldName]);
-        }
-        else {
-          console.log(`Site doesn't have ${fieldName} value yet.`);
-        }
       } catch (error) {
         console.error("Error searching for this site:", error);
       }
@@ -450,6 +469,7 @@ const Editor: React.FC = () => {
         const onboardingData: Questionnaire = result.length > 0 ? result[0] : {};
 
         setLawFirmName(onboardingData.LawFirmName);
+        setOnboardingData(onboardingData);
       } catch (error) {
         console.error("Error fetching for Questionnaire data for this site:", error);
       }
