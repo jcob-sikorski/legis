@@ -717,7 +717,7 @@ function ReviewInputComponent({ data, index, changeReviewData, handleRemoveRevie
             {cdnUUID ? <img src={getUrl(cdnUUID)} alt="avatar" 
             className="relative overflow-hidden bg-cover bg-no-repeat"
             style={{ 
-              width: '120px', 
+              minWidth: '120px', 
               height: '120px',
               borderRadius: 4, 
               border: '2px solid black'

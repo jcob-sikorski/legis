@@ -240,16 +240,29 @@ function Generate() {
 function getSiteData(data: any, onboardingData: Questionnaire, bodyTemplate: any) {
   
   const {NavBar, Hero, PracticeAreas, OurTeam, OurValues, AboutUs} = data;
-  const {ClientReviews, LawFirmName} = onboardingData
-
+  const {ClientReviews, LawFirmName, LawyerDetails: LawyerDetailsJSON} = onboardingData;
+  
   console.log("getSiteData.onboardingData: ", onboardingData);
   console.log("getSiteData.bodyTemplate: ", bodyTemplate);
-
+  
   let reviews = [];
   try {
     reviews = JSON.parse(ClientReviews || "[]");
   } catch {
-    alert("error parsing reviews in getSiteData.")
+    console.warn("error parsing reviews in getSiteData.")
+  }
+  
+  let lawyerDetails = OurTeam;
+  try {
+    const onboardingLawyerDetails: any = JSON.parse(LawyerDetailsJSON || "[]");
+    lawyerDetails = lawyerDetails?.map((lawyer: any, i: number) => {
+      try {
+        return ({...lawyer, cdnUUID: (onboardingLawyerDetails || [])[i].cdnUUID});
+      } catch {}
+    });
+    
+  } catch {
+    console.warn("error parsing lawyerDetails in getSiteData.")
   }
 
   // 1. Nav bar
@@ -297,7 +310,7 @@ function getSiteData(data: any, onboardingData: Questionnaire, bodyTemplate: any
     {
       section_id: v4(),
       template_id: 'LTeam1',
-      lawyerDetails: OurTeam,
+      lawyerDetails,
       "superTitle": "Learn more about...",
       "title": "Our team",
     },
