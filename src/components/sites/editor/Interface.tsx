@@ -528,7 +528,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
     }
 
     return ( 
-      <>
+      <div style={{width: '100%'}}>
         {/* <Flex vertical className='my-5'>
           <Typography.Text>
             key: <b>{context?.key}</b> <br />
@@ -567,7 +567,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
           {/* <Button style={{maxWidth: '190px', fontWeight: 'bold', backgroundColor: '#c00'}} type="primary" icon={<MinusOutlined />} size='large' onClick={onRemoveSection}>
               Remove section
           </Button> */}
-          <Flex justify='center' vertical align='center' className='p-3 text-gray-500'>
+          <Flex justify='center' vertical align='center' className='p-0 text-gray-500'>
             {/* <Typography.Title style={{fontSize: 18}} className='uppercase'>
               design sets
             </Typography.Title>
@@ -646,8 +646,12 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
         </Form>)
         }
 
-        {(!context?.key && !context?.isGroup && !context?.isSection) && <Flex className='flex items-center text-center bg-gray-200 h-80'>Select any element on canvas to open its settings</Flex>}
-</>);
+        {(!context?.key && !context?.isGroup && !context?.isSection) && 
+          <Flex className='flex items-center text-center bg-gray-200 h-80' style={{width: '100%'}}>
+            Select any element on canvas to open its settings
+          </Flex>
+        }
+      </div>);
 }
 
 {/* <Form.Item label="Form Size" name="size">

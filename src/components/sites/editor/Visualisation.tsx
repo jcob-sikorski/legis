@@ -52,6 +52,7 @@ import LAbout2 from '../../templates/LAbout2';
 import LAbout3 from '../../templates/LAbout3';
 import EHero1 from '../../templates/editorial/EHero1';
 import EPracticeAreas1 from '../../templates/editorial/EPracticeAreas1';
+import { updateCssStyles } from '../../../utils';
 // import { delay } from '../../../utils';
 
 const { Content, Footer } = Layout;
@@ -73,7 +74,7 @@ function Visualisation({
         setData: () => {},
         setContext: () => {},
     } : functions;
-    const { selectedSectionId, selectedTemplateId, isDevMode, isDeploying, dummyRef, containerRef } 
+    const { selectedSectionId, selectedTemplateId, isDevMode, isDeploying, dummyRef, containerRef, colors } 
      = mode === "showcase" || mode === "preview"
      ? {
         selectedSectionId: "",
@@ -82,6 +83,7 @@ function Visualisation({
         isDeploying: true,
         dummyRef: null,
         containerRef: null,
+        colors: [],
      } : variables;
 
      
@@ -264,15 +266,15 @@ function Visualisation({
     const contentStyle: any = isDeploying 
     ? {} 
     : { 
-        position: 'absolute', 
-        minHeight: '100vh',
-        top: 0, 
-        margin: '24px 12px 0', 
-        overflow: 'initial', 
-        width: '200%',
-        transform: 'scale(0.49)',
-        marginLeft: 'calc(-50% - 10px)', 
-        transformOrigin: 'top',
+        // position: 'absolute', 
+        // minHeight: '100vh',
+        // top: 0, 
+        // margin: '24px 12px 0', 
+        // overflow: 'initial', 
+        width: '100%',
+        // transform: 'scale(1)',
+        // marginLeft: 'calc(-50% - 10px)', 
+        // transformOrigin: 'top',
         scroll: 'smooth',
     }
 
@@ -297,15 +299,21 @@ function Visualisation({
         document.documentElement.style.setProperty('--vw-scale', `${calculateScale()}`);
     });
 
+    useEffect(() => {
+        if (colors?.length > 0) {
+          updateCssStyles(colors);
+        }
+       }, [colors])
+
     const layoutStyle = isDeploying || mode === 'preview'
     ? { marginInline: 'auto', scroll: 'smooth' }
     : { 
         // background: '#f00',
-        padding: 10, 
-        minHeight: '100vh',
-        transform: 'scale(var(--vw-scale))', 
-        transformOrigin: 'top',
-        width: '100vw',
+        // padding: 10, 
+        // minHeight: '100vh',
+        // transform: 'scale(var(--vw-scale))', 
+        // transformOrigin: 'top',
+        // width: '100vw',
     }
 
     return ( <Layout className="site-layout" style={layoutStyle} ref={containerRef}>
@@ -319,7 +327,7 @@ function Visualisation({
                 className={`hover-parent ${s.section_id === removedSectionId ? "animate__bounceOut" : ''}`}
                 key={s.section_id} 
                 id={'wrapper-' + s.section_id} 
-                onClick={() => mode === 'showcase' ? {} :  onSectionClick(s)} 
+                onClick={() => mode === 'showcase' ? {} : onSectionClick(s)} 
                 style={{
                     position: 'relative',
                     opacity: 1,

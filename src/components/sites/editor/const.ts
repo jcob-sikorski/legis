@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 
-export const LEFT_BAR_WIDTH = 120;
-export const RIGHT_BAR_WIDTH = 325;
+export const LEFT_BAR_WIDTH = 100;
+export const RIGHT_BAR_WIDTH = 300;
 export const NAV_BAR_HEIGHT = 68;
 export const DEV_START_JSON = `[
 {

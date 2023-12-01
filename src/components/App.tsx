@@ -36,6 +36,9 @@ function App() {
           {/* DEV */}
           <Route path="/html" element={<Html />} />
           <Route path="/playground" element={<Playground />} />
+          
+          {/* DON'T DELETE  */}
+          <Route path="/preview-iframe" element={<></>} />
 
           <Route path="/from-template/:template_set_id" 
             element={

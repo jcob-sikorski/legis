@@ -33,6 +33,7 @@ import Site from '../../../models/Site';
 
 import { useDispatch } from 'react-redux';
 import { setSite } from '../../../redux/actions';
+import IFrame from '../../iFrame';
 
 const Editor: React.FC = () => {
   const app: any = useApp();
@@ -138,8 +139,8 @@ const Editor: React.FC = () => {
    }
   
   function onMobile() {
-    // setIsMobile(true);
-    window.open(`/preview/${site_id}`, '', 'width=410,height=700');
+    setIsMobile(state => !state);
+    // window.open(`/preview/${site_id}`, '', 'width=410,height=700');
   }
 
    function onGenerate() {
@@ -155,7 +156,7 @@ const Editor: React.FC = () => {
       templateIds: ["THero1", "TContact3", "TContact2"],
       lawyerField: 'Real Estate'
     }
-    getPromptForGeneration(surveyData);
+    // getPromptForGeneration(surveyData);
    }
 
    useEffect(() => {
@@ -564,26 +565,33 @@ const Editor: React.FC = () => {
     isDevMode,
     isDeploying,
     dummyRef,
-    containerRef
+    containerRef,
+    colors,
   }} 
 />
 
   const borderStyle = '1px solid #0002';
 
-  const containerStyle: any = {
-    maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`, 
-    overflowY: 'scroll', 
-    marginLeft: LEFT_BAR_WIDTH, 
-    marginRight: RIGHT_BAR_WIDTH, 
-    background: '#f9fafb', 
-    justifyContent: 'center',
-    display: 'flex',
-    alignItems: 'flex-start',
-    boxShadow: '12px 4px solid black',
-    // scrollBehavior: 'smooth',
-    scrollBehavior: 'smooth',
-    scroll: 'smooth',
+  const [isTooSmall, setIsTooSmall] = useState(false);
+
+  function checkIfIsTooSmall() {
+    if (window.innerWidth < 980) {
+      setIsTooSmall(true)
+    } else {
+      setIsTooSmall(false)
+    }
   }
+
+  addEventListener("resize", (event) => {
+    // checkIfIsTooSmall();
+    console.log(window.innerWidth)
+  });
+
+  useEffect(() => {
+    // checkIfIsTooSmall();
+  }, [])
+
+  if (isTooSmall) return <>Try different bigger defice bro</>
 
   return (
     <Layout style={{width: '100%', height: 'calc(100vh - 46px)'}}>
@@ -663,27 +671,95 @@ const Editor: React.FC = () => {
       <Layout hasSider style={{ marginTop: NAV_BAR_HEIGHT}}>
         <Layout>
           {/* Left side */}
-          <Flex  style={{ width: LEFT_BAR_WIDTH, background: '#EDF3F9', borderRight: borderStyle, position: 'fixed', height: '100vh', left: 0 }}>
+          <Flex  style={{ 
+            width: LEFT_BAR_WIDTH,
+            background: '#EDF3F9', 
+            borderRight: borderStyle,
+            height: `calc(100vh - ${NAV_BAR_HEIGHT}px)`, 
+            maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`,
+           }}>
             {sectionsComponent}
           </Flex>
+
           {/* Center */}
           <Flex 
-            id='visualisation-container' 
+            id='vis' 
             className='editor-scrollbar'
             ref={containerRef} 
-            style={containerStyle} >
-            {visualisationComponent}
+            style={{
+              width: '100%',
+              maxWidth: `calc(100vw - ${LEFT_BAR_WIDTH}px - ${RIGHT_BAR_WIDTH}px - 10px)`,
+              
+              // height: `calc(100vh - ${NAV_BAR_HEIGHT}px)`, 
+              maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`,
+
+              background: '#f9fafb', 
+              // background: '#f00', 
+              height: '100vh',
+              justifyContent: 'center',
+              display: 'flex',
+              alignItems: 'flex-start',
+              // boxShadow: '12px 4px solid black',
+              // scrollBehavior: 'smooth',
+            }} >
+              <div style={
+                isMobile 
+                ? {
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  // width: '100%',
+                  // marginTop: 20,
+                  marginTop: 10,
+                  border: '10px solid #555',
+                  borderTopWidth: '20px',
+                  borderBottomWidth: '20px',
+                  borderRadius: 16,
+                  height: `calc(100vh - ${NAV_BAR_HEIGHT}px - 20px)`,
+                  maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`,
+                }
+                : {
+                  outline: 0,
+                  height: '100%',
+                  width: '100%',
+                }
+              }>
+                <IFrame 
+                colors={colors}
+                style={
+                  isMobile 
+                  ? {
+                    width: '360px', 
+                    // padding: 10,
+                    height: '100%', 
+                    maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px + 0px)`,
+                  }
+                  : {
+                    width: '100%', 
+                    padding: 10,
+                    height: '100vh', 
+                    maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px + 0px)`,
+                  }
+                }
+                >
+                  {visualisationComponent}
+                </IFrame>
+              </div>
           </Flex>
           {/* Right side */}
           <Flex vertical style={{ 
             width: RIGHT_BAR_WIDTH, 
             background: '#EDF3F9', 
             borderLeft: borderStyle, 
-            position: 'fixed', 
-            height: '100vh', 
-            overflowY: 'scroll',
-            paddingBottom: 50,
-            right: 0 }}>
+            // position: 'fixed',
+            height: `calc(100vh - ${NAV_BAR_HEIGHT}px)`,
+            maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`,
+            // maxHeight: '100vh', 
+            // overflowY: 'scroll',
+            // overflowX: 'hidden',
+            // paddingBottom: 50,
+            // right: 0 
+            }}>
 
             {interfaceComponent}
           </Flex>  

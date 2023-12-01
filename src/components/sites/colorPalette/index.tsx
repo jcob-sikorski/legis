@@ -8,8 +8,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import * as Realm from "realm-web";
 import { updateCssStyles } from '../../../utils/index.ts';
+import IFrame from '../../iFrame/index.tsx';
 
-const SIDE_BAR_WIDTH = 600;
+const SIDE_BAR_WIDTH = 300;
 
 function ColorPalette() {
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(-1);
@@ -96,9 +97,14 @@ function ColorPalette() {
         width: '100%',
         marginRight: SIDE_BAR_WIDTH,
         }}>
-          <div style={{transform: 'scale(0.7)', transformOrigin: 'top'}}>
-        <Visualisation data={data} mode='showcase' />
-          </div>
+          {/* <div style={{
+            transform: 'scale(0.7)', 
+            transformOrigin: 'top'
+          }}> */}
+            <IFrame style={{width: '100%', height: '100vh'}}>
+              <Visualisation data={data} mode='showcase' />
+            </IFrame>
+          {/* </div> */}
       </Flex>
       <div style={{width: '100%', maxWidth: SIDE_BAR_WIDTH, position: 'absolute', right: 0}}>
         <List
@@ -106,6 +112,8 @@ function ColorPalette() {
             flex: '1', 
             // overflowY: 'scroll', 
             height: '100vh', 
+            maxHeight: 'calc(100vh - 100px)',
+            overflowY: 'scroll',
             display: 'flex', 
             flexDirection: 'column', 
             alignItems: 'center',
@@ -136,20 +144,23 @@ function ColorPalette() {
               </Card>
           )}
         />
-         <Button
-          type="primary"
-          onClick={onNext}
-          className="custom-button"
-          style={{
-            // width: 100,
-            height: 50,
-            position: 'absolute',
-            right: 10,
-            bottom: 0
-          }}
-        >
-          Click to customize
-        </Button>
+        <Flex justify='center'>
+          <Button
+            type="primary"
+            onClick={onNext}
+            className="custom-button"
+            style={{
+              // width: 100,
+              height: 50,
+              // right: 0,
+              // position: 'absolute',
+              right: 0,
+              // bottom: 0
+            }}
+            >
+            Click to customize
+          </Button>
+        </Flex>
       </div>
     </Layout>
   );

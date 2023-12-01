@@ -33,6 +33,7 @@
     "realm-web": "^2.0.0",
     "redux": "^4.2.1",
     "redux-persist": "^6.0.0",
+    "use-iframe": "^1.0.4",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

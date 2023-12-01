@@ -3043,6 +3043,11 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
+use-iframe@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/use-iframe/-/use-iframe-1.0.4.tgz#1cc452def1c6e52ac0c9496e949591f3dec8f2f4"
+  integrity sha512-WgxbLchPojWcJT0rPdI37yY+ZjB4UjuWRnPpVkCq1uG5HXwmgYh7nKJo3yOvKubXsCb1WqERSHn0MPRlg5Ex5Q==
+
 use-sync-external-store@^1.0.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"

@@ -121,8 +121,8 @@ export function LHero1({data, setContext, isDeploying} : {data: any, setContext:
                             <button
                              onMouseEnter={() => setBgEditable(false)}
                              onMouseLeave={() => setBgEditable(true)}
-                             className="editable mt-6 rounded-full -inset-px sm:h-10 lg:h-14 sm:w-40 lg:w-60 text-lg bg-gradient-to-r font-black bg-[var(--legis-color-2)]"
-                             
+                             className="editable mt-6 p-3 px-6 rounded-full -inset-px  text-lg bg-gradient-to-r bg-[var(--legis-color-2)]"
+                             style={{fontWeight: 600}}
                              onClick={() => setContext({key: 'button', type: 'button', label: 'Button', variantProperty: 'marginInline'})}
                              >
                                 {data?.buttonLabel || "REGISTER"}
