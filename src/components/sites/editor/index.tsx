@@ -681,6 +681,8 @@ const Editor: React.FC = () => {
             borderLeft: borderStyle, 
             position: 'fixed', 
             height: '100vh', 
+            overflowY: 'scroll',
+            paddingBottom: 50,
             right: 0 }}>
 
             {interfaceComponent}
