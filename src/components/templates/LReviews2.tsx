@@ -25,7 +25,8 @@ export default function LReviews2({data, setContext}: any) {
             {((data?.reviews ?? []).map((obj: any, i: number) => 
                 <div className="sm:flex sm:items-start">
                 <img 
-                    className="flex-shrink-0 object-cover w-24 h-24 rounded-full" 
+                    className="editable flex-shrink-0 object-cover w-24 h-24 rounded-full" 
+                    onClick={() => setContext({cdnUUID: obj?.cdnUUID, collection: 'reviews', seriableLabel: 'review', key: 'cdnUUID', type: 'image', ratio: 1, label: 'Profile Picture', index: i}) }  
                     src={obj?.cdnUUID ? getUrl(obj.cdnUUID) : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"} 
                     alt="" 
                 />
