@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Col, Flex, Layout, Row, Space, Typography } from 'antd';
+import { Button, Col, Flex, Layout, Row, Input } from 'antd';
 import { RIGHT_BAR_WIDTH, DEV_START_JSON, NAV_BAR_HEIGHT, LEFT_BAR_WIDTH } from './const';
 
 // Window Components
@@ -34,6 +34,7 @@ import Site from '../../../models/Site';
 import { useDispatch } from 'react-redux';
 import { setSite } from '../../../redux/actions';
 
+
 const Editor: React.FC = () => {
   const app: any = useApp();
 
@@ -56,6 +57,7 @@ const Editor: React.FC = () => {
   const [onboardingData, setOnboardingData] = useState<Questionnaire | null>(null);
   const [lawFirmName, setLawFirmName] = useState<string>();
   const [colors, setColors] = useState<string[]>([]);
+  const [siteCname, setSiteCname] = useState<string>();
   const [siteTitle, setSiteTitle] = useState<string>();
   const [siteDescription, setSiteDescription] = useState<string>();
   const [faviconURL, setFaviconURL] = useState<string>();
@@ -68,7 +70,7 @@ const Editor: React.FC = () => {
 
   const [displayHostingBox, setDisplayHostingBox] = useState<boolean>(false);
   const [isDeploying, setIsDeploying] = useState<boolean>(false);
-  const [legisSubdomain, setLegisSubdomain] = useState<boolean>(true);
+  const [legisSubdomain, setLegisSubdomain] = useState<boolean>(false);
 
   const [isDevMode, setIsDevMode] = useState<boolean>(false);
 
@@ -201,6 +203,9 @@ const Editor: React.FC = () => {
   
 
   async function handlePublishButton() {
+    if (!displayHostingBox && legisSubdomain) {
+      setLegisSubdomain(false);
+    }
     setDisplayHostingBox(!displayHostingBox);
   }
 
@@ -444,6 +449,15 @@ const Editor: React.FC = () => {
       try {
         // Include a query to find the site by its site_id
         const result = await site_collection.find({ _id: new Realm.BSON.ObjectId(site_id) });
+
+        let fieldName = 'cname';
+        if (result.length > 0 && result[0].hasOwnProperty(fieldName)) {
+            console.log(`Found a site with ${fieldName}:`, result[0][fieldName]);
+            setSiteCname(result[0][fieldName]);
+        }
+        else {
+          console.log(`Site doesn't have ${fieldName} value yet.`);
+        }
   
         const getFromMongoDB = (fieldName: string, setter: any) => {
           if (result.length > 0 && result[0].hasOwnProperty(fieldName)) {
@@ -639,7 +653,7 @@ const Editor: React.FC = () => {
                       {displayHostingBox ? (
                         <div style={{ position: 'absolute', top: NAV_BAR_HEIGHT , backgroundColor: '#ffffff', zIndex: 1, right: 10, height: 255, width: 430, borderRadius: 8 }}>
                           <h1 style={{ fontSize: 20, fontWeight: '600', marginLeft: 10 }}>Choose Where to Publish</h1>
-                          <button onClick={() => { setLegisSubdomain(true); setIsDeploying(true); }} style={{ height: 85, width: '95%', marginInline: 10, marginBottom: 10, padding: 5, borderRadius: 5, backgroundColor: '#ECECEC', display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', }}>
+                          <button onClick={() => { setLegisSubdomain(true); setDisplayHostingBox(false); }} style={{ height: 85, width: '95%', marginInline: 10, marginBottom: 10, padding: 5, borderRadius: 5, backgroundColor: '#ECECEC', display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', }}>
                             <h2 style={{ fontSize: 16, fontWeight: '600', wordWrap: 'break-word', lineHeight: '35px', marginLeft: 5 }}>Connect to legis subdomain</h2>
                             <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>Click here to publish your website on the legis</h2>
                             <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>subdomain for free.</h2>
@@ -649,6 +663,32 @@ const Editor: React.FC = () => {
                             <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>Become a Legis pro member & connect your</h2>
                             <h2 style={{ fontSize: 14, fontWeight: '400', wordWrap: 'break-word', lineHeight: '20px', marginLeft: 5 }}>custom domain for $49 a year.</h2>
                           </button>
+                        </div>
+                      ) : (
+                        null
+                      )}
+                      {legisSubdomain ? (
+                        <div style={{ position: 'absolute', top: NAV_BAR_HEIGHT , backgroundColor: '#ffffff', zIndex: 1, right: 10, height: 255, width: 430, borderRadius: 8 }}>
+                          <h1 style={{ fontSize: 20, fontWeight: '600', marginLeft: 10 }}>Name your site</h1>
+                          <Input
+                            style={{
+                              maxWidth: '400px',
+                              borderRadius: 12,
+                              height: '40px',
+                              marginLeft: 10,
+                              borderColor: 'black',
+                            }}
+                            value={siteCname}
+                            readOnly={true}
+                          />
+                          <Button
+                            type="primary"
+                            onClick={() => setIsDeploying(true)}
+                            className="custom-button"
+                            style={{ marginLeft: 10, height: 50 }}
+                            >
+                            Publish for free on legis subdomain
+                          </Button>
                         </div>
                       ) : (
                         null
