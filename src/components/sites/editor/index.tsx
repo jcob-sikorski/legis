@@ -177,7 +177,7 @@ const Editor: React.FC = () => {
         console.log("COMITING INDEX HTML TO GITHUB");
         commitIndexHtmlToGithub();
         
-        const site = await site_collection.find({ _id: new Realm.BSON.ObjectId(site_id) });
+        const site = await site_collection.findOne({ _id: new Realm.BSON.ObjectId(site_id) });
 
         if (!site.domainConnected) {
           if (legisSubdomain) {
