@@ -18,7 +18,7 @@ export default function SHero1({data} : any) {
             },
             button: {
                 borderRadius: 0,
-                boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.15)',
+                boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.2)',
                 backgroundColor: 'black'
             },
             image: {
@@ -33,7 +33,7 @@ export default function SHero1({data} : any) {
             },
             button: {
                 borderRadius: 5,
-                boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.15)',
+                boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.2)',
                 backgroundColor: 'black'
             },
             image: {
@@ -46,7 +46,7 @@ export default function SHero1({data} : any) {
             },
             button: {
                 borderRadius: 40,
-                boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.15)',
+                boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.2)',
                 backgroundColor: 'black'
             },
             image: {
