@@ -9,16 +9,43 @@ export default function SHero1({data} : any) {
     }
 
     // mozesz sobie wybrac nazwy styli jakie polaczysz do danego elementu HTML, ale np konwencja to by nazywac tak samo jak klase
-    const s: {[key: string] : CSSProperties} = {
-        content: {
-            // ... tutaj ida  WLASCIWOSCI stylu np background, color itp,
-            boxShadow: '24px 24px red'
+    const sArray: {[key: string] : CSSProperties}[] = 
+    [
+        {
+            content: {
+                // ... tutaj ida  WLASCIWOSCI stylu np background, color itp,
+                boxShadow: '24px 24px red'
+            },
+            innyStyl: {
+                // boxShadow: '24px -24px blue'
+            },
+            // ... itd
         },
-        innyStyl: {
-            // boxShadow: '24px -24px blue'
+        {
+            content: {
+                // ... tutaj ida  WLASCIWOSCI stylu np background, color itp,
+                boxShadow: '24px 24px red'
+            },
+            innyStyl: {
+                // boxShadow: '24px -24px blue'
+            },
+            // ... itd
         },
-        // ... itd
-    }
+        {
+            content: {
+                // ... tutaj ida  WLASCIWOSCI stylu np background, color itp,
+                boxShadow: '24px 24px red'
+            },
+            innyStyl: {
+                // boxShadow: '24px -24px blue'
+            },
+            // ... itd
+        },
+    ]
+    
+    const skeletonIndex = 0; // narazie recznie zmieniaj, albo napisz jakas funkcje do ui
+    const s = sArray[skeletonIndex]
+
 
     return <section style={{...s?.main}} className={i('section') + 's1_section'}>
         <div className={i('wrapper')} >
