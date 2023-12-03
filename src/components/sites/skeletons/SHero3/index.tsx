@@ -12,36 +12,37 @@ export default function SHero3({data} : any) {
     const sArray: {[key: string] : CSSProperties}[] = 
     [
         {
-            content: {
-                // ... tutaj ida  WLASCIWOSCI stylu np background, color itp,
-                boxShadow: '24px 24px red'
+            card: {
+                borderRadius: 0
+
             },
-            innyStyl: {
-                // boxShadow: '24px -24px blue'
+            button: {
+                borderRadius: 0,
+                boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.2)',
+                backgroundColor: 'black'
             },
-            // ... itd
         },
         {
-            content: {
-                // ... tutaj ida  WLASCIWOSCI stylu np background, color itp,
-                boxShadow: '24px -24px blue'
+            card: {
+                borderRadius: 10
+
             },
-            innyStyl: {
-                // boxShadow: '24px -24px blue'
+            button: {
+                borderRadius: 5,
+                boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.2)',
+                backgroundColor: 'black'
             },
-            // ... itd
         },
         {
-            content: {
-                // ... tutaj ida  WLASCIWOSCI stylu np background, color itp,
-                boxShadow: '-24px 24px yellow',
-                color: 'cyan',
+            card: {
+                borderRadius: 30
             },
-            innyStyl: {
-                boxShadow: '24px -24px blue'
+            button: {
+                borderRadius: 40,
+                boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.2)',
+                backgroundColor: 'black'
             },
-            // ... itd
-        },
+        }
     ]
     
     const skeletonIndex = 2; // narazie recznie zmieniaj, albo napisz jakas funkcje do ui
@@ -53,16 +54,16 @@ export default function SHero3({data} : any) {
                 <div  
                     className={i('image') + 'bg-photo'}
                     style ={{
-                        backgroundImage: `url('${data?.cdnUUID ? getUrl(data?.cdnUUID) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Gray_Wikipedia_Logo.jpg/715px-Gray_Wikipedia_Logo.jpg?20191209222645'}')`,
-                        ...(s?.innyStyl ?? {}) // syntax for appending to existing style properties in React
+                        backgroundImage: `url('${data?.cdnUUID ? getUrl(data?.cdnUUID) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Gray_Wikipedia_Logo.jpg/715px-Gray_Wikipedia_Logo.jpg?20191209222645'}')`
                     }}
                 >
                     
                 </div>
-                <div className={i('content')} style={s?.innyStyl}>
+                <div className={i('content')} style={s?.card}>
                     <div className={i('subheading')} style={{lineHeight: 1.5, margin: '20px 0px'}}>{data?.subHeading}</div>
                     <button
                         className={i('button')}
+                        style={{ color: '#fff', ...s?.button }}
                         >
                         {data?.buttonLabel}
                     </button>
