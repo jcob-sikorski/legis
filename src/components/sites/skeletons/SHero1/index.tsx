@@ -12,38 +12,50 @@ export default function SHero1({data} : any) {
     const sArray: {[key: string] : CSSProperties}[] = 
     [
         {
-            content: {
-                // ... tutaj ida  WLASCIWOSCI stylu np background, color itp,
-                boxShadow: '24px 24px red'
+            card: {
+                borderRadius: 0
+
             },
-            innyStyl: {
-                // boxShadow: '24px -24px blue'
+            button: {
+                borderRadius: 0,
+                boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.15)',
+                backgroundColor: 'black'
             },
-            // ... itd
-        },
-        {
-            content: {
-                // ... tutaj ida  WLASCIWOSCI stylu np background, color itp,
-                boxShadow: '24px 24px red'
-            },
-            innyStyl: {
-                // boxShadow: '24px -24px blue'
+            image: {
+                borderRadius: 0,
             },
             // ... itd
         },
         {
-            content: {
-                // ... tutaj ida  WLASCIWOSCI stylu np background, color itp,
-                boxShadow: '24px 24px red'
+            card: {
+                borderRadius: 10
+
             },
-            innyStyl: {
-                // boxShadow: '24px -24px blue'
+            button: {
+                borderRadius: 5,
+                boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.15)',
+                backgroundColor: 'black'
             },
-            // ... itd
+            image: {
+                borderRadius: 15,
+            }
         },
+        {
+            card: {
+                borderRadius: 30
+            },
+            button: {
+                borderRadius: 40,
+                boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.15)',
+                backgroundColor: 'black'
+            },
+            image: {
+                borderRadius: 50,
+            }
+        }
     ]
     
-    const skeletonIndex = 0; // narazie recznie zmieniaj, albo napisz jakas funkcje do ui
+    const skeletonIndex = 2; // narazie recznie zmieniaj, albo napisz jakas funkcje do ui
     const s = sArray[skeletonIndex]
 
 
@@ -56,15 +68,17 @@ export default function SHero1({data} : any) {
                         className={i('right') + 'bg-photo'}
                         style ={{
                             backgroundImage: `url('${data?.cdnUUID ? getUrl(data?.cdnUUID) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Gray_Wikipedia_Logo.jpg/715px-Gray_Wikipedia_Logo.jpg?20191209222645'}')`,
+                            ...s?.image
                         }}
                      />
                      <div  
                         className={i('left')}
+                        style={{...s?.card}}
                      >
                         <div style={{fontSize: 30, fontWeight: 400}}>{data?.heading}</div>
                         <div style={{lineHeight: 1.5, margin: '20px 0px'}}>{data?.subHeading}</div>
                         <button
-                            style={{padding: '15px 20px', background: '#666', color: '#fff', fontSize: 13}}
+                            style={{padding: '15px 20px', background: '#666', color: '#fff', fontSize: 13, ...s?.button}}
                         >
                             {data?.buttonLabel}
                         </button>
