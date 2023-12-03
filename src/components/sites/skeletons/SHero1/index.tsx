@@ -24,7 +24,6 @@ export default function SHero1({data} : any) {
             image: {
                 borderRadius: 0,
             },
-            // ... itd
         },
         {
             card: {
@@ -55,9 +54,8 @@ export default function SHero1({data} : any) {
         }
     ]
     
-    const skeletonIndex = 2; // narazie recznie zmieniaj, albo napisz jakas funkcje do ui
-    const s = sArray[skeletonIndex]
-
+    const skeletonIndex = 8; // narazie recznie zmieniaj, albo napisz jakas funkcje do ui
+    const s = sArray[skeletonIndex%3]
 
     return <section style={{...s?.main}} className={i('section') + 's1_section'}>
         <div className={i('wrapper')} >
@@ -65,14 +63,14 @@ export default function SHero1({data} : any) {
                     style={{width: '100vw', background: 'pink', maxWidth: '1200px', position: 'relative'}}
                 >
                     <div  
-                        className={i('right') + 'bg-photo'}
+                        className={i(`right${Math.floor(skeletonIndex/3)}`) + 'bg-photo'}
                         style ={{
                             backgroundImage: `url('${data?.cdnUUID ? getUrl(data?.cdnUUID) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Gray_Wikipedia_Logo.jpg/715px-Gray_Wikipedia_Logo.jpg?20191209222645'}')`,
                             ...s?.image
                         }}
                      />
                      <div  
-                        className={i('left')}
+                        className={i(`left${Math.floor(skeletonIndex/3)}`)}
                         style={{...s?.card}}
                      >
                         <div style={{fontSize: 30, fontWeight: 400}}>{data?.heading}</div>
