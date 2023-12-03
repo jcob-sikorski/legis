@@ -1,0 +1,51 @@
+/* SHero1 */
+
+.section {
+    background-color: var(--light-gray);
+    font-family: 'Poppins', sans-serif;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    padding: 350px 0;
+    @media (max-width: 800px) {
+        height: fit-content;
+    }
+}
+
+.right {
+    position: absolute;
+    right: 15%;
+    top: calc(-350px/2);
+    width: 50%;
+    height: 400px;
+
+    @media (max-width: 800px) {
+        top: -350px;
+        height: 50vh;
+        width: 100%;
+        right: 0;
+    }
+}
+
+.left {
+    position: absolute;
+    left: 15%;
+    width: 50%;
+    height: fit-content;
+    min-height: 200px;
+    /* max-height: 300px; */
+    background: var(--white);
+    top: calc(-350px/3.5);
+    padding: 30px 20px;
+    
+    @media (max-width: 800px) {
+        width: calc(100% - 20px);
+        left: 0;
+        margin-inline: 10px;
+        max-height: initial;
+    }
+}

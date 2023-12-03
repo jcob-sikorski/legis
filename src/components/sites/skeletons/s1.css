@@ -1,0 +1,31 @@
+.s1_section {
+    /* background-color: red; */
+}
+
+.s1_seriables {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+}
+
+.s1_seriable_main {
+    padding: 24px;
+    min-height: 250px;
+}
+
+.s1_seriable_main_1 {
+    background-color: #023C8311;
+}
+
+.s1_seriable_main_2 {
+    background-color: #023C8322;
+}
+
+.s1_title {
+    font-family: serif;
+    font-size: x-large;
+    margin-bottom: 24px;
+}
+
+.s1_description {
+    font-size: medium;
+}

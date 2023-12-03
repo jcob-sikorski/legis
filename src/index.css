@@ -20,6 +20,12 @@
   --legis-font-main: 'IBM Plex Sans';
 
   --legis-editable-outline: 3px dotted #4391ff;
+
+  /* skeletons variables */
+  --white: #fff;
+  --black: #000;
+  --light-gray: #eee;
+  --dark-gray: #666;
 }
 
 *, html {
@@ -90,6 +96,13 @@ div {
 }
 
 /* DEPLOYED TO SITE */
+
+.bg-photo {
+  overflow: hidden;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
 
 .color-1 {
   background-color: var(--legis-color-1) !important;

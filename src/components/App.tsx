@@ -16,6 +16,7 @@ import Media from "./sites/siteSettings/Media";
 import Playground from "./sites/playground";
 import FromTemplate from "./sites/fromTemplate";
 import Preview from "./sites/preview";
+import Skeletons from "./sites/skeletons";
 
 
 const RequireAuth: React.FC<{ children: React.ReactElement }> = ({ children }) => {
@@ -36,6 +37,7 @@ function App() {
           {/* DEV */}
           <Route path="/html" element={<Html />} />
           <Route path="/playground" element={<Playground />} />
+          <Route path="/skeletons" element={<Skeletons />} />
           
           {/* DON'T DELETE  */}
           <Route path="/preview-iframe" element={<></>} />

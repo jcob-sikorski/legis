@@ -53,6 +53,8 @@ import LAbout3 from '../../templates/LAbout3';
 import EHero1 from '../../templates/editorial/EHero1';
 import EPracticeAreas1 from '../../templates/editorial/EPracticeAreas1';
 import { updateCssStyles } from '../../../utils';
+import { SHero1 } from '../skeletons';
+import SHero2 from '../skeletons/SHero2';
 // import { delay } from '../../../utils';
 
 const { Content, Footer } = Layout;
@@ -206,7 +208,7 @@ function Visualisation({
         switch(data.template_id) {
             // Hero
             case 'LHero1':
-                return <LHero1 isDeploying={isDeploying || mode === 'preview'} data={data} setContext={setContextMiddleware} />
+                return <SHero2 data={data} s={{}}/>
             case 'LHero2':
                 return <LHero2 data={data} setContext={setContextMiddleware} />
             case 'LHero3':
