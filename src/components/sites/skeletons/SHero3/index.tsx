@@ -45,12 +45,12 @@ export default function SHero3({data} : any) {
         }
     ]
     
-    const skeletonIndex = 2; // narazie recznie zmieniaj, albo napisz jakas funkcje do ui
-    const s = sArray[skeletonIndex]
+    const skeletonIndex = 4; // narazie recznie zmieniaj, albo napisz jakas funkcje do ui
+    const s = sArray[skeletonIndex%3]
 
     return <section style={{...s?.main}} className={i('section') + 's1_section'}>
         <div className={i('wrapper')} >
-                <div className={i('heading')}>{data?.heading}</div>
+                <div className={i(`heading${Math.floor(skeletonIndex/3)}`)}>{data?.heading}</div>
                 <div  
                     className={i('image') + 'bg-photo'}
                     style ={{
@@ -59,7 +59,7 @@ export default function SHero3({data} : any) {
                 >
                     
                 </div>
-                <div className={i('content')} style={s?.card}>
+                <div className={i(`content${Math.floor(skeletonIndex/3)}`)} style={s?.card}>
                     <div className={i('subheading')} style={{lineHeight: 1.5, margin: '20px 0px'}}>{data?.subHeading}</div>
                     <button
                         className={i('button')}

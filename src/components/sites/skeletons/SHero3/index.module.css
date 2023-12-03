@@ -5,37 +5,11 @@
     font-family: 'Poppins', sans-serif;
 }
 
-.heading {
-    font-size: 55px;
-    text-align: left;
-    font-weight: 500;
-    max-width: 600px;
-    font-family: Oswald, serif;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    margin-left: 65px;
-    line-height: 1;
-    
-    @media (max-width: 800px) {
-        font-size: 40px;
-        margin-inline: 10px;
-        text-align: center;
-    }
-}
-
 .button {
     padding: 15px 20px;
     background: var(--white);
     color: var(--black);
     font-size: 13px;
-}
-
-.subheading {
-    max-width: 80%;
-
-    @media (max-width: 800px) {
-        max-width: initial;
-    }
 }
 
 .wrapper {
@@ -63,13 +37,78 @@
     }
 }
 
-.content {
+.subheading {
+    max-width: 80%;
+
+    @media (max-width: 800px) {
+        max-width: initial;
+    }
+}
+
+.heading0 {
+    font-size: 55px;
+    text-align: left;
+    font-weight: 500;
+    max-width: 600px;
+    font-family: Oswald, serif;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 65px;
+    line-height: 1;
+    
+    @media (max-width: 800px) {
+        font-size: 40px;
+        margin-inline: 10px;
+        text-align: center;
+    }
+}
+
+.content0 {
     width: 50%;
     height: fit-content;
     max-width: 50%;
     left: 0px;
     margin-left: 65px;
     margin-top: -150px;
+    min-height: 200px;
+    background: var(--dark-gray);
+    color: var(--white);
+    padding: 30px 50px;
+    
+    @media (max-width: 800px) {
+        max-width: initial;
+        margin-inline: 10px;
+        width: calc(100% - 20px);
+        padding: 30px 20px;
+    }
+}
+
+
+.heading1 {
+    font-size: 80px;
+    text-align: left;
+    font-weight: 500;
+    max-width: 600px;
+    font-family: Oswald, serif;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 65px;
+    line-height: 1;
+    
+    @media (max-width: 800px) {
+        font-size: 40px;
+        margin-inline: 10px;
+        text-align: center;
+    }
+}
+
+.content1 {
+    width: 80%;
+    height: fit-content;
+    max-width: 100%;
+    left: 0px;
+    margin-left: 65px;
+    margin-top: -300px;
     min-height: 200px;
     background: var(--dark-gray);
     color: var(--white);
