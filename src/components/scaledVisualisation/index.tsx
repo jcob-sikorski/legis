@@ -11,7 +11,7 @@ export default function ScaledVisualisation({data, mode, width, height} : {data:
     <div style={{ background: 'cyan', width: HALF_WIDTH, height: HALF_HEIGHT, maxWidth: '80vw'}}>
         <div style={{
             // position: 'absolute',
-            background: 'red', 
+            // background: 'red', 
             transform:'scale(0.5) translateX(-50%) translateY(-50%)', 
             width: WIDTH, 
             height: HEIGHT,
