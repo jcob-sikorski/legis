@@ -9,6 +9,7 @@ import SHero3 from './SHero3';
 import SPracticeAreas1 from './SPracticeAreas1';
 import SPracticeAreas3 from './SPracticeAreas3';
 import SValues1 from './SValues1';
+import SAbout1 from './SAbout1';
 
 const testData = {
     heading: 'Corporate Law Experts with 10+ years experience', 
@@ -134,8 +135,8 @@ function Skeletons() {
             case 'SPracticeAreas1': {setComponent(<SPracticeAreas1 data={testData} s={{}} />); break;}            
             case 'SPracticeAreas2': {setComponent(<SPracticeAreas2 data={testData} s={{}} />); break;}            
             case 'SPracticeAreas3': {setComponent(<SPracticeAreas3 data={testData} s={{}} />); break;}            
-            case 'SValues1': {setComponent(<SValues1 data={testData} s={{}} />); break;}            
-            // ... add others 
+            case 'SValues1': {setComponent(<SValues1 data={testData} s={{}} />); break;}
+            case 'SAbout1': {setComponent(<SAbout1 data={testData} s={{}} />); break;}
         }
     }, [selectedSkeletonId])
 
@@ -147,7 +148,7 @@ function Skeletons() {
         'SPracticeAreas2',
         'SPracticeAreas3',
         'SValues1',
-        // ... add others 
+        'SAbout1',
     ]
 
     return ( <div>
