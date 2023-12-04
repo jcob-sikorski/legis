@@ -28,9 +28,9 @@
   --dark-gray: #666;
 }
 
-*, html {
+/* *, html {
   scroll-behavior: smooth;
-}
+} */
 
 body {
   margin: 0;
