@@ -66,7 +66,7 @@ export function getGenerativeFieldsFromTemplateId(template_id: string) {
   // const template_id = "THero1";
   const profiles: any = PROFILES;
   const profile = profiles[template_id]
-  const fields = profile.fields;
+  const fields = profile?.fields;
 
   return fields.filter(({generative}: JSONProfileField) => generative && generative > 0)
 }

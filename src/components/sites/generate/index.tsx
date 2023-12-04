@@ -22,6 +22,7 @@ const openai = new OpenAI({
 
 function Generate() {
   const {site_id, onboarding} = useParams();
+  // onboarding param: 0 = regenerating, 1 = generating FIRST TIME
   
   const [onboardingData, setOnboardingData] = useState<any>();
   const [response, setResponse] = useState<any>();
@@ -265,22 +266,16 @@ function getSiteData(data: any, onboardingData: Questionnaire, bodyTemplate: any
     console.warn("error parsing lawyerDetails in getSiteData.")
   }
 
-  // 1. Nav bar
-  // 2. Hero section - name & 1-2 sentence description
-  // 3. Practice areas
-  // 4. Their values
-  // 5. The team
-  // 6. Reviews and testimonials
-  // 7. Contact us form / CTA
+  // 1. Hero section - name & 1-2 sentence description
+  // 2. Practice areas
+  // 3. Their values
+  // 4. The team
+  // 5. Reviews and testimonials
+  // 6. About us
+  // 7. Contact us
 
   let arr = [
-    // 1. Nav bar = QUESTION 1
-    // {
-    //   section_id: v4(),
-    //   template_id: 'TNavBar1',
-    //   name: NavBar,
-    // },
-    // 2. Hero section = GENERATED
+    // 1. Hero
     {
       section_id: v4(),
       template_id: 'LHero1',
@@ -290,14 +285,14 @@ function getSiteData(data: any, onboardingData: Questionnaire, bodyTemplate: any
       "buttonLabel": "REGISTER",
       "buttonLink": "#Contact-us",
     },
-    // 3. Practice areas = GENERATED
+    // 2. Practice areas
     {
       section_id: v4(),
       template_id: 'LPracticeAreas2',
       areasList: PracticeAreas,
       "title": "Our practice areas",
     },
-    // 4. Their values = GENERATED 
+    // 3. Values
     {
       section_id: v4(),
       template_id: 'LValues2',
@@ -306,7 +301,7 @@ function getSiteData(data: any, onboardingData: Questionnaire, bodyTemplate: any
       "superTitle": "Find out about...",
       "title": "Our values",
     },
-    // 5. The team = QUESTION 9
+    // 4. Team
     {
       section_id: v4(),
       template_id: 'LTeam1',
@@ -314,14 +309,14 @@ function getSiteData(data: any, onboardingData: Questionnaire, bodyTemplate: any
       "superTitle": "Learn more about...",
       "title": "Our team",
     },
-    // 6. Reviews and testimonials = GENERATED
+    // 5. Reviews
     {
       section_id: v4(),
       template_id: 'LReviews2',
       reviews,
       "title": "See what our clients are saying",
     },
-    // 7. About us = GENERATED
+    // 6. About 
     {
       section_id: v4(),
       template_id: 'LAbout1',
@@ -344,6 +339,103 @@ function getSiteData(data: any, onboardingData: Questionnaire, bodyTemplate: any
   }
 
   return arr;
+}
+
+// SAVE CODE FOR REGENERATION FOR LATER
+      // generate site data value
+      // if (onboarding === "1") {
+      //   // FIRST TIME / ONBOARDING
+      //   const siteData = getSiteData(finalContent, onboardingData, bodyTemplate);
+      //   updateSite(siteData);
+      // } else {
+      //   // REGENERATING / NOT ONBOARDING
+      //   const siteData = getRegeneratedSiteData(finalContent, onboardingData, bodyTemplate);
+      //   updateSite(siteData);
+      // }
+
+function getRegeneratedSiteData(aiData: any, onboardingData: Questionnaire, bodyTemplateProps: any[]) {
+  
+  const {NavBar, Hero, PracticeAreas, OurTeam, OurValues, AboutUs} = aiData;
+  const {ClientReviews, LawFirmName, LawyerDetails: LawyerDetailsJSON} = onboardingData;
+  let bodyTemplate = [...bodyTemplateProps];
+  console.log("getSiteData.onboardingData: ", onboardingData);
+  console.log("getSiteData.bodyTemplate: ", bodyTemplate);
+  
+  let reviews = [];
+  try {
+    reviews = JSON.parse(ClientReviews || "[]");
+  } catch {
+    console.warn("error parsing reviews in getSiteData.")
+  }
+  
+  let lawyerDetails = OurTeam;
+  try {
+    const onboardingLawyerDetails: any = JSON.parse(LawyerDetailsJSON || "[]");
+    lawyerDetails = lawyerDetails?.map((lawyer: any, i: number) => {
+      try {
+        return ({...lawyer, cdnUUID: (onboardingLawyerDetails || [])[i].cdnUUID});
+      } catch {}
+    });
+    
+  } catch {
+    console.warn("error parsing lawyerDetails in getSiteData.")
+  }
+  
+  // 1. Hero section - name & 1-2 sentence description
+  // 2. Practice areas
+  // 3. Their values
+  // 4. The team
+  // 5. Reviews and testimonials
+  // 6. About us
+  // 7. Contact us
+  
+  console.log("OK 1");
+  // Here include ONLY generated values, OMIT predefined values coz they never changed or if they changed the user wants to keep them changed.
+  let generatedMap: {[key: string] : object} = {
+    // 1. Hero
+    'hero': {
+      heading: Hero.headline,
+      subHeading: Hero.subHeadline,
+      logo: LawFirmName,
+    },
+    // 2. Practice areas
+    'practice': {
+      areasList: PracticeAreas,
+    },
+    // 3. Values
+    'values': {
+      valuesList: OurValues,
+    },
+    // 4. Team
+    'team': {
+      lawyerDetails,
+    },
+    // 5. Reviews
+    // nothing to generate here
+    // 6. About us
+    'about': {
+      paragraph: AboutUs,
+    },
+    // 7. Contact us
+    // nothing to generate here
+  }
+  
+  console.log("OK 2");
+  console.log("OK 2.0", bodyTemplate);
+  Object.keys(generatedMap)?.map((key: string) => {
+    bodyTemplate = bodyTemplate?.map((section: any) => {
+      if (section?.template_id?.indexOf(key) > -1) {
+        return {...section, ...generatedMap[key] };
+      } else return section
+    })
+    console.log("OK 3.0 ", bodyTemplate);
+  })
+  console.log("OK 3");
+  
+  console.log('Hey generated: ', bodyTemplate);
+  return bodyTemplate;
+  
+  // return arr;
 }
 
 export default Generate;
