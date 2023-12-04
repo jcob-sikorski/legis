@@ -95,6 +95,9 @@ div {
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
 /* DEPLOYED TO SITE */
 
 .bg-photo {

@@ -47,7 +47,7 @@ export default function LContact1({data, setContext} : any) {
                     <p 
                     onClick={() => setContext({key: 'email', type: 'text', label: 'email'})}  
                     className="editable mt-5 text-base font-normal">
-                        <a href="#" title="" className="text-gray-400 hover:text-white">{data?.email ?? "example@example.com"}</a>
+                        <a href="#contact-us" title="" className="text-gray-400 hover:text-white">{data?.email ?? "example@example.com"}</a>
                     </p>
                     {/* <p className="text-base font-normal mt-0.5">
                         <a href="#" title="" className="text-gray-400 hover:text-white"> contact@example.com </a>
@@ -76,7 +76,7 @@ export default function LContact1({data, setContext} : any) {
                     <p
                     onClick={() => setContext({key: 'phone', type: 'text', label: 'Phone number'})}  
                     className="mt-5 text-base font-normal editable">
-                        <a href="#" title="" className="text-gray-400 hover:text-white">{data?.phone || "1-234-567-7890"} </a>
+                        <a href="#contact-us" title="" className="text-gray-400 hover:text-white">{data?.phone || "1-234-567-7890"} </a>
                     </p>
                     {/* <p className="text-base font-normal mt-0.5">
                         <a href="#" title="" className="text-gray-400 hover:text-white"> +1 (252) 555-0356 </a>
@@ -108,7 +108,7 @@ export default function LContact1({data, setContext} : any) {
 
                     <p className="mt-8 text-xl font-normal text-white lg:mt-12 lg:text-2xl">Location</p>
                     <p className="mt-5 text-base font-normal">
-                        <a href="#" title="" 
+                        <a href="#contact-us" title="" 
                         onClick={() => setContext({key: 'address', type: 'text', label: 'Address'})}  
                         className="editable text-gray-400 hover:text-white">
                             {data?.address || "Address, A1 234BC"}
