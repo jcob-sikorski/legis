@@ -11,6 +11,7 @@ import SPracticeAreas3 from './SPracticeAreas3';
 import SValues1 from './SValues1';
 import SAbout1 from './SAbout1';
 import SAbout2 from './SAbout2';
+import SAbout3 from './SAbout3';
 
 const testData = {
     heading: 'Corporate Law Experts with 10+ years experience', 
@@ -139,6 +140,7 @@ function Skeletons() {
             case 'SValues1': {setComponent(<SValues1 data={testData} s={{}} />); break;}
             case 'SAbout1': {setComponent(<SAbout1 data={testData} s={{}} />); break;}
             case 'SAbout2': {setComponent(<SAbout2 data={testData} s={{}} />); break;}
+            case 'SAbout3': {setComponent(<SAbout3 data={testData} s={{}} />); break;}
         }
     }, [selectedSkeletonId])
 
@@ -151,7 +153,8 @@ function Skeletons() {
         'SPracticeAreas3',
         'SValues1',
         'SAbout1',
-        'SAbout2'
+        'SAbout2',
+        'SAbout3'
     ]
 
     return ( <div>

@@ -27,9 +27,6 @@ export default function SAbout1({data} : any) {
                 boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.2)',
                 backgroundColor: 'black'
             },
-            image: {
-                borderRadius: 0,
-            },
         },
         {
             card: {
@@ -41,9 +38,6 @@ export default function SAbout1({data} : any) {
                 boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.2)',
                 backgroundColor: 'black'
             },
-            image: {
-                borderRadius: 15,
-            }
         },
         {
             card: {
@@ -54,9 +48,6 @@ export default function SAbout1({data} : any) {
                 boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.2)',
                 backgroundColor: 'black'
             },
-            image: {
-                borderRadius: 50,
-            }
         }
     ]
     
