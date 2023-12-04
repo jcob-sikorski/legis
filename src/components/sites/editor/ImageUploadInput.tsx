@@ -75,7 +75,7 @@ const ImageUploadInput = ({handleCustomFieldChange, oldUUID, ratio}: any) => {
     
     return <Space direction="vertical" style={{ width: '120px', borderRadius: 12, backgroundColor: 'white', maxHeight: '120px', padding: 0, margin: 0 }} size="large">
       {/* <Upload {...uploadProps}>Click to Upload</Upload>; */}
-        <ImgCrop rotationSlider aspect={ratio} >
+        <ImgCrop modalProps={{okButtonProps: { style: {backgroundColor: '#1677ff'}}}} rotationSlider aspect={ratio} >
             <Dragger showUploadList={false} style={{all: 'unset', background: 'red', maxWidth: '120px' }} {...uploadProps}>
               {resultUUID || oldUUID ? <><img src={getUrl(resultUUID || oldUUID)} alt="avatar" 
               className="relative overflow-hidden bg-cover bg-no-repeat"

@@ -235,7 +235,7 @@ function SiteComponent() {
       borderRadius: 4,
       // justifyContent: '',
       }}>
-      <ImgCrop cropShape='rect' rotationSlider aspect={1}>
+      <ImgCrop modalProps={{okButtonProps: { style: {backgroundColor: '#1677ff'}}}} cropShape='rect' rotationSlider aspect={1}>
         <Upload
           name="avatar"
           style={{width: '100%', height: '100%', 
