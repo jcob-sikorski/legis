@@ -31,7 +31,7 @@ export default function LPracticeAreas2({data, setContext}: any) {
     <div className="relative px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl flex justify-center items-center">
         <div className="grid grid-cols-1 xl:grid-cols-2 md:grid-cols-2 sm-grid-cols-1 gap-x-14 gap-y-12" >
         
-        {((data?.areasList ?? []).map((area: any, i:number) => 
+        {((data?.areasList ?? []).map((area: any, i: number) => 
             <div>
             <p style={{
                 overflowWrap: 'break-word',  

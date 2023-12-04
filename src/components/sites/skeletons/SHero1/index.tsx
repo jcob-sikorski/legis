@@ -54,7 +54,7 @@ export default function SHero1({data} : any) {
         }
     ]
     
-    const skeletonIndex = 8; // narazie recznie zmieniaj, albo napisz jakas funkcje do ui
+    const skeletonIndex = 2; // narazie recznie zmieniaj, albo napisz jakas funkcje do ui
     const s = sArray[skeletonIndex%3]
 
     return <section style={{...s?.main}} className={i('section') + 's1_section'}>

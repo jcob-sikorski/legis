@@ -8,9 +8,9 @@ export default function LValues2({data, setContext} : any) {
     <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="max-w-xl mx-auto text-center">
             <div
-            style={{marginInline: data?.buttonVariant || 'auto auto'}}  
-            onClick={() => setContext({key: 'superTitle', type: 'text', label: 'Super-Title'})} 
-            className="inline-flex px-4 py-1.5 mx-autox rounded-full bg-gradient-to-r from-[var(--legis-color-2)] to-[var(--legis-color-3)]">
+                style={{marginInline: data?.buttonVariant || 'auto auto'}}  
+                onClick={() => setContext({key: 'superTitle', type: 'text', label: 'Super-Title'})} 
+                className="inline-flex px-4 py-1.5 mx-autox rounded-full bg-gradient-to-r from-[var(--legis-color-2)] to-[var(--legis-color-3)]">
                 <p 
                 
                 className="editable text-xs font-semibold tracking-widest text-white uppercase">

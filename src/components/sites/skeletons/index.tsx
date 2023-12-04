@@ -6,6 +6,9 @@ import SHero1 from './SHero1';
 import SHero2 from './SHero2';
 import Visualisation from '../editor/Visualisation';
 import SHero3 from './SHero3';
+import SPracticeAreas1 from './SPracticeAreas1';
+import SPracticeAreas3 from './SPracticeAreas3';
+import SValues1 from './SValues1';
 
 const testData = {
     heading: 'Corporate Law Experts with 10+ years experience', 
@@ -128,6 +131,10 @@ function Skeletons() {
             case 'SHero1': {setComponent(<SHero1 data={testData} s={{}} />); break;}
             case 'SHero2': {setComponent(<SHero2 data={testData} s={{}} />); break;}            
             case 'SHero3': {setComponent(<SHero3 data={testData} s={{}} />); break;}            
+            case 'SPracticeAreas1': {setComponent(<SPracticeAreas1 data={testData} s={{}} />); break;}            
+            case 'SPracticeAreas2': {setComponent(<SPracticeAreas2 data={testData} s={{}} />); break;}            
+            case 'SPracticeAreas3': {setComponent(<SPracticeAreas3 data={testData} s={{}} />); break;}            
+            case 'SValues1': {setComponent(<SValues1 data={testData} s={{}} />); break;}            
             // ... add others 
         }
     }, [selectedSkeletonId])
@@ -136,6 +143,10 @@ function Skeletons() {
         'SHero1',
         'SHero2',
         'SHero3',
+        'SPracticeAreas1',
+        'SPracticeAreas2',
+        'SPracticeAreas3',
+        'SValues1',
         // ... add others 
     ]
 
@@ -187,7 +198,7 @@ function SPracticeAreas2({data, s} : any) {
             practiceDescription: '',
         },
     ]
-    const list = data?.areasList || defaultList;
+    const list = defaultList;
 
     return <section style={s.main} className='s1_section'>
         <div className='s1_seriables' style={s?.seriables || {}}>
@@ -197,8 +208,8 @@ function SPracticeAreas2({data, s} : any) {
                 return <div 
                     className={`s1_seriable_main ${ condition ? 's1_seriable_main_1' : 's1_seriable_main_2'}`} 
                     style={{
-                        ...(s?.seriable?.main || {}), 
-                        ...((condition ? s?.seriable?.main1 : s?.seriable.main2) || {})
+                        ...(s?.seriable?.main || {}),
+                        ...((condition ? s?.seriable?.main1 : s?.seriable?.main2) || {})
                     }}
                 >
                     <div className='s1_title' style={s?.seriable?.title || {}}>
