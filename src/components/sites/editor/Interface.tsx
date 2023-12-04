@@ -157,6 +157,7 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
       let isSection: boolean | undefined = field?.isSection;
       let cdnUUID: string | undefined = field?.cdnUUID;
       let seriableId: string | undefined = field?.seriableId;
+      let inputSize: number[] | undefined = field?.inputSize;
       
       let section_id: string | undefined = field?.section_id;
       
@@ -248,9 +249,11 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
                 {labelComponent()}
                 <Form.Item className='animate__slideIn' name={key} style={itemStyle} >
                   <ImageUploadInput 
+                    inputSize={inputSize}
                     ratio={ratio} 
                     handleCustomFieldChange={changeToSerialCall} // for serial values we append serial context fields. For more info see FieldContext model.
                     oldUUID={oldUUID}
+                    fieldKey={(key && key !== "_") ? key : "cdnUUID"}
                     />
                 </Form.Item>
               </div>
@@ -300,16 +303,22 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
           case 'image': {
             // Select current photo cdn uuid
             let oldUUID = "";
-            data.map((x: any) => {if (x?.section_id === selectedSectionId) oldUUID = x.cdnUUID})
-            
+            if (cdnUUID) {
+              oldUUID = cdnUUID || "";
+            } else {
+              data.map((x: any) => {if (x?.section_id === selectedSectionId) oldUUID = ''})
+            }
+
             return (
               <div key={generatedKey} >
                 {labelComponent()}
                 <Form.Item className='animate__slideIn' name={key} style={itemStyle} >
                   <ImageUploadInput 
+                    inputSize={inputSize}
                     ratio={ratio} 
                     handleCustomFieldChange={handleCustomFieldChange} 
                     oldUUID={oldUUID}
+                    fieldKey={(key && key !== "_") ? key : "cdnUUID"}
                   />
                 </Form.Item>
               </div>  
@@ -398,18 +407,6 @@ function Interface({json, setJson, data, setData, processJson, functions, variab
             </Form.Item>
           </div>
         );
-      case 'image': {
-        
-        // Select current photo cdn uuid
-        let oldUUID = "";
-        data.map((x: any) => {if (x?.section_id === selectedSectionId) oldUUID = x.cdnUUID})
-        
-        return <div key={generatedKey} >
-        {labelComponent}
-        <Form.Item className='animate__slideIn' name={key} style={itemStyle} >
-        <ImageUploadInput ratio={ratio} handleCustomFieldChange={handleCustomFieldChange} oldUUID={oldUUID} />
-      </Form.Item></div>
-      }
       default: {
         return <></>
       }

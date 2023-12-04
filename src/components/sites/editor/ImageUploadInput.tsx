@@ -14,11 +14,13 @@ import { sha256 } from 'js-sha256';
 import { getUrl } from '../../../utils';
 import { DEFAULT_IMAGE_URL } from '../dashboard/SiteCard';
 
-const ImageUploadInput = ({handleCustomFieldChange, oldUUID, ratio}: any) => {
+const ImageUploadInput = ({handleCustomFieldChange, oldUUID: oldUUIDProps, ratio, fieldKey = "cdnUUID", inputSize = [120, 120]}: any) => {
 
     const [resultUUID, setResultUUID] = useState<string>("");
     const [uploading, setUploading] = useState<boolean>(false);
+    const [oldUUID, setOldUUID] = useState(oldUUIDProps);
 
+    // alert(String(inputSize[0]) + " " + String(inputSize[1]))
     const publicKey = config.pkUploadcare; //pk - is public key?
     const privateKey = config.skUploadcare; // sk - is secret key?
     
@@ -45,6 +47,14 @@ const ImageUploadInput = ({handleCustomFieldChange, oldUUID, ratio}: any) => {
       }
      };
 
+
+
+    function handleRemove() {
+      handleCustomFieldChange({[fieldKey]: ''})
+      setResultUUID('');
+      setOldUUID('');
+    }
+
     const uploadProps = {
       beforeUpload: async (file: any) => {
         console.log("Before upload")
@@ -58,7 +68,7 @@ const ImageUploadInput = ({handleCustomFieldChange, oldUUID, ratio}: any) => {
           console.log("result: ", result);
           console.log("result.uuid: ", result.uuid);
   
-          handleCustomFieldChange({cdnUUID: result.uuid})
+          handleCustomFieldChange({[fieldKey]: result.uuid})
           setResultUUID(result.uuid);
           // handleDelete(tempOldUUID);
         }).catch((err) => {
@@ -73,45 +83,56 @@ const ImageUploadInput = ({handleCustomFieldChange, oldUUID, ratio}: any) => {
       maxCount: 1,
     };
     
-    return <Space direction="vertical" style={{ width: '120px', borderRadius: 12, backgroundColor: 'white', maxHeight: '120px', padding: 0, margin: 0 }} size="large">
+    const uploadButton = (
+      <div style={{ 
+        width: '100%', 
+        height: inputSize[1],
+        marginTop: '-16px',
+        borderRadius: 12,
+        boxShadow: '0px 0px 4px 0px #0009', 
+        // border: '2px solid black',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        lineHeight: 1,
+        flexDirection: 'column',
+        background: "#ccc"
+         }}>
+        {/* {loading ? <LoadingOutlined /> : } */}
+        <PlusOutlined />
+        <div style={{ marginTop: 8 }}>Upload</div>
+      </div>
+    );
+
+    return <Space direction="vertical" style={{ width: inputSize[0], borderRadius: 12, backgroundColor: 'white', maxHeight: inputSize[1], padding: 0, margin: 0 }} size="large">
       {/* <Upload {...uploadProps}>Click to Upload</Upload>; */}
-        <ImgCrop modalProps={{okButtonProps: { style: {backgroundColor: '#1677ff'}}}} rotationSlider aspect={ratio} >
-            <Dragger showUploadList={false} style={{all: 'unset', background: 'red', maxWidth: '120px' }} {...uploadProps}>
+        <ImgCrop fillColor='#0000' cropperProps={{style: {containerStyle: {
+        boxShadow: '12px 12px red',
+        background: '#999',
+        backgroundPosition: '50%',
+         backgroundImage: "url('https://upload.wikimedia.org/wikipedia/commons/6/66/White_grey_checkerboard.svg'",
+         }}}} modalProps={{okButtonProps: { style: {backgroundColor: '#1677ff'}}}} rotationSlider aspect={ratio} >
+            <Dragger showUploadList={false} style={{all: 'unset', background: 'red', maxWidth: inputSize[0] }} {...uploadProps}>
               {resultUUID || oldUUID ? <><img src={getUrl(resultUUID || oldUUID)} alt="avatar" 
               className="relative overflow-hidden bg-cover bg-no-repeat"
               style={{ 
+                background: '#0009',
                 // marginInline: 'auto',
                 marginTop: '-16px',
-                width: `120px`, 
-                height: '120px',
+                width: inputSize[0], 
+                height: inputSize[1],
                 borderRadius: 4, 
                 border: '2px solid black'
-                }} />Click to change</> : uploadButton}
+                }} />
+                  {/* <div></div> */}
+                </> : uploadButton}
             </Dragger>
         </ImgCrop>
+        <Button style={{transform: 'translateY(-30px)'}} danger type='primary'  onClick={() => handleRemove()}>Click to DELETE</Button>
         
     </Space>
 };
 
-const uploadButton = (
-  <div style={{ 
-    width: '100%', 
-    height: '120px',
-    marginTop: '-16px',
-    borderRadius: 12,
-    boxShadow: '0px 0px 4px 0px #0009', 
-    // border: '2px solid black',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    lineHeight: 1,
-    flexDirection: 'column',
-    background: "#ccc"
-     }}>
-    {/* {loading ? <LoadingOutlined /> : } */}
-    <PlusOutlined />
-    <div style={{ marginTop: 8 }}>Upload</div>
-  </div>
-);
+
 
 export default ImageUploadInput;

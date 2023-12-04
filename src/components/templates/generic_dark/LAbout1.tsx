@@ -7,7 +7,7 @@ export default function LAbout1({data, setContext}: any) {
         <div className="grid items-center grid-cols-1 md:grid-cols-2 sm:grid-cols-1 gap-x-16 gap-y-12">
             <div className="md:order-last">
                 <img 
-                onClick={() => setContext({key: '_', type: 'image', ratio: 8/10, label: 'Hero Image'})}
+                onClick={() => setContext({key: '_', type: 'image', ratio: 8/10, label: 'Hero Image', inputSize: [80 * 2, 100 * 2]})}
                     className="editable object-cover w-full h-full mx-auto rounded-md lg:max-w-md" 
                     src={data?.cdnUUID ? getUrl(data?.cdnUUID) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/CityLife_Shopping_District_1.jpg/1024px-CityLife_Shopping_District_1.jpg'} 
                     alt="" 

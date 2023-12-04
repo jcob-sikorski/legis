@@ -590,7 +590,7 @@ function LawyerInputComponent({ data, index, changeLawyerData, handleRemoveLawye
       borderRadius: 4,
       justifyContent: 'flex-end',
       }}>
-      <ImgCrop modalProps={{okButtonProps: { style: {backgroundColor: '#1677ff'}}}} cropShape='round' rotationSlider aspect={1}>
+      <ImgCrop fillColor='#0000' modalProps={{okButtonProps: { style: {backgroundColor: '#1677ff'}}}} cropShape='round' rotationSlider aspect={1}>
         <Upload
           name="avatar"
           style={{width: '100%', height: '100%', 
@@ -707,7 +707,7 @@ function ReviewInputComponent({ data, index, changeReviewData, handleRemoveRevie
       borderRadius: 4,
       justifyContent: 'flex-end',
       }}>
-      <ImgCrop modalProps={{okButtonProps: { style: {backgroundColor: '#1677ff'}}}} cropShape='round' rotationSlider aspect={1}>
+      <ImgCrop fillColor='#0000' modalProps={{okButtonProps: { style: {backgroundColor: '#1677ff'}}}} cropShape='round' rotationSlider aspect={1}>
         <Upload
           name="avatar"
           style={{width: '100%', height: '100%', 

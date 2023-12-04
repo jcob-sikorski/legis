@@ -22,6 +22,7 @@ interface IFrameProps {
                 innerDoc?.documentElement?.style.setProperty('--legis-color-1', `${colors[0]}`);
                 innerDoc?.documentElement?.style.setProperty('--legis-color-2', `${colors[1]}`);
                 innerDoc?.documentElement?.style.setProperty('--legis-color-3', `${colors[2]}`);
+                innerDoc?.documentElement?.style.setProperty('--legis-font-main', `IBM Plex Sans`);
             } catch {message.error("Error loading template colors"); }
         }
     }    

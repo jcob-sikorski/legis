@@ -34,4 +34,5 @@ export interface FieldContext {
   isSection?: boolean // if set to true interface displays '+ Add' and '- Delete' buttons for seriables in selected collection value
   cdnUUID?: string // used to store clicked value's current image cdn UUID. It will be later displayed in image input in editor's Interface.
   seriableId?: string // used as diffrentiator between seriable field input forms (E.g. when new lawyer is created it's edit form doesn't have the same key as the previous one. )
+  inputSize?: number[] // used to change image input width and height (for images only)
 }

@@ -53,7 +53,6 @@ import LAbout3 from '../../templates/LAbout3';
 import EHero1 from '../../templates/editorial/EHero1';
 import EPracticeAreas1 from '../../templates/editorial/EPracticeAreas1';
 import { updateCssStyles } from '../../../utils';
-import { SHero1 } from '../skeletons';
 import SHero2 from '../skeletons/SHero2';
 // import { delay } from '../../../utils';
 
@@ -208,7 +207,7 @@ function Visualisation({
         switch(data.template_id) {
             // Hero
             case 'LHero1':
-                return <SHero2 data={data} s={{}}/>
+                return <LHero1 data={data} setContext={setContextMiddleware} isDeploying={isDeploying} />
             case 'LHero2':
                 return <LHero2 data={data} setContext={setContextMiddleware} />
             case 'LHero3':
