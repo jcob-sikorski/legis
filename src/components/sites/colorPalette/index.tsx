@@ -101,7 +101,7 @@ function ColorPalette() {
             transform: 'scale(0.7)', 
             transformOrigin: 'top'
           }}> */}
-            <IFrame style={{width: '100%', height: '100vh'}}>
+            <IFrame colors={palette} style={{width: '100%', height: '100vh'}}>
               <Visualisation data={data} mode='showcase' />
             </IFrame>
           {/* </div> */}
@@ -158,7 +158,7 @@ function ColorPalette() {
               // bottom: 0
             }}
             >
-            Click to customize
+            Edit your content
           </Button>
         </Flex>
       </div>

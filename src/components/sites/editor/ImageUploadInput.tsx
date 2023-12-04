@@ -106,12 +106,21 @@ const ImageUploadInput = ({handleCustomFieldChange, oldUUID: oldUUIDProps, ratio
 
     return <Space direction="vertical" style={{ width: inputSize[0], borderRadius: 12, backgroundColor: 'white', maxHeight: inputSize[1], padding: 0, margin: 0 }} size="large">
       {/* <Upload {...uploadProps}>Click to Upload</Upload>; */}
-        <ImgCrop fillColor='#0000' cropperProps={{style: {containerStyle: {
-        boxShadow: '12px 12px red',
-        background: '#999',
-        backgroundPosition: '50%',
-         backgroundImage: "url('https://upload.wikimedia.org/wikipedia/commons/6/66/White_grey_checkerboard.svg'",
-         }}}} modalProps={{okButtonProps: { style: {backgroundColor: '#1677ff'}}}} rotationSlider aspect={ratio} >
+        <ImgCrop fillColor='#0000' 
+        cropperProps={{
+            style: {
+              containerStyle: {
+              background: '#999',
+              backgroundPosition: '50%',
+              backgroundImage: "url('https://upload.wikimedia.org/wikipedia/commons/6/66/White_grey_checkerboard.svg'",
+              }
+            },
+          // required props set to default to avoid <ImgCrop /> error
+          zoomSpeed: 1,
+          restrictPosition: true,
+          mediaProps: {}
+         }} 
+         modalProps={{okButtonProps: { style: {backgroundColor: '#1677ff'}}}} rotationSlider aspect={ratio} >
             <Dragger showUploadList={false} style={{all: 'unset', background: 'red', maxWidth: inputSize[0] }} {...uploadProps}>
               {resultUUID || oldUUID ? <><img src={getUrl(resultUUID || oldUUID)} alt="avatar" 
               className="relative overflow-hidden bg-cover bg-no-repeat"

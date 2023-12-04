@@ -152,6 +152,8 @@ export function getHeroImageURLFromBodyTemplate(body_template: object[]) {
       if (section?.template_id?.toLowerCase()?.indexOf("hero") > -1) // "has hero in template_id name"
         image_url = section?.cdnUUID ? getUrl(section?.cdnUUID) : DEFAULT_IMAGE_URL
     });
+
+  if (!image_url) image_url = DEFAULT_IMAGE_URL;
     
   return image_url;
 }

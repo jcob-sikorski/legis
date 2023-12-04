@@ -124,6 +124,10 @@ function Survey() {
     setFieldValues(updatedValues);
   };
 
+  const devUpdateFields = async (obj: any) => {
+    const updatedValues = { ...fieldValues, ...obj };
+    setFieldValues(updatedValues);
+  };
 
   React.useEffect(() => {
     if (fieldValues) {
@@ -336,6 +340,60 @@ function Survey() {
     }
   }, [fieldValues]) 
 
+  async function devFillOut() {
+    // setPage(8);
+
+    const shaunTestData = {
+      // site_id: new Realm.BSON.ObjectID(site_id),
+      // _id: newId,
+      // page: 0,
+      LawFirmName: "Shaun & Benn Law partners",
+      MainPracticeArea: "Intellectual Property Law",
+      OneSentenceDescription: "we are a team of intellectual property lawyers who specialize in copyrights, trademarks, patents and everything related to IP rights for innovative & creative companies and individuals.",
+      SpecializedPracticeAreas: "copyright law, trademark law, patent law,",
+      StandOutFactor: ["Clarity-focused: We are problem solvers at heart.", "Domain experts - We are experts at what we do."],
+      ImportantValues: ["Reliability", "Loyalty & Trust", "Excellence", "Collaboration"],
+      FirmStrengths: `Our firm’s significant litigation experience provides our transactional services an advantage by knowing first-hand how registrations and agreements play out when they are disputed in court. Since 2017, industry peers awarded Shaun & Benn as a "SuperLawyers Rising Star“ for "Intellectual Property Litigation” - a distinction limited to only 2.5% attorneys in the Southern California region.`,
+      LawyerDetails: JSON.stringify([
+        {
+          "name": "Shaun Poli",
+          "description": "is a renowned IP lawyer with over 10+ years of experience handling IP law cases and has worked with companies like Cisco, Sun microsystems, Apple, Slack and many more companies across Silicon Valley."
+        },
+        {
+          "name": "Benn Deusch",
+          "description": "is a copyright lawyer who works with creators and artists across different domains. He has worked with writers, musicians, painters, architects and many more creators for over 10 years."
+        },
+      ]),
+      ClientReviews: JSON.stringify([
+        {
+          "testimonial": "Shaun & Benn have been incredibly professional about how they go about doing their business. They are domain experts and they have a very keen attention to detail",
+          "clientName": "Client 1"
+        },
+        {
+          "testimonial": "Shaun & Been helped me when I really needed someone to step in and help me file a patent for my invention. It's hard to trust lawyers but Shaun & Benn really had my back and I appreciate them.",
+          "clientName": "Client 2"
+        },
+        {
+          "testimonial": "The best lawyers are those who give a shit about your business and Shaun and Benn are those rare breed of lawyers who care about their clients. They go above and beyond to make you feel you're in good hands. I recommend them very strongly.",
+          "clientName": "Client 3"
+        }
+      ]),
+    };
+
+    try {
+      const updateResult = await survey_collection.updateOne(
+        { site_id: new Realm.BSON.ObjectID(site_id) },
+        { $set: { ...shaunTestData } }
+      );
+      console.log(`Updated ${updateResult.modifiedCount} document.`);
+      setPage(9)
+    } catch (error) {
+      console.error('Error updating document in MongoDB:', error);
+    }
+
+
+  }
+
   let leftStyle: any = { backgroundColor: '#262627' };
   if (page === 8 || page === 9) {
     leftStyle = { backgroundColor: '#262627', minWidth: '50vw', maxWidth: '50vw', height: '100vh', padding: 15, maxHeight: '100vh', overflowY: 'scroll'}
@@ -469,6 +527,7 @@ function Survey() {
             </div>
           )}
         <div style={{ display: 'flex', flexDirection: 'row', position: 'absolute', bottom: 0, right: 0 }}>
+          {import.meta.env.DEV && <button onClick={devFillOut}>Fill out with [Shaun & Benn]</button>}
           {page !== 0 && (
             <Button
               type="primary"
@@ -590,7 +649,21 @@ function LawyerInputComponent({ data, index, changeLawyerData, handleRemoveLawye
       borderRadius: 4,
       justifyContent: 'flex-end',
       }}>
-      <ImgCrop fillColor='#0000' modalProps={{okButtonProps: { style: {backgroundColor: '#1677ff'}}}} cropShape='round' rotationSlider aspect={1}>
+      <ImgCrop 
+      cropperProps={{
+        style: {
+          containerStyle: {
+          background: '#999',
+          backgroundPosition: '50%',
+          backgroundImage: "url('https://upload.wikimedia.org/wikipedia/commons/6/66/White_grey_checkerboard.svg'",
+          }
+        },
+      // required props set to default to avoid <ImgCrop /> error
+      zoomSpeed: 1,
+      restrictPosition: true,
+      mediaProps: {}
+     }} 
+      fillColor='#0000' modalProps={{okButtonProps: { style: {backgroundColor: '#1677ff'}}}} cropShape='round' rotationSlider aspect={1}>
         <Upload
           name="avatar"
           style={{width: '100%', height: '100%', 
@@ -707,7 +780,21 @@ function ReviewInputComponent({ data, index, changeReviewData, handleRemoveRevie
       borderRadius: 4,
       justifyContent: 'flex-end',
       }}>
-      <ImgCrop fillColor='#0000' modalProps={{okButtonProps: { style: {backgroundColor: '#1677ff'}}}} cropShape='round' rotationSlider aspect={1}>
+      <ImgCrop 
+      cropperProps={{
+        style: {
+          containerStyle: {
+          background: '#999',
+          backgroundPosition: '50%',
+          backgroundImage: "url('https://upload.wikimedia.org/wikipedia/commons/6/66/White_grey_checkerboard.svg'",
+          }
+        },
+      // required props set to default to avoid <ImgCrop /> error
+      zoomSpeed: 1,
+      restrictPosition: true,
+      mediaProps: {}
+     }} 
+      fillColor='#0000' modalProps={{okButtonProps: { style: {backgroundColor: '#1677ff'}}}} cropShape='round' rotationSlider aspect={1}>
         <Upload
           name="avatar"
           style={{width: '100%', height: '100%', 

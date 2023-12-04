@@ -1,15 +1,16 @@
-import { DeleteOutlined, EditOutlined, CopyOutlined, SettingOutlined } from "@ant-design/icons";
-import { Card, Popover, QRCode, Space } from "antd";
+import { DeleteOutlined, EditOutlined, CopyOutlined, SettingOutlined, FormOutlined, LoadingOutlined, AuditOutlined } from "@ant-design/icons";
+import { Card, Popover, QRCode, Space, message } from "antd";
 import Meta from "antd/es/card/Meta";
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from 'react-redux';
 import { setSite } from '../../../redux/actions';
 import { getHeroImageURLFromBodyTemplate } from "../../../utils";
+import { useEffect } from "react";
 
 export const DEFAULT_IMAGE_URL = 'https://mdbcdn.b-cdn.net/img/new/slides/146.webp';
 
-export default function SiteCard({ data, onEdit, onClone, onDelete }: any) {
+export default function SiteCard({ data, onEdit, onClone, onDelete, site_id }: any) {
 
     const { title, description, body_template} = data;
 
@@ -22,7 +23,17 @@ export default function SiteCard({ data, onEdit, onClone, onDelete }: any) {
       dispatch(setSite(data));
 
       navigate('/overview-settings')
-  }
+    }
+
+    function onSurvey() {
+      navigate(`/survey/${site_id}`)
+    }
+
+    useEffect(() => {
+      if (!body_template || body_template?.length <= 0) {
+        message.info(`Please finish survey in the site "${title}"`)
+      }
+    }, [])
 
     return (
       <Card
@@ -38,7 +49,11 @@ export default function SiteCard({ data, onEdit, onClone, onDelete }: any) {
         }
         actions={[
           <SettingOutlined key="setting" onClick={onSettings} style={{ color: 'black', fontWeight: 'bold' }}/>,
-          <EditOutlined key="edit" onClick={onEdit} style={{ color: 'black', fontWeight: 'bold' }}/>,
+          <>{
+            body_template && body_template?.length > 0 
+            ? <EditOutlined key="edit" onClick={onEdit} style={{ color: 'black', fontWeight: 'bold' }}/>
+            : <AuditOutlined label='Finish the survey' key="survey" onClick={onSurvey} style={{ color: 'black', fontWeight: 'bold' }}/>
+          }</>,
           <CopyOutlined key="clone" onClick={onClone} style={{ color: 'black', fontWeight: 'bold' }}/>,
           <DeleteOutlined key="delete" onClick={onDelete} style={{ color: 'black', fontWeight: 'bold' }}/>,
         ]}

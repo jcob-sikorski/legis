@@ -17,6 +17,7 @@ import Playground from "./sites/playground";
 import FromTemplate from "./sites/fromTemplate";
 import Preview from "./sites/preview";
 import Skeletons from "./sites/skeletons";
+import Showcase from "./sites/showcase";
 
 
 const RequireAuth: React.FC<{ children: React.ReactElement }> = ({ children }) => {
@@ -52,6 +53,13 @@ function App() {
             element={
               <RequireAuth>
                 <Dashboard />
+              </RequireAuth>
+            } 
+          />
+          <Route path="/showcase/:site_id"
+            element={
+              <RequireAuth>
+                <Showcase />
               </RequireAuth>
             } 
           />

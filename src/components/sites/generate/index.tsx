@@ -147,7 +147,7 @@ function Generate() {
         // TODO if useParams says onboardingflow == true then go to color-palette
         //        else go to editor
         if (onboarding === '1') {
-          navigate(`/color-palette/${site_id}`);
+          navigate(`/showcase/${site_id}`);
         } else {
           navigate(`/editor/${site_id}`);
         }
@@ -283,7 +283,7 @@ function getSiteData(data: any, onboardingData: Questionnaire, bodyTemplate: any
       subHeading: Hero.subHeadline,
       logo: LawFirmName,
       "buttonLabel": "REGISTER",
-      "buttonLink": "#Contact-us",
+      "buttonLink": "#contact-us",
     },
     // 2. Practice areas
     {

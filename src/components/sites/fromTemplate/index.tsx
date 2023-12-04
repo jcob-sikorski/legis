@@ -17,10 +17,7 @@ function FromTemplate() {
   const {template_set_id}: any = useParams();
   
   if (template_set_id) {
-    sessionStorage.setItem('legis_template_set_id', template_set_id);
-    
-    
-    // console.log()
+    // sessionStorage.setItem('legis_template_set_id', template_set_id);
   }
 
   let mockData = JSON.parse(DEV_JSON_TO_INJECT);

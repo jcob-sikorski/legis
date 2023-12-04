@@ -27,7 +27,7 @@ export const DEV_JSON_TO_INJECT = `
       "subHeading": "Passionate about the game both inside and outside the courtroom, our sports law firm excels in navigating the complex legal landscape of the sports industry, ensuring our clients score victories on and off the field.",
       "logo": "Roomba & Associates",
       "buttonLabel": "REGISTER",
-      "buttonLink": "#Contact-us"
+      "buttonLink": "#contact-us"
     },
     {
       "section_id": "c2553439-5bc8-4f02-98f6-e250fb2c7d2e",
