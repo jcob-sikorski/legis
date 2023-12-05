@@ -1,0 +1,121 @@
+/* SHero3 */
+
+.section {
+  background-color: white;
+  font-family: 'Poppins', sans-serif;
+}
+
+.button {
+  padding: 15px 20px;
+  font-size: 13px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  /* align-items: center; */
+  height: fit-content;
+  /* padding: 350px 0; */
+  @media (max-width: 800px) {
+      height: fit-content;
+  }
+}
+
+.image {
+  /* position: relative; */
+  /* right: 15%; */
+  /* top: calc(-350px/2); */
+  width: 100%;
+  height: 450px;
+
+  @media (max-width: 800px) {
+      height: 450px;
+      width: 100%;
+  }
+}
+
+.subheading {
+  max-width: 80%;
+
+  @media (max-width: 800px) {
+      max-width: initial;
+  }
+}
+
+.heading0 {
+  font-size: 55px;
+  text-align: left;
+  font-weight: 500;
+  max-width: 600px;
+  font-family: 'Playfair Display', serif;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 65px;
+  line-height: 1;
+  
+  @media (max-width: 800px) {
+      font-size: 40px;
+      margin-inline: 10px;
+      text-align: center;
+  }
+}
+
+.content0 {
+  width: 50%;
+  height: fit-content;
+  max-width: 50%;
+  left: 0px;
+  margin-left: 65px;
+  margin-top: -150px;
+  min-height: 200px;
+  background: white;
+  color: var(--white);
+  padding: 30px 50px;
+  
+  @media (max-width: 800px) {
+      max-width: initial;
+      margin-inline: 10px;
+      width: calc(100% - 20px);
+      padding: 30px 20px;
+  }
+}
+
+
+.heading1 {
+  font-size: 80px;
+  text-align: left;
+  font-weight: 500;
+  max-width: 600px;
+  font-family: Oswald, serif;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 65px;
+  line-height: 1;
+  
+  @media (max-width: 800px) {
+      font-size: 40px;
+      margin-inline: 10px;
+      text-align: center;
+  }
+}
+
+.content1 {
+  width: 80%;
+  height: fit-content;
+  max-width: 100%;
+  left: 0px;
+  margin-left: 65px;
+  margin-top: -150px;
+  min-height: 200px;
+  background: white;
+  color: var(--white);
+  padding: 30px 50px;
+  
+  @media (max-width: 800px) {
+      max-width: initial;
+      margin-inline: 10px;
+      width: calc(100% - 20px);
+      padding: 30px 20px;
+  }
+}

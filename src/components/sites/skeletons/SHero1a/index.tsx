@@ -20,7 +20,6 @@ export default function SHero1a({data} : any) {
             button: {
                 borderRadius: 0,
                 boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.2)',
-                backgroundColor: 'black'
             },
             image: {
                 borderRadius: 0
@@ -35,7 +34,6 @@ export default function SHero1a({data} : any) {
             button: {
                 borderRadius: 5,
                 boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.2)',
-                backgroundColor: 'black'
             },
             image: {
                 borderRadius: 15,
@@ -49,7 +47,6 @@ export default function SHero1a({data} : any) {
             button: {
                 borderRadius: 40,
                 boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.2)',
-                backgroundColor: 'black'
             },
             image: {
                 borderRadius: 50,
@@ -81,7 +78,7 @@ export default function SHero1a({data} : any) {
                         </div>
                         <div style={{lineHeight: 1.5, margin: '20px 0px', color: '#9CA3AF'}}>{data?.subHeading}</div>
                         <button
-                            style={{padding: '15px 20px', background: '#03507e', color: '#fff', fontSize: 13, ...s?.button}}
+                            style={{padding: '15px 20px', backgroundColor: '#03507e', color: '#fff', fontSize: 13, ...s?.button}}
                         >
                             {data?.buttonLabel}
                         </button>

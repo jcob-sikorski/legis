@@ -8,6 +8,7 @@ import SHero2 from './SHero2';
 import SHero2a from './SHero2a';
 import Visualisation from '../editor/Visualisation';
 import SHero3 from './SHero3';
+import SHero3a from './SHero3a';
 import SPracticeAreas1 from './SPracticeAreas1';
 import SPracticeAreas3 from './SPracticeAreas3';
 import SValues1 from './SValues1';
@@ -141,7 +142,8 @@ function Skeletons() {
             case 'SHero1a': {setComponent(<SHero1a data={testData} s={{}} />); break;}
             case 'SHero2': {setComponent(<SHero2 data={testData} s={{}} />); break;}
             case 'SHero2a': {setComponent(<SHero2a data={testData} s={{}} />); break;}       
-            case 'SHero3': {setComponent(<SHero3 data={testData} s={{}} />); break;}            
+            case 'SHero3': {setComponent(<SHero3 data={testData} s={{}} />); break;}
+            case 'SHero3a': {setComponent(<SHero3a data={testData} s={{}} />); break;}            
             case 'SPracticeAreas1': {setComponent(<SPracticeAreas1 data={testData} s={{}} />); break;}            
             case 'SPracticeAreas2': {setComponent(<SPracticeAreas2 data={testData} s={{}} />); break;}            
             case 'SPracticeAreas3': {setComponent(<SPracticeAreas3 data={testData} s={{}} />); break;}            
@@ -162,6 +164,7 @@ function Skeletons() {
         'SHero2',
         'SHero2a',
         'SHero3',
+        'SHero3a',
         'SPracticeAreas1',
         'SPracticeAreas2',
         'SPracticeAreas3',
