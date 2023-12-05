@@ -48,21 +48,22 @@ export default function SValues1({data} : any) {
     const skeletonIndex = 4; // narazie recznie zmieniaj, albo napisz jakas funkcje do ui
     const s = sArray[skeletonIndex%3]
 
-    return <section>
-    <header>
-        <h2>Feugiat consequat tempus ultrices</h2>
-    </header>
-    <div className="content">
-        <p><strong>Etiam tristique libero</strong> eu nibh porttitor amet fermentum. Nullam venenatis erat id vehicula ultrices sed ultricies condimentum.</p>
-        <ul className="feature-icons">
-            <li className="icon solid fa-laptop">Consequat tempus</li>
-            <li className="icon solid fa-bolt">Etiam adipiscing</li>
-            <li className="icon solid fa-signal">Libero nullam</li>
-            <li className="icon solid fa-cog">Blandit condimentum</li>
-            <li className="icon solid fa-map-marker-alt">Lorem ipsum dolor</li>
-            <li className="icon solid fa-code">Nibh amet venenatis</li>
-        </ul>
-        <p>Vehicula ultrices sed ultricies condimentum. Magna sed etiam consequat, et lorem adipiscing sed nulla. Volutpat nisl et tempus et dolor libero, feugiat magna tempus, sed et lorem adipiscing.</p>
+    return <section style={{...s?.main}} className={i('section')}>
+    <div className={i('wrapper')} >
+        <div className={i('heading')}>Our</div>
+        <div className={i('heading')}>Values</div>
+        <div className={i('subheading')}>Our board-certified family law attorneys work to achieve a fair and timely resolution of the legal issues in your case.</div>
+        <div className={i('square-row')}>
+            <div className={i('square')}></div>
+            <div className={i('square')}></div>
+            <div className={i('square')}></div>
+        </div>
+        <div className={i('square-row')}>
+            <div className={i('square')}></div>
+            <div className={i('square')}></div>
+            <div className={i('square')}></div>
+        </div>
     </div>
-</section>
+</section> /* SHero3 */
+
 }
