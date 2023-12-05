@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import SHero1 from './SHero1';
 import SHero1a from './SHero1a';
 import SHero2 from './SHero2';
+import SHero2a from './SHero2a';
 import Visualisation from '../editor/Visualisation';
 import SHero3 from './SHero3';
 import SPracticeAreas1 from './SPracticeAreas1';
@@ -138,7 +139,8 @@ function Skeletons() {
             default: 
             case 'SHero1': {setComponent(<SHero1 data={testData} s={{}} />); break;}
             case 'SHero1a': {setComponent(<SHero1a data={testData} s={{}} />); break;}
-            case 'SHero2': {setComponent(<SHero2 data={testData} s={{}} />); break;}            
+            case 'SHero2': {setComponent(<SHero2 data={testData} s={{}} />); break;}
+            case 'SHero2a': {setComponent(<SHero2a data={testData} s={{}} />); break;}       
             case 'SHero3': {setComponent(<SHero3 data={testData} s={{}} />); break;}            
             case 'SPracticeAreas1': {setComponent(<SPracticeAreas1 data={testData} s={{}} />); break;}            
             case 'SPracticeAreas2': {setComponent(<SPracticeAreas2 data={testData} s={{}} />); break;}            
@@ -158,6 +160,7 @@ function Skeletons() {
         'SHero1',
         'SHero1a',
         'SHero2',
+        'SHero2a',
         'SHero3',
         'SPracticeAreas1',
         'SPracticeAreas2',
