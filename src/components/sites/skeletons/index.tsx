@@ -11,6 +11,7 @@ import SPracticeAreas3 from './SPracticeAreas3';
 import SValues1 from './SValues1';
 import SValues2 from './SValues2';
 import SAbout1 from './SAbout1';
+import SAbout1a from './SAbout1a';
 import SAbout2 from './SAbout2';
 import SAbout3 from './SAbout3';
 import SContact1 from './SContact1';
@@ -143,6 +144,7 @@ function Skeletons() {
             case 'SValues1': {setComponent(<SValues1 data={testData} s={{}} />); break;}
             case 'SValues2': {setComponent(<SValues2 data={testData} s={{}} />); break;}
             case 'SAbout1': {setComponent(<SAbout1 data={testData} s={{}} />); break;}
+            case 'SAbout1a': {setComponent(<SAbout1a data={testData} s={{}} />); break;}
             case 'SAbout2': {setComponent(<SAbout2 data={testData} s={{}} />); break;}
             case 'SAbout3': {setComponent(<SAbout3 data={testData} s={{}} />); break;}
             case 'SContact1': {setComponent(<SContact1 data={testData} s={{}} />); break;}
@@ -160,6 +162,7 @@ function Skeletons() {
         'SValues1',
         'SValues2',
         'SAbout1',
+        'SAbout1a',
         'SAbout2',
         'SAbout3',
         'SContact1',
