@@ -9,6 +9,7 @@ import SHero3 from './SHero3';
 import SPracticeAreas1 from './SPracticeAreas1';
 import SPracticeAreas3 from './SPracticeAreas3';
 import SValues1 from './SValues1';
+import SValues2 from './SValues2';
 import SAbout1 from './SAbout1';
 import SAbout2 from './SAbout2';
 import SAbout3 from './SAbout3';
@@ -140,6 +141,7 @@ function Skeletons() {
             case 'SPracticeAreas2': {setComponent(<SPracticeAreas2 data={testData} s={{}} />); break;}            
             case 'SPracticeAreas3': {setComponent(<SPracticeAreas3 data={testData} s={{}} />); break;}            
             case 'SValues1': {setComponent(<SValues1 data={testData} s={{}} />); break;}
+            case 'SValues2': {setComponent(<SValues2 data={testData} s={{}} />); break;}
             case 'SAbout1': {setComponent(<SAbout1 data={testData} s={{}} />); break;}
             case 'SAbout2': {setComponent(<SAbout2 data={testData} s={{}} />); break;}
             case 'SAbout3': {setComponent(<SAbout3 data={testData} s={{}} />); break;}
@@ -156,6 +158,7 @@ function Skeletons() {
         'SPracticeAreas2',
         'SPracticeAreas3',
         'SValues1',
+        'SValues2',
         'SAbout1',
         'SAbout2',
         'SAbout3',
