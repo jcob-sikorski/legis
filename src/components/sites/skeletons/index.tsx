@@ -3,6 +3,7 @@ import './s1.css';
 import IFrame from '../../iFrame';
 import { useEffect, useState } from 'react';
 import SHero1 from './SHero1';
+import SHero1a from './SHero1a';
 import SHero2 from './SHero2';
 import Visualisation from '../editor/Visualisation';
 import SHero3 from './SHero3';
@@ -136,6 +137,7 @@ function Skeletons() {
         switch(selectedSkeletonId) {
             default: 
             case 'SHero1': {setComponent(<SHero1 data={testData} s={{}} />); break;}
+            case 'SHero1a': {setComponent(<SHero1a data={testData} s={{}} />); break;}
             case 'SHero2': {setComponent(<SHero2 data={testData} s={{}} />); break;}            
             case 'SHero3': {setComponent(<SHero3 data={testData} s={{}} />); break;}            
             case 'SPracticeAreas1': {setComponent(<SPracticeAreas1 data={testData} s={{}} />); break;}            
@@ -154,6 +156,7 @@ function Skeletons() {
 
     const skeletonIds = [
         'SHero1',
+        'SHero1a',
         'SHero2',
         'SHero3',
         'SPracticeAreas1',
