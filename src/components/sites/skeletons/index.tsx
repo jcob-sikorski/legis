@@ -3,7 +3,8 @@ import './s1.css';
 import IFrame from '../../iFrame';
 import { useEffect, useState } from 'react';
 import Visualisation from '../editor/Visualisation';
-import Stellar from './Stellar';
+// import Stellar from './Stellar';
+import SolidState from './SolidState';
 
 const testData = {
     heading: 'Corporate Law Experts with 10+ years experience', 
@@ -20,12 +21,14 @@ function Skeletons() {
     useEffect(() => {
         switch(selectedSkeletonId) {
             default:
-            case 'Stellar': {setComponent(<Stellar/>); break;}
+            // case 'Stellar': {setComponent(<Stellar/>); break;}
+            case 'SolidState': {setComponent(<SolidState/>); break;}
         }
     }, [selectedSkeletonId])
 
     const skeletonIds = [
-        'Stellar'
+        // 'Stellar',
+        'SolidState'
     ]
 
     return ( <div>
