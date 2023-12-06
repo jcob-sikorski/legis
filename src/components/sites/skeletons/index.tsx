@@ -2,23 +2,8 @@ import { faker } from '@faker-js/faker';
 import './s1.css';
 import IFrame from '../../iFrame';
 import { useEffect, useState } from 'react';
-import SHero1 from './SHero1';
-import SHero1a from './SHero1a';
-import SHero2 from './SHero2';
-import SHero2a from './SHero2a';
 import Visualisation from '../editor/Visualisation';
-import SHero3 from './SHero3';
-import SHero3a from './SHero3a';
-import SPracticeAreas1 from './SPracticeAreas1';
-import SPracticeAreas3 from './SPracticeAreas3';
-import SValues1 from './SValues1';
-import SValues2 from './SValues2';
-import SAbout1 from './SAbout1';
-import SAbout1a from './SAbout1a';
-import SAbout2 from './SAbout2';
-import SAbout3 from './SAbout3';
-import SContact1 from './SContact1';
-import SContact2 from './SContact2';
+import Stellar from './Stellar';
 
 const testData = {
     heading: 'Corporate Law Experts with 10+ years experience', 
@@ -27,155 +12,20 @@ const testData = {
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Gray_Wikipedia_Logo.jpg/715px-Gray_Wikipedia_Logo.jpg?20191209222645'
 }
 
-function Skeletons() {
-
-    const data = JSON.parse(`{
-        "section_id": "c2553439-5bc8-4f02-98f6-e250fb2c7d2e",
-        "template_id": "LPracticeAreas2",
-        "title": "Our practice areas",
-        "areasList": [
-          {
-            "practiceAreaName": "Contract Negotiation",
-            "practiceDescription": "Our team of experienced sports law attorneys specializes in contract negotiation. We understand the intricacies of sports contracts and can help you navigate the complex legal landscape to ensure your interests are protected. Whether you're an athlete, team, or sports organization, we have the expertise to secure favorable terms and maximize your opportunities."
-          },
-          {
-            "practiceAreaName": "Intellectual Property Issues in Sports",
-            "practiceDescription": "Intellectual property is a critical aspect of the sports industry. Our firm has extensive experience in handling intellectual property issues in sports, including trademark and copyright infringement, licensing agreements, and brand protection. We can help you safeguard your intellectual property rights and ensure that your brand is protected in the competitive sports market."
-          },
-          {
-            "practiceAreaName": "Contract Negotiation",
-            "practiceDescription": "Our team of experienced sports law attorneys specializes in contract negotiation. We understand the intricacies of sports contracts and can help you navigate the complex legal landscape to ensure your interests are protected. Whether you're an athlete, team, or sports organization, we have the expertise to secure favorable terms and maximize your opportunities."
-          },
-          {
-            "practiceAreaName": "Intellectual Property Issues in Sports",
-            "practiceDescription": "Intellectual property is a critical aspect of the sports industry. Our firm has extensive experience in handling intellectual property issues in sports, including trademark and copyright infringement, licensing agreements, and brand protection. We can help you safeguard your intellectual property rights and ensure that your brand is protected in the competitive sports market."
-          },
-          {
-            "practiceAreaName": "Athlete Endorsement Agreements",
-            "practiceDescription": "Securing endorsement deals is crucial for athletes looking to maximize their earning potential. Our sports law firm has a deep understanding of the endorsement landscape and can assist athletes in negotiating favorable endorsement agreements. We work tirelessly to protect our clients' interests and ensure they receive fair compensation for their endorsements."
-          }
-        ]
-      }`)
-
-      const [stylesIndex, setStylesIndex] = useState<number>(0);
-
-    const styles: any[] = [
-        {
-            main: {
-
-            },
-            seriable: {
-                main1 : {
-                    background: 'red',
-                },
-                main2: {
-                    background: 'cyan',
-                },
-                main: {
-                    padding: 14,
-                },
-                title: {
-                    fontFamily: 'Oswald',
-                },
-                description: {
-                    background: 'yellow',
-                },
-            },
-        },
-        {
-            main: {
-
-            },
-            seriable: {
-                main1 : {
-                    background: '#eee',
-                },
-                main2: {
-                    background: '#ddd',
-                },
-                main: {
-                    padding: 30,
-                },
-                title: {
-                    fontFamily: 'monospace',
-                },
-                description: {
-                    background: '#ccc',
-                },
-            },
-        },
-        {
-            main: {
-
-            },
-            seriable: {
-                main1 : {
-                    background: '#eee',
-                },
-                main2: {
-                    background: '#ddd',
-                },
-                main: {
-                    padding: 30,
-                },
-                title: {
-                    fontFamily: 'serif',
-                },
-                description: {
-                    background: '#ccc',
-                },
-            },
-        },
-    ]
-
-
-
-    
+function Skeletons() {    
     const [selectedSkeletonId, setSelectedSkeletonId] = useState('SHero1');
     
     const [component, setComponent] = useState<any>();
     
     useEffect(() => {
         switch(selectedSkeletonId) {
-            default: 
-            case 'SHero1': {setComponent(<SHero1 data={testData} s={{}} />); break;}
-            case 'SHero1a': {setComponent(<SHero1a data={testData} s={{}} />); break;}
-            case 'SHero2': {setComponent(<SHero2 data={testData} s={{}} />); break;}
-            case 'SHero2a': {setComponent(<SHero2a data={testData} s={{}} />); break;}       
-            case 'SHero3': {setComponent(<SHero3 data={testData} s={{}} />); break;}
-            case 'SHero3a': {setComponent(<SHero3a data={testData} s={{}} />); break;}            
-            case 'SPracticeAreas1': {setComponent(<SPracticeAreas1 data={testData} s={{}} />); break;}            
-            case 'SPracticeAreas2': {setComponent(<SPracticeAreas2 data={testData} s={{}} />); break;}            
-            case 'SPracticeAreas3': {setComponent(<SPracticeAreas3 data={testData} s={{}} />); break;}            
-            case 'SValues1': {setComponent(<SValues1 data={testData} s={{}} />); break;}
-            case 'SValues2': {setComponent(<SValues2 data={testData} s={{}} />); break;}
-            case 'SAbout1': {setComponent(<SAbout1 data={testData} s={{}} />); break;}
-            case 'SAbout1a': {setComponent(<SAbout1a data={testData} s={{}} />); break;}
-            case 'SAbout2': {setComponent(<SAbout2 data={testData} s={{}} />); break;}
-            case 'SAbout3': {setComponent(<SAbout3 data={testData} s={{}} />); break;}
-            case 'SContact1': {setComponent(<SContact1 data={testData} s={{}} />); break;}
-            case 'SContact2': {setComponent(<SContact2 data={testData} s={{}} />); break;}
+            default:
+            case 'Stellar': {setComponent(<Stellar/>); break;}
         }
     }, [selectedSkeletonId])
 
     const skeletonIds = [
-        'SHero1',
-        'SHero1a',
-        'SHero2',
-        'SHero2a',
-        'SHero3',
-        'SHero3a',
-        'SPracticeAreas1',
-        'SPracticeAreas2',
-        'SPracticeAreas3',
-        'SValues1',
-        'SValues2',
-        'SAbout1',
-        'SAbout1a',
-        'SAbout2',
-        'SAbout3',
-        'SContact1',
-        'SContact2'
+        'Stellar'
     ]
 
     return ( <div>
@@ -205,54 +55,5 @@ function Skeletons() {
         </div>
     </div> );
 }
-
-function SPracticeAreas2({data, s} : any) {
-    // console.log(data.areasList);
-    const defaultList = [
-        {
-            practiceAreaName: '',
-            practiceDescription: '',
-        },
-        {
-            practiceAreaName: '',
-            practiceDescription: '',
-        },
-        {
-            practiceAreaName: '',
-            practiceDescription: '',
-        },
-        {
-            practiceAreaName: '',
-            practiceDescription: '',
-        },
-    ]
-    const list = defaultList;
-
-    return <section style={s.main} className='s1_section'>
-        <div className='s1_seriables' style={s?.seriables || {}}>
-
-            {list.map((area: any, i: number) => {
-                const condition = (i % 3 == 0 || i % 4 == 0);
-                return <div 
-                    className={`s1_seriable_main ${ condition ? 's1_seriable_main_1' : 's1_seriable_main_2'}`} 
-                    style={{
-                        ...(s?.seriable?.main || {}),
-                        ...((condition ? s?.seriable?.main1 : s?.seriable?.main2) || {})
-                    }}
-                >
-                    <div className='s1_title' style={s?.seriable?.title || {}}>
-                        {area?.practiceAreaName || "Practice Area " + String(i + 1)}
-                    </div>
-                    <div className='s1_description' style={s?.seriable?.description || {}}>
-                        {area?.practiceDescription || "Pracitce Area Description here " + faker.lorem.words(25)}
-                    </div>
-                </div>
-            })}
-
-        </div>
-        
-    </section>
-}
-
 
 export default Skeletons;
