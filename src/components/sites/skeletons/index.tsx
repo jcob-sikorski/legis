@@ -4,7 +4,9 @@ import IFrame from '../../iFrame';
 import { useEffect, useState } from 'react';
 import Visualisation from '../editor/Visualisation';
 // import Stellar from './Stellar';
-import SolidState from './SolidState';
+// import SolidState from './SolidState';
+import Hyperspace from './Hyperspace';
+
 
 const testData = {
     heading: 'Corporate Law Experts with 10+ years experience', 
@@ -22,13 +24,15 @@ function Skeletons() {
         switch(selectedSkeletonId) {
             default:
             // case 'Stellar': {setComponent(<Stellar/>); break;}
-            case 'SolidState': {setComponent(<SolidState/>); break;}
+            // case 'SolidState': {setComponent(<SolidState/>); break;}
+            case 'Hyperspace': {setComponent(<Hyperspace/>); break;}
         }
     }, [selectedSkeletonId])
 
     const skeletonIds = [
         // 'Stellar',
-        'SolidState'
+        // 'SolidState',
+        'Hyperspace'
     ]
 
     return ( <div>
