@@ -1987,7 +1987,10 @@ input, select, textarea {
 
 .testimonials article {
 	padding: 1.75em 1.75em 0.1em 1.75em;
-	background-color: #ffffff;
+	background-image: -moz-linear-gradient(to right, #f6f6f6, #E2DEDE);
+	background-image: -webkit-linear-gradient(to right, #f6f6f6, #E2DEDE);
+	background-image: -ms-linear-gradient(to right, #f6f6f6, #E2DEDE);
+	background-image: linear-gradient(to right, #f6f6f6, #E2DEDE);
 	box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.1);
 	margin: 1.5em; /* Updated margin */
 	width: calc(25% - 3em); /* Updated width calculation */
@@ -2062,7 +2065,7 @@ input, select, textarea {
 
 /* Features */
 
-.team-cards {
+.value-bulletpoints {
 	display: -moz-flex;
 	display: -webkit-flex;
 	display: -ms-flex;
@@ -2074,9 +2077,12 @@ input, select, textarea {
 	margin: 0 0 2em 0;
 }
 
-	.team-cards article {
+	.value-bulletpoints article {
 		padding: 1.75em 1.75em 0.1em 1.75em ;
-		background-color: #ffffff;
+		background-image: -moz-linear-gradient(to right, #f6f6f6, #E2DEDE);
+		background-image: -webkit-linear-gradient(to right, #f6f6f6, #E2DEDE);
+		background-image: -ms-linear-gradient(to right, #f6f6f6, #E2DEDE);
+		background-image: linear-gradient(to right, #f6f6f6, #E2DEDE);
 		box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.1);
 
 
@@ -2085,11 +2091,11 @@ input, select, textarea {
 		width: calc(50% - 1.5em);
 	}
 
-		.team-cards article:nth-child(2n) {
+		.value-bulletpoints article:nth-child(2n) {
 			margin-right: 0;
 		}
 
-		.team-cards article .image {
+		.value-bulletpoints article .image {
 			border-radius: 5px 5px 0 0;
 			display: block;
 			margin-bottom: 1.75em;
@@ -2099,14 +2105,14 @@ input, select, textarea {
 			width: calc(100% + 3.5em);
 		}
 
-			.team-cards article .image img {
+			.value-bulletpoints article .image img {
 				border-radius: 5px 5px 0 0;
 				width: 100%;
 			}
 
 	@media screen and (max-width: 980px) {
 
-		.team-cards article {
+		.value-bulletpoints article {
 			margin: 1em 2em 1em 0;
 			width: calc(50% - 1em);
 		}
@@ -2115,13 +2121,13 @@ input, select, textarea {
 
 	@media screen and (max-width: 736px) {
 
-		.team-cards article {
+		.value-bulletpoints article {
 			padding: 1.5em 1.5em 0.1em 1.5em ;
 			margin: 0.875em 1.75em 0.875em 0;
 			width: calc(50% - 0.875em - 1px);
 		}
 
-			.team-cards article .image {
+			.value-bulletpoints article .image {
 				margin-bottom: 1.5em;
 				margin-left: -1.5em;
 				margin-top: -1.5em;
@@ -2132,11 +2138,11 @@ input, select, textarea {
 
 	@media screen and (max-width: 480px) {
 
-		.team-cards {
+		.value-bulletpoints {
 			display: block;
 		}
 
-			.team-cards article {
+			.value-bulletpoints article {
 				width: 100%;
 				margin: 0 0 2em 0 !important;
 			}
@@ -2281,7 +2287,7 @@ input, select, textarea {
 
 	.features section {
 		padding: 3.5em 3em 1em 7em ;
-		width: 50%;
+		width: 100%;
 		border-top: transparent;
 		position: relative;
 	}
@@ -2808,7 +2814,10 @@ input, select, textarea {
 			width: 2.5em;
 			height: 2.5em;
 			display: block;
-			background: #ffffff;
+			background-image: -moz-linear-gradient(to right, #f6f6f6, #E2DEDE);
+			background-image: -webkit-linear-gradient(to right, #f6f6f6, #E2DEDE);
+			background-image: -ms-linear-gradient(to right, #f6f6f6, #E2DEDE);
+			background-image: linear-gradient(to right, #f6f6f6, #E2DEDE);
 			border-radius: 100%;
 			color: #312450;
 			text-align: center;
@@ -3277,7 +3286,6 @@ input, select, textarea {
 		display: -webkit-flex;
 		display: -ms-flex;
 		display: flex;
-		justify-content: center;
 		-moz-flex-direction: row;
 		-webkit-flex-direction: row;
 		-ms-flex-direction: row;

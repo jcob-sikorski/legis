@@ -41,7 +41,7 @@ export default function Hyperspace() {
               <div className="inner">
                 <div className="content">
                   <h1 style={{ fontSize: '35px' }}>Practice Areas</h1>
-                  <section className="team-cards">
+                  <section className="value-bulletpoints">
                     <article>
                       <h3 className="major">Sed feugiat lorem</h3>
                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing vehicula id nulla dignissim dapibus ultrices.</p>
