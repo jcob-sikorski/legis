@@ -1,4 +1,4 @@
-import './assets/css/main.css'
+// import './assets/css/main.css'
 
 export default function Stellar() {
     return (  <div id="wrapper">

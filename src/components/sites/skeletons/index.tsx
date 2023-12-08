@@ -3,10 +3,15 @@ import './s1.css';
 import IFrame from '../../iFrame';
 import { useEffect, useState } from 'react';
 import Visualisation from '../editor/Visualisation';
-// import Stellar from './Stellar';
-// import SolidState from './SolidState';
-import Hyperspace from './Hyperspace';
 
+import Stellar from './Stellar';
+import StellarCSS from './Stellar/assets/css/main.css?inline';
+
+import SolidState from './SolidState';
+import SolidStateCSS from './SolidState/assets/css/main.css?inline';
+
+import Hyperspace from './Hyperspace';
+import HyperspaceCSS from './Hyperspace/assets/css/main.css?inline';
 
 const testData = {
     heading: 'Corporate Law Experts with 10+ years experience', 
@@ -16,22 +21,43 @@ const testData = {
 }
 
 function Skeletons() {    
-    const [selectedSkeletonId, setSelectedSkeletonId] = useState('SHero1');
+    const [selectedSkeletonId, setSelectedSkeletonId] = useState('Stellar');
     
     const [component, setComponent] = useState<any>();
+    const [cssString, setCssString] = useState<string>("");
     
     useEffect(() => {
         switch(selectedSkeletonId) {
             default:
-            // case 'Stellar': {setComponent(<Stellar/>); break;}
-            // case 'SolidState': {setComponent(<SolidState/>); break;}
-            case 'Hyperspace': {setComponent(<Hyperspace/>); break;}
+            case 'Stellar': {
+                setComponent(<Stellar/>); 
+                setCssString(StellarCSS);
+                break;
+            }
+            case 'SolidState': {
+                setComponent(<SolidState/>); 
+                setCssString(SolidStateCSS);
+                break;
+            }
+            case 'Hyperspace': {
+                setComponent(<Hyperspace />); 
+                setCssString(HyperspaceCSS);
+                break;
+            }
         }
     }, [selectedSkeletonId])
 
+    // useEffect(() => {
+    //     if (cssString) {
+    //         const styleElement = document.createElement('style');
+    //         styleElement.innerHTML = cssString;
+    //         document.head.appendChild(styleElement);
+    //     }
+    // }, [cssString])
+
     const skeletonIds = [
-        // 'Stellar',
-        // 'SolidState',
+        'Stellar',
+        'SolidState',
         'Hyperspace'
     ]
 
@@ -51,11 +77,12 @@ function Skeletons() {
         <div style={{display: 'flex', flexDirection: 'column'}}>
             {/* SHero1 */}
             <div style={{display: 'flex'}}>
-                <IFrame style={{width: '75vw', height: '95vh', marginInline: 'auto', outline: '4px solid #99f'}}>
+                {/* {HyperspaceCSS} */}
+                <IFrame cssString={cssString} style={{width: '75vw', height: '95vh', marginInline: 'auto', outline: '4px solid #99f'}}>
                     {component}
                     {/* <Visualisation data={[{template_id: 'LHero1'}]} mode='showcase' /> */}
                 </IFrame>
-                <IFrame style={{width: 'calc(25vw - 30px)', maxHeight: '760px', height: '95vh', marginInline: 'auto', outline: '4px solid #99f'}}>
+                <IFrame cssString={cssString} style={{width: 'calc(25vw - 30px)', maxHeight: '760px', height: '95vh', marginInline: 'auto', outline: '4px solid #99f'}}>
                     {component}
                 </IFrame>
             </div>
