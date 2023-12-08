@@ -3538,7 +3538,7 @@ input, select, textarea {
 		}
 
 		.wrapper.style1-alt {
-			background-color: #493382;
+			background-color: #FFC6A7;
 		}
 
 		.wrapper.style2 {
@@ -3802,7 +3802,7 @@ input, select, textarea {
 		}
 
 	#footer > .inner a {
-		border-bottom-color: rgba(255, 255, 255, 0.15);
+		border-bottom-color: black;
 	}
 
 		#footer > .inner a:hover {
@@ -3811,7 +3811,7 @@ input, select, textarea {
 
 	#footer > .inner .menu {
 		font-size: 0.8em;
-		color: rgba(255, 255, 255, 0.15);
+		color: black;
 	}
 
 	#header + #wrapper + #footer > .inner {

@@ -13,6 +13,9 @@ import SolidStateCSS from './SolidState/assets/css/main.css?inline';
 import Hyperspace from './Hyperspace';
 import HyperspaceCSS from './Hyperspace/assets/css/main.css?inline';
 
+import Story from './Story';
+import StoryCSS from './Story/assets/css/main.css?inline';
+
 const testData = {
     heading: 'Corporate Law Experts with 10+ years experience', 
     subHeading: 'Providing exceptional services to the biggest corporations on Earth. In California. across competition law, corporate law.', 
@@ -44,6 +47,11 @@ function Skeletons() {
                 setCssString(HyperspaceCSS);
                 break;
             }
+            case 'Story': {
+                setComponent(<Story />); 
+                setCssString(StoryCSS);
+                break;
+            }
         }
     }, [selectedSkeletonId])
 
@@ -58,7 +66,8 @@ function Skeletons() {
     const skeletonIds = [
         'Stellar',
         'SolidState',
-        'Hyperspace'
+        'Hyperspace',
+        'Story'
     ]
 
     return ( <div>
