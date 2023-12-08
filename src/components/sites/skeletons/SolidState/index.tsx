@@ -56,7 +56,7 @@ export default function SolidState() {
       </section>
 
       {/* Two */}
-      <section id="two" className="wrapper style3 fade-up">
+      <section id="our values" className="wrapper style3 fade-up">
 						<div className="inner">
               <h1 className="major" style={{ fontSize: '35px' }}>Our Values</h1>
 							<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet imperdiet est velit quis lorem.</p>
