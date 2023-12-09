@@ -16,6 +16,9 @@ import HyperspaceCSS from './Hyperspace/assets/css/main.css?inline';
 import Story from './Story';
 import StoryCSS from './Story/assets/css/main.css?inline';
 
+import ParadigmShift from './ParadigmShift';
+import ParadigmShiftCSS from './ParadigmShift/assets/css/main.css?inline';
+
 const testData = {
     heading: 'Corporate Law Experts with 10+ years experience', 
     subHeading: 'Providing exceptional services to the biggest corporations on Earth. In California. across competition law, corporate law.', 
@@ -52,6 +55,11 @@ function Skeletons() {
                 setCssString(StoryCSS);
                 break;
             }
+            case 'ParadigmShift': {
+                setComponent(<ParadigmShift />); 
+                setCssString(ParadigmShiftCSS);
+                break;
+            }
         }
     }, [selectedSkeletonId])
 
@@ -67,7 +75,8 @@ function Skeletons() {
         'Stellar',
         'SolidState',
         'Hyperspace',
-        'Story'
+        'Story',
+        'ParadigmShift'
     ]
 
     return ( <div>

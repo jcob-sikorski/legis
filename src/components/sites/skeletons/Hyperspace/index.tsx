@@ -177,7 +177,7 @@ export default function Hyperspace() {
           <footer id="footer" className="wrapper style1-alt">
 			    	<div className="inner">
 			    		<ul className="menu">
-			    			<li>Made by <a href="http://legis.live">Legis</a>.</li>
+			    			<li>Made by <a href="https://www.legis.live">Legis</a>.</li>
 			    		</ul>
 			    	</div>
 			    </footer>

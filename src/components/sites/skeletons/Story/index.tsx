@@ -161,7 +161,7 @@ export default function Story() {
 
 					<footer className="wrapper style1 align-center">
 						<div className="inner">
-							<p>&copy; Made by <a href="https://legis.live">Legis</a>.</p>
+							<p>&copy; Made by <a href="https://www.legis.live">Legis</a>.</p>
 						</div>
 					</footer>
         </div>

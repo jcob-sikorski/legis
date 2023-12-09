@@ -146,7 +146,7 @@ export default function SolidState() {
                     <li><input type="submit" value="Send Message" /></li>
                 </ul>
             <ul className="copyright">
-              <p className="copyright">Made by <a href="https://legis.live">Legis</a>.</p>
+              <p className="copyright">Made by <a href="https://www.legis.live">Legis</a>.</p>
             </ul>
         </div>
       </section>

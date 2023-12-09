@@ -153,7 +153,7 @@ export default function Stellar() {
           <li><a className="button primary">Get Started</a></li>
         </ul>
       </footer>
-      <p className="copyright">Made by <a href="https://legis.live">Legis</a>.</p>
+      <p className="copyright">Made by <a href="https://www.legis.live">Legis</a>.</p>
     </section>
   </div>
     );
