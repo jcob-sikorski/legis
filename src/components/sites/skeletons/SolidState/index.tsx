@@ -12,7 +12,8 @@ export default function SolidState() {
 	  			<li><a href="#practice areas">Practice Areas</a></li>
           <li><a href="#our values">Our Values</a></li>
 	  			<li><a href="#our team">Our Team</a></li>
-	  			<li><a href="#reviews and testimonials">Reviews and Testimonials</a></li>
+	  			<li><a href="#reviews and testimonials">Testimonials</a></li>
+          <li><a href="#about us">About Us</a></li>
 	  			<li><a href="#footer">Contact Us</a></li>
 	  		</ul>
 	  	</nav>
@@ -136,6 +137,18 @@ export default function SolidState() {
 						</section>
 					</div>
 				</div>
+      </section>
+
+      {/* Three */}
+      <section id="about us" className="wrapper spotlight style4">
+        <div className="inner">
+          <div className="content">
+            <h1 className="major" style={{ fontSize: '35px' }}>About Us</h1>
+            <section>
+							<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+						</section>
+          </div>
+        </div>
       </section>
 
     {/* Footer */}

@@ -101,6 +101,15 @@ export default function ParadigmShift() {
           </div>
         </section>
 
+        <section>
+          <header>
+            <h2>About Us</h2>
+          </header>
+          <div className="content">
+				    <p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+          </div>
+        </section>
+
         {/* Section */}
         <section>
           <header>

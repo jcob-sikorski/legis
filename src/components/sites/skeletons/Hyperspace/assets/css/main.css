@@ -3561,6 +3561,10 @@ input, select, textarea {
 			background-color: #fadecf;
 		}
 
+		.wrapper.style5 {
+			background-color: #FFEDE5;
+		}
+
 		.wrapper.fullscreen {
 			display: -moz-flex;
 			display: -webkit-flex;

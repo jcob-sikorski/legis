@@ -16,6 +16,7 @@ export default function Hyperspace() {
               <li><a href="#our values">Our Values</a></li>
               <li><a href="#our team">Our Team</a></li>
               <li><a href="#reviews and testimonials">Testimonials</a></li>
+              <li><a href="#about us">About Us</a></li>
               <li><a href="#contact us">Contact Us</a></li>
             </ul>
           </nav>
@@ -64,6 +65,7 @@ export default function Hyperspace() {
                 </div>
               </div>
             </section>
+
             <section id="our values">
               <div className="content">
                 <div className="inner">
@@ -99,6 +101,7 @@ export default function Hyperspace() {
                 </div>
               </div>
             </section>
+
             <section id="our team">
               <div className="content">
                 <div className="inner">
@@ -156,6 +159,12 @@ export default function Hyperspace() {
             </div>
           </section>
 
+          <section id="about us" className="wrapper style5 fade-up">
+              <div className="inner">
+                <h1 style={{ fontSize: '35px' }}>About Us</h1>
+                <p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus.</p>
+              </div>
+          </section>
 
           {/* Three */}
           <section id="contact us" className="wrapper style4 fade-up">
