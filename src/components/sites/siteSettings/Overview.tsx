@@ -193,21 +193,21 @@ function Overview() {
                 </Title>
               </div>
               <div style={{ paddingLeft: 20 }}>
-                <Title
+                {/* <Title
                   level={5}
                   style={{ fontWeight: "initial", color: "#A2A2A2" }}
                 >
                   Custom domain URL
-                </Title>
-                <Button
+                </Title> */}
+                {/* <Button
                   type="primary"
                   className="custom-button"
                   onClick={() => setVisible(true)}
                   style={{ height: 50 }} // Use marginLeft: 'auto' to push the button to the right
                 >
                   Change
-                </Button>
-                <Modal
+                </Button> */}
+                {/* <Modal
                   title="Change Domain Name"
                   open={visible}
                   onOk={configureCustomDomain}
@@ -218,7 +218,7 @@ function Overview() {
                     value={domainName}
                     onChange={(e) => setDomainName(e.target.value)}
                   />
-                </Modal>
+                </Modal> */}
               </div>
             </div>
           </div>

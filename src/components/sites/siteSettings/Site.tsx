@@ -402,7 +402,7 @@ function SiteComponent() {
           /> */}
           {/* <ReactSVG src='https://upload.wikimedia.org/wikipedia/commons/0/09/Van_den_Clooster_wapen.svg' /> */}
           {/* <SvgComponent url='https://ucarecdn.com/17553bdd-a288-4f1d-9fbf-515ccb8f4086/rasterize' /> */}
-          <Title level={5} style={{ fontWeight: "normal", color: "#616161" }}>
+          {/* <Title level={5} style={{ fontWeight: "normal", color: "#616161" }}>
             Action
           </Title>
           <div
@@ -436,7 +436,7 @@ function SiteComponent() {
             <div style={{ marginLeft: 10, color: "black" }}>
               Publish to custom domain
             </div>
-          </div>
+          </div> */}
           {/* <div style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
             <div style={{ backgroundColor: 'black', height: 30, width: 30, borderRadius: 50, marginLeft: 10 }} />
             <div style={{ marginLeft: 10, color: 'black' }}>Save as a template</div>
