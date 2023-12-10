@@ -219,6 +219,27 @@ const Editor: React.FC = () => {
       "Legis | " + (siteTitle || lawFirmName || "Edit your site");
   }, [siteTitle]);
 
+  async function checkDeploymentStatus() {
+    let status = "";
+    while (status !== "built") {
+      const response = await axios.get(
+        `https://api.github.com/repos/${githubUsername}/${site_id}/pages/builds/latest`,
+        {
+          auth: {
+            username: githubUsername,
+            password: githubToken
+          }
+        }
+      );
+      status = response.data?.status;
+      console.log("DEPLOYMENT STATUS: ", status);
+      if (status !== "built") {
+        await new Promise(resolve => setTimeout(resolve, 30000)); // wait for 30 seconds
+      }
+    }
+  }
+  
+
   useEffect(() => {
     const connectDomainsFlow = async () => {
       if (isDeploying) {
@@ -241,6 +262,8 @@ const Editor: React.FC = () => {
 
             console.log("COMITING INDEX HTML TO GITHUB");
             commitIndexHtmlToGithub();
+
+            checkDeploymentStatus();
 
             console.log("CONNECTING DEFAULT SUBDOMAIN");
             connectDefaultSubdomain();
