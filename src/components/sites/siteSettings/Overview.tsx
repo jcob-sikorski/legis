@@ -74,33 +74,33 @@ function Overview() {
   //   }
   // };
 
-  // // check if the custom domain is configured properly
-  // React.useEffect(() => {
-  //   let ARecordsCheck: boolean = false;
-  //   let CNAMECheck: boolean = false;
-  //   if (site && site.cname) {
-  //     // DNS lookup for A records
-  //     fetch(
-  //       `https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://dns.google/resolve?name=${site.cname}&type=A`
-  //     )
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         ARecordsCheck =
-  //           data.Answer[1].data === "185.199.108.153" &&
-  //           data.Answer[2].data === "185.199.109.153" &&
-  //           data.Answer[3].data === "185.199.110.153" &&
-  //           data.Answer[4].data === "185.199.111.153";
-  //         CNAMECheck = data.Answer[0].data === "legisbiz.github.io.";
-  //         // Output A records
-  //         console.log("CNAME check: ", ARecordsCheck);
-  //         console.log("A records check: ", CNAMECheck);
-  //         setPublished(ARecordsCheck && CNAMECheck);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error performing DNS lookup:", error);
-  //       });
-  //   }
-  // }, [site]);
+  // check if the custom domain is configured properly
+  React.useEffect(() => {
+    let ARecordsCheck: boolean = false;
+    let CNAMECheck: boolean = false;
+    if (site && domainName) {
+      // DNS lookup for A records
+      fetch(
+        `https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://dns.google/resolve?name=${domainName}&type=A`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          ARecordsCheck =
+            data.Answer[1].data === "185.199.108.153" &&
+            data.Answer[2].data === "185.199.109.153" &&
+            data.Answer[3].data === "185.199.110.153" &&
+            data.Answer[4].data === "185.199.111.153";
+          CNAMECheck = data.Answer[0].data === "legisbiz.github.io.";
+          // Output A records
+          console.log("CNAME check: ", ARecordsCheck);
+          console.log("A records check: ", CNAMECheck);
+          setPublished(ARecordsCheck && CNAMECheck);
+        })
+        .catch((error) => {
+          console.error("Error performing DNS lookup:", error);
+        });
+    }
+  }, [site]);
 
   const copyUrl = () => {
     const urlToCopy = site?.customDomain || site?.cname || site?.site_url;
