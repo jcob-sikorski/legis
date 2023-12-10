@@ -114,17 +114,17 @@ export function updateCssStyles(colors: string[]) {
 export function switchIcon(valueName: string) {
   switch (valueName.toLocaleLowerCase()) {
     case "reliability":
-      return "bi bi-clock";
+      return "fa-shield-alt";
     case "loyalty & trust":
-      return "bi bi-key";
+      return "fa-handshake";
     case "integrity":
-      return "bi bi-shield";
+      return "fa-gavel";
     case "excellence":
-      return "bi bi-star";
+      return "fa-award";
     case "collaboration":
-      return "bi bi-people";
+      return "fa-user-friends";
     default:
-      return "bi bi-check";
+      return "fa-check";
   }
 }
 

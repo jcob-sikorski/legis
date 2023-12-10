@@ -1,4 +1,5 @@
-import { contains } from "../../../../utils";
+import { useState } from "react";
+import { contains, getUrl, switchIcon } from "../../../../utils";
 
 export default function Hyperspace({
   data,
@@ -10,6 +11,8 @@ export default function Hyperspace({
   setContext: Function;
 }) {
   // console.log('ABC: ', ABC)
+
+  const [editableMap, setEditableMap] = useState<any>([]);
 
   return (
     <div className="is-preload">
@@ -172,58 +175,80 @@ export default function Hyperspace({
             <section id="our values">
               <div className="content">
                 <div className="inner">
-                  <h1 style={{ fontSize: "35px" }}>Our Values</h1>
-                  <p>
-                    Phasellus convallis elit id ullamcorper pulvinar. Duis
-                    aliquam turpis mauris, eu ultricies erat malesuada quis.
-                    Aliquam dapibus.
+                  <h1
+                    style={{
+                      fontSize: "35px",
+                      textAlign: data?.titleVariant || "center",
+                    }}
+                    onClick={() =>
+                      setContext({
+                        key: "title",
+                        type: "text",
+                        label: "Title",
+                        variantProperty: "textAlign",
+                      })
+                    }
+                    className="e"
+                  >
+                    {data?.title || "[Title]"}
+                  </h1>
+                  <p
+                    style={{ textAlign: data?.descriptionVariant || "center" }}
+                    onClick={() =>
+                      setContext({
+                        key: "description",
+                        type: "text",
+                        label: "Description",
+                        variantProperty: "textAlign",
+                      })
+                    }
+                    className="e"
+                  >
+                    {data?.description || "[Description]"}
                   </p>
                   <div className="features">
-                    <section>
-                      <span className="icon solid major fa-shield-alt"></span>
-                      <h3>Reliability</h3>
-                      <p>
-                        Phasellus convallis elit id ullam corper amet et
-                        pulvinar. Duis aliquam turpis mauris, sed ultricies erat
-                        dapibus.
-                      </p>
-                    </section>
-                    <section>
-                      <span className="icon solid major fa-handshake"></span>
-                      <h3>Loyalty & Trust</h3>
-                      <p>
-                        Phasellus convallis elit id ullam corper amet et
-                        pulvinar. Duis aliquam turpis mauris, sed ultricies erat
-                        dapibus.
-                      </p>
-                    </section>
-                    <section>
-                      <span className="icon solid major fa-gavel"></span>
-                      <h3>Integrity</h3>
-                      <p>
-                        Phasellus convallis elit id ullam corper amet et
-                        pulvinar. Duis aliquam turpis mauris, sed ultricies erat
-                        dapibus.
-                      </p>
-                    </section>
-                    <section>
-                      <span className="icon solid major fa-award"></span>
-                      <h3>Excellence</h3>
-                      <p>
-                        Phasellus convallis elit id ullam corper amet et
-                        pulvinar. Duis aliquam turpis mauris, sed ultricies erat
-                        dapibus.
-                      </p>
-                    </section>
-                    <section>
-                      <span className="icon solid major fa-user-friends"></span>
-                      <h3>Collaboration</h3>
-                      <p>
-                        Phasellus convallis elit id ullam corper amet et
-                        pulvinar. Duis aliquam turpis mauris, sed ultricies erat
-                        dapibus.
-                      </p>
-                    </section>
+                    {(typeof data?.valuesList === "object"
+                      ? data?.valuesList
+                      : []
+                    )?.map((value: any, i: number) => (
+                      <section>
+                        <span
+                          className={`icon solid major ${switchIcon(
+                            value?.name ?? ""
+                          )}`}
+                        ></span>
+                        <h3
+                          onClick={() =>
+                            setContext({
+                              collection: "valuesList",
+                              seriableLabel: "value",
+                              key: "name",
+                              label: "Value name",
+                              type: "text",
+                              index: i,
+                            })
+                          }
+                          className="e"
+                        >
+                          {value?.name || "[Value name]"}
+                        </h3>
+                        <p
+                          onClick={() =>
+                            setContext({
+                              collection: "valuesList",
+                              seriableLabel: "value",
+                              key: "description",
+                              label: "Description",
+                              type: "textarea",
+                              index: i,
+                            })
+                          }
+                          className="e"
+                        >
+                          {value?.description || "[Value description]"}
+                        </p>
+                      </section>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -233,25 +258,122 @@ export default function Hyperspace({
             <section id="our team">
               <div className="content">
                 <div className="inner">
-                  <h1 style={{ fontSize: "35px" }}>Our Team</h1>
+                  <h1
+                    style={{
+                      fontSize: "35px",
+                      textAlign: data?.titleVariant || "center",
+                    }}
+                    className="e"
+                    onClick={() =>
+                      setContext({
+                        key: "title",
+                        type: "text",
+                        label: "title",
+                        variantProperty: "textAlign",
+                      })
+                    }
+                  >
+                    {data?.title || "Our team"}
+                  </h1>
                   <ul className="photoshoot">
-                    <li>
-                      <img
-                        style={{
-                          borderRadius: "2%",
-                          height: "300px",
-                          width: "100%",
-                          objectFit: "cover",
-                        }}
-                        src="https://headshots-inc.com/wp-content/uploads/2022/07/attorny-headshot-example-1.jpg"
-                      ></img>
-                      <h2>Clarence Damon</h2>
-                      <p>
-                        Sed lorem amet ipsum dolor et amet nullam consequat a
-                        feugiat consequat tempus veroeros sed consequat.
-                      </p>
-                    </li>
-                    <li>
+                    {/* {JSON.stringify(data?.lawyerDetails)} */}
+                    {(data?.lawyerDetails ?? []).map(
+                      (person: any, i: number) => {
+                        // checks which element is currently hovered at and should be editable.
+                        let parentEditable = true;
+                        try {
+                          parentEditable = editableMap[i];
+                        } catch {}
+
+                        // adds indexed value to the map.
+                        function setEditable(val: boolean) {
+                          setEditableMap({ ...editableMap, [i]: val });
+                        }
+
+                        return (
+                          <>
+                            {/* {parentEditable ? "yes" : "no"} */}
+                            <li
+                              className="e"
+                              onClick={() =>
+                                parentEditable
+                                  ? setContext({
+                                      seriableId: person?.id,
+                                      isGroup: true,
+                                      cdnUUID: person?.cdnUUID,
+                                      collection: "lawyerDetails",
+                                      seriableLabel: "lawyer",
+                                      index: i,
+                                    })
+                                  : () => {}
+                              }
+                            >
+                              <img
+                                onMouseEnter={() => setEditable(false)}
+                                onMouseLeave={() => setEditable(true)}
+                                onClick={() =>
+                                  setContext({
+                                    cdnUUID: person?.cdnUUID,
+                                    collection: "lawyerDetails",
+                                    seriableLabel: "lawyer",
+                                    key: "cdnUUID",
+                                    type: "image",
+                                    ratio: 1,
+                                    label: "Profile Picture",
+                                    index: i,
+                                  })
+                                }
+                                className="e"
+                                style={{
+                                  borderRadius: "2%",
+                                  height: "300px",
+                                  width: "100%",
+                                  objectFit: "cover",
+                                }}
+                                src={getUrl(person?.cdnUUID ?? "")}
+                              ></img>
+                              <h2
+                                onMouseEnter={() => setEditable(false)}
+                                onMouseLeave={() => setEditable(true)}
+                                onClick={() =>
+                                  setContext({
+                                    collection: "lawyerDetails",
+                                    seriableLabel: "lawyer",
+                                    key: "name",
+                                    label: "Lawyer name",
+                                    type: "text",
+                                    index: i,
+                                  })
+                                }
+                                className="e"
+                              >
+                                {person?.name || "[Lawyer Name here]"}
+                              </h2>
+                              <p
+                                className="e"
+                                onMouseEnter={() => setEditable(false)}
+                                onMouseLeave={() => setEditable(true)}
+                                onClick={() =>
+                                  setContext({
+                                    collection: "lawyerDetails",
+                                    seriableLabel: "lawyer",
+                                    key: "description",
+                                    label: "Lawyer Description",
+                                    type: "textarea",
+                                    index: i,
+                                  })
+                                }
+                              >
+                                {person?.description ||
+                                  "[Lawyer description here]"}
+                              </p>
+                            </li>
+                          </>
+                        );
+                      }
+                    )}
+
+                    {/* <li>
                       <img
                         style={{
                           borderRadius: "2%",
@@ -282,7 +404,7 @@ export default function Hyperspace({
                         Sed lorem amet ipsum dolor et amet nullam consequat a
                         feugiat consequat tempus veroeros sed consequat.
                       </p>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </div>
@@ -300,6 +422,33 @@ export default function Hyperspace({
               <div className="content">
                 <h1 style={{ fontSize: "35px" }}>Reviews and Testimonials</h1>
                 <section className="testimonials">
+                  {(data?.reviews ?? []).map((obj: any, i: number) => (
+                    <article>
+                      <i
+                        style={{ color: "black" }}
+                        className="fas fa-quote-left"
+                      ></i>
+                      <h3
+                        className="major e"
+                        onClick={() =>
+                          setContext({
+                            collection: "reviews",
+                            seriableLabel: "review",
+                            key: "clientName",
+                            label: "Review",
+                            type: "text",
+                            index: i,
+                          })
+                        }
+                      >
+                        {obj?.clientName || "[Client name here...]"}
+                      </h3>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        vehicula id nulla dignissim dapibus ultrices.
+                      </p>
+                    </article>
+                  ))}
                   <article>
                     <i
                       style={{ color: "black" }}
