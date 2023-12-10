@@ -427,54 +427,21 @@ function Survey() {
     }
   }
 
-  let leftStyle: any = { backgroundColor: "#262627" };
-  if (page === 8 || page === 9) {
-    leftStyle = {
-      backgroundColor: "#262627",
-      minWidth: "50vw",
-      maxWidth: "50vw",
-      height: "100vh",
-      padding: 15,
-      maxHeight: "100vh",
-      overflowY: "scroll",
-    };
-  }
-
   return (
     <Layout
       style={{ display: "flex", flexDirection: "row", overflow: "hidden" }}
     >
-      <div style={leftStyle}>
-        {page === 8 && (
-          <IFrame style={{ width: "100%", height: "100%" }}>
-            <Visualisation
-              data={[{ template_id: "LTeam1", lawyerDetails: lawyers }]}
-              mode="showcase"
-            />
-          </IFrame>
-        )}
-        {page === 9 && (
-          <IFrame style={{ width: "100%", height: "100%" }}>
-            <Visualisation
-              data={[{ template_id: "LReviews2", reviews }]}
-              mode="showcase"
-            />
-          </IFrame>
-        )}
-        {page !== 8 && page !== 9 && (
-          <div
-            className="relative overflow-hidden bg-cover bg-no-repeat"
-            style={{
-              backgroundPosition: "50%",
-              backgroundImage:
-                "url('https://ucarecdn.com/194ed0d0-5921-4684-8ae1-02bfd645d41c/_d65e891a18e343b9bccb0adb2a065aca.jpeg')",
-              height: "100vh",
-              width: "50vw",
-            }}
-          />
-        )}
-
-        {/* <img src="" alt="Your description" style={{ width: '100%', maxHeight: '100vh' }} /> */}
+      <div>
+        <div
+          className="relative overflow-hidden bg-cover bg-no-repeat"
+          style={{
+            backgroundPosition: "50%",
+            backgroundImage:
+              "url('https://ucarecdn.com/194ed0d0-5921-4684-8ae1-02bfd645d41c/_d65e891a18e343b9bccb0adb2a065aca.jpeg')",
+            height: "100vh",
+            width: "50vw",
+          }}
+        />
       </div>
       <div
         style={{
@@ -666,9 +633,9 @@ function Survey() {
               right: 0,
             }}
           >
-            {import.meta.env.DEV && (
+            {/* {import.meta.env.DEV && (
               <button onClick={devFillOut}>Fill out with [Shaun & Benn]</button>
-            )}
+            )} */}
             {page !== 0 && (
               <Button
                 type="primary"
