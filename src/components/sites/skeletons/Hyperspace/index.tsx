@@ -18,26 +18,26 @@ export default function Hyperspace({
         <section id="custom-navbar">
           <div>
             <nav>
-              <ul>
-                <li>
-                  <a href="#intro">Hero</a>
-                </li>
-                <li>
-                  <a href="#practice areas">Practice Areas</a>
-                </li>
-                <li>
-                  <a href="#our values">Our Values</a>
-                </li>
-                <li>
-                  <a href="#our team">Our Team</a>
-                </li>
-                <li>
-                  <a href="#reviews and testimonials">Testimonials</a>
-                </li>
-                <li>
-                  <a href="#contact us">Contact Us</a>
-                </li>
-              </ul>
+              {/* <ul> */}
+              {/* <li> */}
+              <a href="#intro">Hero</a>
+              {/* </li> */}
+              {/* <li> */}
+              <a href="#practice areas">Practice Areas</a>
+              {/* </li> */}
+              {/* <li> */}
+              <a href="#our values">Values</a>
+              {/* </li> */}
+              {/* <li> */}
+              <a href="#our team">Team</a>
+              {/* </li> */}
+              {/* <li> */}
+              <a href="#reviews and testimonials">Testimonials</a>
+              {/* </li> */}
+              {/* <li> */}
+              <a href="#contact us">Contact Us</a>
+              {/* </li> */}
+              {/* </ul> */}
             </nav>
           </div>
         </section>
@@ -111,36 +111,58 @@ export default function Hyperspace({
             <section id="practice areas" className="wrapper spotlight style3">
               <div className="inner">
                 <div className="content">
-                  <h1 style={{ fontSize: "35px" }}>Practice Areas</h1>
+                  <h1
+                    onClick={() =>
+                      setContext({
+                        key: "title",
+                        type: "text",
+                        label: "Title",
+                        variantProperty: "textAlign",
+                      })
+                    }
+                    className="e"
+                    style={{
+                      fontSize: "35px",
+                      textAlign: data?.titleVariant || "center",
+                    }}
+                  >
+                    {data?.title || "Practice Areas"}
+                  </h1>
                   <section className="value-bulletpoints">
-                    <article>
-                      <h3 className="major">Sed feugiat lorem</h3>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing
-                        vehicula id nulla dignissim dapibus ultrices.
-                      </p>
-                    </article>
-                    <article>
-                      <h3 className="major">Sed feugiat lorem</h3>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing
-                        vehicula id nulla dignissim dapibus ultrices.
-                      </p>
-                    </article>
-                    <article>
-                      <h3 className="major">Sed feugiat lorem</h3>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing
-                        vehicula id nulla dignissim dapibus ultrices.
-                      </p>
-                    </article>
-                    <article>
-                      <h3 className="major">Sed feugiat lorem</h3>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing
-                        vehicula id nulla dignissim dapibus ultrices.
-                      </p>
-                    </article>
+                    {(data?.areasList ?? []).map((area: any, i: number) => (
+                      <article>
+                        <h3
+                          className="major editable"
+                          onClick={() =>
+                            setContext({
+                              collection: "areasList",
+                              seriableLabel: "practice area",
+                              key: "practiceAreaName",
+                              label: "Practice Area Name",
+                              type: "text",
+                              index: i,
+                            })
+                          }
+                        >
+                          {area?.practiceAreaName}
+                        </h3>
+                        <p
+                          className="editable"
+                          onClick={() =>
+                            setContext({
+                              collection: "areasList",
+                              seriableLabel: "practice area",
+                              key: "practiceDescription",
+                              label: "Practice Area Description",
+                              type: "textarea",
+                              index: i,
+                            })
+                          }
+                        >
+                          {area?.practiceDescription}
+                        </p>
+                      </article>
+                    ))}
                   </section>
                 </div>
               </div>

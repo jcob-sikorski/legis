@@ -72,11 +72,13 @@ div {
   font-family: "Playfair Display", serif;
 }
 
-.editable {
+.editable,
+.e {
   transition: outline 0.05s;
 }
 
-.editable:hover {
+.editable:hover,
+.e:hover {
   outline: var(--legis-editable-outline);
 }
 
