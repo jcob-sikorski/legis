@@ -38,6 +38,7 @@ export const Dashboard: React.FC = () => {
   const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
   const site_collection = mongodb.db("legis").collection("Site");
   const user_collection = mongodb.db("legis").collection("User");
+  const survey_collection = mongodb.db("legis").collection("Questionnaire");
 
   // Set up your GitHub API credentials and repository name
   const githubUsername = config.githubUsername;
@@ -94,10 +95,6 @@ export const Dashboard: React.FC = () => {
 
     searchDocuments();
   }, []);
-
-  async function logOut() {
-    app.logOut();
-  }
 
   async function createSite() {
     if (sites.length === 0) {
@@ -232,10 +229,13 @@ export const Dashboard: React.FC = () => {
           prevSites.filter((site) => site._id !== siteId)
         );
 
-        const result = await site_collection.deleteOne({
+        const site_deletion_result = await site_collection.deleteOne({
           _id: new Realm.BSON.ObjectId(siteId),
         });
-        console.log("Deleted site:", JSON.stringify(result));
+
+        const survey_deletion_result = await survey_collection.find({
+          site_id: new Realm.BSON.ObjectId(siteId),
+        });
 
         // Delete the GitHub repository
         const githubRepoName = site._id; // Assuming _id corresponds to the GitHub repository name

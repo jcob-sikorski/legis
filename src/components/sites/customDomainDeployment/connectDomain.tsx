@@ -82,14 +82,14 @@ function ConnectDomain({ nextPage }: any) {
             "Updated the github domain of the site: ",
             githubRepoResponse.data
           );
+
+          const updateResult = await site_collection.updateOne(
+            { _id: new Realm.BSON.ObjectID(site_id) },
+            { $set: { domainConnected: 1 } }
+          );
         } catch (error) {
           console.error("Error updating the domain of the site:", error);
         }
-
-        const updateResult = await site_collection.updateOne(
-          { _id: new Realm.BSON.ObjectID(site_id) },
-          { $set: { domainConnected: 1 } }
-        );
 
         nextPage();
       } else {

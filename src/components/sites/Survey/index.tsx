@@ -633,9 +633,9 @@ function Survey() {
               right: 0,
             }}
           >
-            {/* {import.meta.env.DEV && (
+            {import.meta.env.DEV && (
               <button onClick={devFillOut}>Fill out with [Shaun & Benn]</button>
-            )} */}
+            )}
             {page !== 0 && (
               <Button
                 type="primary"

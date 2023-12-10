@@ -324,48 +324,42 @@ const Editor: React.FC = () => {
       const response = await axios.post(apiURL, payload, axios_config);
       if (response.status === 200) {
         console.log("CNAME record created successfully!");
-      } else {
-        console.log(
-          "Failed to create CNAME record. Status code:",
-          response.status
-        );
-        console.log("Error message:", response.data);
+
+        try {
+          const githubRepoResponse = await axios.put(
+            `https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${site_id}/pages`,
+            {
+              cname: `${validDomain}.legis.live`,
+              source: "gh-pages",
+            },
+            {
+              headers: {
+                Authorization: `token ${githubToken}`,
+              },
+            }
+          );
+          console.log(
+            "Updated the github domain of the site: ",
+            githubRepoResponse.data
+          );
+    
+          const updateResult = await site_collection.updateOne(
+            { _id: new Realm.BSON.ObjectId(site_id) },
+            {
+              $set: {
+                cname: `${validDomain}.legis.live`,
+                domainConnected: 1,
+              },
+            }
+          );
+          console.log(`Updated ${updateResult.modifiedCount} document.`);
+        } catch (error) {
+          console.error("Error updating the domain of the site:", error);
+        }
       }
     } catch (error) {
       console.error("Error creating CNAME record:", error);
     }
-
-    try {
-      const githubRepoResponse = await axios.put(
-        `https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${site_id}/pages`,
-        {
-          cname: `${validDomain}.legis.live`,
-          source: "gh-pages",
-        },
-        {
-          headers: {
-            Authorization: `token ${githubToken}`,
-          },
-        }
-      );
-      console.log(
-        "Updated the github domain of the site: ",
-        githubRepoResponse.data
-      );
-    } catch (error) {
-      console.error("Error updating the domain of the site:", error);
-    }
-
-    const updateResult = await site_collection.updateOne(
-      { _id: new Realm.BSON.ObjectId(site_id) },
-      {
-        $set: {
-          cname: `${validDomain}.legis.live`,
-          domainConnected: 1,
-        },
-      }
-    );
-    console.log(`Updated ${updateResult.modifiedCount} document.`);
   }
 
   async function commitIndexHtmlToGithub() {
