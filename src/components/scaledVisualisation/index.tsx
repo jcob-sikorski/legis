@@ -5,11 +5,13 @@ export default function ScaledVisualisation({
   mode,
   width,
   height,
+  template_set_id,
 }: {
   data: any;
   mode: string;
   width?: string;
   height?: string;
+  template_set_id: string;
 }) {
   const WIDTH = width || "150vw";
   const HALF_WIDTH = `calc(${WIDTH} * 0.5)`;
@@ -19,7 +21,7 @@ export default function ScaledVisualisation({
   return (
     <div
       style={{
-        background: "cyan",
+        // background: "cyan",
         width: HALF_WIDTH,
         height: HALF_HEIGHT,
         maxWidth: "80vw",
@@ -46,7 +48,11 @@ export default function ScaledVisualisation({
             }
           }
         >
-          <Visualisation data={data} mode={mode} />
+          <Visualisation
+            template_set_id={template_set_id}
+            data={data}
+            mode={mode}
+          />
         </div>
       </div>
     </div>

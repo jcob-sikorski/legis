@@ -1,6 +1,6 @@
 // import './assets/css/main.css'
 
-export default function Stellar() {
+export default function Stellar({ data, template_id, setContext }: any) {
   return (
     <div id="wrapper">
       <header id="header" className="alt">

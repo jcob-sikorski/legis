@@ -12,6 +12,12 @@ import ReactDOMServer from "react-dom/server";
 
 import { v4 as uuidv4 } from "uuid";
 
+import HyperspaceCSS from "../skeletons/Hyperspace/assets/css/main.css?inline";
+import ParadigmShiftCSS from "../skeletons/ParadigmShift/assets/css/main.css?inline";
+import SolidStateCSS from "../skeletons/SolidState/assets/css/main.css?inline";
+import StellarCSS from "../skeletons/Stellar/assets/css/main.css?inline";
+import StoryCSS from "../skeletons/Story/assets/css/main.css?inline";
+
 import * as Realm from "realm-web";
 import { config } from "../../../config";
 import axios from "axios";
@@ -27,7 +33,11 @@ import {
   RedoOutlined,
 } from "@ant-design/icons";
 // import Sections from './Sections';
-import { getPromptForGeneration, updateCssStyles } from "../../../utils";
+import {
+  getPromptForGeneration,
+  updateCssStringOutsideIFrame,
+  updateCssStyles,
+} from "../../../utils";
 import MainMenu from "../menu";
 import { useApp } from "../../RealmApp";
 import Logo from "../menu/Logo";
@@ -56,6 +66,7 @@ export default function Preview() {
   const [data, setData] = useState<any[]>([]);
   //   const [lawFirmName, setLawFirmName] = useState<string>();
   const [colors, setColors] = useState<string[]>([]);
+  const [templateSetId, setTemplateSetId] = useState<string>("");
 
   const containerRef = useRef(null);
 
@@ -65,6 +76,27 @@ export default function Preview() {
       updateCssStyles(colors);
     }
   }, [colors]);
+
+  useEffect(() => {
+    switch (templateSetId as any) {
+      default:
+      case "Hyperspace":
+        updateCssStringOutsideIFrame(HyperspaceCSS);
+        break;
+      case "ParadigmShift":
+        updateCssStringOutsideIFrame(ParadigmShiftCSS);
+        break;
+      case "SolidState":
+        updateCssStringOutsideIFrame(SolidStateCSS);
+        break;
+      case "Stellar":
+        updateCssStringOutsideIFrame(StellarCSS);
+        break;
+      case "Story":
+        updateCssStringOutsideIFrame(StoryCSS);
+        break;
+    }
+  }, [templateSetId]);
 
   React.useEffect(() => {
     console.log("Fetching the site from mongo.");
@@ -91,6 +123,17 @@ export default function Preview() {
             result[0].template_colors
           );
           setColors(result[0].template_colors);
+        } else {
+          console.log("Site doesn't have the template_colors yet.");
+        }
+
+        if (result.length > 0 && result[0].hasOwnProperty("template_set_id")) {
+          console.log(
+            "Found a site with template_set_id:",
+            result[0].template_set_id
+          );
+          setTemplateSetId(result[0].template_set_id);
+          setTemplateSetId("SolidState");
         } else {
           console.log("Site doesn't have the template_colors yet.");
         }

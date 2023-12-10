@@ -294,16 +294,6 @@ function Interface({
                   seriableId,
                   collection: "lawyerDetails",
                   seriableLabel: "lawyer",
-                  key: "role",
-                  label: "Role",
-                  type: "text",
-                  index,
-                })}
-                {switchField({
-                  section_id,
-                  seriableId,
-                  collection: "lawyerDetails",
-                  seriableLabel: "lawyer",
                   key: "description",
                   label: "Lawyer Description",
                   type: "textarea",
@@ -442,6 +432,65 @@ function Interface({
               </div>
             );
           }
+          case "icon":
+            return (
+              <div key={generatedKey}>
+                {labelComponent()}
+                <Form.Item
+                  className="animate__slideIn"
+                  name={generatedKey}
+                  style={{ ...itemStyle, background: "" }}
+                >
+                  <Radio.Group
+                    onChange={(e) =>
+                      handleSerialFieldChange(
+                        section_id,
+                        collection,
+                        { [key as string]: e.target.value },
+                        index
+                      )
+                    }
+                    style={{
+                      width: "100%",
+                      display: "grid",
+                      gridTemplateColumns: "repeat(3, auto)",
+                      gridTemplateRows: "repeat(2, auto)",
+                      // justifyContent: "center",
+                      // alignItems: "center",
+                    }}
+                    defaultValue={getSerialFieldValue(
+                      section_id,
+                      collection,
+                      key,
+                      index
+                    )}
+                    buttonStyle="solid"
+                  >
+                    {[
+                      "fa-shield",
+                      "fa-handshake",
+                      "fa-gavel",
+                      "fa-award",
+                      "fa-user-friends",
+                      "fa-check",
+                    ].map((item: any) => (
+                      <Radio.Button
+                        style={{
+                          // width: "33%",
+                          height: 60,
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                        value={item}
+                      >
+                        <i className={`fa ${item}`}></i>
+                      </Radio.Button>
+                    ))}
+                  </Radio.Group>
+                </Form.Item>
+              </div>
+            );
           default: {
             return (
               <>

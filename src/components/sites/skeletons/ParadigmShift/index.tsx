@@ -1,4 +1,4 @@
-export default function ParadigmShift() {
+export default function ParadigmShift({ data, template_id, setContext }: any) {
   return (
     <div className="is-preload">
       {/* Wrapper */}

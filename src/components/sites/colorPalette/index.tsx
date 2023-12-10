@@ -10,7 +10,10 @@ import * as Realm from "realm-web";
 import { updateCssStyles } from "../../../utils/index.ts";
 import IFrame from "../../iFrame/index.tsx";
 import HyperspaceCSS from "../skeletons/Hyperspace/assets/css/main.css?inline";
-
+import ParadigmShiftCSS from "../skeletons/ParadigmShift/assets/css/main.css?inline";
+import SolidStateCSS from "../skeletons/SolidState/assets/css/main.css?inline";
+import StellarCSS from "../skeletons/Stellar/assets/css/main.css?inline";
+import StoryCSS from "../skeletons/Story/assets/css/main.css?inline";
 const SIDE_BAR_WIDTH = 300;
 
 function ColorPalette() {
@@ -23,11 +26,34 @@ function ColorPalette() {
   const site_collection = mongodb.db("legis").collection("Site");
 
   const [data, setData] = useState<any>();
+  const [templateSetId, setTemplateSetId] = useState<any>();
+  const [cssString, setCssString] = useState<any>();
   const [palette, setPalette] = useState<string[]>([
     "#5D74CF",
     "#8D88C7",
     "#4D4D4D",
   ]);
+
+  useEffect(() => {
+    switch (templateSetId as any) {
+      default:
+      case "Hyperspace":
+        setCssString(HyperspaceCSS);
+        break;
+      case "ParadigmShift":
+        setCssString(ParadigmShiftCSS);
+        break;
+      case "SolidState":
+        setCssString(SolidStateCSS);
+        break;
+      case "Stellar":
+        setCssString(StellarCSS);
+        break;
+      case "Story":
+        setCssString(StoryCSS);
+        break;
+    }
+  }, [templateSetId]);
 
   const groups = ["Monochromatic", "Neutral", "Bright", "Bold"];
 
@@ -69,6 +95,16 @@ function ColorPalette() {
           setData(result[0].body_template);
         } else {
           console.log("Site doesn't have the body_template yet.");
+        }
+
+        if (result.length > 0 && result[0].hasOwnProperty("template_set_id")) {
+          console.log(
+            "Found a site with template_set_id:",
+            result[0].template_set_id
+          );
+          setTemplateSetId(result[0].template_set_id);
+        } else {
+          console.log("Site doesn't have the template_set_id yet.");
         }
       } catch (error) {
         console.error("Error searching for this site:", error);
@@ -117,11 +153,15 @@ function ColorPalette() {
             transformOrigin: 'top'
           }}> */}
         <IFrame
-          cssString={HyperspaceCSS}
+          cssString={cssString}
           colors={palette}
           style={{ width: "100%", height: "100vh" }}
         >
-          <Visualisation data={data} mode="showcase" />
+          <Visualisation
+            template_set_id={templateSetId}
+            data={data}
+            mode="showcase"
+          />
         </IFrame>
         {/* </div> */}
       </Flex>

@@ -22,7 +22,8 @@ export type FieldType =
   | "image"
   | "textarea"
   | "checkbox"
-  | "button";
+  | "button"
+  | "icon";
 export interface FieldContext {
   key?: string;
   type?: FieldType;

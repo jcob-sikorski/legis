@@ -16,7 +16,7 @@ export default function Hyperspace({
   // console.log('ABC: ', ABC)
 
   const [editableMap, setEditableMap] = useState<any>([]);
-  const [bgEditable, setBgEditable] = useState<any>([]);
+  const [bgEditable, setBgEditable] = useState<any>(false);
 
   return (
     <div className="is-preload">
@@ -238,7 +238,7 @@ export default function Hyperspace({
                     }
                     className="e"
                   >
-                    {data?.title || "[Title]"}
+                    {data?.title || "Our values"}
                   </h1>
                   <p
                     style={{ textAlign: data?.descriptionVariant || "center" }}
@@ -261,9 +261,21 @@ export default function Hyperspace({
                     )?.map((value: any, i: number) => (
                       <section>
                         <span
-                          className={`icon solid major ${switchIcon(
-                            value?.name ?? ""
-                          )}`}
+                          className={`e icon solid major ${
+                            value?.icon
+                              ? value?.icon
+                              : switchIcon(value?.name ?? "")
+                          }`}
+                          onClick={() =>
+                            setContext({
+                              collection: "valuesList",
+                              seriableLabel: "value",
+                              key: "icon",
+                              label: "Value icon",
+                              type: "icon",
+                              index: i,
+                            })
+                          }
                         ></span>
                         <h3
                           onClick={() =>
@@ -501,7 +513,7 @@ export default function Hyperspace({
                             collection: "reviews",
                             seriableLabel: "review",
                             key: "clientName",
-                            label: "Review",
+                            label: "Client Name",
                             type: "text",
                             index: i,
                           })

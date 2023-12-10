@@ -2,7 +2,7 @@ import * as Realm from "realm-web";
 import { useNavigate, useParams } from "react-router-dom";
 import { config } from "../../../config";
 import { useEffect, useState } from "react";
-import { Button, Flex, Spin } from "antd";
+import { Button, Flex, Spin, message } from "antd";
 
 import OpenAI from "openai";
 import { function_description } from "./functionDescription";
@@ -13,6 +13,7 @@ import { v4 } from "uuid";
 
 import "animate.css";
 import { useApp } from "../../RealmApp";
+import TemplateSetName from "../../../models/TemplateSetName";
 
 const openai = new OpenAI({
   apiKey: config.openaiKey,
@@ -143,7 +144,10 @@ function Generate() {
           onboardingData,
           bodyTemplate
         );
-        updateSite(siteData);
+
+        const template_set_id = getRandomTemplateSetId({ repeat: false });
+
+        updateSite(siteData, template_set_id);
       })
       .catch((e) => {
         setError(JSON.stringify(e));
@@ -157,17 +161,18 @@ function Generate() {
     }
   }, [onboardingData]);
 
-  const updateSite = async (data: any) => {
+  const updateSite = async (data: any, template_set_id: string) => {
     console.log("Trying to upload this data: ", data);
     if (data) {
       try {
         const result = await site_collection.updateOne(
           { _id: new Realm.BSON.ObjectId(site_id) }, // Specify the query to find the site by site_id
           {
-            $set: { body_template: data }, // Use $set to update the data field
+            $set: { body_template: data, template_set_id }, // Use $set to update the data field
           }
         );
 
+        console.log("updated template_set_id to: ", template_set_id);
         console.log("Updated site:", JSON.stringify(result));
         // TODO if useParams says onboardingflow == true then go to color-palette
         //        else go to editor
@@ -428,13 +433,13 @@ function getSiteData(
       buttonLabel: "Send Message",
       buttonLink: "https://legis.live",
     },
-    {
-      section_id: v4(),
-      template_id: "footer",
-      logo: LawFirmName,
-      buttonLabel: "Contact Us",
-      buttonLink: "#contact-us",
-    },
+    // {
+    //   section_id: v4(),
+    //   template_id: "footer",
+    //   logo: LawFirmName,
+    //   buttonLabel: "Contact Us",
+    //   buttonLink: "#contact-us",
+    // },
   ];
 
   if (bodyTemplate?.length > 0) {
@@ -446,6 +451,45 @@ function getSiteData(
   }
 
   return arr;
+}
+
+function getRandomTemplateSetId(options: { repeat: boolean }) {
+  const templateIds: TemplateSetName[] = [
+    "Hyperspace",
+    // "ParadigmShift",
+    "SolidState",
+    // "Stellar",
+    // "Story",
+  ];
+
+  if (localStorage.getItem("legisTemplateSetId") === "Hyperspace") {
+    localStorage.setItem("legisTemplateSetId", "SolidState");
+    return "SolidState";
+  } else {
+    localStorage.setItem("legisTemplateSetId", "Hyperspace");
+    return "Hyperspace";
+  }
+
+  if (options?.repeat == false) {
+    let randomIndex = Math.floor(Math.random() * templateIds.length);
+    let previousIndexes = [];
+    try {
+      previousIndexes = JSON.parse(
+        localStorage.getItem("legisUsedIndexes") ?? "[]"
+      );
+    } catch {}
+
+    if (previousIndexes.indexOf(randomIndex) > -1) {
+      localStorage.setItem(
+        "legisUsedIndexes",
+        JSON.stringify([...previousIndexes, randomIndex])
+      );
+    }
+    message.info("asd");
+  } else {
+    let randomIndex = Math.floor(Math.random() * templateIds.length);
+    return templateIds[randomIndex];
+  }
 }
 
 // SAVE CODE FOR REGENERATION FOR LATER

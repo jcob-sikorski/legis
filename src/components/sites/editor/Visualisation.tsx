@@ -2,18 +2,6 @@ import { Button, Flex, Layout, Space, message } from "antd";
 import { RIGHT_BAR_WIDTH } from "./const";
 
 // Templates
-import TContact1 from "../../templates/TContact1";
-import TContact2 from "../../templates/TContact2";
-import TContact3 from "../../templates/TContact3";
-import THero1 from "../../templates/THero1";
-import Title from "antd/es/typography/Title";
-import TNoTemplate from "../../templates/TNoTemplate";
-import TNavBar1 from "../../templates/TNavBar1";
-import TPracticeAreas1 from "../../templates/TPracticeAreas1";
-import TValues1 from "../../templates/TValues1";
-import TTeam1 from "../../templates/TTeam1";
-import TReviews1 from "../../templates/TReviews1";
-import TAbout1 from "../../templates/TAbout1";
 import {
   ArrowDownOutlined,
   ArrowUpOutlined,
@@ -24,46 +12,14 @@ import {
 } from "@ant-design/icons";
 import { v4 } from "uuid";
 import { useEffect, useRef, useState } from "react";
-import THero2 from "../../templates/THero2";
-import TNavBar2 from "../../templates/TNavBar2";
-import TPracticeAreas2 from "../../templates/TPracticeAreas2";
-import TValues2 from "../../templates/TValues2";
-import TTeam2 from "../../templates/TTeam2";
-import TReviews2 from "../../templates/TReviews2";
-import TAbout2 from "../../templates/TAbout2";
-import TContact4 from "../../templates/TContact4";
-import THero3 from "../../templates/THero3";
-import TNavBar3 from "../../templates/TNavBar3";
-import TPracticeAreas3 from "../../templates/TPracticeAreas3";
-import TValues3 from "../../templates/TValues3";
-import { LHero1 } from "../../templates/generic_dark/LHero1";
-import LHero2 from "../../templates/LHero2";
-import LHero3 from "../../templates/LHero3";
-import LPracticeAreas1 from "../../templates/LPracticeAreas1";
-import LPracticeAreas2 from "../../templates/generic_dark/LPracticeAreas2";
-import LPracticeAreas3 from "../../templates/LPracticeAreas3";
-import LValues1 from "../../templates/LValues1";
-import LValues2 from "../../templates/generic_dark/LValues2";
-import LValues3 from "../../templates/LValues3";
-import LTeam1 from "../../templates/generic_dark/LTeam1";
-import LTeam2 from "../../templates/LTeam2";
-import LTeam3 from "../../templates/LTeam3";
-import LReviews1 from "../../templates/generic_dark/LReviews1";
-import LReviews2 from "../../templates/LReviews2";
-import LReviews3 from "../../templates/LReviews3";
-import LAbout1 from "../../templates/generic_dark/LAbout1";
-import LContact1 from "../../templates/generic_dark/LContact1";
-import LContact2 from "../../templates/LContact2";
-import LContact3 from "../../templates/LContact3";
-import LAbout2 from "../../templates/LAbout2";
-import LAbout3 from "../../templates/LAbout3";
-import EHero1 from "../../templates/editorial/EHero1";
-import EPracticeAreas1 from "../../templates/editorial/EPracticeAreas1";
 import { contains, updateCssStyles } from "../../../utils";
 // import SHero2 from '../skeletons/SHero2';
 import Hyperspace from "../skeletons/Hyperspace";
 import TemplateSetName from "../../../models/TemplateSetName";
 import SolidState from "../skeletons/SolidState";
+import ParadigmShift from "../skeletons/ParadigmShift";
+import Stellar from "../skeletons/Stellar";
+import Story from "../skeletons/Story";
 // import { delay } from '../../../utils';
 
 //const { Content, Footer } = Layout;
@@ -79,7 +35,7 @@ function Visualisation({
   functions?: any;
   variables?: any;
   mode?: string;
-  template_set_id?: TemplateSetName;
+  template_set_id?: TemplateSetName | string;
 }) {
   const {
     onAddSection,
@@ -245,189 +201,76 @@ function Visualisation({
     };
     // message.info('switching ' + template_set_id + ' | ' + template_id)
 
-    switch (template_set_id) {
-      // Hero
-      case "Hyperspace": {
-        if (contains(template_id, "nav"))
-          return (
-            <Hyperspace
-              template_id={template_id}
-              data={data}
-              setContext={setContextMiddleware}
-            />
-          );
+    // switch (template_set_id) {
+    // Hero
+    // case "Hyperspace": {
 
-        if (contains(template_id, "hero"))
-          return (
-            <Hyperspace
-              template_id={template_id}
-              data={data}
-              setContext={setContextMiddleware}
-            />
-          );
-        if (contains(template_id, "practice"))
-          return (
-            <Hyperspace
-              template_id={template_id}
-              data={data}
-              setContext={setContextMiddleware}
-            />
-          );
-        if (contains(template_id, "values"))
-          return (
-            <Hyperspace
-              template_id={template_id}
-              data={data}
-              setContext={setContextMiddleware}
-            />
-          );
-        if (contains(template_id, "team"))
-          return (
-            <Hyperspace
-              template_id={template_id}
-              data={data}
-              setContext={setContextMiddleware}
-            />
-          );
-        if (contains(template_id, "reviews"))
-          return (
-            <Hyperspace
-              template_id={template_id}
-              data={data}
-              setContext={setContextMiddleware}
-            />
-          );
-        // if (contains(template_id, 'about')) return <Hyperspace template_id={template_id} data={data} setContext={setContextMiddleware} />
-        if (contains(template_id, "contact"))
-          return (
-            <Hyperspace
-              template_id={template_id}
-              data={data}
-              setContext={setContextMiddleware}
-            />
-          );
+    const sectionHelperNames = [
+      "nav",
+      "hero",
+      "practice",
+      "values",
+      "team",
+      "reviews",
+      "contact",
+      "footer",
+    ];
 
-        if (contains(template_id, "footer"))
-          return (
-            <Hyperspace
-              template_id={template_id}
-              data={data}
-              setContext={setContextMiddleware}
-            />
-          );
-        break;
+    let res = <>No section matched.</>;
+    sectionHelperNames.map((sectionName: string) => {
+      if (contains(template_id, sectionName)) {
+        switch (template_set_id) {
+          default:
+          case "Hyperspace":
+            res = (
+              <Hyperspace
+                template_id={template_id}
+                data={data}
+                setContext={setContextMiddleware}
+              />
+            );
+            break;
+          case "ParadigmShift":
+            res = (
+              <ParadigmShift
+                template_id={template_id}
+                data={data}
+                setContext={setContextMiddleware}
+              />
+            );
+            break;
+          case "SolidState":
+            res = (
+              <SolidState
+                template_id={template_id}
+                data={data}
+                setContext={setContextMiddleware}
+              />
+            );
+            break;
+          case "Stellar":
+            res = (
+              <Stellar
+                template_id={template_id}
+                data={data}
+                setContext={setContextMiddleware}
+              />
+            );
+            break;
+          case "Story":
+            res = (
+              <Story
+                template_id={template_id}
+                data={data}
+                setContext={setContextMiddleware}
+              />
+            );
+            break;
+        }
       }
-      case "SolidState": {
-        if (contains(template_id, "hero"))
-          return (
-            <SolidState
-              template_id={template_id}
-              data={data}
-              setContext={setContextMiddleware}
-            />
-          );
-        if (contains(template_id, "practice"))
-          return (
-            <SolidState
-              template_id={template_id}
-              data={data}
-              setContext={setContextMiddleware}
-            />
-          );
-        if (contains(template_id, "values"))
-          return (
-            <SolidState
-              template_id={template_id}
-              data={data}
-              setContext={setContextMiddleware}
-            />
-          );
-        if (contains(template_id, "team"))
-          return (
-            <SolidState
-              template_id={template_id}
-              data={data}
-              setContext={setContextMiddleware}
-            />
-          );
-        if (contains(template_id, "hero"))
-          return (
-            <SolidState
-              template_id={template_id}
-              data={data}
-              setContext={setContextMiddleware}
-            />
-          );
-        if (contains(template_id, "hero"))
-          return (
-            <SolidState
-              template_id={template_id}
-              data={data}
-              setContext={setContextMiddleware}
-            />
-          );
-        if (contains(template_id, "hero"))
-          return (
-            <SolidState
-              template_id={template_id}
-              data={data}
-              setContext={setContextMiddleware}
-            />
-          );
-        break;
-      }
-      // case 'LHero1':
-      //     return <Hyperspace data={data} template_id='hero' setContext={setContextMiddleware} />
-      // case 'LHero2':
-      //     return <LHero2 data={data} setContext={setContextMiddleware} />
-      // case 'LHero3':
-      //     return <LHero3 data={data} setContext={setContextMiddleware} />
-      // // PracticeAreas
-      // case 'LPracticeAreas1':
-      //     return <LPracticeAreas1 data={data} setContext={setContextMiddleware} />
-      // case 'LPracticeAreas2':
-      //     return <LPracticeAreas2 data={data} setContext={setContextMiddleware} />
-      // case 'LPracticeAreas3':
-      //     return <LPracticeAreas3 data={data} setContext={setContextMiddleware} />
-      // // Values
-      // case 'LValues1':
-      //     return <LValues1 data={data} setContext={setContextMiddleware} />
-      // case 'LValues2':
-      //     return <LValues2 data={data} setContext={setContextMiddleware} />
-      // case 'LValues3':
-      //     return <LValues3 data={data} setContext={setContextMiddleware} />
-      // // Team
-      // case 'LTeam1':
-      //     return <LTeam1 data={data} setContext={setContextMiddleware} />
-      // case 'LTeam2':
-      //     return <LTeam2 data={data} setContext={setContextMiddleware} />
-      // case 'LTeam3':
-      //     return <LTeam3 data={data} setContext={setContextMiddleware} />
-      // // Reviews
-      // case 'LReviews1':
-      //     return <LReviews1 data={data} setContext={setContextMiddleware} />
-      // case 'LReviews2':
-      //     return <LReviews2 data={data} setContext={setContextMiddleware} />
-      // case 'LReviews3':
-      //     return <LReviews3 data={data} setContext={setContextMiddleware} />
-      // // About
-      // case 'LAbout1':
-      //     return <LAbout1 data={data} setContext={setContextMiddleware} />
-      // case 'LAbout2':
-      //     return <LAbout2 data={data} setContext={setContextMiddleware} />
-      // case 'LAbout3':
-      //     return <LAbout3 data={data} setContext={setContextMiddleware} />
-      // // Contact
-      // case 'LContact1':
-      //     return <LContact1 data={data} setContext={setContextMiddleware} />
-      // case 'LContact2':
-      //     return <LContact2 data={data} setContext={setContextMiddleware} />
-      // case 'LContact3':
-      //     return <LContact3 data={data} setContext={setContextMiddleware} />
-      // No template ID matched
-      default:
-        return <TNoTemplate data={data} setContext={setContextMiddleware} />;
-    }
+    });
+
+    return res;
   }
 
   const selectedSectionStyle = isDeploying
@@ -536,6 +379,7 @@ function Visualisation({
                     position: "absolute",
                     top: 0,
                     zIndex: 1000,
+
                     // width: 100,
                   }}
                 >
@@ -570,7 +414,6 @@ function Visualisation({
                       className="legis-sections-button"
                       style={{
                         all: "unset",
-                        color: "black",
                         borderColor: "#0000",
                         cursor: "pointer",
                         paddingInline: 6,
@@ -592,6 +435,7 @@ function Visualisation({
               {switchTemplate(s)}
             </div>
           ))}
+        {switchTemplate({ template_id: "footer" })}
         <div id="editor-dummy" ref={dummyRef} />
       </Flex>
       {/* {!isDeploying &&

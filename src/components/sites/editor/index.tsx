@@ -52,6 +52,11 @@ import IFrame from "../../iFrame";
 
 // CSS for template sets... in the future can be loaded by React Lazy or imported from cloud to improve performance
 import HyperspaceCSS from "../skeletons/Hyperspace/assets/css/main.css?inline";
+import ParadigmShiftCSS from "../skeletons/ParadigmShift/assets/css/main.css?inline";
+import SolidStateCSS from "../skeletons/SolidState/assets/css/main.css?inline";
+import StellarCSS from "../skeletons/Stellar/assets/css/main.css?inline";
+import StoryCSS from "../skeletons/Story/assets/css/main.css?inline";
+
 import TemplateSetName from "../../../models/TemplateSetName";
 
 const Editor: React.FC = () => {
@@ -78,6 +83,7 @@ const Editor: React.FC = () => {
   );
   const [lawFirmName, setLawFirmName] = useState<string>();
   const [colors, setColors] = useState<string[]>([]);
+  const [templateSetId, setTemplateSetId] = useState<string>("");
   const [siteCname, setSiteCname] = useState<string>();
   const [siteTitle, setSiteTitle] = useState<string>();
   const [siteDescription, setSiteDescription] = useState<string>();
@@ -85,7 +91,8 @@ const Editor: React.FC = () => {
 
   const [selectedSectionId, setSelectedSectionId] = useState<string>("");
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>("");
-  const template_set_id: TemplateSetName = "Hyperspace";
+  // const template_set_id: TemplateSetName = "SolidState";
+
   const [cssString, setCssString] = useState<string>("");
 
   const [isAddingNewSection, setIsAddingNewSection] = useState<boolean>(false);
@@ -122,13 +129,25 @@ const Editor: React.FC = () => {
   }
 
   useEffect(() => {
-    switch (template_set_id) {
+    switch (templateSetId as any) {
       default:
       case "Hyperspace":
         setCssString(HyperspaceCSS);
         break;
+      case "ParadigmShift":
+        setCssString(ParadigmShiftCSS);
+        break;
+      case "SolidState":
+        setCssString(SolidStateCSS);
+        break;
+      case "Stellar":
+        setCssString(StellarCSS);
+        break;
+      case "Story":
+        setCssString(StoryCSS);
+        break;
     }
-  }, [template_set_id]);
+  }, [templateSetId]);
 
   // shared functions
 
@@ -536,6 +555,7 @@ const Editor: React.FC = () => {
 
         getFromMongoDB("body_template", setData);
         getFromMongoDB("template_colors", setColors);
+        getFromMongoDB("template_set_id", setTemplateSetId);
         getFromMongoDB("title", setSiteTitle);
         getFromMongoDB("description", setSiteDescription);
         getFromMongoDB("favicon_url", setFaviconURL);
@@ -641,7 +661,7 @@ const Editor: React.FC = () => {
 
   const visualisationComponent = (
     <Visualisation
-      template_set_id={template_set_id}
+      template_set_id={templateSetId}
       data={data}
       functions={{
         onAddSection,
@@ -1030,7 +1050,7 @@ const Editor: React.FC = () => {
               // position: 'fixed',
               height: `calc(100vh - ${NAV_BAR_HEIGHT}px)`,
               maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)`,
-              // maxHeight: '100vh',
+              // maxHeight: "100vh",
               // overflowY: 'scroll',
               // overflowX: 'hidden',
               // paddingBottom: 50,

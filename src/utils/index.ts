@@ -111,6 +111,12 @@ export function updateCssStyles(colors: string[]) {
   document.documentElement.style.setProperty("--legis-color-3", `${colors[2]}`);
 }
 
+export function updateCssStringOutsideIFrame(cssString: string) {
+  const styleElement = document.createElement("style");
+  styleElement.innerHTML = cssString;
+  document.head.appendChild(styleElement);
+}
+
 export function switchIcon(valueName: string) {
   switch (valueName.toLocaleLowerCase()) {
     case "reliability":

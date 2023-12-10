@@ -17,6 +17,10 @@ import axios from "axios";
 import { BgColorsOutlined, ReloadOutlined } from "@ant-design/icons";
 import IFrame from "../../iFrame";
 import HyperspaceCSS from "../skeletons/Hyperspace/assets/css/main.css?inline";
+import ParadigmShiftCSS from "../skeletons/ParadigmShift/assets/css/main.css?inline";
+import SolidStateCSS from "../skeletons/SolidState/assets/css/main.css?inline";
+import StellarCSS from "../skeletons/Stellar/assets/css/main.css?inline";
+import StoryCSS from "../skeletons/Story/assets/css/main.css?inline";
 
 function Showcase() {
   const { site_id }: any = useParams();
@@ -29,6 +33,8 @@ function Showcase() {
   const navigate = useNavigate();
 
   const [data, setData] = useState();
+  const [templateSetId, setTemplateSetId] = useState();
+  const [cssString, setCssString] = useState<string>("");
 
   useEffect(() => {
     console.log("Fetching the site from mongo.");
@@ -47,6 +53,16 @@ function Showcase() {
           setData(result[0].body_template);
         } else {
           console.log("Site doesn't have the body_template yet.");
+        }
+
+        if (result.length > 0 && result[0].hasOwnProperty("template_set_id")) {
+          console.log(
+            "Found a site with body_template:",
+            result[0].template_set_id
+          );
+          setTemplateSetId(result[0].template_set_id);
+        } else {
+          console.log("Site doesn't have the template_set_id yet.");
         }
       } catch (error) {
         console.error("Error searching for this site:", error);
@@ -75,6 +91,27 @@ function Showcase() {
   function onContinue() {
     navigate(`/color-palette/${site_id}`);
   }
+
+  useEffect(() => {
+    switch (templateSetId as any) {
+      default:
+      case "Hyperspace":
+        setCssString(HyperspaceCSS);
+        break;
+      case "ParadigmShift":
+        setCssString(ParadigmShiftCSS);
+        break;
+      case "SolidState":
+        setCssString(SolidStateCSS);
+        break;
+      case "Stellar":
+        setCssString(StellarCSS);
+        break;
+      case "Story":
+        setCssString(StoryCSS);
+        break;
+    }
+  }, [templateSetId]);
 
   const [mockBought, setMockBought] = useState(false);
 
@@ -130,12 +167,10 @@ function Showcase() {
           </Col>
         </Row>
       </Flex>
-      <IFrame
-        style={{ width: "100%", height: "100%" }}
-        cssString={HyperspaceCSS}
-      >
+      <IFrame style={{ width: "100%", height: "100%" }} cssString={cssString}>
         <div className="animate__bounceIn">
           <ScaledVisualisation
+            template_set_id={templateSetId ?? ""}
             data={data}
             mode="showcase"
             width="200vw"

@@ -107,6 +107,7 @@ html {
 .legis-sections-button {
   all: unset;
   border: 0 !important;
+  color: #000 !important;
 }
 
 .legis-sections-button:hover {
