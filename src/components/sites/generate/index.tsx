@@ -176,11 +176,11 @@ function Generate() {
         console.log("Updated site:", JSON.stringify(result));
         // TODO if useParams says onboardingflow == true then go to color-palette
         //        else go to editor
-        if (onboarding === "1") {
-          navigate(`/showcase/${site_id}`);
-        } else {
+        // if (onboarding === "1") {
+        //   navigate(`/showcase/${site_id}`);
+        // } else {
           navigate(`/editor/${site_id}`);
-        }
+        // }
       } catch (error) {
         console.error("Error updating site:", error);
       }

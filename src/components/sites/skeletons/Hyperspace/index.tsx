@@ -240,20 +240,6 @@ export default function Hyperspace({
                   >
                     {data?.title || "Our values"}
                   </h1>
-                  <p
-                    style={{ textAlign: data?.descriptionVariant || "center" }}
-                    onClick={() =>
-                      setContext({
-                        key: "description",
-                        type: "text",
-                        label: "Description",
-                        variantProperty: "textAlign",
-                      })
-                    }
-                    className="e"
-                  >
-                    {data?.description || "[Description]"}
-                  </p>
                   <div className="features">
                     {(typeof data?.valuesList === "object"
                       ? data?.valuesList

@@ -167,7 +167,7 @@ function Showcase() {
           </Col>
         </Row>
       </Flex>
-      <IFrame style={{ width: "100%", height: "100%" }} cssString={cssString}>
+      <IFrame style={{ width: "40%", height: "100%" }} cssString={cssString}>
         <div className="animate__bounceIn">
           <ScaledVisualisation
             template_set_id={templateSetId ?? ""}

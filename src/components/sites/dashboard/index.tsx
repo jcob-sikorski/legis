@@ -182,7 +182,7 @@ export const Dashboard: React.FC = () => {
 
       // Create a new GitHub repository
       const githubRepoResponse = await axios.post(
-        `https://api.github.com/user/repos`,
+        `https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/user/repos`,
         {
           name: site_id,
           private: false, // Set to true if you want a private repository
@@ -240,7 +240,7 @@ export const Dashboard: React.FC = () => {
         // Delete the GitHub repository
         const githubRepoName = site._id; // Assuming _id corresponds to the GitHub repository name
         const githubRepoDeleteResponse = await axios.delete(
-          `https://api.github.com/repos/${githubUsername}/${githubRepoName}`,
+          `https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${githubRepoName}`,
           {
             auth: {
               username: githubUsername,

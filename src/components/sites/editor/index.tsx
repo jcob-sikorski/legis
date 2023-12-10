@@ -290,7 +290,6 @@ const Editor: React.FC = () => {
 
   async function connectDefaultSubdomain() {
     const validDomain = convertToValidDomainName(lawFirmName!);
-
     const cnameTarget = "legisbiz.github.io.";
 
     // API endpoint and request payload
@@ -372,29 +371,29 @@ const Editor: React.FC = () => {
   async function commitIndexHtmlToGithub() {
     const title = lawFirmName;
 
-    // SEO data
-    const city = "San Francisco";
-    const state = "CA, California";
-    const practiceAreas = onboardingData
-      ? onboardingData.MainPracticeArea +
-        ", " +
-        onboardingData.SpecializedPracticeAreas
-      : "";
-    const userAddedKeywords = "TOP 3 in California";
+    // // SEO data
+    // const city = "San Francisco";
+    // const state = "CA, California";
+    // const practiceAreas = onboardingData
+    //   ? onboardingData.MainPracticeArea +
+    //     ", " +
+    //     onboardingData.SpecializedPracticeAreas
+    //   : "";
+    // const userAddedKeywords = "TOP 3 in California";
     const image = getHeroImageURLFromBodyTemplate(data);
 
-    // Final SEO data to put in HTML
-    const metadata = {
-      description: siteDescription,
-      keywords: `lawyers, legal services, ${practiceAreas}, ${city} attorneys, ${state} law firm, litigation, legal advice, legal consultation, ${userAddedKeywords}`,
-      author: lawFirmName,
-      image,
-    };
+    // // Final SEO data to put in HTML
+    // const metadata = {
+    //   description: siteDescription,
+    //   keywords: `lawyers, legal services, ${practiceAreas}, ${city} attorneys, ${state} law firm, litigation, legal advice, legal consultation, ${userAddedKeywords}`,
+    //   author: lawFirmName,
+    //   image,
+    // };
 
     const htmlBodyString = ReactDOMServer.renderToString(
       visualisationComponent
     );
-    console.log("htmlBodyString: ", htmlBodyString);
+    // console.log("htmlBodyString: ", htmlBodyString);
 
     const htmlString = `
       <!doctype html>
@@ -412,34 +411,44 @@ const Editor: React.FC = () => {
           <!-- customizable page variables -->
           <title>${title}</title>
 
-          <!-- SEO section! -->
-          <meta name="description" content="${metadata.description}">
-          <meta name="keywords" content="${metadata.keywords}">
-          <meta name="author" content="${metadata.author}">
-
           <!-- Web Crawlers -->
           <meta name="robots" content="index, follow">
 
           <!-- Facebook Meta Tags (Open Graph) -->
           <meta property="og:type" content="website">
           <meta property="og:title" content="${lawFirmName}">
-          <meta property="og:description" content="${metadata.description}">
-          <meta property="og:image" content="${metadata.image}">
+          <meta property="og:description" content="${siteDescription}">
+          <meta property="og:image" content="${image}">
 
           <!-- Twitter Meta Tags -->
           <meta name="twitter:card" content="summary_large_image">
           <meta name="twitter:title" content="${lawFirmName}">
-          <meta name="twitter:description" content="${metadata.description}">
-          <meta name="twitter:image" content="${metadata.image}">
+          <meta name="twitter:description" content="${siteDescription}">
+          <meta name="twitter:image" content="${image}">
 
           
           <!-- tailwindcss -->
           <script src="https://cdn.tailwindcss.com"></script>
 
           <!-- Google Fonts -->
-          <link rel="preconnect" href="https://fonts.googleapis.com">
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-          <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700;800;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet"
+          />
+          <link
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet"
+          />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;0,6..96,800;0,6..96,900;1,6..96,400;1,6..96,500;1,6..96,600;1,6..96,700;1,6..96,800;1,6..96,900&family=Playfair+Display&display=swap"
+            rel="stylesheet"
+          />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap"
+            rel="stylesheet"
+          />
 
 
           <!-- Bootstrap Icons -->
@@ -761,7 +770,7 @@ const Editor: React.FC = () => {
                   icon={<RedoOutlined />}
                   style={{ padding: 24, margin: 0 }}
                 />
-                <a href={`/preview/${site_id}`} target="_blank">
+                {/* <a href={`/preview/${site_id}`} target="_blank">
                   <Button
                     type="primary"
                     // onClick={onPreview}
@@ -769,7 +778,7 @@ const Editor: React.FC = () => {
                     icon={<EyeFilled />}
                     style={{ padding: 24, margin: 0 }}
                   />
-                </a>
+                </a> */}
                 <Button
                   type="primary"
                   onClick={handlePublishButton}
@@ -926,7 +935,7 @@ const Editor: React.FC = () => {
                           marginLeft: 10,
                         }}
                       >
-                        Name your site
+                        Your legis subdomain
                       </h1>
                       <Input
                         style={{
@@ -936,7 +945,7 @@ const Editor: React.FC = () => {
                           marginLeft: 10,
                           borderColor: "black",
                         }}
-                        value={siteCname}
+                        value={`${convertToValidDomainName(lawFirmName!)}.legis.live`}
                         readOnly={true}
                       />
                       <Button
