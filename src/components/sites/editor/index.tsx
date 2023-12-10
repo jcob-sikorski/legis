@@ -243,47 +243,44 @@ const Editor: React.FC = () => {
   useEffect(() => {
     const connectDomainsFlow = async () => {
       if (isDeploying) {
-        const site = await site_collection.findOne({
-          _id: new Realm.BSON.ObjectId(site_id),
-        });
+        if (legisSubdomain) {
+          const validDomain = convertToValidDomainName(lawFirmName!);
 
-        if (!site.domainConnected) {
-          if (legisSubdomain) {
-            const validDomain = convertToValidDomainName(lawFirmName!);
-
-            const res = await site_collection.findOne({
-              cname: `${validDomain}.legis.live`,
-            });
-            if (res) {
-              message.error("Such subdomain already exists.");
-              setIsDeploying(false);
-              return;
-            }
-
-            console.log("COMITING INDEX HTML TO GITHUB");
-            commitIndexHtmlToGithub();
-
-            checkDeploymentStatus();
-
-            console.log("CONNECTING DEFAULT SUBDOMAIN");
-            connectDefaultSubdomain();
-
-            console.log("NAVIGATING TO OVERVIEW SETTINGS");
-            const site = await site_collection.findOne({
-              _id: new Realm.BSON.ObjectId(site_id),
-            });
-
-            dispatch(setSite(site));
-            navigate("/overview-settings");
-          } else {
-            console.log("COMITING INDEX HTML TO GITHUB");
-            commitIndexHtmlToGithub();
-            navigate(`/custom-domain-deployment/${site_id}`); // DEPENDENT
+          const res = await site_collection.findOne({
+            cname: `${validDomain}.legis.live`,
+          });
+          if (res) {
+            message.error("Such subdomain already exists.");
+            setIsDeploying(false);
+            return;
           }
-        } else {
+
+          // remove dependency for the settins to not show this in them
+          const updateResult = await site_collection.updateOne(
+            { _id: new Realm.BSON.ObjectId(site_id) },
+            { $set: { customDomain: "" } }
+          );
+          console.log(`Updated ${updateResult.modifiedCount} document.`);
+
+          console.log("COMITING INDEX HTML TO GITHUB");
+          commitIndexHtmlToGithub();
+
+          checkDeploymentStatus();
+
+          console.log("CONNECTING DEFAULT SUBDOMAIN");
+          connectDefaultSubdomain();
+
           console.log("NAVIGATING TO OVERVIEW SETTINGS");
+          const site = await site_collection.findOne({
+            _id: new Realm.BSON.ObjectId(site_id),
+          });
+
           dispatch(setSite(site));
           navigate("/overview-settings");
+        } else {
+          console.log("COMITING INDEX HTML TO GITHUB");
+          commitIndexHtmlToGithub();
+          navigate(`/custom-domain-deployment/${site_id}`); // DEPENDENT
         }
       }
     };
