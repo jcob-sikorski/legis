@@ -100,7 +100,7 @@ function Overview() {
           console.error("Error performing DNS lookup:", error);
         });
     }
-  }, [site]);
+  }, [domainName]);
 
   const copyUrl = () => {
     const urlToCopy = site?.customDomain || site?.cname || site?.site_url;
