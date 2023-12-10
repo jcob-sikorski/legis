@@ -25,7 +25,7 @@ function AddSiteDetails() {
   async function onContinue() {
     const site = await site_collection.findOne(
       { _id: new Realm.BSON.ObjectId(site_id) },
-      { projection: { cname: 1 } }
+      { projection: { customDomain: 1 } }
     );
 
     dispatch(setSite(site));

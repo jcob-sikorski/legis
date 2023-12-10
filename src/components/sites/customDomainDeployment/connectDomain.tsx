@@ -41,10 +41,10 @@ function ConnectDomain({ nextPage }: any) {
     const fetchData = async () => {
       const result = await site_collection.findOne(
         { _id: new Realm.BSON.ObjectId(site_id) },
-        { projection: { cname: 1 } }
+        { projection: { customDomain: 1 } }
       );
-      console.log(`Fetched document: ${JSON.stringify(result.cname)}`);
-      setDomain(result.cname);
+      console.log(`Fetched document: ${JSON.stringify(result.customDomain)}`);
+      setDomain(result.customDomain);
     };
 
     fetchData();

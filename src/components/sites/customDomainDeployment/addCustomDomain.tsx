@@ -24,7 +24,7 @@ function AddCustomDomain({ nextPage }: any) {
   async function onSubmit() {
     const updateResult = await site_collection.updateOne(
       { _id: new Realm.BSON.ObjectId(site_id) },
-      { $set: { cname: domain } }
+      { $set: { customDomain: domain } }
     );
     console.log(`Updated ${updateResult.modifiedCount} document.`);
 
