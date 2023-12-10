@@ -13,7 +13,8 @@ export default function Stellar() {
         <li><a href="#practice areas">Practice Areas</a></li>
         <li><a href="#our values">Our Values</a></li>
         <li><a href="#our team">Our Team</a></li>
-        <li><a href="#reviews and testimonials">Reviews and Testimonials</a></li>
+        <li><a href="#reviews and testimonials">Testimonials</a></li>
+        <li><a href="#about us">About Us</a></li>
         <li><a href="#contact us">Contact Us</a></li>
       </ul>
     </nav>
@@ -142,18 +143,26 @@ export default function Stellar() {
 
     <div style={{ height: 150 }} />
 
+    <section id="about us" className="main special">
+      <header className="major">
+        <h2>About Us</h2>
+        <p>Donec imperdiet consequat consequat. Suspendisse feugiat congue<br />
+        posuere. Nulla massa urna, fermentum eget quam aliquet.</p>
+      </header>
+    </section>
+
+    <div style={{ height: 150 }} />
+
     <section id="contact us" className="main special">
       <header className="major">
         <h2>Contact Us</h2>
-        <p>Donec imperdiet consequat consequat. Suspendisse feugiat congue<br />
-        posuere. Nulla massa urna, fermentum eget quam aliquet.</p>
       </header>
       <footer className="major">
         <ul className="actions special">
           <li><a className="button primary">Get Started</a></li>
         </ul>
       </footer>
-      <p className="copyright">Made by <a href="https://legis.live">Legis</a>.</p>
+      <p className="copyright">Made by <a href="https://www.legis.live">Legis</a>.</p>
     </section>
   </div>
     );

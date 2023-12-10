@@ -145,25 +145,31 @@ export default function Story() {
 					</div>
 				</div>
 			</section>
-			</div>
 
-					<section className="wrapper style1 align-center">
-						<div className="inner medium">
-							<h2>Get in touch</h2>
-							<form method="post" action="#">
-								<ul className="actions special">
-									<li><input type="submit" name="submit" id="submit" value="Send Message" /></li>
-								</ul>
-							</form>
+      <section className="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
+				<div className="content">
+					<h2>About Us</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id ante sed ex pharetra lacinia sit amet vel massa. Donec facilisis laoreet nulla eu bibendum. Donec ut ex risus. Fusce lorem lectus, pharetra pretium massa et, hendrerit vestibulum odio lorem ipsum dolor sit amet.</p>
+				</div>
+			</section>
 
-						</div>
-					</section>
+			<section className="wrapper style1 align-center">
+				<div className="inner medium">
+					<h2>Get in touch</h2>
+					<form method="post" action="#">
+						<ul className="actions special">
+							<li><input type="submit" name="submit" id="submit" value="Send Message" /></li>
+						</ul>
+					</form>
+				</div>
+			</section>
 
-					<footer className="wrapper style1 align-center">
-						<div className="inner">
-							<p>&copy; Made by <a href="https://legis.live">Legis</a>.</p>
-						</div>
-					</footer>
-        </div>
+			<footer className="wrapper style1 align-center">
+				<div className="inner">
+					<p>&copy; Made by <a href="https://www.legis.live">Legis</a>.</p>
+				</div>
+			</footer>
+		</div>
+   </div>
   );
 }
