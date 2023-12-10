@@ -415,12 +415,12 @@ function getSiteData(
       title: "See what our clients are saying",
     },
     // 6. About
-    // {
-    //   section_id: v4(),
-    //   template_id: 'LAbout1',
-    //   paragraph: AboutUs,
-    //   "title": "About us",
-    // },
+    {
+      section_id: v4(),
+      template_id: 'LAbout1',
+      paragraph: AboutUs,
+      "title": "About us",
+    },
     // 7. Contact us form / CTA = NO DATA
     {
       section_id: v4(),
