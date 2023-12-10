@@ -1,18 +1,22 @@
 import { useState } from "react";
 import { contains, getUrl, switchIcon } from "../../../../utils";
+import { DEFAULT_IMAGE_URL } from "../../dashboard/SiteCard";
 
 export default function Hyperspace({
   data,
   template_id,
   setContext,
+  isDeploying,
 }: {
   data: any;
   template_id?: string;
   setContext: Function;
+  isDeploying?: boolean;
 }) {
   // console.log('ABC: ', ABC)
 
   const [editableMap, setEditableMap] = useState<any>([]);
+  const [bgEditable, setBgEditable] = useState<any>([]);
 
   return (
     <div className="is-preload">
@@ -53,57 +57,101 @@ export default function Hyperspace({
           <section
             id="intro"
             style={{ minHeight: "450px" }}
-            className="wrapper style1 fullscreen fade-up"
+            className="wrapper style1 fullscreenx fade-up"
           >
-            <div className="inner">
-              <h1
-                className="editable"
-                onClick={() =>
-                  setContext({
-                    key: "heading",
-                    type: "text",
-                    label: "Heading",
-                    variantProperty: "textAlign",
-                  })
-                }
+            <div
+              className={`inner ${
+                bgEditable && "editable"
+              } relative  overflow-hidden bg-cover bg-no-repeat py-12 bg-blackx  sm:pb-16 lg:pb-20 xl:pb-24`}
+              onClick={() =>
+                bgEditable
+                  ? setContext({
+                      key: "_",
+                      type: "image",
+                      cdnUUID: data?.cdnUUID,
+                      inputSize: [140 * 1.8, 80 * 1.8],
+                      ratio: 14 / 8,
+                      label: "Hero Image",
+                    })
+                  : () => {}
+              }
+              style={{
+                backgroundPosition: "50%",
+                backgroundImage: `url('${
+                  data?.cdnUUID ? getUrl(data?.cdnUUID) : DEFAULT_IMAGE_URL
+                }')`,
+                minHeight: "450px",
+                // ...(isDeploying ? {marginTop: 100} : {})
+              }}
+            >
+              <div
+                className="bg-[hsla(0,0%,0%,0.75)]"
                 style={{
-                  textAlign: data?.headingVariant || "left",
-                  pointerEvents: "auto",
+                  position: "absolute",
+                  left: 0,
+                  top: 0,
+                  width: "100%",
+                  height: "100%",
+                  zIndex: -1,
                 }}
-              >
-                {data?.heading ?? "[Heading]"}
-              </h1>
-              <p
-                className="editable"
-                style={{ textAlign: data?.subHeadingVariant || "left" }}
-                onClick={() =>
-                  setContext({
-                    key: "subHeading",
-                    type: "textarea",
-                    label: "Sub-Heading",
-                    variantProperty: "textAlign",
-                  })
-                }
-              >
-                {data?.subHeading ?? "[Subheading]"}
-              </p>
-              <ul className="actions">
-                <li>
-                  <a
-                    onClick={() =>
-                      setContext({
-                        key: "button",
-                        type: "button",
-                        label: "Button",
-                        variantProperty: "marginInline",
-                      })
-                    }
-                    className="editable button primary"
+              />
+              <div>
+                <h1
+                  onMouseEnter={() => setBgEditable(false)}
+                  onMouseLeave={() => setBgEditable(true)}
+                  className="editable"
+                  onClick={() =>
+                    setContext({
+                      key: "heading",
+                      type: "text",
+                      label: "Heading",
+                      variantProperty: "textAlign",
+                    })
+                  }
+                  style={{
+                    textAlign: data?.headingVariant || "left",
+                    pointerEvents: "auto",
+                  }}
+                >
+                  {data?.heading ?? "[Heading]"}
+                </h1>
+                <p
+                  onMouseEnter={() => setBgEditable(false)}
+                  onMouseLeave={() => setBgEditable(true)}
+                  className="editable"
+                  style={{ textAlign: data?.subHeadingVariant || "left" }}
+                  onClick={() =>
+                    setContext({
+                      key: "subHeading",
+                      type: "textarea",
+                      label: "Sub-Heading",
+                      variantProperty: "textAlign",
+                    })
+                  }
+                >
+                  {data?.subHeading ?? "[Subheading]"}
+                </p>
+                <ul className="actions">
+                  <li
+                    onMouseEnter={() => setBgEditable(false)}
+                    onMouseLeave={() => setBgEditable(true)}
                   >
-                    {data?.buttonLabel || "REGISTER"}
-                  </a>
-                </li>
-              </ul>
+                    <a
+                      onClick={() =>
+                        setContext({
+                          key: "button",
+                          type: "button",
+                          label: "Button",
+                          variantProperty: "marginInline",
+                        })
+                      }
+                      className="editable button primary"
+                    >
+                      {data?.buttonLabel || "REGISTER"}
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </section>
         )}
@@ -420,7 +468,25 @@ export default function Hyperspace({
           >
             <div className="inner">
               <div className="content">
-                <h1 style={{ fontSize: "35px" }}>Reviews and Testimonials</h1>
+                <h1
+                  className="e"
+                  style={{
+                    fontSize: "35px",
+                    textAlign: data?.titleVariant || "center",
+                  }}
+                  onClick={() =>
+                    setContext({
+                      section_id: data?.section_id,
+                      key: "title",
+                      type: "text",
+                      label: "Title",
+                      variantProperty: "textAlign",
+                      placeholder: "Reviews and Testimonials",
+                    })
+                  }
+                >
+                  {data?.title || "Reviews and Testimonials"}
+                </h1>
                 <section className="testimonials">
                   {(data?.reviews ?? []).map((obj: any, i: number) => (
                     <article>
@@ -443,56 +509,23 @@ export default function Hyperspace({
                       >
                         {obj?.clientName || "[Client name here...]"}
                       </h3>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing
-                        vehicula id nulla dignissim dapibus ultrices.
+                      <p
+                        onClick={() =>
+                          setContext({
+                            collection: "reviews",
+                            seriableLabel: "review",
+                            key: "testimonial",
+                            label: "Review",
+                            type: "textarea",
+                            index: i,
+                          })
+                        }
+                        className="e"
+                      >
+                        {obj?.testimonial || "[Client Review here...]"}
                       </p>
                     </article>
                   ))}
-                  <article>
-                    <i
-                      style={{ color: "black" }}
-                      className="fas fa-quote-left"
-                    ></i>
-                    <h3 className="major">Sed feugiat lorem</h3>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing
-                      vehicula id nulla dignissim dapibus ultrices.
-                    </p>
-                  </article>
-                  <article>
-                    <i
-                      style={{ color: "black" }}
-                      className="fas fa-quote-left"
-                    ></i>
-                    <h3 className="major">Sed feugiat lorem</h3>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing
-                      vehicula id nulla dignissim dapibus ultrices.
-                    </p>
-                  </article>
-                  <article>
-                    <i
-                      style={{ color: "black" }}
-                      className="fas fa-quote-left"
-                    ></i>
-                    <h3 className="major">Sed feugiat lorem</h3>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing
-                      vehicula id nulla dignissim dapibus ultrices.
-                    </p>
-                  </article>
-                  <article>
-                    <i
-                      style={{ color: "black" }}
-                      className="fas fa-quote-left"
-                    ></i>
-                    <h3 className="major">Sed feugiat lorem</h3>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing
-                      vehicula id nulla dignissim dapibus ultrices.
-                    </p>
-                  </article>
                 </section>
               </div>
             </div>
@@ -503,20 +536,60 @@ export default function Hyperspace({
         {contains(template_id, "contact") && (
           <section id="contact us" className="wrapper style4 fade-up">
             <div className="inner">
-              <h1 style={{ fontSize: "35px" }}>Contact Us</h1>
-              <p>
-                Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam
-                turpis mauris, eu ultricies erat malesuada quis. Aliquam
-                dapibus, lacus eget hendrerit bibendum, urna est aliquam sem,
-                sit amet imperdiet est velit quis lorem.
+              <h1
+                onClick={() =>
+                  setContext({
+                    key: "title",
+                    type: "text",
+                    label: "Title",
+                    variantProperty: "textAlign",
+                  })
+                }
+                className="e"
+                style={{
+                  fontSize: "35px",
+                  textAlign: data?.titleVariant || "left",
+                  pointerEvents: "auto",
+                }}
+              >
+                {data?.title || "Contact us"}
+              </h1>
+              <p
+                style={{ textAlign: data?.paragraphVariant || "left" }}
+                onClick={() =>
+                  setContext({
+                    key: "paragraph",
+                    type: "text",
+                    label: "Paragraph",
+                    variantProperty: "textAlign",
+                  })
+                }
+                className="e"
+              >
+                {data?.paragraph || "[paragraph]"}
               </p>
               <div className="split style1">
                 <section>
                   <form method="post" action="#">
                     <ul className="actions">
                       <li>
-                        <a href="" className="button submit">
-                          Send Message
+                        <a
+                          style={{
+                            marginInline: data?.buttonVariant || "auto auto",
+                            color: "#000",
+                          }}
+                          onClick={() =>
+                            setContext({
+                              key: "button",
+                              type: "button",
+                              label: "Button",
+                              variantProperty: "marginInline",
+                            })
+                          }
+                          href={isDeploying ? data?.buttonLink || "#" : "#hero"}
+                          className="button submit e"
+                        >
+                          {data?.buttonLabel || "Send Message"}
                         </a>
                       </li>
                     </ul>

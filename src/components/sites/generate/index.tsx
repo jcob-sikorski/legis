@@ -421,9 +421,12 @@ function getSiteData(
       section_id: v4(),
       template_id: "LContact1",
       title: "Contact us",
+      paragraph: "[LOREM IPSUM GENERATED HERE/DEV NEEDS TO REPLACE THIS!!!]",
       email: "example@example.com",
       phone: "1-234-567-890",
       address: "Address, A1 234BC",
+      buttonLabel: "Send Message",
+      buttonLink: "https://legis.live",
     },
     {
       section_id: v4(),
