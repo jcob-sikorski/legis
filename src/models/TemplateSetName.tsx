@@ -1,2 +1,2 @@
-type TemplateSetName = 'Stellar' | 'SolidState' | 'Hyperspace' | 'Story';
+type TemplateSetName = "Stellar" | "SolidState" | "Hyperspace" | "Story";
 export default TemplateSetName;

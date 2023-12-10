@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import {
-  PlusOutlined
-} from '@ant-design/icons';
-import { Layout, Menu, Button, theme, Row, Col, Flex } from 'antd';
-import SiteCard from './SiteCard';
+import React, { useEffect, useState } from "react";
+import { PlusOutlined } from "@ant-design/icons";
+import { Layout, Menu, Button, theme, Row, Col, Flex } from "antd";
+import SiteCard from "./SiteCard";
 import * as Realm from "realm-web";
 import { useApp } from "./../../RealmApp";
-import Site from '../../../models/Site';
-import Sidebar from '../menu';
+import Site from "../../../models/Site";
+import Sidebar from "../menu";
 import { config } from "../../../config";
-import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
-import './../../../index.css';
-import { getBodyTemplateFromTemplateSetId, switchTemplateSet, updateCssStyles } from '../../../utils';
-import Logo from '../menu/Logo';
+import "./../../../index.css";
+import {
+  getBodyTemplateFromTemplateSetId,
+  switchTemplateSet,
+  updateCssStyles,
+} from "../../../utils";
+import Logo from "../menu/Logo";
 
 const { Content } = Layout;
 
@@ -30,7 +32,7 @@ export const Dashboard: React.FC = () => {
   } = theme.useToken();
 
   const app: any = useApp();
-  
+
   const currentUserID = app.currentUser!.id;
 
   const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
@@ -51,25 +53,24 @@ export const Dashboard: React.FC = () => {
         // Create a new user document
         const newUser = {
           _id: new Realm.BSON.ObjectId(app.currentUser!.id),
-          email: email
+          email: email,
         };
-                
+
         // Insert the new user document into the collection
         const result = await user_collection.insertOne(newUser);
         console.log("Created user:", JSON.stringify(result));
       }
     };
-  
+
     insertUser();
 
-    console.log('creating? ', sessionStorage.getItem('legis_template_set_id'))
-    if (sessionStorage.getItem('legis_template_set_id')) {
+    console.log("creating? ", sessionStorage.getItem("legis_template_set_id"));
+    if (sessionStorage.getItem("legis_template_set_id")) {
       createSite();
     }
   }, []);
-  
 
-  const userQuery = { "user_id": new Realm.BSON.ObjectId(currentUserID) };
+  const userQuery = { user_id: new Realm.BSON.ObjectId(currentUserID) };
 
   React.useEffect(() => {
     async function searchDocuments() {
@@ -101,40 +102,40 @@ export const Dashboard: React.FC = () => {
   async function createSite() {
     if (sites.length === 0) {
       try {
-
         const data = {
           email: email,
-          eventName: "onboardingGuidelines"
+          eventName: "onboardingGuidelines",
         };
-        
+
         const tsx = {
-          method: 'post',
-          url: 'https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://app.loops.so/api/v1/events/send',
-          headers: { 
-            Authorization: `Bearer ${config.loopsKey}`
+          method: "post",
+          url: "https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://app.loops.so/api/v1/events/send",
+          headers: {
+            Authorization: `Bearer ${config.loopsKey}`,
           },
-          data : data
+          data: data,
         };
-        
+
         const response = await axios(tsx);
-        
-        console.log("LOOPS RESPONSE: ", (response));
+
+        console.log("LOOPS RESPONSE: ", response);
       } catch {
-        console.warn("ERROR SENDING LOOPS onboardingGuidelines")
+        console.warn("ERROR SENDING LOOPS onboardingGuidelines");
       }
     }
-    
+
     // seeded template id section
 
     let templateIds: string[] = [];
-    const sessionTemplateSetId = sessionStorage.getItem('legis_template_set_id') || '';
+    const sessionTemplateSetId =
+      sessionStorage.getItem("legis_template_set_id") || "";
     if (sessionTemplateSetId) {
       // legis_template_set_id exists in session storage
       templateIds = switchTemplateSet(sessionTemplateSetId);
-      sessionStorage.removeItem('legis_template_set_id');
+      sessionStorage.removeItem("legis_template_set_id");
     }
 
-    const newId = new Realm.BSON.ObjectId()
+    const newId = new Realm.BSON.ObjectId();
 
     type Site = {
       user_id: Realm.BSON.ObjectId;
@@ -148,7 +149,7 @@ export const Dashboard: React.FC = () => {
       template_colors: string[];
       body_template?: any; // replace 'any' with the actual type of 'body_template'
     };
-    
+
     const newSite: Site = {
       user_id: new Realm.BSON.ObjectId(currentUserID),
       _id: newId,
@@ -156,21 +157,21 @@ export const Dashboard: React.FC = () => {
       description: "Your Site Description",
       site_url: "",
       domainConnected: 0,
-      favicon_url: '',
-      cname: '',
+      favicon_url: "",
+      cname: "",
       template_colors: ["#efefee", "#a3826c", "#3e3d3d"],
       // body_template: templateIds ? getBodyTemplateFromTemplateSetId(templateIds),
     };
     if (templateIds.length > 0) {
       newSite.body_template = getBodyTemplateFromTemplateSetId(templateIds);
     }
-    
+
     if (templateIds.length > 0) {
       newSite.body_template = getBodyTemplateFromTemplateSetId(templateIds);
     }
-    
+
     const site_id: string = newSite._id.toString();
-  
+
     try {
       const result = await site_collection.insertOne(newSite);
       console.log("Created site:", JSON.stringify(result));
@@ -178,30 +179,36 @@ export const Dashboard: React.FC = () => {
       // updateCssStyles(["#efefee", "#a3826c", "#3e3d3d"]);
 
       navigate(`/survey/${site_id}`);
-  
+
       // Create a new GitHub repository
-      const githubRepoResponse = await axios.post(`https://api.github.com/user/repos`, {
-        name: site_id,
-        private: false, // Set to true if you want a private repository
-      }, {
-        auth: {
-          username: githubUsername,
-          password: githubToken,
+      const githubRepoResponse = await axios.post(
+        `https://api.github.com/user/repos`,
+        {
+          name: site_id,
+          private: false, // Set to true if you want a private repository
         },
-      });
-  
+        {
+          auth: {
+            username: githubUsername,
+            password: githubToken,
+          },
+        }
+      );
+
       console.log("Created GitHub repository:", githubRepoResponse.data);
-  
-      setSites((prevSites) => [...prevSites, {
-        ...newSite,
-        user_id: newSite.user_id.toString(),
-        _id: site_id,
-      }]);
+
+      setSites((prevSites) => [
+        ...prevSites,
+        {
+          ...newSite,
+          user_id: newSite.user_id.toString(),
+          _id: site_id,
+        },
+      ]);
     } catch (error) {
       console.error("Error creating site:", error);
     }
-  };
-    
+  }
 
   async function editSite(siteId: string) {
     navigate(`/editor/${siteId}`);
@@ -209,7 +216,9 @@ export const Dashboard: React.FC = () => {
 
   async function deleteSite(siteId: string) {
     // Display a confirmation dialog
-    const isConfirmed = window.confirm("Are you sure you want to delete this site?");
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this site?"
+    );
 
     if (!isConfirmed) {
       return; // If the user cancels the deletion, exit the function
@@ -217,23 +226,33 @@ export const Dashboard: React.FC = () => {
     try {
       // Find the site by its _id and get the associated GitHub repository name
       const site = sites.find((site) => site._id === siteId);
-  
-      if (site) {
-        setSites((prevSites) => prevSites.filter((site) => site._id !== siteId));
 
-        const result = await site_collection.deleteOne({ _id: new Realm.BSON.ObjectId(siteId) });
+      if (site) {
+        setSites((prevSites) =>
+          prevSites.filter((site) => site._id !== siteId)
+        );
+
+        const result = await site_collection.deleteOne({
+          _id: new Realm.BSON.ObjectId(siteId),
+        });
         console.log("Deleted site:", JSON.stringify(result));
-  
+
         // Delete the GitHub repository
         const githubRepoName = site._id; // Assuming _id corresponds to the GitHub repository name
-        const githubRepoDeleteResponse = await axios.delete(`https://api.github.com/repos/${githubUsername}/${githubRepoName}`, {
-          auth: {
-            username: githubUsername,
-            password: githubToken,
-          },
-        });
-  
-        console.log("Deleted GitHub repository:", githubRepoDeleteResponse.status);
+        const githubRepoDeleteResponse = await axios.delete(
+          `https://api.github.com/repos/${githubUsername}/${githubRepoName}`,
+          {
+            auth: {
+              username: githubUsername,
+              password: githubToken,
+            },
+          }
+        );
+
+        console.log(
+          "Deleted GitHub repository:",
+          githubRepoDeleteResponse.status
+        );
       } else {
         console.error("Site not found in the local database.");
       }
@@ -241,36 +260,49 @@ export const Dashboard: React.FC = () => {
       console.error("Error deleting site:", error);
     }
   }
-  
-  
+
   return (
     <>
-     <Layout style={{height: 'calc(100vh - 46px)', display: 'flex'}}>
-      
-      <Sidebar/>
-      <Layout>
-        <Content style={{background: colorBgContainer, padding: 0}}>
-        <Button
-          type="primary"
-          onClick={createSite}
-          className="custom-button"
-          style={{ marginLeft: 'auto', height: 50 }} // Use marginLeft: 'auto' to push the button to the right
-          >
-          New Site
-        </Button>
-            <Flex style={{ flexDirection: 'column', maxWidth: 1000, marginInline: 'auto', marginBottom: 50, padding: 10}} >
-              <Row gutter={[16, 24]} style={{padding: 10}}>
-                  {sites && sites.map((d: any) => 
+      <Layout style={{ height: "calc(100vh - 46px)", display: "flex" }}>
+        <Sidebar />
+        <Layout>
+          <Content style={{ background: colorBgContainer, padding: 0 }}>
+            <Button
+              type="primary"
+              onClick={createSite}
+              className="custom-button"
+              style={{ marginLeft: "auto", height: 50 }} // Use marginLeft: 'auto' to push the button to the right
+            >
+              New Site
+            </Button>
+            <Flex
+              style={{
+                flexDirection: "column",
+                maxWidth: 1000,
+                marginInline: "auto",
+                marginBottom: 50,
+                padding: 10,
+              }}
+            >
+              <Row gutter={[16, 24]} style={{ padding: 10 }}>
+                {sites &&
+                  sites.map((d: any) => (
                     <Col className="gutter-row" span={12}>
-                        <SiteCard site_id={d._id} data={d} onEdit={() => editSite(d._id)} onClone={() => createSite()} onDelete={() => deleteSite(d._id)} />
-                    </Col>)
-                  }
+                      <SiteCard
+                        site_id={d._id}
+                        data={d}
+                        onEdit={() => editSite(d._id)}
+                        onClone={() => createSite()}
+                        onDelete={() => deleteSite(d._id)}
+                      />
+                    </Col>
+                  ))}
               </Row>
             </Flex>
-        </Content>
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
-                  </>
+    </>
   );
 };
 

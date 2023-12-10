@@ -7,5 +7,5 @@ export default interface Site {
   domainConnected?: number;
   favicon_url?: string;
   cname?: string;
-  template_colors? : string[];
+  template_colors?: string[];
 }

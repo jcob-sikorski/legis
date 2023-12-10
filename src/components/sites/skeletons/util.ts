@@ -1,3 +1,3 @@
-export function css(styles: any, name: string) { 
-    return ` ${styles[name]} `;
+export function css(styles: any, name: string) {
+  return ` ${styles[name]} `;
 }

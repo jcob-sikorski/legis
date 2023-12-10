@@ -1,10 +1,8 @@
-import { Parser } from 'html-to-react';
-
-
+import { Parser } from "html-to-react";
 
 function Html() {
-    const myHtml = data;
-    return <div>{Parser().parse(myHtml)}</div>;
+  const myHtml = data;
+  return <div>{Parser().parse(myHtml)}</div>;
 }
 
 export default Html;
@@ -90,4 +88,4 @@ const data = `
     </div>
     <footer class="ant-layout-footer css-dev-only-do-not-override-qgg3xn" style="text-align: center;">Legis - Footer</footer>
 </div>
-`
+`;

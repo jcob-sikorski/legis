@@ -1,22 +1,40 @@
-import React from 'react';
-import { Checkbox } from 'antd';
+import React from "react";
+import { Checkbox } from "antd";
 
-import Questionnaire from '../../../models/Questionnaire';
+import Questionnaire from "../../../models/Questionnaire";
 
-export function CheckboxGroup({ value, question, values, page, fields, fieldValues, updateField, chooseMax }: any) {
+export function CheckboxGroup({
+  value,
+  question,
+  values,
+  page,
+  fields,
+  fieldValues,
+  updateField,
+  chooseMax,
+}: any) {
   return (
     <div>
-      <div style={{ fontSize: '30px', fontWeight: 'bolder' }}>{question}</div>
+      <div style={{ fontSize: "30px", fontWeight: "bolder" }}>{question}</div>
       <div className="custom-checkbox">
         <Checkbox.Group
-          value={Array.isArray(fieldValues[value]) ? fieldValues[value] : [fieldValues[value]]}
-          onChange={(checkedValues) => updateField(fields[page] as keyof Questionnaire, checkedValues as string[])}
+          value={
+            Array.isArray(fieldValues[value])
+              ? fieldValues[value]
+              : [fieldValues[value]]
+          }
+          onChange={(checkedValues) =>
+            updateField(
+              fields[page] as keyof Questionnaire,
+              checkedValues as string[]
+            )
+          }
         >
           {values.map((value: string) => (
             <Checkbox
               key={value}
               value={value}
-              style={{ display: 'flex', alignItems: 'center', fontSize: 20 }}
+              style={{ display: "flex", alignItems: "center", fontSize: 20 }}
             >
               {value}
             </Checkbox>

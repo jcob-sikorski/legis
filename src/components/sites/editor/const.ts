@@ -125,144 +125,140 @@ export const DEV_JSON_TO_INJECT = `
       "phone": "1-234-567-890"
     }
   ]
-`.trim()
-
-
+`.trim();
 
 export const TEMPLATES_HEROS = [
   {
-    value: 'LHero1',
-    label: 'Hero 1',
+    value: "LHero1",
+    label: "Hero 1",
     image: faker.image.url(),
   },
   {
-    value: 'LHero2',
-    label: 'Hero 2',
+    value: "LHero2",
+    label: "Hero 2",
     image: faker.image.url(),
   },
   {
-    value: 'LHero3',
-    label: 'Hero 3',
+    value: "LHero3",
+    label: "Hero 3",
     image: faker.image.url(),
   },
-]
+];
 
 export const TEMPLATES_PRACTICE = [
   {
-    value: 'LPracticeAreas1',
-    label: 'Practice Areas 1',
+    value: "LPracticeAreas1",
+    label: "Practice Areas 1",
     image: faker.image.url(),
   },
   {
-    value: 'LPracticeAreas2',
-    label: 'Practice Areas 2',
+    value: "LPracticeAreas2",
+    label: "Practice Areas 2",
     image: faker.image.url(),
   },
   {
-    value: 'LPracticeAreas3',
-    label: 'Practice Areas 3',
+    value: "LPracticeAreas3",
+    label: "Practice Areas 3",
     image: faker.image.url(),
   },
-]
+];
 
 export const TEMPLATES_VALUES = [
   {
-    value: 'LValues1',
-    label: 'Values 1',
+    value: "LValues1",
+    label: "Values 1",
     image: faker.image.url(),
   },
   {
-    value: 'LValues2',
-    label: 'Values 2',
+    value: "LValues2",
+    label: "Values 2",
     image: faker.image.url(),
   },
   {
-    value: 'LValues3',
-    label: 'Values 3',
+    value: "LValues3",
+    label: "Values 3",
     image: faker.image.url(),
   },
-]
-
+];
 
 export const TEMPLATES_TEAM = [
   {
-    value: 'LTeam1',
-    label: 'Team 1',
+    value: "LTeam1",
+    label: "Team 1",
     image: faker.image.url(),
   },
   {
-    value: 'LTeam2',
-    label: 'Team 2',
+    value: "LTeam2",
+    label: "Team 2",
     image: faker.image.url(),
   },
   {
-    value: 'LTeam3',
-    label: 'Team 3',
+    value: "LTeam3",
+    label: "Team 3",
     image: faker.image.url(),
   },
-]
+];
 
 export const TEMPLATES_REVIEWS = [
   {
-    value: 'LReviews1',
-    label: 'Reviews 1',
+    value: "LReviews1",
+    label: "Reviews 1",
     image: faker.image.url(),
   },
   {
-    value: 'LReviews2',
-    label: 'Reviews 2',
+    value: "LReviews2",
+    label: "Reviews 2",
     image: faker.image.url(),
   },
   {
-    value: 'LReviews3',
-    label: 'Reviews 3',
+    value: "LReviews3",
+    label: "Reviews 3",
     image: faker.image.url(),
   },
-]
+];
 
 export const TEMPLATES_ABOUT = [
   {
-    value: 'LAbout1',
-    label: 'About Us 1',
+    value: "LAbout1",
+    label: "About Us 1",
     image: faker.image.url(),
   },
   {
-    value: 'LAbout2',
-    label: 'About Us 2',
+    value: "LAbout2",
+    label: "About Us 2",
     image: faker.image.url(),
   },
   {
-    value: 'LAbout3',
-    label: 'About Us 3',
+    value: "LAbout3",
+    label: "About Us 3",
     image: faker.image.url(),
   },
-]
+];
 
 export const TEMPLATES_CONTACT = [
   {
-    value: 'LContact1',
-    label: 'Contact 1',
+    value: "LContact1",
+    label: "Contact 1",
     image: faker.image.url(),
   },
   {
-    value: 'LContact2',
-    label: 'Contact 2',
+    value: "LContact2",
+    label: "Contact 2",
     image: faker.image.url(),
   },
   {
-    value: 'LContact3',
-    label: 'Contact 3',
+    value: "LContact3",
+    label: "Contact 3",
     image: faker.image.url(),
   },
-]
-
+];
 
 export const templatesMap: any = {
-  "hero": TEMPLATES_HEROS,
-  "practice": TEMPLATES_PRACTICE,
-  "values": TEMPLATES_VALUES,
-  "team": TEMPLATES_TEAM,
-  "reviews": TEMPLATES_REVIEWS,
-  "about": TEMPLATES_ABOUT,
-  "contact": TEMPLATES_CONTACT,
-}
+  hero: TEMPLATES_HEROS,
+  practice: TEMPLATES_PRACTICE,
+  values: TEMPLATES_VALUES,
+  team: TEMPLATES_TEAM,
+  reviews: TEMPLATES_REVIEWS,
+  about: TEMPLATES_ABOUT,
+  contact: TEMPLATES_CONTACT,
+};

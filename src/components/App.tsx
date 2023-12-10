@@ -19,12 +19,13 @@ import Preview from "./sites/preview";
 import Skeletons from "./sites/skeletons";
 import Showcase from "./sites/showcase";
 
-
-const RequireAuth: React.FC<{ children: React.ReactElement }> = ({ children }) => {
+const RequireAuth: React.FC<{ children: React.ReactElement }> = ({
+  children,
+}) => {
   const app: any = useApp();
 
   if (!app.currentUser) {
-     return <LogIn />;
+    return <LogIn />;
   }
   return children;
 };
@@ -34,116 +35,123 @@ function App() {
     <AppProvider appId={config.appId}>
       <BrowserRouter>
         <Routes>
-
           {/* DEV */}
           <Route path="/html" element={<Html />} />
           <Route path="/playground" element={<Playground />} />
           <Route path="/skeletons" element={<Skeletons />} />
-          
+
           {/* DON'T DELETE  */}
           <Route path="/preview-iframe" element={<></>} />
 
-          <Route path="/from-template/:template_set_id" 
-            element={
-              <FromTemplate />
-            } 
+          <Route
+            path="/from-template/:template_set_id"
+            element={<FromTemplate />}
           />
 
-          <Route path="/:email?"
+          <Route
+            path="/:email?"
             element={
               <RequireAuth>
                 <Dashboard />
               </RequireAuth>
-            } 
+            }
           />
-          <Route path="/showcase/:site_id"
+          <Route
+            path="/showcase/:site_id"
             element={
               <RequireAuth>
                 <Showcase />
               </RequireAuth>
-            } 
+            }
           />
-          <Route path="/signup" 
-            element={
-              <SignUp />
-            } 
-          />
-          <Route path="/dashboard" 
+          <Route path="/signup" element={<SignUp />} />
+          <Route
+            path="/dashboard"
             element={
               <RequireAuth>
                 <Dashboard />
               </RequireAuth>
-            } 
+            }
           />
-          <Route path="/preview/:site_id" 
+          <Route
+            path="/preview/:site_id"
             element={
               <RequireAuth>
                 <Preview />
               </RequireAuth>
-            } 
+            }
           />
-          <Route path="/editor/:site_id" 
+          <Route
+            path="/editor/:site_id"
             element={
               <RequireAuth>
                 <Editor />
               </RequireAuth>
-            } 
+            }
           />
-          <Route path="/survey/:site_id" 
+          <Route
+            path="/survey/:site_id"
             element={
               <RequireAuth>
                 <Survey />
               </RequireAuth>
-            } 
+            }
           />
-          <Route path="/color-palette/:site_id" 
+          <Route
+            path="/color-palette/:site_id"
             element={
               <RequireAuth>
                 <ColorPalette />
               </RequireAuth>
-            } 
+            }
           />
-          <Route path="/generate/:site_id/:onboarding" 
+          <Route
+            path="/generate/:site_id/:onboarding"
             element={
               <RequireAuth>
                 <Generate />
               </RequireAuth>
-            } 
+            }
           />
-          <Route path="/html" 
+          <Route
+            path="/html"
             element={
               <RequireAuth>
                 <Html />
               </RequireAuth>
-            } 
+            }
           />
-          <Route path="/custom-domain-deployment/:site_id" 
+          <Route
+            path="/custom-domain-deployment/:site_id"
             element={
               <RequireAuth>
                 <CustomDomainDeployment />
               </RequireAuth>
-            } 
+            }
           />
-          <Route path="/overview-settings" 
+          <Route
+            path="/overview-settings"
             element={
               <RequireAuth>
                 <Overview />
               </RequireAuth>
-            } 
+            }
           />
-          <Route path="/site-settings" 
+          <Route
+            path="/site-settings"
             element={
               <RequireAuth>
                 <Site />
               </RequireAuth>
-            } 
+            }
           />
-          <Route path="/media-settings" 
+          <Route
+            path="/media-settings"
             element={
               <RequireAuth>
                 <Media />
               </RequireAuth>
-            } 
+            }
           />
         </Routes>
       </BrowserRouter>

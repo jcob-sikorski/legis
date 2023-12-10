@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../../RealmApp";
 import * as Realm from "realm-web";
-import { message } from 'antd';
+import { message } from "antd";
 import "./index.css";
 
 export default function LogIn() {
@@ -14,7 +14,13 @@ export default function LogIn() {
 
   const handleLogIn = async () => {
     // app.logOut();
-    if (email && email.length < 80 && password && password.length >= 6 && password.length <= 100) {
+    if (
+      email &&
+      email.length < 80 &&
+      password &&
+      password.length >= 6 &&
+      password.length <= 100
+    ) {
       try {
         // Log in the email/password user
         await app.logIn(Realm.Credentials.emailPassword(email, password));
@@ -23,19 +29,21 @@ export default function LogIn() {
         setPassword("");
       } catch (error) {
         // if login is not successful, show the user an error message
-        message.error('Login failed. Please check your email and password.');
+        message.error("Login failed. Please check your email and password.");
       }
     }
   };
 
   const handleSignUp = async () => {
-    navigate('/signup');
+    navigate("/signup");
   };
 
   return (
     <div className="screen">
       <h1 className="title">Legis</h1>
-      <p className="subtitle">The fastest way to show your website to the planet.</p>
+      <p className="subtitle">
+        The fastest way to show your website to the planet.
+      </p>
       <div className="loginContainer">
         <input
           type="email"
@@ -54,9 +62,7 @@ export default function LogIn() {
         <button className="submitButton" onClick={handleLogIn}>
           Log in
         </button>
-        <button onClick={handleSignUp}>
-          Don't have an account? Sign Up
-        </button>
+        <button onClick={handleSignUp}>Don't have an account? Sign Up</button>
       </div>
     </div>
   );

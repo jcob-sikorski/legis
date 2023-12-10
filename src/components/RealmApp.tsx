@@ -4,7 +4,7 @@ import { config } from "../config";
 
 const AppContext = React.createContext(null);
 
-export function AppProvider({ appId, children } : any) {
+export function AppProvider({ appId, children }: any) {
   // Store Realm.App in React state. If appId changes, all children will rerender and use the new App.
   const app = new Realm.App({ id: config.appId });
 
@@ -42,9 +42,7 @@ export function AppProvider({ appId, children } : any) {
   }, [app, currentUser, logIn, logOut]);
 
   return (
-    <AppContext.Provider value={appContext}>
-      {children}
-    </AppContext.Provider>
+    <AppContext.Provider value={appContext}>{children}</AppContext.Provider>
   );
 }
 

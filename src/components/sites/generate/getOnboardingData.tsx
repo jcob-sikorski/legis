@@ -10,7 +10,7 @@ export const getOnboardingData = ({
   LawyerDetails,
   ClientReviews,
   StandOutFactor,
-  ImportantValues
+  ImportantValues,
 }: Questionnaire): string => {
   return `
 {

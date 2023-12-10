@@ -5,6 +5,6 @@ For Windows:
 
 !!! IMPORTANT:
 
-!!! (1)  Run this without any instances of chrome running already. It should be the first chrome window being opened.
+!!! (1) Run this without any instances of chrome running already. It should be the first chrome window being opened.
 
 !!! (2) You might need to change chrome.exe directory based on where it is on your machine.

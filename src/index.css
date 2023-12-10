@@ -1,6 +1,6 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;  
+@tailwind utilities;
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -17,7 +17,7 @@
   --legis-color-2: #a3826c;
   --legis-color-3: #3e3d3d;
 
-  --legis-font-main: 'IBM Plex Sans';
+  --legis-font-main: "IBM Plex Sans";
 
   --legis-editable-outline: 3px dotted #4391ff;
 
@@ -67,9 +67,9 @@ div {
 }
 
 .custom-font {
-  font-family: 'Oswald';
-  font-family: 'Bodoni Moda', serif;
-  font-family: 'Playfair Display', serif;
+  font-family: "Oswald";
+  font-family: "Bodoni Moda", serif;
+  font-family: "Playfair Display", serif;
 }
 
 .editable {
