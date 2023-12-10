@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Col, Flex, Layout, Row, Input } from "antd";
+import { Button, Col, Flex, Layout, Row, Input, message } from "antd";
 import {
   RIGHT_BAR_WIDTH,
   DEV_START_JSON,
@@ -78,9 +78,7 @@ const Editor: React.FC = () => {
   const [json, setJson] = useState(DEV_START_JSON);
   const [data, setData] = useState<any[]>([]);
 
-  const [onboardingData, setOnboardingData] = useState<Questionnaire | null>(
-    null
-  );
+
   const [lawFirmName, setLawFirmName] = useState<string>();
   const [colors, setColors] = useState<string[]>([]);
   const [templateSetId, setTemplateSetId] = useState<string>("");
@@ -224,23 +222,40 @@ const Editor: React.FC = () => {
   useEffect(() => {
     const connectDomainsFlow = async () => {
       if (isDeploying) {
-        console.log("COMITING INDEX HTML TO GITHUB");
-        commitIndexHtmlToGithub();
-
         const site = await site_collection.findOne({
           _id: new Realm.BSON.ObjectId(site_id),
         });
 
         if (!site.domainConnected) {
           if (legisSubdomain) {
+            const validDomain = convertToValidDomainName(lawFirmName!);
+
+            const res = await site_collection.findOne({
+              cname: `${validDomain}.legis.live`,
+            });
+            if (res) {
+              message.error("Such subdomain already exists.");
+              setIsDeploying(false);
+              return;
+            }
+
+            console.log("COMITING INDEX HTML TO GITHUB");
+            commitIndexHtmlToGithub();
+
             console.log("CONNECTING DEFAULT SUBDOMAIN");
             connectDefaultSubdomain();
 
             console.log("NAVIGATING TO OVERVIEW SETTINGS");
+            const site = await site_collection.findOne({
+              _id: new Realm.BSON.ObjectId(site_id),
+            });
+
             dispatch(setSite(site));
             navigate("/overview-settings");
           } else {
-            navigate(`/custom-domain-deployment/${site_id}`);
+            console.log("COMITING INDEX HTML TO GITHUB");
+            commitIndexHtmlToGithub();
+            navigate(`/custom-domain-deployment/${site_id}`); // DEPENDENT
           }
         } else {
           console.log("NAVIGATING TO OVERVIEW SETTINGS");
@@ -290,6 +305,7 @@ const Editor: React.FC = () => {
 
   async function connectDefaultSubdomain() {
     const validDomain = convertToValidDomainName(lawFirmName!);
+
     const cnameTarget = "legisbiz.github.io.";
 
     // API endpoint and request payload
@@ -478,33 +494,58 @@ const Editor: React.FC = () => {
       </html>
     `;
 
+    const base64Content = btoa(unescape(encodeURIComponent(htmlString))); // Convert HTML string to base64
+
     console.log("htmlString: ", htmlString);
 
     try {
-      const base64Content = btoa(unescape(encodeURIComponent(htmlString))); // Convert HTML string to base64
-      const response = await axios.put(
-        `https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${site_id}/contents/index.html`,
-        {
-          message: "Initial commit",
-          content: base64Content,
-          branch: "gh-pages", // Specify the 'gh-pages' branch
-        },
-        {
-          headers: {
-            Authorization: `token ${githubToken}`,
+      const site = await site_collection.findOne({
+        _id: new Realm.BSON.ObjectId(site_id),
+      });
+
+      const site_url = site.site_url;
+
+      if (site_url) { // update the file on github
+        const getFile = await axios.get( // get file sha
+          `https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${site_id}/contents/index.html`,
+          {
+            headers: {
+              Authorization: `token ${githubToken}`,
+            },
+          }
+        );
+        
+        const fileSha = getFile.data.sha;
+  
+        const response = await axios.put( // update the file
+          `https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${site_id}/contents/index.html`,
+          {
+            message: "Update commit",
+            content: base64Content,
+            branch: "gh-pages", // Specify the 'gh-pages' branch
+            sha: fileSha, // Include the file's SHA
           },
-        }
-      );
-
-      setIsDeploying(false);
-
-      console.log("Pushed HTML content to GitHub repository:", response.data);
-
-      console.log("GitHub Pages deployment triggered.");
-
-      console.log("Pushing the site to mongo.");
-
-      try {
+          {
+            headers: {
+              Authorization: `token ${githubToken}`,
+            },
+          }
+        );
+      } else { // create new file on github
+        const response = await axios.put( // create new file
+          `https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${site_id}/contents/index.html`,
+          {
+            message: "Initial commit",
+            content: base64Content,
+            branch: "gh-pages", // Specify the 'gh-pages' branch
+          },
+          {
+            headers: {
+              Authorization: `token ${githubToken}`,
+            },
+          }
+        );
+  
         const result = await site_collection.updateOne(
           { _id: new Realm.BSON.ObjectId(site_id) }, // Specify the query to find the site by site_id
           {
@@ -513,16 +554,13 @@ const Editor: React.FC = () => {
             },
           }
         );
-        console.log(
-          "Updated site_url and status to deployed:",
-          JSON.stringify(result)
-        );
-      } catch (error) {
-        console.error("Error updating site:", error);
       }
+
+      console.log("GitHub Pages deployment triggered.");
+      setIsDeploying(false);
     } catch (error) {
       setIsDeploying(false);
-      console.error("Error pushing content and triggering deployment.");
+      console.error("Error pushing content and triggering deployment.", error);
       throw error;
     }
   }
@@ -573,7 +611,6 @@ const Editor: React.FC = () => {
           result.length > 0 ? result[0] : {};
 
         setLawFirmName(onboardingData.LawFirmName);
-        setOnboardingData(onboardingData);
       } catch (error) {
         console.error(
           "Error fetching for Questionnaire data for this site:",
@@ -699,15 +736,6 @@ const Editor: React.FC = () => {
       setIsTooSmall(false);
     }
   }
-
-  addEventListener("resize", (event) => {
-    // checkIfIsTooSmall();
-    console.log(window.innerWidth);
-  });
-
-  useEffect(() => {
-    // checkIfIsTooSmall();
-  }, []);
 
   if (isTooSmall) return <>Try different bigger defice bro</>;
 
