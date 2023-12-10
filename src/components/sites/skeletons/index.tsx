@@ -43,7 +43,11 @@ function Skeletons() {
                 break;
             }
             case 'Hyperspace': {
-                setComponent(<Hyperspace />); 
+                setComponent(<>
+                {/* <Hyperspace data={{}} template_id='practice' setContext={() => {}}/> */}
+                <Hyperspace data={{}} template_id='team' setContext={() => {}}/>
+                {/* <Hyperspace data={{}} template_id='values' setContext={() => {}}/> */}
+                </>); 
                 setCssString(HyperspaceCSS);
                 break;
             }

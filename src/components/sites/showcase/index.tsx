@@ -6,16 +6,20 @@ import Title from "antd/es/typography/Title";
 import Visualisation from "../editor/Visualisation";
 import { DEV_JSON_TO_INJECT } from "../editor/const";
 import ScaledVisualisation from "../../scaledVisualisation";
-import { getBodyTemplateFromTemplateSetId, switchTemplateSet } from "../../../utils";
+import {
+  getBodyTemplateFromTemplateSetId,
+  switchTemplateSet,
+} from "../../../utils";
 
-import * as Realm from 'realm-web';
+import * as Realm from "realm-web";
 import { config } from "../../../config";
 import axios from "axios";
 import { BgColorsOutlined, ReloadOutlined } from "@ant-design/icons";
+import IFrame from "../../iFrame";
+import HyperspaceCSS from "../skeletons/Hyperspace/assets/css/main.css?inline";
 
 function Showcase() {
-
-  const {site_id}: any = useParams();
+  const { site_id }: any = useParams();
 
   const app: any = useApp();
 
@@ -31,25 +35,26 @@ function Showcase() {
     async function getData() {
       try {
         // Include a query to find the site by its site_id
-        const result = await site_collection.find({ _id: new Realm.BSON.ObjectId(site_id) });
-  
+        const result = await site_collection.find({
+          _id: new Realm.BSON.ObjectId(site_id),
+        });
+
         if (result.length > 0 && result[0].hasOwnProperty("body_template")) {
-            console.log("Found a site with body_template:", result[0].body_template);
-            setData(result[0].body_template);
-          }
-        else {
+          console.log(
+            "Found a site with body_template:",
+            result[0].body_template
+          );
+          setData(result[0].body_template);
+        } else {
           console.log("Site doesn't have the body_template yet.");
         }
       } catch (error) {
         console.error("Error searching for this site:", error);
       }
     }
-  
+
     getData();
   }, []); // Include site_id in the dependency array if it may change
-
-
-  
 
   // useEffect(() => {
 
@@ -60,11 +65,11 @@ function Showcase() {
   //     // User doesnt have an account! proceed to creating account. template_set_id is still stored in session storage.
   //     navigate('/signup');
   //   }
-  
+
   // }, [app]);
 
   function onRegenerate() {
-    navigate(`/generate/${site_id}/1`)
+    navigate(`/generate/${site_id}/1`);
   }
 
   function onContinue() {
@@ -74,27 +79,71 @@ function Showcase() {
   const [mockBought, setMockBought] = useState(false);
 
   return (
-    <Layout className="text-gray-800" style={{padding: 50, height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-      <Flex vertical className="my-5" style={{minWidth: '500px'}}>
-        <Title level={3} style={{fontWeight: 500, textAlign: 'center'}}>Here's your <span style={{fontWeight: 800}}>generated</span> website!</Title>
-        <div style={{fontWeight: 500, textAlign: 'center', marginTop: -12, marginBottom: 12, fontSize: 16}}>Just a few last steps</div>
-        <Row >
-            <Col span={12}>
-                <Button icon={<ReloadOutlined />}  onClick={onRegenerate} type='primary' className="bg-black font-semibold text-lg h-12 w-100 " style={{width: '100%', marginRight: 3, background: '#111'}}>
-                    Regenerate
-                </Button>
-            </Col>
-            <Col span={12} >
-                <Button icon={<BgColorsOutlined />}  onClick={onContinue} type='primary' className="bg-blue-500 font-semibold text-lg h-12" style={{width: '100%', marginLeft: 3}}>
-                    Choose your colors!
-                </Button>
-            </Col>
+    <Layout
+      className="text-gray-800"
+      style={{
+        padding: 50,
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Flex vertical className="my-5" style={{ minWidth: "500px" }}>
+        <Title level={3} style={{ fontWeight: 500, textAlign: "center" }}>
+          Here's your <span style={{ fontWeight: 800 }}>generated</span>{" "}
+          website!
+        </Title>
+        <div
+          style={{
+            fontWeight: 500,
+            textAlign: "center",
+            marginTop: -12,
+            marginBottom: 12,
+            fontSize: 16,
+          }}
+        >
+          Just a few last steps
+        </div>
+        <Row>
+          <Col span={12}>
+            <Button
+              icon={<ReloadOutlined />}
+              onClick={onRegenerate}
+              type="primary"
+              className="bg-black font-semibold text-lg h-12 w-100 "
+              style={{ width: "100%", marginRight: 3, background: "#111" }}
+            >
+              Regenerate
+            </Button>
+          </Col>
+          <Col span={12}>
+            <Button
+              icon={<BgColorsOutlined />}
+              onClick={onContinue}
+              type="primary"
+              className="bg-blue-500 font-semibold text-lg h-12"
+              style={{ width: "100%", marginLeft: 3 }}
+            >
+              Choose your colors!
+            </Button>
+          </Col>
         </Row>
       </Flex>
-      <div className="animate__bounceIn" >
-            <ScaledVisualisation data={data} mode='showcase' width="160vw" height="160vh" />
-      </div>
-      </Layout>
+      <IFrame
+        style={{ width: "100%", height: "100%" }}
+        cssString={HyperspaceCSS}
+      >
+        <div className="animate__bounceIn">
+          <ScaledVisualisation
+            data={data}
+            mode="showcase"
+            width="200vw"
+            height="200vh"
+          />
+        </div>
+      </IFrame>
+    </Layout>
   );
 }
 

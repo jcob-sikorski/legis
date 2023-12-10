@@ -101,6 +101,16 @@ div {
 html {
   scroll-behavior: smooth;
 }
+
+.legis-sections-button {
+  all: unset;
+  border: 0 !important;
+}
+
+.legis-sections-button:hover {
+  color: #4391ff !important;
+}
+
 /* DEPLOYED TO SITE */
 
 .bg-photo {

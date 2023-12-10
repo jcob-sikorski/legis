@@ -1,6 +1,6 @@
 // import './assets/css/main.css'
 
-export default function SolidState() {
+export default function SolidState({data, template_id, setContext} : any) {
     return (  
   <div id="page-wrapper">
     {/* Header */}

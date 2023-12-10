@@ -35,6 +35,9 @@ import { useDispatch } from 'react-redux';
 import { setSite } from '../../../redux/actions';
 import IFrame from '../../iFrame';
 
+// CSS for template sets... in the future can be loaded by React Lazy or imported from cloud to improve performance
+import HyperspaceCSS from '../skeletons/Hyperspace/assets/css/main.css?inline';
+import TemplateSetName from '../../../models/TemplateSetName';
 
 const Editor: React.FC = () => {
   const app: any = useApp();
@@ -62,9 +65,11 @@ const Editor: React.FC = () => {
   const [siteTitle, setSiteTitle] = useState<string>();
   const [siteDescription, setSiteDescription] = useState<string>();
   const [faviconURL, setFaviconURL] = useState<string>();
-
+  
   const [selectedSectionId, setSelectedSectionId] = useState<string>("");
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>("");
+  const template_set_id: TemplateSetName = 'Hyperspace';
+  const [cssString, setCssString] = useState<string>('');
 
   const [isAddingNewSection, setIsAddingNewSection] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
@@ -99,6 +104,15 @@ const Editor: React.FC = () => {
         console.warn("Custom Error: JSON Parsing Error!")
     }
   }
+
+  useEffect(() => {
+    switch(template_set_id) {
+      default: 
+      case 'Hyperspace':
+        setCssString(HyperspaceCSS);
+        break;
+      }
+  }, [template_set_id])
 
   // shared functions
 
@@ -395,6 +409,10 @@ const Editor: React.FC = () => {
             .color-3 {background-color: var(--legis-color-3) !important;}
 
           </style>
+
+          <style>
+            ${cssString}
+          </style>
         </head>
         <body>
           ${htmlBodyString}
@@ -561,7 +579,8 @@ const Editor: React.FC = () => {
   }} 
   />;
 
-  const visualisationComponent = <Visualisation 
+  const visualisationComponent = <Visualisation
+  template_set_id={template_set_id} 
   data={data} 
   functions={{
     onAddSection,
@@ -765,6 +784,7 @@ const Editor: React.FC = () => {
                 }
               }>
                 <IFrame 
+                cssString={cssString}
                 colors={colors}
                 style={
                   isMobile 

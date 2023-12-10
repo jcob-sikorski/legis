@@ -135,8 +135,8 @@ export function LHero1({data, setContext, isDeploying} : {data: any, setContext:
                         <h1  
                             onMouseEnter={() => setBgEditable(false)}
                             onMouseLeave={() => setBgEditable(true)}
-                            onClick={() => setContext({key: 'heading', type: 'text', label: 'Heading', variantProperty: 'textAlign'})} 
                             className="text-4xl font-normal text-white sm:text-5xl lg:text-6xl xl:text-7xl editable"
+                            onClick={() => setContext({key: 'heading', type: 'text', label: 'Heading', variantProperty: 'textAlign'})} 
                             style={{textAlign: data?.headingVariant || 'center', pointerEvents: 'auto'}}
                         >
                             {data?.heading ?? ""}
@@ -148,7 +148,6 @@ export function LHero1({data, setContext, isDeploying} : {data: any, setContext:
                         onClick={() => setContext({key: 'subHeading', type: 'textarea', label: 'Sub-Heading', variantProperty: 'textAlign'})} 
                         className="mt-4 text-lg font-normal text-gray-400 sm:mt-8 editable">
                             {data?.subHeading ?? ""}
-                            
                         </p>
                         <div className='flex' 
                         // style={{justifyContent: data?.buttonVariant || 'center'}}

@@ -3900,7 +3900,7 @@ input, select, textarea {
 				}
 
 			.wrapper.spotlight.style3 {
-				background-color: #3f4e85;
+				background-color: var(--legis-color-3);
 			}
 
 				.wrapper.spotlight.style3:before, .wrapper.spotlight.style3:after {
