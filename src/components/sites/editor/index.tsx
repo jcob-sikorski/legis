@@ -78,7 +78,6 @@ const Editor: React.FC = () => {
   const [json, setJson] = useState(DEV_START_JSON);
   const [data, setData] = useState<any[]>([]);
 
-
   const [lawFirmName, setLawFirmName] = useState<string>();
   const [colors, setColors] = useState<string[]>([]);
   const [templateSetId, setTemplateSetId] = useState<string>("");
@@ -227,18 +226,17 @@ const Editor: React.FC = () => {
         {
           auth: {
             username: githubUsername,
-            password: githubToken
-          }
+            password: githubToken,
+          },
         }
       );
       status = response.data?.status;
       console.log("DEPLOYMENT STATUS: ", status);
       if (status !== "built") {
-        await new Promise(resolve => setTimeout(resolve, 30000)); // wait for 30 seconds
+        await new Promise((resolve) => setTimeout(resolve, 30000)); // wait for 30 seconds
       }
     }
   }
-  
 
   useEffect(() => {
     const connectDomainsFlow = async () => {
@@ -378,7 +376,7 @@ const Editor: React.FC = () => {
             "Updated the github domain of the site: ",
             githubRepoResponse.data
           );
-    
+
           const updateResult = await site_collection.updateOne(
             { _id: new Realm.BSON.ObjectId(site_id) },
             {
@@ -525,8 +523,10 @@ const Editor: React.FC = () => {
 
       const site_url = site.site_url;
 
-      if (site_url) { // update the file on github
-        const getFile = await axios.get( // get file sha
+      if (site_url) {
+        // update the file on github
+        const getFile = await axios.get(
+          // get file sha
           `https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${site_id}/contents/index.html`,
           {
             headers: {
@@ -534,10 +534,11 @@ const Editor: React.FC = () => {
             },
           }
         );
-        
+
         const fileSha = getFile.data.sha;
-  
-        const response = await axios.put( // update the file
+
+        const response = await axios.put(
+          // update the file
           `https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${site_id}/contents/index.html`,
           {
             message: "Update commit",
@@ -551,8 +552,10 @@ const Editor: React.FC = () => {
             },
           }
         );
-      } else { // create new file on github
-        const response = await axios.put( // create new file
+      } else {
+        // create new file on github
+        const response = await axios.put(
+          // create new file
           `https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${site_id}/contents/index.html`,
           {
             message: "Initial commit",
@@ -565,7 +568,7 @@ const Editor: React.FC = () => {
             },
           }
         );
-  
+
         const result = await site_collection.updateOne(
           { _id: new Realm.BSON.ObjectId(site_id) }, // Specify the query to find the site by site_id
           {
@@ -812,7 +815,7 @@ const Editor: React.FC = () => {
                   icon={<RedoOutlined />}
                   style={{ padding: 24, margin: 0 }}
                 />
-                {/* <a href={`/preview/${site_id}`} target="_blank">
+                <a href={`/preview/${site_id}`} target="_blank">
                   <Button
                     type="primary"
                     // onClick={onPreview}
@@ -820,7 +823,7 @@ const Editor: React.FC = () => {
                     icon={<EyeFilled />}
                     style={{ padding: 24, margin: 0 }}
                   />
-                </a> */}
+                </a>
                 <Button
                   type="primary"
                   onClick={handlePublishButton}
@@ -987,7 +990,9 @@ const Editor: React.FC = () => {
                           marginLeft: 10,
                           borderColor: "black",
                         }}
-                        value={`${convertToValidDomainName(lawFirmName!)}.legis.live`}
+                        value={`${convertToValidDomainName(
+                          lawFirmName!
+                        )}.legis.live`}
                         readOnly={true}
                       />
                       <Button

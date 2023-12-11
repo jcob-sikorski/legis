@@ -1,5 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Col, Flex, Layout, Row, Space, Typography } from "antd";
+import {
+  Button,
+  Col,
+  Flex,
+  Layout,
+  Row,
+  Space,
+  Typography,
+  message,
+} from "antd";
 // import { RIGHT_BAR_WIDTH, DEV_START_JSON, NAV_BAR_HEIGHT, LEFT_BAR_WIDTH } from './const';
 
 // Window Components
@@ -48,6 +57,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Interface from "../editor/Interface";
 import Visualisation from "../editor/Visualisation";
 import ChooseTemplateModal from "../editor/modals/ChooseTemplateModal";
+import IFrame from "../../iFrame";
 
 export default function Preview() {
   const app: any = useApp();
@@ -65,6 +75,7 @@ export default function Preview() {
   //   const [json, setJson] = useState(DEV_START_JSON);
   const [data, setData] = useState<any[]>([]);
   //   const [lawFirmName, setLawFirmName] = useState<string>();
+  const [cssString, setCssString] = useState<string>("");
   const [colors, setColors] = useState<string[]>([]);
   const [templateSetId, setTemplateSetId] = useState<string>("");
 
@@ -81,19 +92,19 @@ export default function Preview() {
     switch (templateSetId as any) {
       default:
       case "Hyperspace":
-        updateCssStringOutsideIFrame(HyperspaceCSS);
+        setCssString(HyperspaceCSS);
         break;
       case "ParadigmShift":
-        updateCssStringOutsideIFrame(ParadigmShiftCSS);
+        setCssString(ParadigmShiftCSS);
         break;
       case "SolidState":
-        updateCssStringOutsideIFrame(SolidStateCSS);
+        setCssString(SolidStateCSS);
         break;
       case "Stellar":
-        updateCssStringOutsideIFrame(StellarCSS);
+        setCssString(StellarCSS);
         break;
       case "Story":
-        updateCssStringOutsideIFrame(StoryCSS);
+        setCssString(StoryCSS);
         break;
     }
   }, [templateSetId]);
@@ -133,7 +144,7 @@ export default function Preview() {
             result[0].template_set_id
           );
           setTemplateSetId(result[0].template_set_id);
-          setTemplateSetId("SolidState");
+          // setTemplateSetId("SolidState");
         } else {
           console.log("Site doesn't have the template_colors yet.");
         }
@@ -159,9 +170,11 @@ export default function Preview() {
     getData();
   }, []); // Include site_id in the dependency array if it may change
 
+  // message.info(templateSetId);
+
   return (
-    <Layout style={{ width: "100%", height: "calc(100vh - 46px)" }}>
-      <a
+    <Layout style={{ width: "100%", height: "100vh" }}>
+      {/* <a
         target="_blank"
         href="https://pyramid-tread-336939.framer.app/template1"
         style={{ color: "#000" }}
@@ -183,14 +196,20 @@ export default function Preview() {
         >
           MADE WITH LEGIS
         </div>
-      </a>
-      <Flex
-        id="visualisation-container"
-        className="editor-scrollbar"
-        ref={containerRef}
-      >
-        <Visualisation data={data} mode="preview" />
-      </Flex>
+      </a> */}
+      <IFrame cssString={cssString} style={{ width: "100vw", height: "100vh" }}>
+        <Flex
+          id="visualisation-container"
+          className="editor-scrollbar"
+          ref={containerRef}
+        >
+          <Visualisation
+            template_set_id={templateSetId}
+            data={data}
+            mode="preview"
+          />
+        </Flex>
+      </IFrame>
     </Layout>
   );
 }
