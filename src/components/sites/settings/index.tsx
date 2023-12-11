@@ -173,7 +173,7 @@ function Settings() {
 
   // React component
   useEffect(() => {
-    // checkDeploymentStatus();
+    checkDeploymentStatus();
 
     const fetchSiteData = async () => {
       let result = await site_collection.find({
