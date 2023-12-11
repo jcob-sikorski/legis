@@ -222,7 +222,7 @@ function Visualisation({
       "footer",
     ];
 
-    let res = <>No section matched.</>;
+    let res = <></>;
     sectionHelperNames.map((sectionName: string) => {
       if (contains(template_id, sectionName)) {
         switch (template_set_id) {
@@ -358,8 +358,9 @@ function Visualisation({
           data.map((s: any) => {
             // template specific edge cases (allow or not some sections.)
             if (
-              template_set_id === "ParadigmShift" &&
-              contains(s?.template_id, "nav")
+              (template_set_id === "ParadigmShift" &&
+                contains(s?.template_id, "nav")) ||
+              (template_set_id === "Stellar" && contains(s?.template_id, "nav"))
             )
               return <></>;
             return (

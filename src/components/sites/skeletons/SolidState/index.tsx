@@ -500,6 +500,7 @@ export default function SolidState({ data, template_id, setContext }: any) {
               <ul className="actions">
                 <li>
                   <input
+                    className="e"
                     role="link"
                     style={{
                       marginInline: data?.buttonVariant || "auto auto",
