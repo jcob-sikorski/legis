@@ -151,16 +151,18 @@ function Generate() {
         setLoading(false);
 
         // generate site data value
-        const siteData = getSiteData(
-          finalContent,
-          onboardingData,
-          bodyTemplate
-        );
 
         const template_set_id = getRandomTemplateSetId({
           repeat: false,
           lastTemplateSetId: templateSetId,
         });
+
+        const siteData = getSiteData(
+          finalContent,
+          onboardingData,
+          bodyTemplate,
+          template_set_id
+        );
 
         updateSite(siteData, template_set_id);
       })
@@ -338,7 +340,8 @@ function Generate() {
 function getSiteData(
   data: any,
   onboardingData: Questionnaire,
-  bodyTemplate: any
+  bodyTemplate: any,
+  templateSetId: string
 ) {
   const { NavBar, Hero, PracticeAreas, OurTeam, OurValues, AboutUs } = data;
   const {
@@ -380,14 +383,256 @@ function getSiteData(
   // 6. About Us
   // 7. Contact Us
 
-  let arr = [
-    {
-      section_id: v4(),
-      template_id: "nav",
-      logo: LawFirmName,
-      buttonLabel: "Contact Us",
-      buttonLink: "#contact-us",
-    },
+  if (templateSetId === "Stellar")
+    return [
+      // {
+      //   section_id: v4(),
+      //   template_id: "nav",
+      //   logo: LawFirmName,
+      //   buttonLabel: "Contact Us",
+      //   buttonLink: "#contact-us",
+      // },
+      // 1. Hero
+      {
+        section_id: v4(),
+        template_id: "LHero1",
+        heading: Hero.headline,
+        subHeading: Hero.subHeadline,
+        logo: LawFirmName,
+        buttonLabel: "REGISTER",
+        buttonLink: "https://legis.live",
+      },
+      // 2. Practice areas
+      {
+        section_id: v4(),
+        template_id: "LPracticeAreas2",
+        areasList: PracticeAreas,
+        title: "Practice Areas",
+      },
+      // 3. Values
+      {
+        section_id: v4(),
+        template_id: "LValues2",
+        // description: OurValues,
+        valuesList: OurValues,
+        superTitle: "Find out about...",
+        title: "Our Values",
+      },
+      // 4. Team
+      {
+        section_id: v4(),
+        template_id: "LTeam1",
+        lawyerDetails,
+        superTitle: "Learn more about...",
+        title: "Our Team",
+      },
+      // 5. Reviews
+      {
+        section_id: v4(),
+        template_id: "LReviews2",
+        reviews,
+        title: "Testimonials",
+      },
+      // 6. About
+      {
+        section_id: v4(),
+        template_id: "LAbout1",
+        paragraph: AboutUs,
+        title: "About Us",
+      },
+      // 7. Contact Us form / CTA = NO DATA
+      {
+        section_id: v4(),
+        template_id: "LContact1",
+        title: "Contact Us",
+        paragraph: "[LOREM IPSUM GENERATED HERE/DEV NEEDS TO REPLACE THIS!!!]",
+        email: "example@example.com",
+        phone: "1-234-567-890",
+        address: "Address, A1 234BC",
+        buttonLabel: "Send Message",
+        buttonLink: "https://legis.live",
+      },
+      // {
+      //   section_id: v4(),
+      //   template_id: "footer",
+      //   logo: LawFirmName,
+      //   buttonLabel: "Contact Us",
+      //   buttonLink: "#contact-us",
+      // },
+    ];
+
+  if (templateSetId === "SolidState")
+    return [
+      // {
+      //   section_id: v4(),
+      //   template_id: "nav",
+      //   logo: LawFirmName,
+      //   buttonLabel: "Contact Us",
+      //   buttonLink: "#contact-us",
+      // },
+      // 1. Hero
+      {
+        section_id: v4(),
+        template_id: "LHero1",
+        heading: Hero.headline,
+        subHeading: Hero.subHeadline,
+        logo: LawFirmName,
+        buttonLabel: "REGISTER",
+        buttonLink: "https://legis.live",
+      },
+      // 2. Practice areas
+      {
+        section_id: v4(),
+        template_id: "LPracticeAreas2",
+        areasList: PracticeAreas,
+        title: "Practice Areas",
+      },
+      // 3. Values
+      {
+        section_id: v4(),
+        template_id: "LValues2",
+        // description: OurValues,
+        valuesList: OurValues,
+        superTitle: "Find out about...",
+        title: "Our Values",
+      },
+      // 4. Team
+      {
+        section_id: v4(),
+        template_id: "LTeam1",
+        lawyerDetails,
+        superTitle: "Learn more about...",
+        title: "Our Team",
+      },
+      // 5. Reviews
+      {
+        section_id: v4(),
+        template_id: "LReviews2",
+        reviews,
+        title: "Testimonials",
+      },
+      // 6. About
+      {
+        section_id: v4(),
+        template_id: "LAbout1",
+        paragraph: AboutUs,
+        title: "About Us",
+      },
+      // 7. Contact Us form / CTA = NO DATA
+      {
+        section_id: v4(),
+        template_id: "LContact1",
+        title: "Contact Us",
+        paragraph: "[LOREM IPSUM GENERATED HERE/DEV NEEDS TO REPLACE THIS!!!]",
+        email: "example@example.com",
+        phone: "1-234-567-890",
+        address: "Address, A1 234BC",
+        buttonLabel: "Send Message",
+        buttonLink: "https://legis.live",
+      },
+      // {
+      //   section_id: v4(),
+      //   template_id: "footer",
+      //   logo: LawFirmName,
+      //   buttonLabel: "Contact Us",
+      //   buttonLink: "#contact-us",
+      // },
+    ];
+
+  if (templateSetId === "ParadigmShift")
+    return [
+      {
+        section_id: v4(),
+        template_id: "nav",
+        logo: LawFirmName,
+        buttonLabel: "Contact Us",
+        buttonLink: "#contact-us",
+      },
+      // 1. Hero
+      {
+        section_id: v4(),
+        template_id: "LHero1",
+        heading: Hero.headline,
+        subHeading: Hero.subHeadline,
+        logo: LawFirmName,
+        buttonLabel: "REGISTER",
+        buttonLink: "https://legis.live",
+      },
+      // 2. Practice areas
+      {
+        section_id: v4(),
+        template_id: "LPracticeAreas2",
+        areasList: PracticeAreas,
+        title: "Practice Areas",
+      },
+      // 3. Values
+      {
+        section_id: v4(),
+        template_id: "LValues2",
+        // description: OurValues,
+        valuesList: OurValues,
+        superTitle: "Find out about...",
+        title: "Our Values",
+      },
+      // 4. Team
+      {
+        section_id: v4(),
+        template_id: "LTeam1",
+        lawyerDetails,
+        superTitle: "Learn more about...",
+        title: "Our Team",
+      },
+      // 5. Reviews
+      {
+        section_id: v4(),
+        template_id: "LReviews2",
+        reviews,
+        title: "Testimonials",
+      },
+      // 6. About
+      {
+        section_id: v4(),
+        template_id: "LAbout1",
+        paragraph: AboutUs,
+        title: "About Us",
+      },
+      // 7. Contact Us form / CTA = NO DATA
+      {
+        section_id: v4(),
+        template_id: "LContact1",
+        title: "Contact Us",
+        paragraph: "[LOREM IPSUM GENERATED HERE/DEV NEEDS TO REPLACE THIS!!!]",
+        email: "example@example.com",
+        phone: "1-234-567-890",
+        address: "Address, A1 234BC",
+        buttonLabel: "Send Message",
+        buttonLink: "https://legis.live",
+      },
+      // {
+      //   section_id: v4(),
+      //   template_id: "footer",
+      //   logo: LawFirmName,
+      //   buttonLabel: "Contact Us",
+      //   buttonLink: "#contact-us",
+      // },
+    ];
+
+  // if (bodyTemplate?.length > 0) {
+  //   arr = arr.map((section: any, i: number) =>
+  //     i < bodyTemplate?.length
+  //       ? { ...section, template_id: bodyTemplate[i].template_id }
+  //       : section
+  //   );
+  // }
+
+  return [
+    // {
+    //   section_id: v4(),
+    //   template_id: "nav",
+    //   logo: LawFirmName,
+    //   buttonLabel: "Contact Us",
+    //   buttonLink: "#contact-us",
+    // },
     // 1. Hero
     {
       section_id: v4(),
@@ -456,16 +701,6 @@ function getSiteData(
     //   buttonLink: "#contact-us",
     // },
   ];
-
-  if (bodyTemplate?.length > 0) {
-    arr = arr.map((section: any, i: number) =>
-      i < bodyTemplate?.length
-        ? { ...section, template_id: bodyTemplate[i].template_id }
-        : section
-    );
-  }
-
-  return arr;
 }
 
 function getRandomTemplateSetId(options: {
