@@ -320,7 +320,7 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
               <h2
                 className="e"
                 style={{
-                  textAlign: data?.titleVariant || "center",
+                  textAlign: data?.titleVariant || "left",
                 }}
                 onClick={() =>
                   setContext({
