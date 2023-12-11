@@ -4,14 +4,23 @@ import { useParams } from "react-router-dom";
 import { useApp } from "../../RealmApp";
 import * as Realm from "realm-web";
 
-import { message } from 'antd';
+import { message } from "antd";
 
 import { config } from "../../../config";
 
-import axios from 'axios';
+import axios from "axios";
 
 import SiteComponent from "./Site";
-
+import Visualisation from "../editor/Visualisation";
+import { getHeroImageURLFromBodyTemplate } from "../../../utils";
+import ReactDOMServer from "react-dom/server";
+import HyperspaceCSS from "../skeletons/Hyperspace/assets/css/main.css?inline";
+import ParadigmShiftCSS from "../skeletons/ParadigmShift/assets/css/main.css?inline";
+import SolidStateCSS from "../skeletons/SolidState/assets/css/main.css?inline";
+import StellarCSS from "../skeletons/Stellar/assets/css/main.css?inline";
+import StoryCSS from "../skeletons/Story/assets/css/main.css?inline";
+import IFrame from "../../iFrame";
+import { NAV_BAR_HEIGHT } from "../editor/const";
 // you can click and unclick the publish button
 // if you unclick the publish button the cname is removed
 // if you click on publish using default domain then you can change the default domain in the pop up and click publish
@@ -43,13 +52,92 @@ function Settings() {
   const [templateSetId, setTemplateSetId] = useState<string>();
   const [customDomain, setCustomDomain] = useState<string>();
   const [lawFirmName, setLawFirmName] = useState<string>();
-  
+
+  const [data, setData] = useState<any[]>([]);
+  const [cssString, setCssString] = useState<string>("");
 
   const app: any = useApp();
   const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
   const site_collection = mongodb.db("legis").collection("Site");
   const survey_collection = mongodb.db("legis").collection("Questionnaire");
+  // const onboarding_collection = mongodb.db("legis").collection("Questionnaire");
+  useEffect(() => {
+    switch (templateSetId as any) {
+      default:
+      case "Hyperspace":
+        setCssString(HyperspaceCSS);
+        break;
+      case "ParadigmShift":
+        setCssString(ParadigmShiftCSS);
+        break;
+      case "SolidState":
+        setCssString(SolidStateCSS);
+        break;
+      case "Stellar":
+        setCssString(StellarCSS);
+        break;
+      case "Story":
+        setCssString(StoryCSS);
+        break;
+    }
+  }, [templateSetId]);
 
+  useEffect(() => {
+    console.log("Fetching the site from mongo.");
+    async function getData() {
+      try {
+        // Include a query to find the site by its site_id
+        const result = await site_collection.find({
+          _id: new Realm.BSON.ObjectId(site_id),
+        });
+
+        const getFromMongoDB = (fieldName: string, setter: any) => {
+          if (result.length > 0 && result[0].hasOwnProperty(fieldName)) {
+            console.log(
+              `Found a site with ${fieldName}:`,
+              result[0][fieldName]
+            );
+            // message.info(result[0][fieldName]);
+            setter(result[0][fieldName]);
+          } else {
+            console.log(`Site doesn't have ${fieldName} value yet.`);
+          }
+        };
+
+        getFromMongoDB("body_template", setData);
+        getFromMongoDB("template_set_id", setTemplateSetId);
+        // message.info("asd");
+        // getFromMongoDB("template_colors", setColors);
+        // getFromMongoDB("template_set_id", setTemplateSetId);
+        // getFromMongoDB("title", setSiteTitle);
+      } catch (error) {
+        console.error("Error searching for this site:", error);
+      }
+
+      try {
+        const result = await site_collection.find({
+          _id: new Realm.BSON.ObjectId(site_id),
+        });
+
+        if (result.length > 0 && result[0].hasOwnProperty("title")) {
+          console.log(
+            "Found a site with template_colors:",
+            result[0].template_colors
+          );
+          // setColors(result[0].template_colors);
+        } else {
+          console.log("Site doesn't have the template_colors yet.");
+        }
+      } catch (error) {
+        console.error(
+          "Error fetching for Questionnaire data for this site:",
+          error
+        );
+      }
+    }
+
+    getData();
+  }, []); // Include site_id in the dependency array if it may change
 
   async function checkDeploymentStatus() {
     let status = "";
@@ -72,6 +160,13 @@ function Settings() {
       }
     }
   }
+  const visualisationComponent = (
+    <Visualisation
+      template_set_id={templateSetId}
+      data={data}
+      mode="showcase"
+    />
+  );
 
   // React component
   useEffect(() => {
@@ -99,7 +194,7 @@ function Settings() {
 
       setLawFirmName(result[0].LawFirmName);
     };
-      
+
     fetchSiteData();
     setSiteDataFetched(true);
   }, []);
@@ -108,7 +203,8 @@ function Settings() {
     console.log("SAVE CHANGES");
     await site_collection.updateOne(
       { _id: new Realm.BSON.ObjectID(site_id) },
-      { $set: { 
+      {
+        $set: {
           title: title,
           description: description,
           site_url: siteUrl,
@@ -118,8 +214,8 @@ function Settings() {
           template_colors: templateColors,
           body_template: bodyTemplate,
           template_set_id: templateSetId,
-          customDomain: customDomain
-        }
+          customDomain: customDomain,
+        },
       }
     );
   };
@@ -143,7 +239,7 @@ function Settings() {
 
     console.log("CONNECTING DEFAULT SUBDOMAIN");
     connectDefaultSubdomain();
-  }
+  };
 
   function convertToValidDomainName(lawFirmName: string): string {
     // Remove spaces
@@ -248,17 +344,17 @@ function Settings() {
     }
   }
 
-  async function commitIndexHtmlToGithub() { 
-     // ALSO RETURN ERROR IF THE DOMAIN IS EMPTY
-     const validDomain = convertToValidDomainName(lawFirmName!);
- 
-     const res = await site_collection.findOne({
-       cname: `${validDomain}.legis.live`,
-     });
-     if (res) {
-       message.error("Such subdomain already exists.");
-       return;
-     }
+  async function commitIndexHtmlToGithub() {
+    // ALSO RETURN ERROR IF THE DOMAIN IS EMPTY
+    const validDomain = convertToValidDomainName(lawFirmName!);
+
+    const res = await site_collection.findOne({
+      cname: `${validDomain}.legis.live`,
+    });
+    if (res) {
+      message.error("Such subdomain already exists.");
+      return;
+    }
 
     // // SEO data
     // const city = "San Francisco";
@@ -455,18 +551,19 @@ function Settings() {
 
   return (
     <>
-      {deploymentStatus === "building" && message.loading({
-        content: 'Deploying...',
-        key: 'deploying',
-        duration: 0,
-        style: {
-          marginTop: '20vh',
-        },
-      })}
-      {(deploymentStatus !== "building" && siteDataFetched === true) && 
+      {deploymentStatus === "building" &&
+        message.loading({
+          content: "Deploying...",
+          key: "deploying",
+          duration: 0,
+          style: {
+            marginTop: "20vh",
+          },
+        })}
+      {deploymentStatus !== "building" && siteDataFetched === true && (
         <SiteComponent
           site_id={site_id || ""}
-          title={title || ""} 
+          title={title || ""}
           description={description || ""}
           siteUrl={siteUrl || ""}
           domainConnected={domainConnected || ""}
@@ -480,7 +577,28 @@ function Settings() {
           commitIndexHtmlToGithub={commitIndexHtmlToGithub}
           connectDefaultSubdomain={connectDefaultSubdomain}
         />
-      }
+      )}
+      <IFrame
+        cssString={cssString}
+        colors={templateColors}
+        style={
+          false
+            ? {
+                width: "360px",
+                // padding: 10,
+                height: "100%",
+                maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px + 0px)`,
+              }
+            : {
+                width: "100%",
+                padding: 10,
+                height: "100vh",
+                maxHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px + 0px)`,
+              }
+        }
+      >
+        {visualisationComponent}
+      </IFrame>
     </>
   );
 }
