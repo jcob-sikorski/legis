@@ -194,6 +194,7 @@ function FromTemplate() {
         )}
       </Flex>
       <ScaledVisualisation
+        template_set_id="SolidState"
         data={mockData}
         mode="showcase"
         width="130vw"

@@ -1665,7 +1665,9 @@ hr {
     padding-top: 2em;
   }
 }
-
+.features {
+  box-sizing: border-box;
+}
 @media screen and (max-width: 480px) {
   .row {
     display: flex;
@@ -2968,7 +2970,7 @@ table.alt tbody tr td {
   padding: 1.75em 10px 0.1em 10px; /* Adjusted padding */
   background-color: #ffffff;
   border-radius: 5px;
-  margin: 2em 2em 2em 2em; /* Adjusted margin */
+  margin: 2em 0em 2em 2em; /* Adjusted margin */
   width: calc(33.33333% - 4em); /* Adjusted width */
   text-align: center;
 }

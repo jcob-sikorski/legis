@@ -530,55 +530,60 @@ export default function Stellar({ data, template_id, setContext }: any) {
       )}
 
       {contains(template_id, "contact") && (
-        <section id="contact us" className="main special">
-          <header className="major">
-            <h2
-              onClick={() =>
-                setContext({
-                  key: "title",
-                  type: "text",
-                  label: "Title",
-                  variantProperty: "textAlign",
-                })
-              }
-              className="e major"
-              style={{
-                // fontSize: "35px",
-                textAlign: data?.titleVariant || "center",
-                pointerEvents: "auto",
-              }}
-            >
-              {data?.title || "Contact us"}
-            </h2>
-          </header>
-          <footer className="major">
-            <ul className="actions special">
-              <li>
-                <a
-                  className="button primary e"
-                  role="link"
-                  style={{
-                    marginInline: data?.buttonVariant || "auto auto",
-                    color: "#000",
-                  }}
-                  onClick={() =>
-                    setContext({
-                      key: "button",
-                      type: "button",
-                      label: "Button",
-                      variantProperty: "marginInline",
-                    })
-                  }
-                >
-                  {data?.buttonLabel || "Send Message"}
-                </a>
-              </li>
-            </ul>
-          </footer>
-          <p className="copyright">
+        <>
+          <section id="contact us" className="main special">
+            <header className="major">
+              <h2
+                onClick={() =>
+                  setContext({
+                    key: "title",
+                    type: "text",
+                    label: "Title",
+                    variantProperty: "textAlign",
+                  })
+                }
+                className="e major"
+                style={{
+                  // fontSize: "35px",
+                  textAlign: data?.titleVariant || "center",
+                  pointerEvents: "auto",
+                }}
+              >
+                {data?.title || "Contact us"}
+              </h2>
+            </header>
+            <footer className="major">
+              <ul className="actions special">
+                <li>
+                  <a
+                    className="button primary e"
+                    role="link"
+                    style={{
+                      marginInline: data?.buttonVariant || "auto auto",
+                      color: "#000",
+                    }}
+                    onClick={() =>
+                      setContext({
+                        key: "button",
+                        type: "button",
+                        label: "Button",
+                        variantProperty: "marginInline",
+                      })
+                    }
+                  >
+                    {data?.buttonLabel || "Send Message"}
+                  </a>
+                </li>
+              </ul>
+            </footer>
+          </section>
+          <p
+            className="copyrightx"
+            style={{ paddingTop: 32, paddingBottom: 32, textAlign: "center" }}
+          >
             Made by <a href="https://www.legis.live">Legis</a>.
           </p>
-        </section>
+        </>
       )}
     </div>
   );
