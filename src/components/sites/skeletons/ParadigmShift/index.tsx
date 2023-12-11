@@ -30,7 +30,7 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
                   fontSize: 60
                 }}
               >
-                {data?.heading ?? "[Heading]"}
+                {data?.heading ?? ""}
               </h1>
               <p
                 className="editable"
@@ -44,7 +44,7 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
                   })
                 }
               >
-                {data?.subHeading ?? "[Subheading]"}
+                {data?.subHeading ?? ""}
               </p>
             </header>
             <div className="content e">
@@ -189,7 +189,7 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
                         })
                       }
                     >
-                      {value?.name || "[Value name]"}
+                      {value?.name || ""}
                     </div>
                   </li>
                 ))}
@@ -289,7 +289,7 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
                           }
                           className="e"
                         >
-                          {person?.name || "[Lawyer Name here]"}
+                          {person?.name || ""}
                         </h2>
                         <p
                           className="e"
@@ -307,7 +307,7 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
                           }
                           style={{ color: '#636363' }}
                         >
-                          {person?.description || "[Lawyer description here]"}
+                          {person?.description || ""}
                         </p>
                       </li>
                     </>
@@ -356,7 +356,7 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
                         })
                       }
                     >
-                      {obj?.clientName || "[Client name here...]"}
+                      {obj?.clientName || ""}
                     </h2>
                     <p
                       onClick={() =>
@@ -372,7 +372,7 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
                       className="e"
                       style={{ color: '#636363' }}
                     >
-                      {obj?.testimonial || "[Client Review here...]"}
+                      {obj?.testimonial || ""}
                     </p>
                   </section>
                 ))}
@@ -417,7 +417,7 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
                   })
                 }
               >
-                {data?.paragraph || "[Paragraph here]"}
+                {data?.paragraph || ""}
               </p>
             </div>
           </section>
