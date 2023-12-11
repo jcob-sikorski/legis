@@ -172,6 +172,15 @@ export default function Preview() {
 
   // message.info(templateSetId);
 
+  // message.info("preview mode");
+  message.info(
+    document.documentElement.style.getPropertyValue("--legis-editable-outline")
+  );
+  document.documentElement.style.setProperty(
+    "--legis-editable-outline",
+    `5px solid red`
+  );
+
   return (
     <Layout style={{ width: "100%", height: "100vh" }}>
       {/* <a
@@ -197,7 +206,11 @@ export default function Preview() {
           MADE WITH LEGIS
         </div>
       </a> */}
-      <IFrame cssString={cssString} style={{ width: "100vw", height: "100vh" }}>
+      <IFrame
+        isPreview={true}
+        cssString={cssString}
+        style={{ width: "100vw", height: "100vh" }}
+      >
         <Flex
           id="visualisation-container"
           className="editor-scrollbar"

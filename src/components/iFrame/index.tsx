@@ -4,17 +4,21 @@ import ReactDOM from "react-dom";
 import A from "../../components/sites/skeletons/Hyperspace/assets/css/main.css?inline";
 import { v4 } from "uuid";
 
+import CancelEditableCSS from "./cancelEditable.css?inline";
+
 interface IFrameProps {
   children: React.ReactNode;
   style?: React.CSSProperties;
   colors?: string[];
   cssString?: string;
+  isPreview?: boolean;
 }
 const IFrame: React.FC<IFrameProps> = ({
   children,
   style = {},
   colors = [],
   cssString = "",
+  isPreview = false,
 }) => {
   const src = "/preview-iframe";
   const [contentRef, setContentRef] = useState<HTMLIFrameElement | null>(null);
@@ -81,6 +85,15 @@ const IFrame: React.FC<IFrameProps> = ({
           styleElement.id = newElementId;
           styleElement.innerHTML = cssString;
           innerDoc?.head.appendChild(styleElement);
+
+          if (isPreview) {
+            const editableStyle = innerDoc?.createElement("style");
+            if (editableStyle) {
+              message.warning("appending child" + CancelEditableCSS);
+              editableStyle.innerHTML = CancelEditableCSS;
+              innerDoc?.head.appendChild(editableStyle);
+            }
+          }
         }
       } catch {
         message.error("Error loading css in IFrame.");

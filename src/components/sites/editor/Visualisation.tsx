@@ -84,7 +84,11 @@ function Visualisation({
   const [followingCount, setFollowingCount] = useState<number>(0);
 
   if (mode === "preview") {
-    document.documentElement.style.setProperty("--legis-editable-outline", `0`);
+    message.info("preview mode");
+    document.documentElement.style.setProperty(
+      "--legis-editable-outline",
+      `5px solid red`
+    );
   }
 
   useEffect(() => {
