@@ -32,6 +32,7 @@ function Generate() {
   const [textIndex, setTextIndex] = useState(0);
 
   const [bodyTemplate, setBodyTemplate] = useState<any>([]);
+  const [templateSetId, setTemplateSetId] = useState<any>([]);
 
   const waitingRoomTexts = [
     "Spinning the Magic...",
@@ -96,8 +97,19 @@ function Generate() {
             result[0].body_template
           );
           setBodyTemplate(result[0].body_template);
+          // tdyTemplate(setTemplateSetIdt[ssetTemplateSetId].body_template);
         } else {
           console.log("Site doesn't have the body_template yet.");
+        }
+
+        if (result.length > 0 && result[0].hasOwnProperty("template_set_id")) {
+          console.log(
+            "Found a site with body_template:",
+            result[0].template_set_id
+          );
+          setTemplateSetId(result[0].template_set_id);
+        } else {
+          console.log("Site doesn't have the template_set_id yet.");
         }
       } catch (error) {
         console.error("Error searching for this site:", error);
@@ -145,7 +157,10 @@ function Generate() {
           bodyTemplate
         );
 
-        const template_set_id = getRandomTemplateSetId({ repeat: false });
+        const template_set_id = getRandomTemplateSetId({
+          repeat: false,
+          lastTemplateSetId: templateSetId,
+        });
 
         updateSite(siteData, template_set_id);
       })
@@ -453,16 +468,24 @@ function getSiteData(
   return arr;
 }
 
-function getRandomTemplateSetId(options: { repeat: boolean }) {
+function getRandomTemplateSetId(options: {
+  repeat: boolean;
+  lastTemplateSetId?: string | undefined;
+}) {
   const templateIds: TemplateSetName[] = [
-    // "Hyperspace",
+    "Stellar",
     "ParadigmShift",
     "SolidState",
-    "Stellar",
-    // "Story",
   ];
 
-  return "Stellar";
+  if (options.lastTemplateSetId) {
+    // it's a rerun. get next template id in the array.
+    const i = templateIds?.indexOf(options.lastTemplateSetId as any);
+    return templateIds[(i + 1) % templateIds.length];
+  } else {
+    let randomIndex = Math.floor(Math.random() * templateIds.length);
+    return templateIds[randomIndex];
+  }
 
   if (localStorage.getItem("legisTemplateSetId") === "ParadigmShift") {
     localStorage.setItem("legisTemplateSetId", "SolidState");
