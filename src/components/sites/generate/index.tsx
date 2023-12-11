@@ -458,11 +458,11 @@ function getRandomTemplateSetId(options: { repeat: boolean }) {
     // "Hyperspace",
     "ParadigmShift",
     "SolidState",
-    // "Stellar",
+    "Stellar",
     // "Story",
   ];
 
-  // return "ParadigmShift";
+  return "Stellar";
 
   if (localStorage.getItem("legisTemplateSetId") === "ParadigmShift") {
     localStorage.setItem("legisTemplateSetId", "SolidState");
