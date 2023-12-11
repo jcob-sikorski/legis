@@ -27,6 +27,7 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
                 style={{
                   textAlign: data?.headingVariant || "left",
                   pointerEvents: "auto",
+                  fontSize: 60
                 }}
               >
                 {data?.heading ?? "[Heading]"}
@@ -123,6 +124,7 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
                         index: i,
                       })
                     }
+                    style={{ color: '#636363' }}
                   >
                     {area?.practiceDescription}
                   </p>
@@ -303,6 +305,7 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
                               index: i,
                             })
                           }
+                          style={{ color: '#636363' }}
                         >
                           {person?.description || "[Lawyer description here]"}
                         </p>
@@ -367,6 +370,7 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
                         })
                       }
                       className="e"
+                      style={{ color: '#636363' }}
                     >
                       {obj?.testimonial || "[Client Review here...]"}
                     </p>
@@ -400,7 +404,10 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
             <div className="content">
               <p
                 className="editable"
-                style={{ textAlign: data?.paragraphVariant || "left" }}
+                style={{ 
+                  textAlign: data?.paragraphVariant || "left", 
+                  color: '#636363'
+                }}
                 onClick={() =>
                   setContext({
                     key: "paragraph",
