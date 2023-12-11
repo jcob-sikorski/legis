@@ -24,7 +24,7 @@ const About = () => {
       <div className="container mx-auto">
         <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-8 gap-20 lg:py-32 py-12 items-center">
           <div className="lg:col-span-6 flex flex-col gap-6">
-            <Eyebrow label="ABOUT US" />
+            <Eyebrow label="About Us" />
             <h2 className="font-display md:text-display-xl text-display-md font-normal pb-4">
               We help to bring your <span className="italic">dream home</span>{" "}
               to reality

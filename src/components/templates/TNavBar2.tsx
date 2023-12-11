@@ -36,7 +36,7 @@ export default function TNavBar2({data} : any) {
                 </a>
               ))}
             </div>
-            <Button label='CONTACT US'  link='#contact' />
+            <Button label='Contact Us'  link='#contact' />
           </div>
         </div>
       </div>

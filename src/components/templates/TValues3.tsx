@@ -15,7 +15,7 @@ export default function TValues2({data} : any) {
       </div>
       <div>
         <p className="inline-block pt-px pr-3 pb-px pl-3 mt-0 mr-0 mb-4 ml-0 text-xs font-semibold text-pink-200
-            rounded-full bg-pink-500 tracking-wider uppercase rounded-full">OUR VALUES</p>
+            rounded-full bg-pink-500 tracking-wider uppercase rounded-full">Our Values</p>
       </div>
       <p className="text-gray-700 text-base md:text-lg">
         {data?.description}

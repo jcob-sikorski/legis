@@ -30,7 +30,7 @@ const Header = () => {
                 </a>
               ))}
             </div>
-            <Button label="CONTACT US" link="#" />
+            <Button label="Contact Us" link="#" />
           </div>
         </div>
       </div>

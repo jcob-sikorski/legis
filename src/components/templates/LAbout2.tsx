@@ -21,7 +21,7 @@ export default function LAbout2({data}: any) {
 
                         <div className="flex flex-col p-6 lg:col-span-3 bg-dark-gray sm:px-10 sm:py-12">
                             <h2 className="tracking-tighter text-white">
-                                <span className="block font-serifx text-5xl"> About us </span>
+                                <span className="block font-serifx text-5xl"> About Us </span>
                             </h2>
                                 
                             <p className="font-sans mt-8 text-lg font-normal text-white">

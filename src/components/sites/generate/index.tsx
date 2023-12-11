@@ -362,8 +362,8 @@ function getSiteData(
   // 3. Their values
   // 4. The team
   // 5. Reviews and testimonials
-  // 6. About us
-  // 7. Contact us
+  // 6. About Us
+  // 7. Contact Us
 
   let arr = [
     {
@@ -388,7 +388,7 @@ function getSiteData(
       section_id: v4(),
       template_id: "LPracticeAreas2",
       areasList: PracticeAreas,
-      title: "Our practice areas",
+      title: "Practice Areas",
     },
     // 3. Values
     {
@@ -397,7 +397,7 @@ function getSiteData(
       // description: OurValues,
       valuesList: OurValues,
       superTitle: "Find out about...",
-      title: "Our values",
+      title: "Our Values",
     },
     // 4. Team
     {
@@ -405,27 +405,27 @@ function getSiteData(
       template_id: "LTeam1",
       lawyerDetails,
       superTitle: "Learn more about...",
-      title: "Our team",
+      title: "Our Team",
     },
     // 5. Reviews
     {
       section_id: v4(),
       template_id: "LReviews2",
       reviews,
-      title: "See what our clients are saying",
+      title: "Testimonials",
     },
     // 6. About
     {
       section_id: v4(),
       template_id: "LAbout1",
       paragraph: AboutUs,
-      title: "About us",
+      title: "About Us",
     },
-    // 7. Contact us form / CTA = NO DATA
+    // 7. Contact Us form / CTA = NO DATA
     {
       section_id: v4(),
       template_id: "LContact1",
-      title: "Contact us",
+      title: "Contact Us",
       paragraph: "[LOREM IPSUM GENERATED HERE/DEV NEEDS TO REPLACE THIS!!!]",
       email: "example@example.com",
       phone: "1-234-567-890",
@@ -548,8 +548,8 @@ function getRegeneratedSiteData(
   // 3. Their values
   // 4. The team
   // 5. Reviews and testimonials
-  // 6. About us
-  // 7. Contact us
+  // 6. About Us
+  // 7. Contact Us
 
   console.log("OK 1");
   // Here include ONLY generated values, OMIT predefined values coz they never changed or if they changed the user wants to keep them changed.
@@ -574,11 +574,11 @@ function getRegeneratedSiteData(
     },
     // 5. Reviews
     // nothing to generate here
-    // 6. About us
+    // 6. About Us
     about: {
       paragraph: AboutUs,
     },
-    // 7. Contact us
+    // 7. Contact Us
     // nothing to generate here
   };
 

@@ -20,13 +20,13 @@ export default function LReviews2({ data, setContext }: any) {
                 type: "text",
                 label: "Title",
                 variantProperty: "textAlign",
-                placeholder: "See what our clients are saying",
+                placeholder: "Testimonials",
               })
             }
             className="py-4 editable text-3xl font-bold text-white sm:text-4xl xl:text-5xl font-pj"
             style={{ textAlign: data?.titleVariant || "center" }}
           >
-            {data?.title || "See what our clients are saying"}
+            {data?.title || "Testimonials"}
           </h2>
         </div>
 
