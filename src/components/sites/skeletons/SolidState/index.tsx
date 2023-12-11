@@ -61,7 +61,7 @@ export default function SolidState({ data, template_id, setContext }: any) {
               }}
               className="e"
             >
-              {data?.heading ?? "[Heading]"}
+              {data?.heading ?? ""}
             </h2>
             <p
               className="editable"
@@ -75,7 +75,7 @@ export default function SolidState({ data, template_id, setContext }: any) {
                 })
               }
             >
-              {data?.subHeading ?? "[Subheading]"}
+              {data?.subHeading ?? ""}
             </p>
           </div>
         </section>
@@ -179,7 +179,7 @@ export default function SolidState({ data, template_id, setContext }: any) {
                 }
                 className="e"
               >
-                {data?.description || "[Description]"}
+                {data?.description || ""}
               </p>
               <div className="features">
                 {(typeof data?.valuesList === "object"
@@ -217,7 +217,7 @@ export default function SolidState({ data, template_id, setContext }: any) {
                       }
                       className="e"
                     >
-                      {value?.name || "[Value name]"}
+                      {value?.name || ""}
                     </h3>
                     <p
                       onClick={() =>
@@ -232,7 +232,7 @@ export default function SolidState({ data, template_id, setContext }: any) {
                       }
                       className="e"
                     >
-                      {value?.description || "[Value description]"}
+                      {value?.description || ""}
                     </p>
                   </section>
                 ))}
@@ -333,7 +333,7 @@ export default function SolidState({ data, template_id, setContext }: any) {
                             }
                             className="e"
                           >
-                            {person?.name || "[Lawyer Name here]"}
+                            {person?.name || ""}
                           </h2>
                           <p
                             className="e"
@@ -350,7 +350,7 @@ export default function SolidState({ data, template_id, setContext }: any) {
                               })
                             }
                           >
-                            {person?.description || "[Lawyer description here]"}
+                            {person?.description || ""}
                           </p>
                         </article>
                       </>
@@ -407,7 +407,7 @@ export default function SolidState({ data, template_id, setContext }: any) {
                       }
                       className="e"
                     >
-                      {obj?.clientName || "[Client name here...]"}
+                      {obj?.clientName || ""}
                     </h2>
                     <p
                       onClick={() =>
@@ -422,7 +422,7 @@ export default function SolidState({ data, template_id, setContext }: any) {
                       }
                       className="e"
                     >
-                      {obj?.testimonial || "[Client Review here...]"}
+                      {obj?.testimonial || ""}
                     </p>
                   </section>
                 ))}
@@ -467,7 +467,7 @@ export default function SolidState({ data, template_id, setContext }: any) {
                       })
                     }
                   >
-                    {data?.paragraph || "[Paragraph here]"}
+                    {data?.paragraph || ""}
                   </p>
                 </section>
               </div>
