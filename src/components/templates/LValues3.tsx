@@ -5,7 +5,7 @@ export default function LValues2({data} : any) {
     <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="text-center mb-16">
             <h2 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl xl:text-5xl font-pj">
-                Our values
+                Our Values
             </h2>
             <p className="mt-4 text-base leading-7 text-gray-600 sm:mt-8 font-pj max-w-md" style={{marginInline: 'auto'}}>
                 {data?.description}

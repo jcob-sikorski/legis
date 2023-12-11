@@ -32,11 +32,11 @@ export const DEV_JSON_TO_INJECT = `
     {
       "section_id": "c2553439-5bc8-4f02-98f6-e250fb2c7d2e",
       "template_id": "LPracticeAreas2",
-      "title": "Our practice areas",
+      "title": "Practice Areas",
       "areasList": [
         {
           "practiceAreaName": "Contract Negotiation",
-          "practiceDescription": "Our team of experienced sports law attorneys specializes in contract negotiation. We understand the intricacies of sports contracts and can help you navigate the complex legal landscape to ensure your interests are protected. Whether you're an athlete, team, or sports organization, we have the expertise to secure favorable terms and maximize your opportunities."
+          "practiceDescription": "Our Team of experienced sports law attorneys specializes in contract negotiation. We understand the intricacies of sports contracts and can help you navigate the complex legal landscape to ensure your interests are protected. Whether you're an athlete, team, or sports organization, we have the expertise to secure favorable terms and maximize your opportunities."
         },
         {
           "practiceAreaName": "Intellectual Property Issues in Sports",
@@ -52,8 +52,8 @@ export const DEV_JSON_TO_INJECT = `
       "section_id": "c18d2b97-ac62-4f62-9145-1c451682bf88",
       "template_id": "LValues2",
       "superTitle": "Find out about...",
-      "title": "Our values",
-      "description": "At Roomba & Associates, our values are the foundation of our firm. They guide our actions and shape our relationships with clients. We believe in:",
+      "title": "Our Values",
+      "description": "At Roomba & Associates, Our Values are the foundation of our firm. They guide our actions and shape our relationships with clients. We believe in:",
       "valuesList": [
         {
           "name": "Reliability",
@@ -76,7 +76,7 @@ export const DEV_JSON_TO_INJECT = `
       "section_id": "d775d1e1-fbc6-4f11-b6bc-a1b62c3223fa",
       "template_id": "LTeam1",
       "superTitle": "Learn more about...",
-      "title": "Our team",
+      "title": "Our Team",
       "lawyerDetails": [
         {
           "name": "Jessica Taylor",
@@ -95,7 +95,7 @@ export const DEV_JSON_TO_INJECT = `
     {
       "section_id": "d9decb2a-51e5-418f-9d8c-ee4d02c17517",
       "template_id": "LReviews2",
-      "title": "See what our clients are saying",
+      "title": "Testimonials",
       "reviews": [
         {
           "clientName": "John Smith",
@@ -114,11 +114,11 @@ export const DEV_JSON_TO_INJECT = `
     {
       "section_id": "ba656dce-1753-4620-8bdd-737be12709ec",
       "template_id": "LAbout1",
-      "title": "About us",
+      "title": "About Us",
       "paragraph": "At Roomba & Associates, we are a clarity-focused sports law firm. We are problem solvers at heart, dedicated to finding innovative solutions for our clients. With our domain expertise in sports law, we bring a fresh perspective to every case. Our accessible approach ensures that quality legal help reaches as many people as possible. We pride ourselves on our gritty representation, never afraid to get our hands dirty to achieve optimal outcomes for our clients. With a team of dedicated attorneys deeply entrenched in the world of sports law, we provide comprehensive and tailored solutions for athletes, teams, and sports organizations alike. Our firm is committed to helping our clients not only play the game but win it, both on and off the field."
     },
     {
-      "title": "Contact us",
+      "title": "Contact Us",
       "section_id": "dab71b51-a6a0-48ff-a655-cf9dda361df0",
       "template_id": "LContact1",
       "email": "example@example.com",

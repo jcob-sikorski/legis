@@ -19,19 +19,19 @@ export default function Stellar({ data, template_id, setContext }: any) {
             <a href="#practice areas">Practice Areas</a>
           </li>
           <li>
-            <a href="#our values">Our Values</a>
+            <a href="#Our Values">Our Values</a>
           </li>
           <li>
-            <a href="#our team">Our Team</a>
+            <a href="#Our Team">Our Team</a>
           </li>
           <li>
             <a href="#reviews and testimonials">Testimonials</a>
           </li>
           <li>
-            <a href="#about us">About Us</a>
+            <a href="#About Us">About Us</a>
           </li>
           <li>
-            <a href="#contact us">Contact Us</a>
+            <a href="#Contact Us">Contact Us</a>
           </li>
         </ul>
       </nav>
@@ -92,7 +92,7 @@ export default function Stellar({ data, template_id, setContext }: any) {
 
       <div style={{ height: 150 }} />
 
-      <section id="our values" className="main special">
+      <section id="Our Values" className="main special">
         <header className="major">
           <h2>Our Values</h2>
         </header>
@@ -142,7 +142,7 @@ export default function Stellar({ data, template_id, setContext }: any) {
 
       <div style={{ height: 150 }} />
 
-      <section id="our team" className="main special">
+      <section id="Our Team" className="main special">
         <header className="major">
           <h2>Our Team</h2>
         </header>
@@ -231,7 +231,7 @@ export default function Stellar({ data, template_id, setContext }: any) {
 
       <div style={{ height: 150 }} />
 
-      <section id="about us" className="main special">
+      <section id="About Us" className="main special">
         <header className="major">
           <h2>About Us</h2>
           <p>
@@ -244,7 +244,7 @@ export default function Stellar({ data, template_id, setContext }: any) {
 
       <div style={{ height: 150 }} />
 
-      <section id="contact us" className="main special">
+      <section id="Contact Us" className="main special">
         <header className="major">
           <h2>Contact Us</h2>
         </header>

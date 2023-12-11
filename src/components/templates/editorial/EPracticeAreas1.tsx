@@ -5,7 +5,7 @@ export default function EPracticeAreas1({data, setContext}: any) {
     return(<>
         <section>
             <header className="major">
-                <h2>{data?.title || "Our practice areas"}</h2>
+                <h2>{data?.title || "Practice Areas"}</h2>
             </header>
             <div className="posts">
 

@@ -6,7 +6,7 @@ export default function TAbout2({data} : any) {
       <div className="container mx-auto my-0 gap-0 ">
         <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-8 gap-20 py-10 items-center">
           <div className="col-span-6 flex flex-col gap-6">
-            <Eyebrow label="ABOUT US" />
+            <Eyebrow label="About Us" />
             <h2 className="font-display md:text-display-xl text-display-md font-normal pb-4">
                 We can help you in all your cases
             </h2>

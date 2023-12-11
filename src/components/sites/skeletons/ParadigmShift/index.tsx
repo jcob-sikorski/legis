@@ -150,7 +150,7 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
                 }
                 className="e"
               >
-                {data?.title || "Our values"}
+                {data?.title || "Our Values"}
               </h2>
             </header>
             <div className="content">
@@ -213,7 +213,7 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
                   })
                 }
               >
-                {data?.title || "Our team"}
+                {data?.title || "Our Team"}
               </h2>
             </header>
             <div className="content">
@@ -394,7 +394,7 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
                   pointerEvents: "auto",
                 }}
               >
-                {data?.title || "About us"}
+                {data?.title || "About Us"}
               </h2>
             </header>
             <div className="content">
@@ -434,7 +434,7 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
                   pointerEvents: "auto",
                 }}
               >
-                {data?.title || "Contact us"}
+                {data?.title || "Contact Us"}
               </h2>
             </header>
             <div className="content">

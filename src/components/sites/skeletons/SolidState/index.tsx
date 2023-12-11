@@ -24,16 +24,16 @@ export default function SolidState({ data, template_id, setContext }: any) {
                 <a href="#practice areas">Practice Areas</a>
               </li>
               <li>
-                <a href="#our values">Our Values</a>
+                <a href="#Our Values">Our Values</a>
               </li>
               <li>
-                <a href="#our team">Our Team</a>
+                <a href="#Our Team">Our Team</a>
               </li>
               <li>
                 <a href="#reviews and testimonials">Testimonials</a>
               </li>
               <li>
-                <a href="#about us">About Us</a>
+                <a href="#About Us">About Us</a>
               </li>
               <li>
                 <a href="#footer">Contact Us</a>
@@ -148,7 +148,7 @@ export default function SolidState({ data, template_id, setContext }: any) {
 
         {/* Two */}
         {contains(template_id, "values") && (
-          <section id="our values" className="wrapper style3 fade-up">
+          <section id="Our Values" className="wrapper style3 fade-up">
             <div className="inner">
               <h1
                 className="e major"
@@ -165,7 +165,7 @@ export default function SolidState({ data, template_id, setContext }: any) {
                   })
                 }
               >
-                {data?.title || "Our values"}
+                {data?.title || "Our Values"}
               </h1>
               <p
                 style={{ textAlign: data?.descriptionVariant || "center" }}
@@ -243,7 +243,7 @@ export default function SolidState({ data, template_id, setContext }: any) {
 
         {/* Three */}
         {contains(template_id, "team") && (
-          <section id="our team" className="wrapper spotlight style3">
+          <section id="Our Team" className="wrapper spotlight style3">
             <div className="inner">
               <div className="content">
                 <h1
@@ -261,7 +261,7 @@ export default function SolidState({ data, template_id, setContext }: any) {
                     })
                   }
                 >
-                  {data?.title || "Our team"}
+                  {data?.title || "Our Team"}
                 </h1>
                 <section className="features">
                   {(data?.lawyerDetails ?? []).map((person: any, i: number) => {
@@ -433,7 +433,7 @@ export default function SolidState({ data, template_id, setContext }: any) {
 
         {/* Three */}
         {contains(template_id, "about") && (
-          <section id="about us" className="wrapper spotlight style4">
+          <section id="About Us" className="wrapper spotlight style4">
             <div className="inner">
               <div className="content">
                 <h1
@@ -452,7 +452,7 @@ export default function SolidState({ data, template_id, setContext }: any) {
                     fontSize: "35px",
                   }}
                 >
-                  {data?.title || "About us"}
+                  {data?.title || "About Us"}
                 </h1>
                 <section>
                   <p
@@ -495,7 +495,7 @@ export default function SolidState({ data, template_id, setContext }: any) {
                   pointerEvents: "auto",
                 }}
               >
-                {data?.title || "Contact us"}
+                {data?.title || "Contact Us"}
               </h1>
               <ul className="actions">
                 <li>

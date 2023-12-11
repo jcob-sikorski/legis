@@ -33,16 +33,16 @@ export default function Hyperspace({
               <a href="#practice areas">Practice Areas</a>
               {/* </li> */}
               {/* <li> */}
-              <a href="#our values">Values</a>
+              <a href="#Our Values">Values</a>
               {/* </li> */}
               {/* <li> */}
-              <a href="#our team">Team</a>
+              <a href="#Our Team">Team</a>
               {/* </li> */}
               {/* <li> */}
               <a href="#reviews and testimonials">Testimonials</a>
               {/* </li> */}
               {/* <li> */}
-              <a href="#contact us">Contact Us</a>
+              <a href="#Contact Us">Contact Us</a>
               {/* </li> */}
               {/* </ul> */}
             </nav>
@@ -220,7 +220,7 @@ export default function Hyperspace({
             </section>
           )}
           {contains(template_id, "values") && (
-            <section id="our values">
+            <section id="Our Values">
               <div className="content">
                 <div className="inner">
                   <h1
@@ -238,7 +238,7 @@ export default function Hyperspace({
                     }
                     className="e"
                   >
-                    {data?.title || "Our values"}
+                    {data?.title || "Our Values"}
                   </h1>
                   <div className="features">
                     {(typeof data?.valuesList === "object"
@@ -301,7 +301,7 @@ export default function Hyperspace({
             </section>
           )}
           {contains(template_id, "team") && (
-            <section id="our team">
+            <section id="Our Team">
               <div className="content">
                 <div className="inner">
                   <h1
@@ -319,7 +319,7 @@ export default function Hyperspace({
                       })
                     }
                   >
-                    {data?.title || "Our team"}
+                    {data?.title || "Our Team"}
                   </h1>
                   <ul className="photoshoot">
                     {/* {JSON.stringify(data?.lawyerDetails)} */}
@@ -532,7 +532,7 @@ export default function Hyperspace({
 
         {/* Three */}
         {contains(template_id, "contact") && (
-          <section id="contact us" className="wrapper style4 fade-up">
+          <section id="Contact Us" className="wrapper style4 fade-up">
             <div className="inner">
               <h1
                 onClick={() =>
@@ -550,7 +550,7 @@ export default function Hyperspace({
                   pointerEvents: "auto",
                 }}
               >
-                {data?.title || "Contact us"}
+                {data?.title || "Contact Us"}
               </h1>
               <p
                 style={{ textAlign: data?.paragraphVariant || "left" }}

@@ -50,7 +50,7 @@ export default function LContact1({ data, setContext }: any) {
 
       <div className="relative px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="max-w-sm mx-auto text-center">
-          {/* <h2 className="text-3xl font-normal text-white sm:text-4xl lg:text-5xl">Contact us</h2> */}
+          {/* <h2 className="text-3xl font-normal text-white sm:text-4xl lg:text-5xl">Contact Us</h2> */}
           <h2
             style={{
               textAlign: data?.headingVariant || "center",
@@ -66,7 +66,7 @@ export default function LContact1({ data, setContext }: any) {
             }
             className="editable mt-6 text-3xl font-bold text-white sm:text-4xl xl:text-5xl font-pj"
           >
-            {data?.title || "Contact us"}
+            {data?.title || "Contact Us"}
           </h2>
           {/* <p className="mt-4 text-base font-normal text-gray-400 sm:text-lg sm:mt-6"></p> */}
         </div>

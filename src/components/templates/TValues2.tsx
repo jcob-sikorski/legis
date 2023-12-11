@@ -11,7 +11,7 @@ export default function TValues2({data} : any) {
         <div className="flex flex-col md:gap-10 gap-10 lg:py-14 md:py-14 py-14">
           <div className="grid lg:grid-cols-12 grid-cols-1 gap-8">
             <div className="lg:col-span-8">
-              <Eyebrow label="OUR VALUES" />
+              <Eyebrow label="Our Values" />
               <h2 className="font-display md:text-display-sm text-display-sm pt-5">
                 {data?.description}
               </h2>

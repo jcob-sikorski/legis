@@ -3,7 +3,7 @@ export default function LPracticeAreas1({data, setContext}: any) {
     <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="text-center text-black">
             <h2 onClick={() => setContext({key: 'title', type: 'text', label: 'Section Title'})} className="editable text-3xl font-bold text-whitex sm:text-4xl xl:text-5xl font-pj">
-                {data?.title || "Our practice areas"}
+                {data?.title || "Practice Areas"}
             </h2>
         </div>
 

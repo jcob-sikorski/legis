@@ -25,7 +25,7 @@ export default function LTeam3({data} : any) {
 
     <div className="relative px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div className="max-w-md mx-auto text-center lg:max-w-2xl">
-            <h2 className="text-3xl font-normal text-white sm:text-4xl lg:text-5xl xl:text-6xl">Our team</h2>
+            <h2 className="text-3xl font-normal text-white sm:text-4xl lg:text-5xl xl:text-6xl">Our Team</h2>
             {/* <p className="mt-6 text-lg font-normal text-gray-400"></p> */}
         </div>
 

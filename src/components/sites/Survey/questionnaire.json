@@ -4,7 +4,7 @@
       {
         "id": "message",
         "type": "text",
-        "default": "Welcome to Legis. To adjust the website to your law firm, we first need to understand what your law firm does, what practice areas you work in, and your values among other things. The following questions take between 5 and 8 minutes to complete. They will reveal your law firm's values and how you want your firm to be perceived by your clients. We’ll use it to display website options that reflect your firm and meet the expectations of your client."
+        "default": "Welcome to Legis. To adjust the website to your law firm, we first need to understand what your law firm does, what practice areas you work in, and yOur Values among other things. The following questions take between 5 and 8 minutes to complete. They will reveal your law firm's values and how you want your firm to be perceived by your clients. We’ll use it to display website options that reflect your firm and meet the expectations of your client."
       }
     ]
   },

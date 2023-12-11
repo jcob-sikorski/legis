@@ -12,7 +12,7 @@ export default function LAbout3({data}: any) {
             </div>
             <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-gray-900 to-transparent rounded-2xl lg:rounded-3xl opacity-80"></div>
             <div className="absolute bottom-0 w-full px-4 py-8 text-center -translate-x-1/2 left-1/2 lg:p-12">
-                <p className="text-lg font-semibold text-white sm:text-xl lg:text-3xl">ABOUT US</p>
+                <p className="text-lg font-semibold text-white sm:text-xl lg:text-3xl">About Us</p>
             </div>
         </div>
 
