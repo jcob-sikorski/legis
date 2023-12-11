@@ -15,12 +15,10 @@ const SettingsMenu = ({
       style={{ height: "100vh", display: "flex", flexDirection: "column" }}
     >
       {[
-        { key: "1", label: "Overview", to: "/overview-settings" },
-        { key: "2", label: "Site", to: "/site-settings" },
-        // { key: "3", label: "Media", to: "/media-settings" },
+        { key: "1", label: "Overview", to: "overview" },
       ].map((item) => (
         <Menu.Item key={item.key}>
-          <Link to={item.to as string}>{item.label}</Link>
+          <Link to={item.to as string}>{item.label}</Link> 
         </Menu.Item>
       ))}
     </Menu>

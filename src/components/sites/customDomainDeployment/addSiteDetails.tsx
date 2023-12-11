@@ -22,17 +22,6 @@ function AddSiteDetails({ prevPage }: any) {
   const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
   const site_collection = mongodb.db("legis").collection("Site");
 
-  async function onContinue() {
-    const site = await site_collection.findOne(
-      { _id: new Realm.BSON.ObjectId(site_id) },
-      { projection: { customDomain: 1 } }
-    );
-
-    dispatch(setSite(site));
-
-    navigate("/overview-settings");
-  }
-
   return (
     <Layout style={{ height: "100vh", backgroundColor: "white" }}>
       <div style={{ position: 'absolute', top: 50, left: 50 }}>
@@ -111,7 +100,7 @@ function AddSiteDetails({ prevPage }: any) {
       </h2>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Button
-          onClick={onContinue}
+          onClick={() => navigate("/settings")}
           className="custom-button"
           type="primary"
           size="large"

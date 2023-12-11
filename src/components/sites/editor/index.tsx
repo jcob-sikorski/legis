@@ -18,8 +18,6 @@ import ReactDOMServer from "react-dom/server";
 import { v4 as uuidv4 } from "uuid";
 
 import * as Realm from "realm-web";
-import { config } from "../../../config";
-import axios from "axios";
 
 import "./index.css";
 import Sider from "antd/es/layout/Sider";
@@ -182,12 +180,7 @@ const Editor: React.FC = () => {
   }, [siteTitle]);
 
   async function handleSettingsButton() {
-    const site = await site_collection.findOne({
-      _id: new Realm.BSON.ObjectId(site_id),
-    });
-
-    dispatch(setSite(site));
-    navigate("/overview-settings");
+    navigate(`/settings/${site_id}`);
   }
 
 

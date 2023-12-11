@@ -31,12 +31,9 @@ export default function SiteCard({
   let image_url = getHeroImageURLFromBodyTemplate(body_template);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   function onSettings() {
-    dispatch(setSite(data));
-
-    navigate("/overview-settings");
+    navigate(`/settings/${site_id}`);
   }
 
   function onSurvey() {

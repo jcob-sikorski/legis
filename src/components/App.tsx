@@ -10,9 +10,7 @@ import ColorPalette from "./sites/colorPalette";
 import Html from "./sites/html";
 import Generate from "./sites/generate";
 import CustomDomainDeployment from "./sites/customDomainDeployment";
-import Overview from "./sites/siteSettings/Overview";
-import Site from "./sites/siteSettings/Site";
-import Media from "./sites/siteSettings/Media";
+import Settings from "./sites/settings";
 import Playground from "./sites/playground";
 import FromTemplate from "./sites/fromTemplate";
 import Preview from "./sites/preview";
@@ -130,26 +128,10 @@ function App() {
             }
           />
           <Route
-            path="/overview-settings"
+            path="/settings/:site_id"
             element={
               <RequireAuth>
-                <Overview />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/site-settings"
-            element={
-              <RequireAuth>
-                <Site />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/media-settings"
-            element={
-              <RequireAuth>
-                <Media />
+                <Settings />
               </RequireAuth>
             }
           />

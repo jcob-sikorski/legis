@@ -144,7 +144,7 @@ export const Dashboard: React.FC = () => {
       favicon_url: string;
       cname: string;
       template_colors: string[];
-      body_template?: any; // replace 'any' with the actual type of 'body_template'
+      body_template?: any;
     };
 
     const newSite: Site = {
@@ -156,7 +156,7 @@ export const Dashboard: React.FC = () => {
       domainConnected: 0,
       favicon_url: "",
       cname: "",
-      template_colors: ["#efefee", "#a3826c", "#3e3d3d"],
+      template_colors: ["#efefee", "#a3826c", "#3e3d3d"]
       // body_template: templateIds ? getBodyTemplateFromTemplateSetId(templateIds),
     };
     if (templateIds.length > 0) {
