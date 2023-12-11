@@ -170,7 +170,7 @@ function Settings() {
 
   // React component
   useEffect(() => {
-    // checkDeploymentStatus();
+    checkDeploymentStatus();
 
     const fetchSiteData = async () => {
       let result = await site_collection.find({
@@ -218,27 +218,6 @@ function Settings() {
         },
       }
     );
-  };
-
-  const connectDomainsFlow = async () => {
-    // ALSO RETURN ERROR IF THE DOMAIN IS EMPTY
-    const validDomain = convertToValidDomainName(lawFirmName!);
-
-    const res = await site_collection.findOne({
-      cname: `${validDomain}.legis.live`,
-    });
-    if (res) {
-      message.error("Such subdomain already exists.");
-      return;
-    }
-
-    console.log("COMITING INDEX HTML TO GITHUB");
-    commitIndexHtmlToGithub();
-    //  YOU ARE HERE IMPLEMENTING THE DEPLOYMENT FOR DEFAULT SUBDOMAIN
-    checkDeploymentStatus();
-
-    console.log("CONNECTING DEFAULT SUBDOMAIN");
-    connectDefaultSubdomain();
   };
 
   function convertToValidDomainName(lawFirmName: string): string {
@@ -576,6 +555,9 @@ function Settings() {
           saveChanges={saveChanges}
           commitIndexHtmlToGithub={commitIndexHtmlToGithub}
           connectDefaultSubdomain={connectDefaultSubdomain}
+          setTitle={setTitle}
+          setDescription={setDescription}
+          deploymentStatus={deploymentStatus}
         />
       )}
       <IFrame

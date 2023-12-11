@@ -28,7 +28,10 @@ function SiteComponent({
   customDomain,
   saveChanges,
   commitIndexHtmlToGithub,
-  connectDefaultSubdomain
+  connectDefaultSubdomain,
+  setTitle,
+  setDescription,
+  deploymentStatus
   }: any) {
     
   return (
@@ -73,7 +76,7 @@ function SiteComponent({
             }}
             bordered={false}
             value={title}
-            onChange={(e) => title = e.target.value}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <Title
             level={5}
@@ -94,7 +97,7 @@ function SiteComponent({
             }}
             bordered={false}
             value={description}
-            onChange={(e) => description = e.target.value}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </Content>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -108,26 +111,30 @@ function SiteComponent({
               Save changes
             </Button>
           </div>
-          <div>
-            <Button
-              type="primary"
-              className="custom-button"
-              onClick={connectDefaultSubdomain}
-              style={{ height: 60, width: 200, marginTop: 10 }} // You can adjust the marginTop as needed
-            >
-              Connect Domain
-            </Button>
-          </div>
-          <div>
-            <Button
-              type="primary"
-              className="custom-button"
-              onClick={commitIndexHtmlToGithub}
-              style={{ height: 60, width: 200, marginTop: 10 }} // You can adjust the marginTop as needed
-            >
-              Publish
-            </Button>
-          </div>
+          {/* {deploymentStatus === "building" &&  */}
+            <div>
+              <Button
+                type="primary"
+                className="custom-button"
+                onClick={connectDefaultSubdomain}
+                style={{ height: 60, width: 200, marginTop: 10 }} // You can adjust the marginTop as needed
+              >
+                Connect Domain
+              </Button>
+            </div>
+          {/* }
+          {deploymentStatus !== "built" &&  */}
+            <div>
+              <Button
+                type="primary"
+                className="custom-button"
+                onClick={commitIndexHtmlToGithub}
+                style={{ height: 60, width: 200, marginTop: 10 }} // You can adjust the marginTop as needed
+              >
+                Publish
+              </Button>
+            </div>
+          {/* } */}
         </div>
       </Layout>
     </Layout>
