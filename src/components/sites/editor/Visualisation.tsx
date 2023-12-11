@@ -84,7 +84,8 @@ function Visualisation({
   const [followingCount, setFollowingCount] = useState<number>(0);
 
   if (mode === "preview") {
-    message.info("preview mode");
+    // message.info("preview mode");
+    // PROBABLY DOESNT AFFECT THE APP. DELETE LATER WITH TESTING
     document.documentElement.style.setProperty(
       "--legis-editable-outline",
       `5px solid red`
