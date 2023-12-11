@@ -30,11 +30,10 @@ import {
   MobileFilled,
   MobileOutlined,
   RedoOutlined,
+  SettingOutlined
 } from "@ant-design/icons";
 import Sections from "./Sections";
 import {
-  getHeroImageURLFromBodyTemplate,
-  getPromptForGeneration,
   updateCssStyles,
 } from "../../../utils";
 import MainMenu from "../menu";
@@ -66,10 +65,6 @@ const Editor: React.FC = () => {
   const onboarding_collection = mongodb.db("legis").collection("Questionnaire");
   const site_collection = mongodb.db("legis").collection("Site");
 
-  // Set up your GitHub API credentials and repository name
-  const githubUsername = config.githubUsername;
-  const githubToken = config.githubToken;
-
   const dispatch = useDispatch();
 
   const { site_id } = useParams();
@@ -81,23 +76,15 @@ const Editor: React.FC = () => {
   const [lawFirmName, setLawFirmName] = useState<string>();
   const [colors, setColors] = useState<string[]>([]);
   const [templateSetId, setTemplateSetId] = useState<string>("");
-  const [siteCname, setSiteCname] = useState<string>();
   const [siteTitle, setSiteTitle] = useState<string>();
-  const [siteDescription, setSiteDescription] = useState<string>();
-  const [faviconURL, setFaviconURL] = useState<string>();
 
   const [selectedSectionId, setSelectedSectionId] = useState<string>("");
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>("");
-  // const template_set_id: TemplateSetName = "SolidState";
 
   const [cssString, setCssString] = useState<string>("");
 
   const [isAddingNewSection, setIsAddingNewSection] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
-
-  const [displayHostingBox, setDisplayHostingBox] = useState<boolean>(false);
-  const [isDeploying, setIsDeploying] = useState<boolean>(false);
-  const [legisSubdomain, setLegisSubdomain] = useState<boolean>(false);
 
   const [isDevMode, setIsDevMode] = useState<boolean>(false);
 
@@ -113,15 +100,6 @@ const Editor: React.FC = () => {
       setData(JSON.parse(json));
     } catch {
       console.warn("Custom Error: JSON Formatting Error!");
-    }
-  }
-
-  function processData(data: any[]) {
-    // If is able to parse json, then parse it and set to data. If not, display error in console, but don't crash app.
-    try {
-      if (json != JSON.stringify(data)) setJson(JSON.stringify(data));
-    } catch {
-      console.warn("Custom Error: JSON Parsing Error!");
     }
   }
 
@@ -171,21 +149,6 @@ const Editor: React.FC = () => {
     return data && data.length === 0;
   }
 
-  function scrollToElement(id: string) {
-    // const visualisationContainer: any = document.getElementById('visualisation-container');
-    // element.scrollTo({
-    //   top: 1000,
-    //   behavior: "smooth"
-    //  });
-    // const yOffset = -10;
-    // const y = element.getBoundingClientRect().top + visualisationContainer.pageYOffset  + yOffset;
-    // if (element) visualisationContainer.scrollTo({top: y, behavior: 'smooth'});
-    const element: any = document.getElementById(id);
-    if (element) element.scrollIntoView({ block: "end", behavior: "smooth" });
-    // dummyRef.current.scrollIntoView({ block: "start", behavior: 'smooth' });
-    // console.log("el: ", element)
-  }
-
   function onMobile() {
     setIsMobile((state) => !state);
     // window.open(`/preview/${site_id}`, '', 'width=410,height=700');
@@ -218,381 +181,15 @@ const Editor: React.FC = () => {
       "Legis | " + (siteTitle || lawFirmName || "Edit your site");
   }, [siteTitle]);
 
-  async function checkDeploymentStatus() {
-    let status = "";
-    while (status !== "built") {
-      const response = await axios.get(
-        `https://api.github.com/repos/${githubUsername}/${site_id}/pages/builds/latest`,
-        {
-          auth: {
-            username: githubUsername,
-            password: githubToken,
-          },
-        }
-      );
-      status = response.data?.status;
-      console.log("DEPLOYMENT STATUS: ", status);
-      if (status !== "built") {
-        await new Promise((resolve) => setTimeout(resolve, 30000)); // wait for 30 seconds
-      }
-    }
+  async function handleSettingsButton() {
+    const site = await site_collection.findOne({
+      _id: new Realm.BSON.ObjectId(site_id),
+    });
+
+    dispatch(setSite(site));
+    navigate("/overview-settings");
   }
 
-  useEffect(() => {
-    const connectDomainsFlow = async () => {
-      if (isDeploying) {
-        if (legisSubdomain) {
-          const validDomain = convertToValidDomainName(lawFirmName!);
-
-          const res = await site_collection.findOne({
-            cname: `${validDomain}.legis.live`,
-          });
-          if (res) {
-            message.error("Such subdomain already exists.");
-            setIsDeploying(false);
-            return;
-          }
-
-          // remove dependency for the settins to not show this in them
-          const updateResult = await site_collection.updateOne(
-            { _id: new Realm.BSON.ObjectId(site_id) },
-            { $set: { customDomain: "" } }
-          );
-          console.log(`Updated ${updateResult.modifiedCount} document.`);
-
-          console.log("COMITING INDEX HTML TO GITHUB");
-          commitIndexHtmlToGithub();
-
-          checkDeploymentStatus();
-
-          console.log("CONNECTING DEFAULT SUBDOMAIN");
-          connectDefaultSubdomain();
-
-          console.log("NAVIGATING TO OVERVIEW SETTINGS");
-          const site = await site_collection.findOne({
-            _id: new Realm.BSON.ObjectId(site_id),
-          });
-
-          dispatch(setSite(site));
-          navigate("/overview-settings");
-        } else {
-          console.log("COMITING INDEX HTML TO GITHUB");
-          commitIndexHtmlToGithub();
-          navigate(`/custom-domain-deployment/${site_id}`); // DEPENDENT
-        }
-      }
-    };
-
-    connectDomainsFlow();
-  }, [isDeploying]);
-
-  async function handlePublishButton() {
-    if (!displayHostingBox && legisSubdomain) {
-      setLegisSubdomain(false);
-    }
-    setDisplayHostingBox(!displayHostingBox);
-  }
-
-  function convertToValidDomainName(lawFirmName: string): string {
-    // Remove spaces
-    lawFirmName = lawFirmName.replace(/\s/g, "");
-
-    // Convert to lowercase
-    lawFirmName = lawFirmName.toLowerCase();
-
-    // Check if the domain name starts or ends with a dash
-    if (lawFirmName.startsWith("-")) {
-      lawFirmName = lawFirmName.substring(1);
-    }
-    if (lawFirmName.endsWith("-")) {
-      lawFirmName = lawFirmName.slice(0, -1);
-    }
-
-    // Trim the domain name if it's longer than 63 characters
-    if (lawFirmName.length > 63) {
-      lawFirmName = lawFirmName.substring(0, 63);
-    }
-
-    // Check if the domain name contains any characters other than a-z, 0-9, and -
-    if (!/^[a-z0-9-]+$/.test(lawFirmName)) {
-      lawFirmName = lawFirmName.replace(/[^a-z0-9-]/g, "");
-    }
-
-    return `${lawFirmName}`;
-  }
-
-  async function connectDefaultSubdomain() {
-    const validDomain = convertToValidDomainName(lawFirmName!);
-
-    const cnameTarget = "legisbiz.github.io.";
-
-    // API endpoint and request payload
-    const apiURL =
-      "https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://host51.registrar-servers.com:2083/json-api/cpanel";
-    const payload = {
-      cpanel_jsonapi_version: "2",
-      cpanel_jsonapi_module: "ZoneEdit",
-      cpanel_jsonapi_func: "add_zone_record",
-      domain: "legis.live",
-      name: validDomain,
-      type: "CNAME",
-      cname: cnameTarget,
-    };
-
-    const base64Content = btoa(
-      unescape(
-        encodeURIComponent(`${config.cpanelUsername}:${config.cpanelPassword}`)
-      )
-    );
-
-    // Axios request configuration
-    const axios_config = {
-      headers: {
-        Authorization: `Basic ${base64Content}`,
-        "Content-Type": "application/json",
-      },
-    };
-
-    // Make the API request
-    try {
-      const response = await axios.post(apiURL, payload, axios_config);
-      if (response.status === 200) {
-        console.log("CNAME record created successfully!");
-
-        try {
-          const githubRepoResponse = await axios.put(
-            `https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${site_id}/pages`,
-            {
-              cname: `${validDomain}.legis.live`,
-              source: "gh-pages",
-            },
-            {
-              headers: {
-                Authorization: `token ${githubToken}`,
-              },
-            }
-          );
-          console.log(
-            "Updated the github domain of the site: ",
-            githubRepoResponse.data
-          );
-
-          const updateResult = await site_collection.updateOne(
-            { _id: new Realm.BSON.ObjectId(site_id) },
-            {
-              $set: {
-                cname: `${validDomain}.legis.live`,
-                domainConnected: 1,
-              },
-            }
-          );
-          console.log(`Updated ${updateResult.modifiedCount} document.`);
-        } catch (error) {
-          console.error("Error updating the domain of the site:", error);
-        }
-      }
-    } catch (error) {
-      console.error("Error creating CNAME record:", error);
-    }
-  }
-
-  async function commitIndexHtmlToGithub() {
-    const title = lawFirmName;
-
-    // // SEO data
-    // const city = "San Francisco";
-    // const state = "CA, California";
-    // const practiceAreas = onboardingData
-    //   ? onboardingData.MainPracticeArea +
-    //     ", " +
-    //     onboardingData.SpecializedPracticeAreas
-    //   : "";
-    // const userAddedKeywords = "TOP 3 in California";
-    const image = getHeroImageURLFromBodyTemplate(data);
-
-    // // Final SEO data to put in HTML
-    // const metadata = {
-    //   description: siteDescription,
-    //   keywords: `lawyers, legal services, ${practiceAreas}, ${city} attorneys, ${state} law firm, litigation, legal advice, legal consultation, ${userAddedKeywords}`,
-    //   author: lawFirmName,
-    //   image,
-    // };
-
-    const htmlBodyString = ReactDOMServer.renderToString(
-      visualisationComponent
-    );
-    // console.log("htmlBodyString: ", htmlBodyString);
-
-    const htmlString = `
-      <!doctype html>
-        <html>
-        <head>
-          <meta charset="UTF-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-          <!-- IE -->
-          <link rel="shortcut icon" type="image/x-icon" href="${faviconURL}" />
-          <!-- other browsers -->
-          <link rel="icon" type="image/x-icon" href="${faviconURL}" />
-
-
-          <!-- customizable page variables -->
-          <title>${title}</title>
-
-          <!-- Web Crawlers -->
-          <meta name="robots" content="index, follow">
-
-          <!-- Facebook Meta Tags (Open Graph) -->
-          <meta property="og:type" content="website">
-          <meta property="og:title" content="${lawFirmName}">
-          <meta property="og:description" content="${siteDescription}">
-          <meta property="og:image" content="${image}">
-
-          <!-- Twitter Meta Tags -->
-          <meta name="twitter:card" content="summary_large_image">
-          <meta name="twitter:title" content="${lawFirmName}">
-          <meta name="twitter:description" content="${siteDescription}">
-          <meta name="twitter:image" content="${image}">
-
-          
-          <!-- tailwindcss -->
-          <script src="https://cdn.tailwindcss.com"></script>
-
-          <!-- Google Fonts -->
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-            rel="stylesheet"
-          />
-          <link
-            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-            rel="stylesheet"
-          />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;0,6..96,800;0,6..96,900;1,6..96,400;1,6..96,500;1,6..96,600;1,6..96,700;1,6..96,800;1,6..96,900&family=Playfair+Display&display=swap"
-            rel="stylesheet"
-          />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap"
-            rel="stylesheet"
-          />
-          
-          <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-          />
-
-          <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100&family=Oswald:wght@200;300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
-          <!-- Bootstrap Icons -->
-          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-
-          <style>
-
-            * {
-              scroll-behavior: smooth;
-            }
-
-            :root {
-              --legis-color-1: ${colors[0]};
-              --legis-color-2: ${colors[1]};
-              --legis-color-3: ${colors[2]};
-
-              --legis-font-main: 'IBM Plex Sans';
-            }
-
-            .color-1 {background-color: var(--legis-color-1) !important;}
-            .color-2 {background-color: var(--legis-color-2) !important;}
-            .color-3 {background-color: var(--legis-color-3) !important;}
-
-          </style>
-
-          <style>
-            ${cssString}
-          </style>
-        </head>
-        <body>
-          ${htmlBodyString}
-        </body>
-      </html>
-    `;
-
-    const base64Content = btoa(unescape(encodeURIComponent(htmlString))); // Convert HTML string to base64
-
-    console.log("htmlString: ", htmlString);
-
-    try {
-      const site = await site_collection.findOne({
-        _id: new Realm.BSON.ObjectId(site_id),
-      });
-
-      const site_url = site.site_url;
-
-      if (site_url) {
-        // update the file on github
-        const getFile = await axios.get(
-          // get file sha
-          `https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${site_id}/contents/index.html`,
-          {
-            headers: {
-              Authorization: `token ${githubToken}`,
-            },
-          }
-        );
-
-        const fileSha = getFile.data.sha;
-
-        const response = await axios.put(
-          // update the file
-          `https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${site_id}/contents/index.html`,
-          {
-            message: "Update commit",
-            content: base64Content,
-            branch: "gh-pages", // Specify the 'gh-pages' branch
-            sha: fileSha, // Include the file's SHA
-          },
-          {
-            headers: {
-              Authorization: `token ${githubToken}`,
-            },
-          }
-        );
-      } else {
-        // create new file on github
-        const response = await axios.put(
-          // create new file
-          `https://legis-cors-anywhere-xmo76.ondigitalocean.app/https://api.github.com/repos/${githubUsername}/${site_id}/contents/index.html`,
-          {
-            message: "Initial commit",
-            content: base64Content,
-            branch: "gh-pages", // Specify the 'gh-pages' branch
-          },
-          {
-            headers: {
-              Authorization: `token ${githubToken}`,
-            },
-          }
-        );
-
-        const result = await site_collection.updateOne(
-          { _id: new Realm.BSON.ObjectId(site_id) }, // Specify the query to find the site by site_id
-          {
-            $set: {
-              site_url: "https://legisbiz.github.io/" + site_id,
-            },
-          }
-        );
-      }
-
-      console.log("GitHub Pages deployment triggered.");
-      setIsDeploying(false);
-    } catch (error) {
-      setIsDeploying(false);
-      console.error("Error pushing content and triggering deployment.", error);
-      throw error;
-    }
-  }
 
   React.useEffect(() => {
     console.log("Fetching the site from mongo.");
@@ -602,14 +199,6 @@ const Editor: React.FC = () => {
         const result = await site_collection.find({
           _id: new Realm.BSON.ObjectId(site_id),
         });
-
-        let fieldName = "cname";
-        if (result.length > 0 && result[0].hasOwnProperty(fieldName)) {
-          console.log(`Found a site with ${fieldName}:`, result[0][fieldName]);
-          setSiteCname(result[0][fieldName]);
-        } else {
-          console.log(`Site doesn't have ${fieldName} value yet.`);
-        }
 
         const getFromMongoDB = (fieldName: string, setter: any) => {
           if (result.length > 0 && result[0].hasOwnProperty(fieldName)) {
@@ -627,8 +216,6 @@ const Editor: React.FC = () => {
         getFromMongoDB("template_colors", setColors);
         getFromMongoDB("template_set_id", setTemplateSetId);
         getFromMongoDB("title", setSiteTitle);
-        getFromMongoDB("description", setSiteDescription);
-        getFromMongoDB("favicon_url", setFaviconURL);
       } catch (error) {
         console.error("Error searching for this site:", error);
       }
@@ -651,7 +238,6 @@ const Editor: React.FC = () => {
         const result = await site_collection.find({
           _id: new Realm.BSON.ObjectId(site_id),
         });
-        const site: Site = result.length > 0 ? result[0] : {};
 
         if (result.length > 0 && result[0].hasOwnProperty("title")) {
           console.log(
@@ -713,16 +299,13 @@ const Editor: React.FC = () => {
         onAddSection,
         setSelectedSectionId,
         setSelectedTemplateId,
-        handlePublishButton,
         setIsDevMode,
-        setIsDeploying,
         setContext,
       }}
       variables={{
         selectedSectionId,
         selectedTemplateId,
         isDevMode,
-        isDeploying,
         context,
       }}
     />
@@ -746,7 +329,6 @@ const Editor: React.FC = () => {
         selectedSectionId,
         selectedTemplateId,
         isDevMode,
-        isDeploying,
         dummyRef,
         containerRef,
         colors,
@@ -755,18 +337,6 @@ const Editor: React.FC = () => {
   );
 
   const borderStyle = "1px solid #0002";
-
-  const [isTooSmall, setIsTooSmall] = useState(false);
-
-  function checkIfIsTooSmall() {
-    if (window.innerWidth < 980) {
-      setIsTooSmall(true);
-    } else {
-      setIsTooSmall(false);
-    }
-  }
-
-  if (isTooSmall) return <>Try different bigger defice bro</>;
 
   return (
     <Layout style={{ width: "100%", height: "calc(100vh - 46px)" }}>
@@ -832,188 +402,12 @@ const Editor: React.FC = () => {
                 </a>
                 <Button
                   type="primary"
-                  onClick={handlePublishButton}
-                  className="custom-button bg-blue-500"
-                  style={{ padding: 24, margin: 0 }} // Use marginLeft: 'auto' to push the button to the right
-                >
-                  Publish
-                </Button>
-                <div style={{ position: "relative" }}>
-                  {displayHostingBox ? (
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: NAV_BAR_HEIGHT,
-                        backgroundColor: "#ffffff",
-                        zIndex: 1,
-                        right: 10,
-                        height: 255,
-                        width: 430,
-                        borderRadius: 8,
-                      }}
-                    >
-                      <h1
-                        style={{
-                          fontSize: 20,
-                          fontWeight: "600",
-                          marginLeft: 10,
-                        }}
-                      >
-                        Choose Where to Publish
-                      </h1>
-                      <button
-                        onClick={() => {
-                          setLegisSubdomain(true);
-                          setDisplayHostingBox(false);
-                        }}
-                        style={{
-                          height: 85,
-                          width: "95%",
-                          marginInline: 10,
-                          marginBottom: 10,
-                          padding: 5,
-                          borderRadius: 5,
-                          backgroundColor: "#ECECEC",
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          flexDirection: "column",
-                        }}
-                      >
-                        <h2
-                          style={{
-                            fontSize: 16,
-                            fontWeight: "600",
-                            wordWrap: "break-word",
-                            lineHeight: "35px",
-                            marginLeft: 5,
-                          }}
-                        >
-                          Connect to legis subdomain
-                        </h2>
-                        <h2
-                          style={{
-                            fontSize: 14,
-                            fontWeight: "400",
-                            wordWrap: "break-word",
-                            lineHeight: "20px",
-                            marginLeft: 5,
-                          }}
-                        >
-                          Click here to publish your website on the legis
-                        </h2>
-                        <h2
-                          style={{
-                            fontSize: 14,
-                            fontWeight: "400",
-                            wordWrap: "break-word",
-                            lineHeight: "20px",
-                            marginLeft: 5,
-                          }}
-                        >
-                          subdomain for free.
-                        </h2>
-                      </button>
-                      <button
-                        onClick={() => {
-                          setLegisSubdomain(false);
-                          setIsDeploying(true);
-                        }}
-                        style={{
-                          height: 85,
-                          width: "95%",
-                          marginInline: 10,
-                          padding: 5,
-                          borderRadius: 5,
-                          backgroundColor: "#ECECEC",
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          flexDirection: "column",
-                        }}
-                      >
-                        <h2
-                          style={{
-                            fontSize: 16,
-                            fontWeight: "600",
-                            wordWrap: "break-word",
-                            lineHeight: "35px",
-                            marginLeft: 5,
-                          }}
-                        >
-                          Connect your custom domain
-                        </h2>
-                        <h2
-                          style={{
-                            fontSize: 14,
-                            fontWeight: "400",
-                            wordWrap: "break-word",
-                            lineHeight: "20px",
-                            marginLeft: 5,
-                          }}
-                        >
-                          Become a Legis pro member & connect your
-                        </h2>
-                        <h2
-                          style={{
-                            fontSize: 14,
-                            fontWeight: "400",
-                            wordWrap: "break-word",
-                            lineHeight: "20px",
-                            marginLeft: 5,
-                          }}
-                        >
-                          custom domain for $49 a year.
-                        </h2>
-                      </button>
-                    </div>
-                  ) : null}
-                  {legisSubdomain ? (
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: NAV_BAR_HEIGHT,
-                        backgroundColor: "#ffffff",
-                        zIndex: 1,
-                        right: 10,
-                        height: 255,
-                        width: 430,
-                        borderRadius: 8,
-                      }}
-                    >
-                      <h1
-                        style={{
-                          fontSize: 20,
-                          fontWeight: "600",
-                          marginLeft: 10,
-                        }}
-                      >
-                        Your legis subdomain
-                      </h1>
-                      <Input
-                        style={{
-                          maxWidth: "400px",
-                          borderRadius: 12,
-                          height: "40px",
-                          marginLeft: 10,
-                          borderColor: "black",
-                        }}
-                        value={`${convertToValidDomainName(
-                          lawFirmName!
-                        )}.legis.live`}
-                        readOnly={true}
-                      />
-                      <Button
-                        type="primary"
-                        onClick={() => setIsDeploying(true)}
-                        className="custom-button"
-                        style={{ marginLeft: 10, height: 50 }}
-                      >
-                        Publish for free on legis subdomain
-                      </Button>
-                    </div>
-                  ) : null}
-                </div>
+                  onClick={handleSettingsButton}
+                  className="custom-button"
+                  icon={<SettingOutlined />}
+                  style={{ padding: 24, margin: 0 }}
+                />
               </Flex>
-              {/* </Col> */}
             </Flex>
           </Col>
         </Row>
