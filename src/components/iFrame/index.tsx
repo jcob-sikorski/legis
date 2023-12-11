@@ -89,7 +89,7 @@ const IFrame: React.FC<IFrameProps> = ({
           if (isPreview) {
             const editableStyle = innerDoc?.createElement("style");
             if (editableStyle) {
-              message.warning("appending child" + CancelEditableCSS);
+              // message.warning("appending child" + CancelEditableCSS);
               editableStyle.innerHTML = CancelEditableCSS;
               innerDoc?.head.appendChild(editableStyle);
             }

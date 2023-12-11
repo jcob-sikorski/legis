@@ -173,9 +173,9 @@ export default function Preview() {
   // message.info(templateSetId);
 
   // message.info("preview mode");
-  message.info(
-    document.documentElement.style.getPropertyValue("--legis-editable-outline")
-  );
+  // message.info(
+  //   document.documentElement.style.getPropertyValue("--legis-editable-outline")
+  // );
   document.documentElement.style.setProperty(
     "--legis-editable-outline",
     `5px solid red`
