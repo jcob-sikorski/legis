@@ -22,7 +22,7 @@ import axios from "axios";
 const { Step } = Steps;
 const { Title } = Typography;
 
-function ConnectDomain({ nextPage }: any) {
+function ConnectDomain({ prevPage, nextPage }: any) {
   const [domain, setDomain] = useState("");
   const [checkDomainAgain, setCheckDomainAgain] = useState<boolean>(true);
   const [showResult, setShowResult] = useState<boolean>(false);
@@ -121,6 +121,16 @@ function ConnectDomain({ nextPage }: any) {
 
   return (
     <Layout style={{ height: "100vh", backgroundColor: "white" }}>
+      <div style={{ position: 'absolute', top: 50, left: 50 }}>
+        <Button
+          onClick={() => prevPage()}
+          className="custom-button"
+          type="primary"
+          size="large"
+        >
+          Back
+        </Button>
+      </div>
       <div
         style={{
           display: "flex",

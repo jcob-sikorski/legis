@@ -10,7 +10,7 @@ import * as Realm from "realm-web";
 const { Step } = Steps;
 const { Title } = Typography;
 
-function AddSiteDetails() {
+function AddSiteDetails({ prevPage }: any) {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -35,6 +35,16 @@ function AddSiteDetails() {
 
   return (
     <Layout style={{ height: "100vh", backgroundColor: "white" }}>
+      <div style={{ position: 'absolute', top: 50, left: 50 }}>
+        <Button
+          onClick={() => prevPage()}
+          className="custom-button"
+          type="primary"
+          size="large"
+        >
+          Back
+        </Button>
+      </div>
       <div
         style={{
           display: "flex",

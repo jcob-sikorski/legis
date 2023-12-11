@@ -43,10 +43,10 @@ function CustomDomainDeployment() {
   return (
     <>
       {page === -1 && null}
-      {page === 0 && <PitchCards nextPage={() => setPage(1)} />}
+      {page === 0 && <PitchCards />}
       {page === 1 && <AddCustomDomain nextPage={() => setPage(2)} />}
-      {page === 2 && <ConnectDomain nextPage={() => setPage(3)} />}
-      {page === 3 && <AddSiteDetails />}
+      {page === 2 && <ConnectDomain prevPage={() => setPage(1)} nextPage={() => setPage(3)} />}
+      {page === 3 && <AddSiteDetails prevPage={() => setPage(2)} />}
     </>
   );
 }

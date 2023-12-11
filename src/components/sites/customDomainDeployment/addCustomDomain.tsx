@@ -1,5 +1,5 @@
 import { Layout, Typography, Button, Steps, Input, Result } from "antd";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useApp } from "../../RealmApp";
 import * as Realm from "realm-web";
@@ -20,6 +20,19 @@ function AddCustomDomain({ nextPage }: any) {
   const site_collection = mongodb.db("legis").collection("Site");
 
   const { site_id } = useParams();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await site_collection.findOne(
+        { _id: new Realm.BSON.ObjectId(site_id) },
+        { projection: { customDomain: 1 } }
+      );
+      console.log(`Fetched document: ${JSON.stringify(result.customDomain)}`);
+      setDomain(result.customDomain);
+    };
+
+    fetchData();
+  }, []);
 
   async function onSubmit() {
     const updateResult = await site_collection.updateOne(
@@ -134,7 +147,7 @@ function AddCustomDomain({ nextPage }: any) {
             height: "40px",
             backgroundColor: "white",
           }}
-          placeholder={"company.com"}
+          placeholder={domain || "company.com"}
           onChange={(e) => setDomain(e.target.value)}
         />
       </div>

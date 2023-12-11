@@ -58,7 +58,7 @@ const cardContent = [
   },
 ];
 
-function PitchCards({ nextPage }: any) {
+function PitchCards() {
   const { site_id } = useParams();
 
   const stripePromise = loadStripe(config.stripePk as string);
