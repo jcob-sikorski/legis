@@ -217,6 +217,7 @@ function Visualisation({
       "values",
       "team",
       "reviews",
+      "about",
       "contact",
       "footer",
     ];
@@ -354,92 +355,100 @@ function Visualisation({
           </>
         )}
         {data &&
-          data.map((s: any) => (
-            <div
-              className={`hover-parent ${
-                s.section_id === removedSectionId ? "animate__bounceOut" : ""
-              }`}
-              key={s.section_id}
-              id={"wrapper-" + s.section_id}
-              onClick={() => (mode === "showcase" ? {} : onSectionClick(s))}
-              style={{
-                position: "relative",
-                opacity: 1,
-                ...(selectedSectionId === s.section_id
-                  ? selectedSectionStyle
-                  : {}),
-              }}
-            >
-              {!isDeploying && (
-                <div
-                  className="hover-child"
-                  style={{
-                    background: "#fff",
-                    width: "",
-                    right: 0,
-                    padding: 4,
-                    borderRadius: 4,
-                    marginTop: 8,
-                    marginRight: 8,
-                    position: "absolute",
-                    top: 0,
-                    zIndex: 1000,
+          data.map((s: any) => {
+            // template specific edge cases (allow or not some sections.)
+            if (
+              template_set_id === "ParadigmShift" &&
+              contains(s?.template_id, "nav")
+            )
+              return <></>;
+            return (
+              <div
+                className={`hover-parent ${
+                  s.section_id === removedSectionId ? "animate__bounceOut" : ""
+                }`}
+                key={s.section_id}
+                id={"wrapper-" + s.section_id}
+                onClick={() => (mode === "showcase" ? {} : onSectionClick(s))}
+                style={{
+                  position: "relative",
+                  opacity: 1,
+                  ...(selectedSectionId === s.section_id
+                    ? selectedSectionStyle
+                    : {}),
+                }}
+              >
+                {!isDeploying && (
+                  <div
+                    className="hover-child"
+                    style={{
+                      background: "#fff",
+                      width: "",
+                      right: 0,
+                      padding: 4,
+                      borderRadius: 4,
+                      marginTop: 8,
+                      marginRight: 8,
+                      position: "absolute",
+                      top: 0,
+                      zIndex: 1000,
 
-                    // width: 100,
-                  }}
-                >
-                  {[
-                    {
-                      label: "Duplicate section",
-                      icon: <CopyFilled />,
-                      onClick: () => onSectionDuplicate(s),
-                    },
-                    {
-                      label: "Move section up",
-                      icon: <ArrowUpOutlined />,
-                      onClick: () => onSectionMove(s, "up"),
-                    },
-                    {
-                      label: "Move section down",
-                      icon: <ArrowDownOutlined />,
-                      onClick: () => onSectionMove(s, "down"),
-                    },
-                    // {
-                    //     label: 'Edit section',
-                    //     icon: <EditFilled />,
-                    //     onClick: () => onSectionClick(s),
-                    // },
-                    {
-                      label: "Delete section",
-                      icon: <DeleteFilled />,
-                      onClick: () => onSectionDelete(s),
-                    },
-                  ].map(({ label, icon, onClick }) => (
-                    <Button
-                      className="legis-sections-button"
-                      style={{
-                        all: "unset",
-                        borderColor: "#0000",
-                        cursor: "pointer",
-                        paddingInline: 6,
-                        outline: 0,
-                      }}
-                      title={label}
-                      icon={icon}
-                      onClick={onClick}
-                    />
-                  ))}
-                </div>
-              )}
-              {isDevMode && (
-                <>
-                  [section_id]: {s.section_id}
-                  [template_id]: {s.template_id}
-                </>
-              )}
-              {switchTemplate(s)}
-            </div>
-          ))}
+                      // width: 100,
+                    }}
+                  >
+                    {[
+                      {
+                        label: "Duplicate section",
+                        icon: <CopyFilled />,
+                        onClick: () => onSectionDuplicate(s),
+                      },
+                      {
+                        label: "Move section up",
+                        icon: <ArrowUpOutlined />,
+                        onClick: () => onSectionMove(s, "up"),
+                      },
+                      {
+                        label: "Move section down",
+                        icon: <ArrowDownOutlined />,
+                        onClick: () => onSectionMove(s, "down"),
+                      },
+                      // {
+                      //     label: 'Edit section',
+                      //     icon: <EditFilled />,
+                      //     onClick: () => onSectionClick(s),
+                      // },
+                      {
+                        label: "Delete section",
+                        icon: <DeleteFilled />,
+                        onClick: () => onSectionDelete(s),
+                      },
+                    ].map(({ label, icon, onClick }) => (
+                      <Button
+                        className="legis-sections-button"
+                        style={{
+                          all: "unset",
+                          borderColor: "#0000",
+                          cursor: "pointer",
+                          paddingInline: 6,
+                          outline: 0,
+                        }}
+                        title={label}
+                        icon={icon}
+                        onClick={onClick}
+                      />
+                    ))}
+                  </div>
+                )}
+                {isDevMode && (
+                  <>
+                    [section_id]: {s.section_id}
+                    [template_id]: {s.template_id}
+                  </>
+                )}
+                {switchTemplate(s)}
+              </div>
+            );
+          })}
         {switchTemplate({ template_id: "footer" })}
         <div id="editor-dummy" ref={dummyRef} />
       </Flex>

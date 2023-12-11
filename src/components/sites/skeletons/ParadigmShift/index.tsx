@@ -1,198 +1,479 @@
+import { useState } from "react";
+import { contains, getUrl, switchIcon } from "../../../../utils";
+import { DEFAULT_IMAGE_URL } from "../../dashboard/SiteCard";
+
 export default function ParadigmShift({ data, template_id, setContext }: any) {
+  const [editableMap, setEditableMap] = useState<any>([]);
+  const [bgEditable, setBgEditable] = useState<any>(true);
+
   return (
     <div className="is-preload">
       {/* Wrapper */}
       <div id="wrapper">
         {/* Intro */}
-        <section className="intro">
-          <header>
-            <h1>Larry & Cooper</h1>
-            <p>
-              We are committed to excellence and have a deep understanding of
-              the law. Our aim is to provide you with practical solutions.
-            </p>
-          </header>
-          <div className="content">
-            <span className="image fill" data-position="center">
-              <img
-                src="https://www.sebastiangibsonlaw.com/wp-content/uploads/2016/06/shutterstock_91899863.jpg"
-                alt=""
-              />
-            </span>
-          </div>
-        </section>
-
-        {/* Section */}
-        <section id="first">
-          <header>
-            <h2>Practice Areas</h2>
-          </header>
-          <ul className="features">
-            <li>
-              <h3>Ipsum consequat</h3>
-              <p>
-                Sed lorem amet ipsum dolor et amet nullam consequat a feugiat
-                consequat tempus veroeros sed consequat.
+        {contains(template_id, "hero") && (
+          <section className="intro">
+            <header>
+              <h1
+                className="editable"
+                onClick={() =>
+                  setContext({
+                    key: "heading",
+                    type: "text",
+                    label: "Heading",
+                    variantProperty: "textAlign",
+                  })
+                }
+                style={{
+                  textAlign: data?.headingVariant || "left",
+                  pointerEvents: "auto",
+                }}
+              >
+                {data?.heading ?? "[Heading]"}
+              </h1>
+              <p
+                className="editable"
+                style={{ textAlign: data?.subHeadingVariant || "left" }}
+                onClick={() =>
+                  setContext({
+                    key: "subHeading",
+                    type: "textarea",
+                    label: "Sub-Heading",
+                    variantProperty: "textAlign",
+                  })
+                }
+              >
+                {data?.subHeading ?? "[Subheading]"}
               </p>
-            </li>
-            <li>
-              <h3>Amed sed feugiat</h3>
-              <p>
-                Sed lorem amet ipsum dolor et amet nullam consequat a feugiat
-                consequat tempus veroeros sed consequat.
-              </p>
-            </li>
-            <li>
-              <h3>Dolor nullam</h3>
-              <p>
-                Sed lorem amet ipsum dolor et amet nullam consequat a feugiat
-                consequat tempus veroeros sed consequat.
-              </p>
-            </li>
-          </ul>
-        </section>
-
-        {/* Section */}
-        <section>
-          <header>
-            <h2>Our Values</h2>
-          </header>
-          <div className="content">
-            <ul className="feature-icons">
-              <li className="icon solid fa-shield-alt">Reliability</li>
-              <li className="icon solid fa-handshake">Loyalty & Trust</li>
-              <li className="icon solid fa-gavel">Integrity</li>
-              <li className="icon solid fa-award">Excellence</li>
-              <li className="icon solid fa-user-friends">Collaboration</li>
-            </ul>
-          </div>
-        </section>
-
-        {/* Section */}
-        <section>
-          <header>
-            <h2>Our Team</h2>
-          </header>
-          <div className="content">
-            <ul className="team-cards">
-              <li>
+            </header>
+            <div className="content e">
+              <span className="image fill e" data-position="center">
                 <img
-                  style={{
-                    borderRadius: "2%",
-                    height: "300px",
-                    width: "100%",
-                    objectFit: "cover",
-                  }}
-                  src="https://headshots-inc.com/wp-content/uploads/2022/07/attorny-headshot-example-1.jpg"
-                ></img>
-                <h2>Clarence Damon</h2>
-                <p>
-                  Sed lorem amet ipsum dolor et amet nullam consequat a feugiat
-                  consequat tempus veroeros sed consequat.
-                </p>
-              </li>
-              <li>
-                <img
-                  style={{
-                    borderRadius: "2%",
-                    height: "300px",
-                    width: "100%",
-                    objectFit: "cover",
-                  }}
-                  src="https://headshots-inc.com/wp-content/uploads/2022/08/attorney-headshot-photography-examples-1.jpg"
-                ></img>
-                <h2>Almanda Li</h2>
-                <p>
-                  Sed lorem amet ipsum dolor et amet nullam consequat a feugiat
-                  consequat tempus veroeros sed consequat.
-                </p>
-              </li>
-              <li>
-                <img
-                  style={{
-                    borderRadius: "2%",
-                    height: "300px",
-                    width: "100%",
-                    objectFit: "cover",
-                  }}
-                  src="https://www.bethesdaheadshots.com/wp-content/uploads/2022/05/attorney-professional-headshot-photographer-3.jpg"
-                ></img>
-                <h2>James Pontiac</h2>
-                <p>
-                  Sed lorem amet ipsum dolor et amet nullam consequat a feugiat
-                  consequat tempus veroeros sed consequat.
-                </p>
-              </li>
-            </ul>
-          </div>
-        </section>
-
-        <section>
-          <header>
-            <h2>Reviews and Testimonials</h2>
-          </header>
-          <div className="content">
-            <div className="testimonials">
-              <section style={{ all: "unset" }}>
-                <h2>Colgate</h2>
-                <p>
-                  Phasellus convallis elit id ullam corper amet et pulvinar.
-                  Duis aliquam turpis mauris, sed ultricies erat dapibus.
-                </p>
-              </section>
-              <section style={{ all: "unset" }}>
-                <h2>Bradley & Co</h2>
-                <p>
-                  Phasellus convallis elit id ullam corper amet et pulvinar.
-                  Duis aliquam turpis mauris, sed ultricies erat dapibus.
-                </p>
-              </section>
-              <section style={{ all: "unset" }}>
-                <h2>Alex Hayet & Adams</h2>
-                <p>
-                  Phasellus convallis elit id ullam corper amet et pulvinar.
-                  Duis aliquam turpis mauris, sed ultricies erat dapibus.
-                </p>
-              </section>
+                  className="e"
+                  onClick={() =>
+                    true
+                      ? setContext({
+                          key: "_",
+                          type: "image",
+                          cdnUUID: data?.cdnUUID,
+                          inputSize: [140 * 1.8, 80 * 1.8],
+                          ratio: 14 / 8,
+                          label: "Hero Image",
+                        })
+                      : () => {}
+                  }
+                  src={
+                    data?.cdnUUID ? getUrl(data?.cdnUUID) : DEFAULT_IMAGE_URL
+                  }
+                  alt=""
+                />
+              </span>
             </div>
-          </div>
-        </section>
-
-        <section>
-          <header>
-            <h2>About Us</h2>
-          </header>
-          <div className="content">
-            <p>
-              Phasellus convallis elit id ullam corper amet et pulvinar. Duis
-              aliquam turpis mauris, sed ultricies erat dapibus.
-            </p>
-          </div>
-        </section>
-
+          </section>
+        )}
         {/* Section */}
-        <section>
-          <header>
-            <h2>Contact Us</h2>
-          </header>
-          <div className="content">
-            <strong>
-              Proin tempus feugiat sed varius enim lorem ullamcorper dolore
-              aliquam aenean ornare velit lacus, ac varius enim lorem
-              ullamcorper dolore.
-            </strong>
-            <ul className="actions">
-              <li>
-                <a href="#" className="button primary large">
-                  Get Started
-                </a>
-              </li>
+        {contains(template_id, "practice") && (
+          <section id="first">
+            <header>
+              <h2
+                onClick={() =>
+                  setContext({
+                    key: "title",
+                    type: "text",
+                    label: "Title",
+                    variantProperty: "textAlign",
+                  })
+                }
+                className="e"
+                style={{
+                  // fontSize: "35px",
+                  textAlign: data?.titleVariant || "left",
+                }}
+              >
+                {data?.title || "Practice Areas"}
+              </h2>
+            </header>
+            <ul className="features">
+              {(data?.areasList ?? []).map((area: any, i: number) => (
+                <li>
+                  <h3
+                    className="e"
+                    onClick={() =>
+                      setContext({
+                        collection: "areasList",
+                        seriableLabel: "practice area",
+                        key: "practiceAreaName",
+                        label: "Practice Area Name",
+                        type: "text",
+                        index: i,
+                      })
+                    }
+                  >
+                    {area?.practiceAreaName}
+                  </h3>
+                  <p
+                    className="e"
+                    onClick={() =>
+                      setContext({
+                        collection: "areasList",
+                        seriableLabel: "practice area",
+                        key: "practiceDescription",
+                        label: "Practice Area Description",
+                        type: "textarea",
+                        index: i,
+                      })
+                    }
+                  >
+                    {area?.practiceDescription}
+                  </p>
+                </li>
+              ))}
             </ul>
+          </section>
+        )}
+        {/* Section */}
+        {contains(template_id, "values") && (
+          <section>
+            <header>
+              <h2
+                style={{
+                  // fontSize: "35px",
+                  textAlign: data?.titleVariant || "left",
+                }}
+                onClick={() =>
+                  setContext({
+                    key: "title",
+                    type: "text",
+                    label: "Title",
+                    variantProperty: "textAlign",
+                  })
+                }
+                className="e"
+              >
+                {data?.title || "Our values"}
+              </h2>
+            </header>
+            <div className="content">
+              <ul className="feature-icons">
+                {(typeof data?.valuesList === "object"
+                  ? data?.valuesList
+                  : []
+                )?.map((value: any, i: number) => (
+                  <li
+                    className={`e icon solid  ${
+                      value?.icon ? value?.icon : switchIcon(value?.name ?? "")
+                    }`}
+                    onClick={() =>
+                      setContext({
+                        collection: "valuesList",
+                        seriableLabel: "value",
+                        key: "icon",
+                        label: "Value icon",
+                        type: "icon",
+                        index: i,
+                      })
+                    }
+                  >
+                    <div
+                      className="e"
+                      onClick={() =>
+                        setContext({
+                          collection: "valuesList",
+                          seriableLabel: "value",
+                          key: "name",
+                          label: "Value name",
+                          type: "text",
+                          index: i,
+                        })
+                      }
+                    >
+                      {value?.name || "[Value name]"}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
+        {/* Section */}
+        {contains(template_id, "team") && (
+          <section>
+            <header>
+              <h2
+                style={{
+                  textAlign: data?.titleVariant || "left",
+                }}
+                className="e"
+                onClick={() =>
+                  setContext({
+                    key: "title",
+                    type: "text",
+                    label: "title",
+                    variantProperty: "textAlign",
+                  })
+                }
+              >
+                {data?.title || "Our team"}
+              </h2>
+            </header>
+            <div className="content">
+              <ul className="team-cards">
+                {(data?.lawyerDetails ?? []).map((person: any, i: number) => {
+                  // checks which element is currently hovered at and should be editable.
+                  let parentEditable = true;
+                  try {
+                    parentEditable = editableMap[i];
+                  } catch {}
+
+                  // adds indexed value to the map.
+                  function setEditable(val: boolean) {
+                    setEditableMap({ ...editableMap, [i]: val });
+                  }
+
+                  return (
+                    <>
+                      {/* {parentEditable ? "yes" : "no"} */}
+                      <li
+                        className="e"
+                        onClick={() =>
+                          parentEditable
+                            ? setContext({
+                                seriableId: person?.id,
+                                isGroup: true,
+                                cdnUUID: person?.cdnUUID,
+                                collection: "lawyerDetails",
+                                seriableLabel: "lawyer",
+                                index: i,
+                              })
+                            : () => {}
+                        }
+                      >
+                        <img
+                          onMouseEnter={() => setEditable(false)}
+                          onMouseLeave={() => setEditable(true)}
+                          onClick={() =>
+                            setContext({
+                              cdnUUID: person?.cdnUUID,
+                              collection: "lawyerDetails",
+                              seriableLabel: "lawyer",
+                              key: "cdnUUID",
+                              type: "image",
+                              ratio: 1,
+                              label: "Profile Picture",
+                              index: i,
+                            })
+                          }
+                          className="e"
+                          style={{
+                            borderRadius: "2%",
+                            height: "300px",
+                            width: "100%",
+                            objectFit: "cover",
+                          }}
+                          src={getUrl(person?.cdnUUID ?? "")}
+                        ></img>
+                        <h2
+                          onMouseEnter={() => setEditable(false)}
+                          onMouseLeave={() => setEditable(true)}
+                          onClick={() =>
+                            setContext({
+                              collection: "lawyerDetails",
+                              seriableLabel: "lawyer",
+                              key: "name",
+                              label: "Lawyer name",
+                              type: "text",
+                              index: i,
+                            })
+                          }
+                          className="e"
+                        >
+                          {person?.name || "[Lawyer Name here]"}
+                        </h2>
+                        <p
+                          className="e"
+                          onMouseEnter={() => setEditable(false)}
+                          onMouseLeave={() => setEditable(true)}
+                          onClick={() =>
+                            setContext({
+                              collection: "lawyerDetails",
+                              seriableLabel: "lawyer",
+                              key: "description",
+                              label: "Lawyer Description",
+                              type: "textarea",
+                              index: i,
+                            })
+                          }
+                        >
+                          {person?.description || "[Lawyer description here]"}
+                        </p>
+                      </li>
+                    </>
+                  );
+                })}
+              </ul>
+            </div>
+          </section>
+        )}
+        {contains(template_id, "reviews") && (
+          <section>
+            <header>
+              <h2
+                className="e"
+                style={{
+                  textAlign: data?.titleVariant || "center",
+                }}
+                onClick={() =>
+                  setContext({
+                    section_id: data?.section_id,
+                    key: "title",
+                    type: "text",
+                    label: "Title",
+                    variantProperty: "textAlign",
+                    placeholder: "Reviews and Testimonials",
+                  })
+                }
+              >
+                {data?.title || "Reviews and Testimonials"}
+              </h2>
+            </header>
+            <div className="content">
+              <div className="testimonials">
+                {(data?.reviews ?? []).map((obj: any, i: number) => (
+                  <section style={{ all: "unset" }}>
+                    <h2
+                      className="major e"
+                      onClick={() =>
+                        setContext({
+                          collection: "reviews",
+                          seriableLabel: "review",
+                          key: "clientName",
+                          label: "Client Name",
+                          type: "text",
+                          index: i,
+                        })
+                      }
+                    >
+                      {obj?.clientName || "[Client name here...]"}
+                    </h2>
+                    <p
+                      onClick={() =>
+                        setContext({
+                          collection: "reviews",
+                          seriableLabel: "review",
+                          key: "testimonial",
+                          label: "Review",
+                          type: "textarea",
+                          index: i,
+                        })
+                      }
+                      className="e"
+                    >
+                      {obj?.testimonial || "[Client Review here...]"}
+                    </p>
+                  </section>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+        {contains(template_id, "about") && (
+          <section>
+            <header>
+              <h2
+                onClick={() =>
+                  setContext({
+                    key: "title",
+                    type: "text",
+                    label: "Title",
+                    variantProperty: "textAlign",
+                  })
+                }
+                className="e majorx"
+                style={{
+                  textAlign: data?.titleVariant || "left",
+                  pointerEvents: "auto",
+                }}
+              >
+                {data?.title || "About us"}
+              </h2>
+            </header>
+            <div className="content">
+              <p
+                className="editable"
+                style={{ textAlign: data?.paragraphVariant || "left" }}
+                onClick={() =>
+                  setContext({
+                    key: "paragraph",
+                    type: "textarea",
+                    label: "paragraph",
+                    variantProperty: "textAlign",
+                  })
+                }
+              >
+                {data?.paragraph || "[Paragraph here]"}
+              </p>
+            </div>
+          </section>
+        )}
+        {/* Section */}{" "}
+        {contains(template_id, "contact") && (
+          <section>
+            <header>
+              <h2
+                onClick={() =>
+                  setContext({
+                    key: "title",
+                    type: "text",
+                    label: "Title",
+                    variantProperty: "textAlign",
+                  })
+                }
+                className="e"
+                style={{
+                  textAlign: data?.titleVariant || "left",
+                  pointerEvents: "auto",
+                }}
+              >
+                {data?.title || "Contact us"}
+              </h2>
+            </header>
+            <div className="content">
+              {/* <strong>
+                Proin tempus feugiat sed varius enim lorem ullamcorper dolore
+                aliquam aenean ornare velit lacus, ac varius enim lorem
+                ullamcorper dolore.
+              </strong> */}
+              <ul className="actions">
+                <li>
+                  <a
+                    role="link"
+                    style={{
+                      marginInline: data?.buttonVariant || "auto auto",
+                      color: "#000",
+                    }}
+                    onClick={() =>
+                      setContext({
+                        key: "button",
+                        type: "button",
+                        label: "Button",
+                        variantProperty: "marginInline",
+                      })
+                    }
+                    href="#"
+                    className="button primary large"
+                  >
+                    {data?.buttonLabel || "Send Message"}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </section>
+        )}
+        {contains(template_id, "footer") && (
+          <div className="copyright">
+            Made by <a href="https://www.legis.live">Legis</a>.
           </div>
-        </section>
-        <div className="copyright">
-          Made by <a href="https://www.legis.live">Legis</a>.
-        </div>
+        )}
       </div>
     </div>
   );

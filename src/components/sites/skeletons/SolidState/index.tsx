@@ -436,13 +436,38 @@ export default function SolidState({ data, template_id, setContext }: any) {
           <section id="about us" className="wrapper spotlight style4">
             <div className="inner">
               <div className="content">
-                <h1 className="major" style={{ fontSize: "35px" }}>
-                  About Us
+                <h1
+                  onClick={() =>
+                    setContext({
+                      key: "title",
+                      type: "text",
+                      label: "Title",
+                      variantProperty: "textAlign",
+                    })
+                  }
+                  className="e major"
+                  style={{
+                    textAlign: data?.titleVariant || "left",
+                    pointerEvents: "auto",
+                    fontSize: "35px",
+                  }}
+                >
+                  {data?.title || "About us"}
                 </h1>
                 <section>
-                  <p>
-                    Phasellus convallis elit id ullam corper amet et pulvinar.
-                    Duis aliquam turpis mauris, sed ultricies erat dapibus.
+                  <p
+                    className="editable"
+                    style={{ textAlign: data?.paragraphVariant || "left" }}
+                    onClick={() =>
+                      setContext({
+                        key: "paragraph",
+                        type: "textarea",
+                        label: "paragraph",
+                        variantProperty: "textAlign",
+                      })
+                    }
+                  >
+                    {data?.paragraph || "[Paragraph here]"}
                   </p>
                 </section>
               </div>

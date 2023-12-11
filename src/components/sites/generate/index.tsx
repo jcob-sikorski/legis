@@ -179,7 +179,7 @@ function Generate() {
         // if (onboarding === "1") {
         //   navigate(`/showcase/${site_id}`);
         // } else {
-          navigate(`/editor/${site_id}`);
+        navigate(`/editor/${site_id}`);
         // }
       } catch (error) {
         console.error("Error updating site:", error);
@@ -417,9 +417,9 @@ function getSiteData(
     // 6. About
     {
       section_id: v4(),
-      template_id: 'LAbout1',
+      template_id: "LAbout1",
       paragraph: AboutUs,
-      "title": "About us",
+      title: "About us",
     },
     // 7. Contact us form / CTA = NO DATA
     {
@@ -455,19 +455,21 @@ function getSiteData(
 
 function getRandomTemplateSetId(options: { repeat: boolean }) {
   const templateIds: TemplateSetName[] = [
-    "Hyperspace",
-    // "ParadigmShift",
+    // "Hyperspace",
+    "ParadigmShift",
     "SolidState",
     // "Stellar",
     // "Story",
   ];
 
-  if (localStorage.getItem("legisTemplateSetId") === "Hyperspace") {
+  // return "ParadigmShift";
+
+  if (localStorage.getItem("legisTemplateSetId") === "ParadigmShift") {
     localStorage.setItem("legisTemplateSetId", "SolidState");
     return "SolidState";
   } else {
-    localStorage.setItem("legisTemplateSetId", "Hyperspace");
-    return "Hyperspace";
+    localStorage.setItem("legisTemplateSetId", "ParadigmShift");
+    return "ParadigmShift";
   }
 
   if (options?.repeat == false) {
