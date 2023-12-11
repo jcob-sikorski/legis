@@ -1,15 +1,8 @@
-import {
-  Layout,
-  Input,
-  Button,
-  Typography,
-} from "antd";
+import { Layout, Input, Button, Typography } from "antd";
 
 import Sidebar from "../menu";
 import SettingsMenu from "./SettingsMenu";
-import {
-  PlusOutlined,
-} from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -28,9 +21,9 @@ function SiteComponent({
   customDomain,
   saveChanges,
   commitIndexHtmlToGithub,
-  connectDefaultSubdomain
-  }: any) {
-    
+  connectDefaultSubdomain,
+  deploymentStatus,
+}: any) {
   return (
     <Layout
       hasSider
@@ -73,7 +66,7 @@ function SiteComponent({
             }}
             bordered={false}
             value={title}
-            onChange={(e) => title = e.target.value}
+            onChange={(e) => (title = e.target.value)}
           />
           <Title
             level={5}
@@ -94,10 +87,10 @@ function SiteComponent({
             }}
             bordered={false}
             value={description}
-            onChange={(e) => description = e.target.value}
+            onChange={(e) => (description = e.target.value)}
           />
         </Content>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div>
             <Button
               type="primary"
@@ -109,14 +102,16 @@ function SiteComponent({
             </Button>
           </div>
           <div>
-            <Button
-              type="primary"
-              className="custom-button"
-              onClick={connectDefaultSubdomain}
-              style={{ height: 60, width: 200, marginTop: 10 }} // You can adjust the marginTop as needed
-            >
-              Connect Domain
-            </Button>
+            {deploymentStatus !== "building" && (
+              <Button
+                type="primary"
+                className="custom-button"
+                onClick={connectDefaultSubdomain}
+                style={{ height: 60, width: 200, marginTop: 10 }} // You can adjust the marginTop as needed
+              >
+                Connect Domain
+              </Button>
+            )}
           </div>
           <div>
             <Button

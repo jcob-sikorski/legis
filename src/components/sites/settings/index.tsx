@@ -38,7 +38,7 @@ function Settings() {
   const githubUsername = config.githubUsername;
   const githubToken = config.githubToken;
 
-  const [deploymentStatus, setDeploymentStatus] = useState<string>();
+  const [deploymentStatus, setDeploymentStatus] = useState<string>("building");
   const [siteDataFetched, setSiteDataFetched] = useState<boolean>(false);
 
   const [title, setTitle] = useState<string>();
@@ -140,8 +140,10 @@ function Settings() {
   }, []); // Include site_id in the dependency array if it may change
 
   async function checkDeploymentStatus() {
-    let status = "";
+    console.log("checkDeploymentStatus");
+    let status = "building";
     while (status === "building") {
+      console.log("checking");
       const response = await axios.get(
         `https://api.github.com/repos/${githubUsername}/${site_id}/pages/builds/latest`,
         {
@@ -152,6 +154,7 @@ function Settings() {
         }
       );
       status = response.data?.status;
+      setDeploymentStatus(status);
       console.log("DEPLOYMENT STATUS: ", status);
       if (status === "building") {
         await new Promise((resolve) => setTimeout(resolve, 30000)); // wait for 30 seconds
@@ -233,9 +236,10 @@ function Settings() {
     }
 
     console.log("COMITING INDEX HTML TO GITHUB");
-    commitIndexHtmlToGithub();
+    // await commitIndexHtmlToGithub();
     //  YOU ARE HERE IMPLEMENTING THE DEPLOYMENT FOR DEFAULT SUBDOMAIN
-    checkDeploymentStatus();
+
+    // await checkDeploymentStatus();
 
     console.log("CONNECTING DEFAULT SUBDOMAIN");
     connectDefaultSubdomain();
@@ -477,7 +481,7 @@ function Settings() {
 
     const base64Content = btoa(unescape(encodeURIComponent(htmlString))); // Convert HTML string to base64
 
-    console.log("htmlString: ", htmlString);
+    // console.log("htmlString: ", htmlString);
 
     try {
       const site = await site_collection.findOne({
@@ -543,6 +547,7 @@ function Settings() {
       }
 
       console.log("GitHub Pages deployment triggered.");
+      await checkDeploymentStatus();
     } catch (error) {
       console.error("Error pushing content and triggering deployment.", error);
       throw error;
@@ -551,7 +556,7 @@ function Settings() {
 
   return (
     <>
-      {deploymentStatus === "building" &&
+      {/* {deploymentStatus === "building" &&
         message.loading({
           content: "Deploying...",
           key: "deploying",
@@ -559,25 +564,27 @@ function Settings() {
           style: {
             marginTop: "20vh",
           },
-        })}
-      {deploymentStatus !== "building" && siteDataFetched === true && (
-        <SiteComponent
-          site_id={site_id || ""}
-          title={title || ""}
-          description={description || ""}
-          siteUrl={siteUrl || ""}
-          domainConnected={domainConnected || ""}
-          faviconUrl={faviconUrl || ""}
-          cname={cname || ""}
-          templateColors={templateColors || ""}
-          bodyTemplate={bodyTemplate || ""}
-          templateSetId={templateSetId || ""}
-          customDomain={customDomain || ""}
-          saveChanges={saveChanges}
-          commitIndexHtmlToGithub={commitIndexHtmlToGithub}
-          connectDefaultSubdomain={connectDefaultSubdomain}
-        />
-      )}
+        })} */}
+      {/* {deploymentStatus !== "building" && siteDataFetched === true && ( */}
+      <SiteComponent
+        deploymentStatus={deploymentStatus}
+        site_id={site_id || ""}
+        title={title || ""}
+        description={description || ""}
+        siteUrl={siteUrl || ""}
+        domainConnected={domainConnected || ""}
+        faviconUrl={faviconUrl || ""}
+        cname={cname || ""}
+        templateColors={templateColors || ""}
+        bodyTemplate={bodyTemplate || ""}
+        templateSetId={templateSetId || ""}
+        customDomain={customDomain || ""}
+        saveChanges={saveChanges}
+        commitIndexHtmlToGithub={commitIndexHtmlToGithub}
+        connectDefaultSubdomain={connectDefaultSubdomain}
+      />
+      {/* )} */}
+
       <IFrame
         cssString={cssString}
         colors={templateColors}
