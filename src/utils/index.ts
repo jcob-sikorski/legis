@@ -1,18 +1,9 @@
 import { DataNode } from "antd/es/tree";
 import PROFILES from "../components/templates/profiles.json";
 import PROFILES_METADATA_MAP from "../components/templates/profiles_metadata_map.json";
-import { JSONProfile, JSONProfileField, OnboardingData } from "../models";
-import { EditOutlined, FrownFilled, FrownOutlined } from "@ant-design/icons";
+import { JSONProfileField, OnboardingData } from "../models";
 import { v4 } from "uuid";
-import { DEFAULT_IMAGE_URL } from "../components/sites/dashboard/SiteCard";
 
-async function copyTextToClipboard(text: any) {
-  if ("clipboard" in navigator) {
-    await navigator.clipboard.writeText(text);
-  } else {
-    document.execCommand("copy", true, text);
-  }
-}
 
 export function groupProfilesByCategory() {
   const profiles: any = PROFILES;
@@ -188,6 +179,8 @@ console.log(camelCase("Click the button to convert to camelCase"));
 
 export function getHeroImageURLFromBodyTemplate(body_template: object[]) {
   let image_url;
+
+  const DEFAULT_IMAGE_URL = "https://mdbcdn.b-cdn.net/img/new/slides/146.webp";
 
   (body_template || []).map((section: any) => {
     if (section?.template_id?.toLowerCase()?.indexOf("hero") > -1)

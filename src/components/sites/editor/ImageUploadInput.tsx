@@ -16,7 +16,6 @@ import axios from "axios";
 // import { createHmac } from 'crypto-browserify';
 import { sha256 } from "js-sha256";
 import { getUrl } from "../../../utils";
-import { DEFAULT_IMAGE_URL } from "../dashboard/SiteCard";
 
 const ImageUploadInput = ({
   handleCustomFieldChange,

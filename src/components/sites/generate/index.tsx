@@ -22,66 +22,23 @@ const openai = new OpenAI({
 });
 
 function Generate() {
-  const { site_id, onboarding } = useParams();
-  // onboarding param: 0 = regenerating, 1 = generating FIRST TIME
+  const { site_id } = useParams();
 
-  const [onboardingData, setOnboardingData] = useState<any>();
   const [response, setResponse] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<any>();
-  const [textIndex, setTextIndex] = useState(0);
 
   const [bodyTemplate, setBodyTemplate] = useState<any>([]);
   const [templateSetId, setTemplateSetId] = useState<any>([]);
-
-  const waitingRoomTexts = [
-    "Spinning the Magic...",
-    "Brewing Awesomeness...",
-    "Stirring the Creativity...",
-    "Cooking up Brilliance...",
-    "Shaping Wonders...",
-    "Dancing with Ideas...",
-    "Whipping up Wonderment...",
-    "Sprinkling Stardust...",
-    "Crafting Dreams...",
-    "Juggling Innovation...",
-    "Painting Pixel Perfection...",
-    "Mastering the Art of Fun...",
-    "Tickling the Imagination...",
-    "Weaving Digital Delight...",
-    "Sculpting Smiles...",
-    "Building Blocks of Joy...",
-    "Blending Laughter and Code...",
-    "Mixing Tech and Play...",
-    "Sculpting the Future...",
-    "Waltzing with Innovation...",
-  ];
 
   const navigate = useNavigate();
 
   const app: any = useApp();
 
   const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
-  const onboarding_collection = mongodb.db("legis").collection("Questionnaire");
   const site_collection = mongodb.db("legis").collection("Site");
 
   useEffect(() => {
-    console.log("Fetching the survey data from mongo.");
-    async function fetchOnboardingData() {
-      try {
-        const result = await onboarding_collection.find({
-          site_id: new Realm.BSON.ObjectId(site_id),
-        });
-        const data = result.length > 0 ? result[0] : {};
-        setOnboardingData(data);
-      } catch (error) {
-        console.error(
-          "Error fetching for Questionnaire data for this site:",
-          error
-        );
-      }
-    }
-    fetchOnboardingData();
 
     console.log("Fetching site's body_template from mongo.");
     async function fetchBodyTemplate() {
@@ -122,9 +79,7 @@ function Generate() {
   async function getResponseFromGPT() {
     const systemPrompt =
       "You’re the expert at designing sleek, professional, high-end, easy to read and very short text for legal firm website. Design one and provide the JSON of the following structure:";
-    const userPrompt = getOnboardingData(onboardingData);
-
-    console.log("userPrompt: ", userPrompt);
+    const userPrompt = getOnboardingData();
 
     setLoading(true);
     await openai.chat.completions
@@ -159,7 +114,6 @@ function Generate() {
 
         const siteData = getSiteData(
           finalContent,
-          onboardingData,
           bodyTemplate,
           template_set_id
         );
@@ -204,14 +158,6 @@ function Generate() {
     }
   };
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setTextIndex(() => Math.floor(Math.random() * waitingRoomTexts.length));
-    }, 3500);
-
-    return () => clearInterval(intervalId); // Cleanup the interval on component unmount
-  }, []);
-
   return (
     <>
       <Flex
@@ -253,8 +199,7 @@ function Generate() {
         )}
         {loading && (
           <h1 className="animate__bounceIn" style={{ fontSize: 25 }}>
-            <Spin size="large" style={{ marginRight: 10 }} />{" "}
-            {waitingRoomTexts[textIndex]}
+            <Spin size="large"/>
           </h1>
         )}
       </Flex>
@@ -343,26 +288,10 @@ function getSiteData(
   bodyTemplate: any,
   templateSetId: string
 ) {
-  const { NavBar, Hero, PracticeAreas, OurTeam, OurValues, AboutUs } = data;
-  const {
-    ClientReviews,
-    LawFirmName,
-    LawyerDetails: LawyerDetailsJSON,
-  } = onboardingData;
-
-  console.log("getSiteData.onboardingData: ", onboardingData);
-  console.log("getSiteData.bodyTemplate: ", bodyTemplate);
-
-  let reviews = [];
-  try {
-    reviews = JSON.parse(ClientReviews || "[]");
-  } catch {
-    console.warn("error parsing reviews in getSiteData.");
-  }
+  const { Hero, PracticeAreas, OurTeam, OurValues, AboutUs } = data;
 
   let lawyerDetails = OurTeam;
   try {
-    const onboardingLawyerDetails: any = JSON.parse(LawyerDetailsJSON || "[]");
     lawyerDetails = lawyerDetails?.map((lawyer: any, i: number) => {
       try {
         return {
@@ -751,18 +680,6 @@ function getRandomTemplateSetId(options: {
     return templateIds[randomIndex];
   }
 }
-
-// SAVE CODE FOR REGENERATION FOR LATER
-// generate site data value
-// if (onboarding === "1") {
-//   // FIRST TIME / ONBOARDING
-//   const siteData = getSiteData(finalContent, onboardingData, bodyTemplate);
-//   updateSite(siteData);
-// } else {
-//   // REGENERATING / NOT ONBOARDING
-//   const siteData = getRegeneratedSiteData(finalContent, onboardingData, bodyTemplate);
-//   updateSite(siteData);
-// }
 
 function getRegeneratedSiteData(
   aiData: any,

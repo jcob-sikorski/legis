@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { contains, getUrl, switchIcon } from "../../../../utils";
-import { DEFAULT_IMAGE_URL } from "../../dashboard/SiteCard";
 
 export default function ParadigmShift({ data, template_id, setContext }: any) {
   const [editableMap, setEditableMap] = useState<any>([]);
@@ -64,7 +63,7 @@ export default function ParadigmShift({ data, template_id, setContext }: any) {
                       : () => {}
                   }
                   src={
-                    data?.cdnUUID ? getUrl(data?.cdnUUID) : DEFAULT_IMAGE_URL
+                    data?.cdnUUID ? getUrl(data?.cdnUUID) : "https://mdbcdn.b-cdn.net/img/new/slides/146.webp"
                   }
                   alt=""
                 />

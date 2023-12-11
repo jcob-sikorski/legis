@@ -40,8 +40,6 @@ const ChooseTemplateModal = ({ setOpen, open, onTemplateSelected }: any) => {
           </>
         )}
       >
-        {/* groups:
-        {JSON.stringify(groups)} */}
         {Object.keys(groups)?.map((groupKey: any) => {
           const group: any = groups[groupKey];
           return (

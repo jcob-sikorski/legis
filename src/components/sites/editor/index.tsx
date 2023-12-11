@@ -36,7 +36,6 @@ import {
 } from "../../../utils";
 import MainMenu from "../menu";
 import { useApp } from "../../RealmApp";
-import Logo from "../menu/Logo";
 import { FieldContext } from "../../../models";
 import { getOnboardingData } from "../generate/getOnboardingData";
 import Questionnaire from "../../../models/Questionnaire";
@@ -349,13 +348,6 @@ const Editor: React.FC = () => {
         }}
       >
         <Row>
-          <Col span={18}>
-            <Flex justify="center" style={{ maxWidth: LEFT_BAR_WIDTH }}>
-              <div style={{ marginTop: "0px", marginLeft: "-20px" }}>
-                <Logo />
-              </div>
-            </Flex>
-          </Col>
           <Col span={6}>
             <Flex
               justify="flex-end"

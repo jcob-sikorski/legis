@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { contains, getUrl, switchIcon } from "../../../../utils";
-import { DEFAULT_IMAGE_URL } from "../../dashboard/SiteCard";
 
 export default function Hyperspace({
   data,
@@ -78,7 +77,7 @@ export default function Hyperspace({
               style={{
                 backgroundPosition: "50%",
                 backgroundImage: `url('${
-                  data?.cdnUUID ? getUrl(data?.cdnUUID) : DEFAULT_IMAGE_URL
+                  data?.cdnUUID ? getUrl(data?.cdnUUID) : "https://mdbcdn.b-cdn.net/img/new/slides/146.webp"
                 }')`,
                 minHeight: "450px",
                 // ...(isDeploying ? {marginTop: 100} : {})
